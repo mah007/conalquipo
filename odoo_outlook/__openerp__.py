@@ -7,7 +7,8 @@
         """,
 
     'description': """
-        The Outlook add-in allows the user to connect Odoo and Outlook. Synchronisation is bi-directional and the user may decide which direction to prioritize (Odoo or Outlook)
+        The Outlook add-in allows the user to connect Odoo and Outlook.
+        Synchronisation is bi-directional and the user may decide which direction to prioritize (Odoo or Outlook)
     """,
 
     'author': "Atteli - Juliusz Sosinowicz",

@@ -3,7 +3,7 @@
 from openerp import models, fields, api
 
 
-class outlook_sync(models.Model):
+class OutlookSync(models.Model):
     _name = 'odoo_outlook.outlook_sync'
     
     def _server(self):
@@ -17,8 +17,7 @@ class outlook_sync(models.Model):
     @api.multi
     def download_outlook(self):
         return {
-            'type' : 'ir.actions.act_url',
+            'type': 'ir.actions.act_url',
             'url': '/web/binary/download_outlook_add_in',
             'target': 'self',
         }
-

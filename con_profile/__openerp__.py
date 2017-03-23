@@ -4,7 +4,7 @@
 
     'summary': """
         Conalequipos's Odoo Installation profile.
-        """,
+    """,
 
     'description': """
         Conalequipo's Odoo Installation profile.
