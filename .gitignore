@@ -6,4 +6,4 @@
 *.swp
 *.swo
 *~
-./odoo_outlook
+odoo_outlook/
