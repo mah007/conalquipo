@@ -16,8 +16,6 @@
     'version': '0.1',
     'depends': ['base', 'crm', 'project', 'odoo_outlook'],
     'data': [
-        'views/outlook.xml',
-        'records/ir.model.access.csv',
     ],
     'qweb': [],
     'images': [],
