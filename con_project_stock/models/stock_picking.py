@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo.models import Model
+from odoo.models import Model, api
 from odoo import fields
 
 
@@ -27,3 +27,9 @@ class StockPicking(Model):
     _inherit = "stock.picking"
 
     project_id = fields.Many2one('project.project', string="Project")
+
+    @api.onchange('picking_type_id', 'partner_id')
+    def onchange_picking_type(self):
+        super(StockPicking, self).onchange_picking_type()
+        if self.partner_id:
+            self.project_id = False
