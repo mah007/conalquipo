@@ -18,27 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': "Odoo CON Profile",
 
-    'summary': """
-        Conalequipos's Odoo Installation profile.
-    """,
+from odoo.models import Model
+from odoo import fields
 
-    'description': """
-        Conalequipo's Odoo Installation profile.
-    """,
 
-    'author': "Ingeniería Aplicaciones y Software",
-    'website': "http://www.ias.com.co",
-    'category': 'Base Profile',
-    'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'odoo_outlook'],
-    'data': [
-    ],
-    'qweb': [],
-    'images': [],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+class StockPicking(Model):
+    _inherit = "stock.picking"
+
+    project_id = fields.Many2one('project.project', string="Project")
