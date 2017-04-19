@@ -22,6 +22,9 @@ class projectWorks(models.Model):
     work_code = fields.Char(string='Work Code', required=True)
     work_date_creation = fields.Date(
         string="Work date creation", required=True)
+    invoice_limit_date = fields.Date(
+        string="Invoice limit date", required=True)
+    email = fields.Char()
     observations = fields.Html(string='Observations', required=False)
     partner_code = fields.Char(
         string='Partner Code', compute='_get_partner_code', store=True)
@@ -36,3 +39,26 @@ class projectWorks(models.Model):
         'res.partner', string='Work Storer', required=True)
     work_contract = fields.Many2one(
         'res.partner', string='Work Contract', required=True)
+    work_phone = fields.Char(string='Work Phone', required=True)
+    work_owner = fields.Many2one(
+        'res.partner', string='Work Owner', required=True)
+    owner_phone = fields.Char(string='Owner Phone', required=True)
+    work_interventor = fields.Many2one(
+        'res.partner', string='Work Interventor', required=True)
+    interventor_phone = fields.Char(string='Interventor Phone', required=True)
+    street = fields.Char()
+    street2 = fields.Char()
+    zip = fields.Char(change_default=True)
+    city = fields.Char()
+    state_id = fields.Many2one(
+        "res.country.state", string='State', ondelete='restrict')
+    country_id = fields.Many2one(
+        'res.country', string='Country', ondelete='restrict')
+    street2 = fields.Char()
+    street2_2 = fields.Char()
+    zip2 = fields.Char(change_default=True)
+    city2 = fields.Char()
+    state2_id = fields.Many2one(
+        "res.country.state", string='State', ondelete='restrict')
+    country2_id = fields.Many2one(
+        'res.country', string='Country', ondelete='restrict')
