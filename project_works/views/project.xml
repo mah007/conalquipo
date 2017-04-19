@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- SIMPLIFIED PROJECT VIEW -->
+    <record id="project_form_works_simpl" model="ir.ui.view">
+      <field name="name">project.form.work.simpl</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet" position="replace">
+          <sheet>
+            <group>
+              <group>
+                <field name="name"
+                    string="Project Name" placeholder="e.g. Office Party"/>
+                <field name="partner_id" string="Customer" required="1"/>
+                <label for="alias_name" string="Choose a Project Email" attrs="{'invisible': [('alias_domain', '=', False)]}"/>
+                <div name="alias_def" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                    <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                </div>
+              </group>
+              <group>
+                <field name="work_code"/>
+              </group>
+              <group name='options' invisible="1">
+                <field name="use_tasks"/>
+              </group>
+            </group>
+            <footer>
+                <button string="Create" name="close_dialog" type="object" class="btn-primary"/>
+                <button string="Discard" class="btn-default" special="cancel"/>
+            </footer>
+          </sheet>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- EDIT PROJECT VIEW -->
+    <record id="project_form_works" model="ir.ui.view">
+      <field name="name">project.form.work</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.edit_project"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//div[@class='oe_title']" position="after">
+          <group>
+            <group>
+              <field name="work_code"/>
+              <field name="work_date_creation"/>
+            </group>
+            <group>
+              <field name="user_id" string="Project Manager"
+                attrs="{'readonly':[('active','=',False)]}"/>
+              <field name="partner_id" string="Customer" required="1"/>
+              <field name="partner_code" string="Partner Code" readonly="1"/>
+            </group>
+          </group>
+        </xpath>
+
+        <xpath expr="//notebook" position="replace">
+          <notebook>
+            <page name="Work information" string="Work information">
+            </page>
+            <page name="observations" string="Observations">
+              <field name="observations" type="html"/>
+              <div class="oe_clear"/>
+            </page>
+            <page string="Settings">
+              <group>
+                <field name="privacy_visibility" widget="radio"/>
+              </group>
+              <group name="misc">
+                <group string="Configuration" groups="base.group_no_one">
+                  <field name="sequence" groups="base.group_no_one"/>
+                </group>
+                <group string="Time Scheduling" groups="base.group_no_one">
+                  <field name="resource_calendar_id" groups="base.group_no_one"/>
+                </group>
+              </group>
+            </page>
+            <page string="Emails" attrs="{'invisible': [('alias_domain', '=', False)]}">
+              <group name="group_alias">
+                <label for="alias_name" string="Email Alias"/>
+                <div name="alias_def">
+                  <field name="alias_id" class="oe_read_only oe_inline"
+                      string="Email Alias" required="0"/>
+                  <div class="oe_edit_only oe_inline" name="edit_alias" style="display: inline;" >
+                      <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                  </div>
+                </div>
+                <label for="alias_model" string="Incoming Emails create" class="oe_edit_only"/>
+                <field name="alias_model" class="oe_inline oe_edit_only" nolabel="1"/>
+                <field name="alias_contact" class="oe_inline oe_edit_only"
+                      string="Accept Emails From"/>
+              </group>
+            </page>
+          </notebook>
+        </xpath>
+
+      </field>
+    </record>
+
+
+    </data>
+</openerp>
