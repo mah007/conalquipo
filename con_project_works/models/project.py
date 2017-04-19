@@ -25,3 +25,14 @@ class projectWorks(models.Model):
     observations = fields.Html(string='Observations', required=False)
     partner_code = fields.Char(
         string='Partner Code', compute='_get_partner_code', store=True)
+    legal_cont_responsible = fields.Many2one(
+        'res.partner', string='Legal Responsible', required=True)
+    contract_number = fields.Char(string='Contract Number', required=True)
+    work_responsible = fields.Many2one(
+        'res.partner', string='Work Responsible', required=True)
+    work_resident = fields.Many2one(
+        'res.partner', string='Work Resident', required=True)
+    work_storer = fields.Many2one(
+        'res.partner', string='Work Storer', required=True)
+    work_contract = fields.Many2one(
+        'res.partner', string='Work Contract', required=True)

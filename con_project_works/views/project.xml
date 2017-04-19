@@ -60,7 +60,19 @@
 
         <xpath expr="//notebook" position="replace">
           <notebook>
-            <page name="Work information" string="Work information">
+            <page name="Contract Work information" string="Contract Work information">
+              <group>
+                <group string="Contract">
+                  <field name="legal_cont_responsible"/>
+                  <field name="contract_number"/>
+                </group>
+                <group string="Responsibles">
+                  <field name="work_responsible"/>
+                  <field name="work_resident"/>
+                  <field name="work_storer"/>
+                  <field name="work_contract"/>
+                </group>
+              </group>
             </page>
             <page name="observations" string="Observations">
               <field name="observations" type="html"/>
