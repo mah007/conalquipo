@@ -11,8 +11,11 @@
                 </field>
                  <xpath expr="//group[contains(@class, 'hidden-xs')]" position="after">
                     <group name="address_client_details" class="hidden-xs">
-                        <group>
-
+                        <group string="Shipping Address">
+                            <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                        </group>
+                        <group string="Invoice Address">
+                            <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
                         </group>
                     </group>
                  </xpath>

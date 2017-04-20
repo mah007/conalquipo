@@ -72,7 +72,7 @@
                       class="o_address_street"/>
                     <field name="city" placeholder="City"
                       class="o_address_city"/>
-                    <field name="municipality_ids" class="o_address_state"
+                    <field name="municipality_id" class="o_address_state"
                       placeholder="Municipality" options='{"no_open": True}'/>
                     <field name="state_id" class="o_address_state"
                       placeholder="State" options='{"no_open": True}'/>
@@ -90,6 +90,8 @@
                       class="o_address_street"/>
                     <field name="city2" placeholder="City"
                       class="o_address_city"/>
+                    <field name="municipality2_id" class="o_address_state"
+                      placeholder="Municipality" options='{"no_open": True}'/>
                     <field name="state2_id" class="o_address_state"
                       placeholder="State" options='{"no_open": True}'/>
                     <field name="zip2" placeholder="ZIP" class="o_address_zip"/>

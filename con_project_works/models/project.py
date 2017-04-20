@@ -62,5 +62,7 @@ class projectWorks(models.Model):
     city2 = fields.Char()
     state2_id = fields.Many2one(
         "res.country.state", string='State', ondelete='restrict')
+    municipality2_id = fields.Many2one(
+        'res.country.municipality', string='Municipality', ondelete='restrict')
     country2_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
