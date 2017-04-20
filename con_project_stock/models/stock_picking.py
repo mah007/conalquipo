@@ -37,6 +37,17 @@ class StockPicking(Model):
         if self.partner_id:
             self.project_id = False
 
+    @api.onchage('project_id')
+    def onchange_project_id(self):
+        if self.project_id:
+            p = self.project_id
+            self.shipping_address = self.merge_address(
+                p.street, p.street2, p.city, p.municipality_id,
+                p.state_id, p.zip, p.country_id)
+            self.invoice_address = self.merge_address(
+                p.street, p.street2, p.city, p.municipality_id,
+                p.state_id, p.zip, p.country_id)
+
     @staticmethod
     def merge_address(street, street2, city, municipality,
                       state, zip, country):
@@ -53,5 +64,6 @@ class StockPicking(Model):
         :return: merge string with 
         street+street2+city+municipality+state+zip+country
         """
-        new_string = street+street2+city+municipality+state+zip+country
+        new_string = street+', '+street2+', '+city+', '+municipality+', '
+        new_string += state+','+zip+', '+country
         return new_string
