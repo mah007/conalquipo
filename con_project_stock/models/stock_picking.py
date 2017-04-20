@@ -28,8 +28,8 @@ class StockPicking(Model):
 
     project_id = fields.Many2one('project.project', string="Project")
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping", compute="")
-    invoice_address = fields.Text(string="Billing", compute="")
+    shipping_address = fields.Text(string="Shipping")
+    invoice_address = fields.Text(string="Billing")
 
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):

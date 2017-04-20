@@ -26,7 +26,8 @@
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': '',
     'description': """ Add Municipality.""",
-    'depends': ['base', 'delivery', 'sales_team', 'sale'],
+    'depends': ['base', 'delivery', 'sales_team', 'sale',
+                'con_project_works'],
     'data': [
         'views/municipality.xml',
         'views/sale_order.xml'
