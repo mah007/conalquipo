@@ -46,15 +46,15 @@ class projectWorks(models.Model):
     work_interventor = fields.Many2one(
         'res.partner', string='Work Interventor', required=True)
     interventor_phone = fields.Char(string='Interventor Phone', required=True)
-    street = fields.Char()
-    street2 = fields.Char()
+    street1 = fields.Char()
+    street1_2 = fields.Char()
     zip = fields.Char(change_default=True)
     city = fields.Char()
     state_id = fields.Many2one(
         "res.country.state", string='State', ondelete='restrict')
     country_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
-    street2 = fields.Char()
+    street2_1 = fields.Char()
     street2_2 = fields.Char()
     zip2 = fields.Char(change_default=True)
     city2 = fields.Char()
