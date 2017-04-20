@@ -9,6 +9,13 @@
                 <field name="location_dest_id" position="after">
                     <field name="project_id" domain="[('partner_id', '=', partner_id)]}"/>
                 </field>
+                 <xpath expr="//group[contains(@class, 'hidden-xs')]" position="after">
+                    <group name="address_client_details" class="hidden-xs">
+                        <group>
+
+                        </group>
+                    </group>
+                 </xpath>
             </field>
         </record>
     </data>

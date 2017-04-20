@@ -28,11 +28,11 @@ class TestStockFlow(TestStockCommon):
     @mute_logger('odoo.addons.base.ir.ir_model', 'odoo.models')
     def test_00_picking_create_and_transfer_quantity(self):
         """ Basic stock operation on outgoing shipment."""
-        # ======================================================================
+        # ===================================================================
         # Create Outgoing shipment with ...
         #   product A ( 10 Unit ) , product B ( 5 Unit )
         #   product C (  3 unit ) , product D ( 10 Unit )
-        # ======================================================================
+        # ===================================================================
 
         project_agrolite_id = self.env['project.project'].create({
             'partner_id': self.partner_agrolite_id,
@@ -55,17 +55,25 @@ class TestStockFlow(TestStockCommon):
         # Confirm outgoing shipment.
         picking_out.action_confirm()
         for move in picking_out.move_lines:
-            self.assertEqual(move.state, 'confirmed', 'Wrong state of move line.')
+            self.assertEqual(move.state, 'confirmed',
+                             'Wrong state of move line.')
         # Product assign to outgoing shipments
         picking_out.action_assign()
-        self.assertEqual(picking_out.move_lines[0].state, 'confirmed', 'Wrong state of move line.')
-        self.assertEqual(picking_out.move_lines[1].state, 'assigned', 'Wrong state of move line.')
-        self.assertEqual(picking_out.move_lines[2].state, 'assigned', 'Wrong state of move line.')
-        self.assertEqual(picking_out.move_lines[3].state, 'confirmed', 'Wrong state of move line.')
+        self.assertEqual(picking_out.move_lines[0].state,
+                         'confirmed', 'Wrong state of move line.')
+        self.assertEqual(picking_out.move_lines[1].state,
+                         'assigned', 'Wrong state of move line.')
+        self.assertEqual(picking_out.move_lines[2].state,
+                         'assigned', 'Wrong state of move line.')
+        self.assertEqual(picking_out.move_lines[3].state,
+                         'confirmed', 'Wrong state of move line.')
         # Check availability for product A
-        aval_a_qty = self.MoveObj.search([('product_id', '=', self.productA.id),
-                                          ('picking_id', '=', picking_out.id)], limit=1).reserved_availability
-        self.assertEqual(aval_a_qty, 4.0,
-                         'Wrong move quantity availability of product A (%s found instead of 4)' % aval_a_qty)
+        aval_a_qty = self.MoveObj.search(
+            [('product_id', '=', self.productA.id),
+             ('picking_id', '=', picking_out.id)],
+            limit=1).reserved_availability
+        self.assertEqual(aval_a_qty, 4.0, 'Wrong move quantity availability'
+                                          ' of product A (%s found instead '
+                                          'of 4)' % aval_a_qty)
         # Transfer picking.
         picking_out.do_transfer()
