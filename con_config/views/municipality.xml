@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record id="view_country_municipality_tree" model="ir.ui.view">
+            <field name="name">res.country.municipality.tree</field>
+            <field name="model">res.country.municipality</field>
+            <field name="arch" type="xml">
+                <tree string="State">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_country_municipality_form" model="ir.ui.view">
+            <field name="name">res.country.municipality.form</field>
+            <field name="model">res.country.municipality</field>
+            <field name="arch" type="xml">
+                <form string="State">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="state_id" options='{"no_open": True}'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_country_municipality" model="ir.actions.act_window">
+            <field name="name">Municipalities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.municipality</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_country_municipality_tree"/>
+            <field name="help">If you are working on the American market, you can manage the different federal states you are working on from here. Each state is attached to one country.</field>
+        </record>
+
+        <menuitem action="action_country_municipality" id="menu_country_municipality_partner" parent="sales_team.menu_localisation" sequence="5" groups="base.group_no_one"/>
+
+        <record model="ir.ui.view" id="view_partner_address_form_inherit">
+          <field name="name">res.partner.form.address</field>
+          <field name="inherit_id" ref="base.view_partner_address_form"/>
+          <field name="model">res.partner</field>
+          <field name="arch" type="xml">
+            <field name="country_id" position="after">
+              <field name="municipality_id" placeholder="Municipality" class="oe_no_button"
+                attrs="{'required': ['&amp;', ('country_id','=', %(base.co)d)]}"
+                domain="[('state_id', '=', state_id)]"
+              />
+            </field>
+          </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_form_inherit">
+              <field name="name">res.partner.form</field>
+              <field name="inherit_id" ref="base.view_partner_form"/>
+              <field name="model">res.partner</field>
+              <field name="arch" type="xml">
+                <field name="country_id" position="after">
+                  <field name="municipality_id" placeholder="Municipality" class="oe_no_button"
+                    attrs="{'required': ['&amp;', ('country_id','=', %(base.co)d)]}"
+                    domain="[('state_id', '=', state_id)]"
+                  />
+                </field>
+              </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
+              <field name="name">delivery.carrier.form</field>
+              <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+              <field name="model">delivery.carrier</field>
+              <field name="arch" type="xml">
+                <field name="state_ids" position="after">
+                  <field name="municipality_ids" widget="many2many_tags" />
+                </field>
+              </field>
+        </record>
+
+    </odoo>
