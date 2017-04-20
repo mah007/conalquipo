@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * con_config
+# * con_sale_shipping
 #
 # Translators:
 # Shirly Asprilla Ramirez <sasprilla@ias.com.co>, 2017
@@ -20,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
-#. module: con_config
-#: model:ir.ui.view,arch_db:con_config.view_order_form_with_carrier_inherit
+#. module: con_sale_shipping
+#: model:ir.ui.view,arch_db:con_sale_shipping.view_order_form_with_carrier_inherit
 msgid "Set price"
 msgstr "Configurar precio"
 
-#. module: con_config
-#: model:ir.model.fields,field_description:con_config.field_sale_order_carrier_type
+#. module: con_sale_shipping
+#: model:ir.model.fields,field_description:con_sale_shipping.field_sale_order_carrier_type
 msgid "Carrier Responsible"
 msgstr "Responsable de Acarreo"

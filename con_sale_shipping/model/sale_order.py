@@ -19,22 +19,25 @@ class SaleOrder(models.Model):
     def onchange_carrier_type(self):
         if self.carrier_type != 'company':
             if self.partner_id:
-                # self._delivery_unset()
-                SaleOrderLine = self.env['sale.order.line']
-                res = SaleOrderLine.search([('order_id', '=', self._origin.id),
-                                            ('is_delivery', '=', True)])
+                res = self.env['sale.order.line'].search([(
+                    'order_id', '=', self._origin.id),
+                    ('is_delivery', '=', True)])
 
-                res.unlink()
-                new_lines = SaleOrderLine.search([('order_id', '=',
-                                                    self._origin.id)])
+                self.update({
+                    'order_line': [(5, _, _)],
+                })
+                new_lines = self.env['sale.order.line'].search([
+                    ('order_id', '=', self._origin.id),
+                    ('is_delivery', '!=', True)])
+
                 for new in new_lines:
-                    self.write({'order_line': [
+                    self.update({'order_line': [
                         (0, 0, {
                                 'order_id': self._origin.id,
                                 'name': new.name,
                                 'product_uom_qty': new.product_uom_qty,
-                                'product_uom': new.product_uom,
-                                'product_id': new.product_id,
+                                'product_uom': new.product_uom.id,
+                                'product_id': new.product_id.id,
                                 'price_unit': new.price_unit,
                                 'tax_id': new.tax_id,
                                 'is_delivery': False

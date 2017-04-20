@@ -3,7 +3,7 @@
 
 
 {
-    'name': 'Conalequipo Config',
+    'name': 'Conalequipo Sale Shipping',
     'version': '1.0',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': '',
