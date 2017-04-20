@@ -4,7 +4,7 @@ from odoo import models, fields, api, exceptions
 from odoo.tools.translate import _
 
 
-class ResPartnerCode(models.Model):
+class ResPartnerProject(models.Model):
     _inherit = "res.partner"
 
-    partner_code = fields.Char(string='Partner Code', required=True)
+    project_ids = fields.One2many('project.project', 'partner_id')
