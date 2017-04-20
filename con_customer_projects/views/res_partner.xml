@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+      <record id="res_partner_form_project" model="ir.ui.view">
+          <field name="name">res.partner.form.project</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+
+            <xpath expr="//page[1]" position="after">
+
+              <page string="Projects">
+                <field name='project_ids' string="Projects">
+                  <tree string="Projects">
+                      <field name="name"/>
+                      <field name="work_code"/>
+                      <field name="work_date_creation"/>
+                      <field name="invoice_limit_date"/>
+                      <field name="email"/>
+                  </tree>
+                </field>
+              </page>
+            </xpath>
+
+          </field>
+      </record>
+
+  </data>
+</openerp>
