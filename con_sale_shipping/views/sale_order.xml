@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+          <record model="ir.ui.view" id="view_order_form_inherit">
+              <field name="name">sale.order.form</field>
+              <field name="inherit_id" ref="sale.view_order_form"/>
+              <field name="model">sale.order</field>
+              <field name="arch" type="xml">
+                <field name="payment_term_id" position="after">
+                  <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+                </field>
+              </field>
+        </record>
+
+        <record id="view_order_form_with_carrier_inherit" model="ir.ui.view">
+            <field name="name">delivery.sale.order.form.view.with_carrier</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='carrier_id']" position="replace">
+                        <field name="carrier_id" context="{'order_id': id}" class="oe_inline" options="{'no_create': True, 'no_open': True}"
+                           attrs="{'readonly':[('state','not in',('draft','sent'))],
+                                   'invisible': [('carrier_type','!=', 'company')]}"/>
+                    </xpath>
+                    <xpath expr="//label[@for='carrier_id']" position="replace">
+                         <label for="carrier_id"  attrs="{'invisible': [('carrier_type','!=', 'company')]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='delivery_price']" position="replace">
+                        <field name='delivery_price' widget='monetary' class="oe_inline" options="{'currency_field': 'currency_id'}" nolabel="1"
+                               attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
+                    </xpath>
+                    <xpath expr="//button[@name='delivery_set']" position="replace">
+                        <button name="delivery_set" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
+                                attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','not in',('draft','sent')), ('carrier_type', '!=', 'company')]}"/>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+
+    </odoo>
