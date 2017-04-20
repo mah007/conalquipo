@@ -19,9 +19,6 @@ class SaleOrder(models.Model):
     def onchange_carrier_type(self):
         if self.carrier_type != 'company':
             if self.partner_id:
-                res = self.env['sale.order.line'].search([(
-                    'order_id', '=', self._origin.id),
-                    ('is_delivery', '=', True)])
 
                 self.update({
                     'order_line': [(5, _, _)],
