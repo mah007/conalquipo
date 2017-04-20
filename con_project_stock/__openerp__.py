@@ -18,23 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    'name': "Odoo CON Profile",
+    'name': "CON Project in Stock",
 
     'summary': """
-        Conalequipos's Odoo Installation profile.
+        Conalequipos's Project information for each customer on Stock form.
     """,
 
     'description': """
-        Conalequipo's Odoo Installation profile.
+        Conalequipos's Project information for each customer on Stock form.
     """,
 
     'author': "Ingeniería Aplicaciones y Software",
     'website': "http://www.ias.com.co",
-    'category': 'Base Profile',
+    'category': 'stock',
     'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'odoo_outlook'],
+    'depends': ['base', 'project', 'stock'],
     'data': [
+        'views/stock_picking.xml'
     ],
     'qweb': [],
     'images': [],
