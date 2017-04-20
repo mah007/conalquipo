@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, fields, api, exceptions
-from openerp.tools.translate import _
+from odoo import models, fields, api, exceptions
+from odoo.tools.translate import _
 
 
 class projectWorks(models.Model):
@@ -46,8 +46,8 @@ class projectWorks(models.Model):
     work_interventor = fields.Many2one(
         'res.partner', string='Work Interventor', required=True)
     interventor_phone = fields.Char(string='Interventor Phone', required=True)
-    street = fields.Char()
-    street2 = fields.Char()
+    street1 = fields.Char()
+    street1_2 = fields.Char()
     zip = fields.Char(change_default=True)
     city = fields.Char()
     state_id = fields.Many2one(
@@ -56,7 +56,7 @@ class projectWorks(models.Model):
         'res.country.municipality', string='Municipality', ondelete='restrict')
     country_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
-    street2 = fields.Char()
+    street2_1 = fields.Char()
     street2_2 = fields.Char()
     zip2 = fields.Char(change_default=True)
     city2 = fields.Char()
