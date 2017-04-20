@@ -13,7 +13,7 @@
               <page string="Projects">
                 <field name='project_ids' string="Projects">
                   <tree string="Projects">
-                      <field name="name"/>
+                      <field name="name" string="Name"/>
                       <field name="work_code"/>
                       <field name="work_date_creation"/>
                       <field name="invoice_limit_date"/>

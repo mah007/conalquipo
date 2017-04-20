@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Show projects customers',
     'depends': [
-        'base', 'project',
+        'base', 'con_project_works',
     ],
     'description':
     """
