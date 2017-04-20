@@ -27,7 +27,7 @@ class StockPicking(Model):
     _inherit = "stock.picking"
 
     project_id = fields.Many2one('project.project', string="Project")
-    # ~Fields for shipping address
+    # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping", compute="")
     invoice_address = fields.Text(string="Billing", compute="")
 
