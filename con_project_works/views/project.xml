@@ -64,7 +64,7 @@
           <notebook>
             <page name="Address" string="Address">
               <group>
-                <group string="Address">
+                <group string="Shipping Address">
                   <div class="o_address_format">
                     <field name="street" placeholder="Street..."
                       class="o_address_street"/>
@@ -80,7 +80,7 @@
                       options='{"no_open": True, "no_create": True}'/>
                   </div>
                 </group>
-                <group string="Address Invoice">
+                <group string="Invoice Address">
                   <div class="o_address_format">
                     <field name="street2" placeholder="Street..."
                       class="o_address_street"/>
