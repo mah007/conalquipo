@@ -21,7 +21,7 @@
 
 import logging
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ class InvoicingArea(models.Model):
     code = fields.Char(string="Code", track_visibility='onchange')
     name = fields.Char(string="Name", track_visibility='onchange')
     state_id = fields.Many2one('res.country.state', string='State',
-                                    track_visibility='onchange')
+                               track_visibility='onchange')
     country_municipality = fields.One2many('res.country.municipality',
                                            'invoicing_area_id',
                                            string='Municipality',

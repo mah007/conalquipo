@@ -34,7 +34,8 @@
     'website': "http://www.ias.com.co",
     'category': 'stock',
     'version': '0.1',
-    'depends': ['base', 'project', 'stock'],
+    'depends': ['base', 'project', 'stock', 'con_project_works',
+                'con_sale_shipping', 'con_client_code'],
     'data': [
         'views/stock_picking.xml'
     ],
