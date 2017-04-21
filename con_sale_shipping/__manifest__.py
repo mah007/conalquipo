@@ -25,11 +25,11 @@
     'version': '1.0',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': '',
-    'description': """ Add Municipality.""",
+    'description': """ Add field for Municipality and delivery cost in the
+    sale order.""",
     'depends': ['base', 'delivery', 'sales_team', 'sale',
-                'con_project_works', 'website_quote'],
+                'con_project_works', 'website_quote', 'con_project_stock'],
     'data': [
-        'views/municipality.xml',
         'views/sale_order.xml'
     ],
     'demo': [''],

@@ -19,4 +19,6 @@
 #
 ##############################################################################
 
+import res_country_municipality
 import stock_picking
+import sale_order

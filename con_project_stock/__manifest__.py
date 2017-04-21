@@ -35,9 +35,10 @@
     'category': 'stock',
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'con_project_works',
-                'con_sale_shipping', 'con_client_code'],
+                'con_client_code'],
     'data': [
-        'views/stock_picking.xml'
+        'views/stock_picking.xml',
+        'views/municipality.xml',
     ],
     'qweb': [],
     'images': [],

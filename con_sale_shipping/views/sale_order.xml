@@ -8,28 +8,6 @@
                 <field name="payment_term_id" position="after">
                   <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
                 </field>
-                <field name="partner_shipping_id" position="after">
-                    <field name="projects_id" domain="[('partner_id', '=', partner_id)]}"/>
-                    <group name="client_address_project">
-                        <group string="Shipping">
-                            <field name="shipping_address"/>
-                        </group>
-                        <group string="Invoice">
-                            <field name="invoice_address"/>
-                        </group>
-                    </group>
-                </field>
-              </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_order_form2_inherit">
-              <field name="name">sale.order.form</field>
-              <field name="inherit_id" ref="website_quote.sale_order_form_quote"/>
-              <field name="model">sale.order</field>
-              <field name="arch" type="xml">
-                <field name="template_id" position="after">
-                    <field name="shipping_address"/>
-                </field>
               </field>
         </record>
 
