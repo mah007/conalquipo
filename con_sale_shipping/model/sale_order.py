@@ -30,7 +30,7 @@ class SaleOrder(Model):
         [('client', 'Client'), ('company', 'Company')],
         string='Carrier Responsible', default='fixed')
 
-    project_id = fields.Many2one('project.project', string="Project")
+    projects_id = fields.Many2one('project.project', string="Project")
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping")
     invoice_address = fields.Text(string="Billing")
@@ -40,12 +40,12 @@ class SaleOrder(Model):
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
         if self.partner_id:
-            self.project_id = False
+            self.projects_id = False
 
     @api.onchange('project_id')
     def onchange_project_id(self):
-        if self.project_id:
-            p = self.project_id
+        if self.projects_id:
+            p = self.projects_id
             self.shipping_address = self.merge_address(
                 p.street1 or '', p.street1_2 or '', p.city or '',
                 p.municipality_id.name or '', p.state_id.name or '',

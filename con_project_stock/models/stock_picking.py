@@ -43,7 +43,7 @@ class StockPicking(Model):
             p = self.project_id
             self.shipping_address = self.merge_address(
                 p.street1 or '', p.street1_2 or '', p.city or '',
-                p.municipality_id.name or '', p.state_id.name or '',
+                p.state_id.name or '',
                 p.zip or '', p.country_id.name or '')
             self.invoice_address = self.merge_address(
                 p.street2_1 or '', p.street2_2 or '', p.city2 or '',

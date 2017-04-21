@@ -27,7 +27,7 @@
     'category': '',
     'description': """ Add Municipality.""",
     'depends': ['base', 'delivery', 'sales_team', 'sale',
-                'con_project_works'],
+                'con_project_works', 'website_quote'],
     'data': [
         'views/municipality.xml',
         'views/sale_order.xml'
