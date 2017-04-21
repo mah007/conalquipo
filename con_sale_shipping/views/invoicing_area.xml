@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <menuitem id="menu_invoicing_area" name="Invoicing Area" parent="account.menu_finance_configuration" groups="base.group_system" sequence="10"/>
+
+        <record id="view_invoicing_area_tree" model="ir.ui.view">
+            <field name="name">invoicing.area.tree</field>
+            <field name="model">invoicing.area</field>
+            <field name="arch" type="xml">
+                <tree string="Invoicing Area">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_invoicing_area_form" model="ir.ui.view">
+            <field name="name">invoicing.area.form</field>
+            <field name="model">invoicing.area</field>
+            <field name="arch" type="xml">
+                <form string="Invoicing Area">
+                    <sheet>
+                        <group col="4">
+                             <field name="code"/>
+                             <field name="name"/>
+                             <field name="state_id"/>
+                             <field name="country_municipality" class="oe_no_button"
+                                    widget="many2many_tags" domain="[('state_id', '=', state_id)]"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_vinvoicing_area" model="ir.actions.act_window">
+            <field name="name">Invoicing Area</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invoicing.area</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_invoicing_area_tree"/>
+            <field name="help"></field>
+        </record>
+
+        <menuitem action="action_vinvoicing_area" id="menu_action_invoicing_area_form" parent="menu_invoicing_area" sequence="1"/>
+    </odoo>

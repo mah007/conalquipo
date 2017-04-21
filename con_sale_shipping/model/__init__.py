@@ -3,3 +3,5 @@
 
 import municipality
 import sale_order
+import vehicle
+import invoicing_area
