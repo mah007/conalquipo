@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
     <odoo>
-          <record model="ir.ui.view" id="view_order_form_inherit">
-              <field name="name">sale.order.form</field>
-              <field name="inherit_id" ref="sale.view_order_form"/>
-              <field name="model">sale.order</field>
-              <field name="arch" type="xml">
-                <field name="payment_term_id" position="after">
-                  <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
-                </field>
-              </field>
-        </record>
+          <!--<record model="ir.ui.view" id="view_order_form_inherit">-->
+              <!--<field name="name">sale.order.form</field>-->
+              <!--<field name="inherit_id" ref="sale.view_order_form"/>-->
+              <!--<field name="model">sale.order</field>-->
+              <!--<field name="arch" type="xml">-->
+                <!--<field name="payment_term_id" position="after">-->
+                  <!--<field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>-->
+                <!--</field>-->
+              <!--</field>-->
+        <!--</record>-->
 
         <record id="view_order_form_with_carrier_inherit" model="ir.ui.view">
             <field name="name">delivery.sale.order.form.view.with_carrier</field>
@@ -17,6 +17,9 @@
             <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
             <field name="arch" type="xml">
                 <data>
+                <field name="payment_term_id" position="after">
+                  <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+                </field>
                     <xpath expr="//field[@name='carrier_id']" position="replace">
                         <field name="carrier_id" context="{'order_id': id}" class="oe_inline" options="{'no_create': True, 'no_open': True}"
                            attrs="{'readonly':[('state','not in',('draft','sent'))],
@@ -36,6 +39,17 @@
 
                 </data>
             </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
+              <field name="name">delivery.carrier.form</field>
+              <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+              <field name="model">delivery.carrier</field>
+              <field name="arch" type="xml">
+                <field name="state_ids" position="after">
+                  <field name="municipality_ids" widget="many2many_tags" />
+                </field>
+              </field>
         </record>
 
     </odoo>

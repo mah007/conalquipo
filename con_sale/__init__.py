@@ -19,10 +19,4 @@
 #
 ##############################################################################
 
-from odoo import models, fields
-
-
-class ResPartnerProject(models.Model):
-    _inherit = "res.partner"
-
-    project_ids = fields.One2many('project.project', 'partner_id')
+import model

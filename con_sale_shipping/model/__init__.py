@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-import res_country_municipality
-import sale_order
+from . import delivery_carrier
+from . import sale_order

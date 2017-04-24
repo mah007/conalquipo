@@ -19,28 +19,19 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models
 
-
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
-
-    municipality_id = fields.Many2one('res.country.municipality',
-                                      string='Municipality')
-
-
-class DeliveryCarrier(models.Model):
-    _inherit = 'delivery.carrier'
-
-    municipality_ids = fields.Many2many('res.country.municipality',
-                                        'delivery_carrier_municipality_rel',
-                                        'carrier_id',
-                                        'municipality_ids', 'Municipality')
-
-    @api.onchange('state_ids')
-    def onchange_states(self):
-        self.country_ids = [(6, 0, self.country_ids.ids +
-                             self.state_ids.mapped('country_id.id'))]
-        self.municipality_ids = [(6, 0, self.municipality_ids.ids +
-                                  self.municipality_ids.mapped('state_id.id'))
-                                 ]
+{
+    'name': 'Conalequipo Sale Customization',
+    'version': '1.0',
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
+    'category': '',
+    'description': """ Add field for Municipality and delivery cost in the
+    sale order.""",
+    'depends': ['base', 'delivery', 'sales_team', 'sale', 'website_quote'],
+    'data': [
+        'views/municipality.xml'
+    ],
+    'demo': [''],
+    'test': [''],
+    'installable': True,
+}

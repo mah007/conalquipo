@@ -22,13 +22,9 @@
 from odoo import fields, models
 
 
-class ResCountryMunicipality(models.Model):
-    _name = 'res.country.municipality'
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
 
-    _description = "Municipality"
-    _order = 'sequence, id'
+    municipality_id = fields.Many2one('res.country.municipality',
+                                      string='Municipality')
 
-    sequence = fields.Integer(help="Determine the display order", default=10)
-    name = fields.Char(string="Name")
-    state_id = fields.Many2one('res.country.state', string='State')
-    code = fields.Char(string="Code")

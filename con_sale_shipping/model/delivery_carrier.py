@@ -19,10 +19,21 @@
 #
 ##############################################################################
 
-from odoo import models, fields
+from odoo import api, fields, models
 
 
-class ResPartnerProject(models.Model):
-    _inherit = "res.partner"
+class DeliveryCarrier(models.Model):
+    _inherit = 'delivery.carrier'
 
-    project_ids = fields.One2many('project.project', 'partner_id')
+    municipality_ids = fields.Many2many('res.country.municipality',
+                                        'delivery_carrier_municipality_rel',
+                                        'carrier_id',
+                                        'municipality_ids', 'Municipality')
+
+    @api.onchange('state_ids')
+    def onchange_states(self):
+        self.country_ids = [(6, 0, self.country_ids.ids +
+                             self.state_ids.mapped('country_id.id'))]
+        self.municipality_ids = [(6, 0, self.municipality_ids.ids +
+                                  self.municipality_ids.mapped('state_id.id'))
+                                 ]

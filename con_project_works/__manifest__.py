@@ -7,15 +7,14 @@
     'category': 'Project Management',
     'sequence': 10,
     'summary': 'Projects, Works',
-    'depends': [
-        'project', 'con_client_code',
-    ],
+    'depends': ['project', 'con_client_code', 'sale'],
     'description':
     """
         Project Management for works
     """,
     'data': [
         'views/project.xml',
+        'views/sale_order.xml',
     ],
     'qweb': [
     ],

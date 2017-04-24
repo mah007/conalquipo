@@ -38,7 +38,6 @@
                 'con_client_code'],
     'data': [
         'views/stock_picking.xml',
-        'views/municipality.xml',
     ],
     'qweb': [],
     'images': [],
