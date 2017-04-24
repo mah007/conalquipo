@@ -19,10 +19,12 @@
 #
 ##############################################################################
 
-from odoo import models, fields
+from odoo import fields, models
 
 
-class ResPartnerProject(models.Model):
-    _inherit = "res.partner"
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
 
-    project_ids = fields.One2many('project.project', 'partner_id')
+    municipality_id = fields.Many2one('res.country.municipality',
+                                      string='Municipality')
+

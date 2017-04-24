@@ -19,10 +19,19 @@
 #
 ##############################################################################
 
-from odoo import models, fields
 
-
-class ResPartnerProject(models.Model):
-    _inherit = "res.partner"
-
-    project_ids = fields.One2many('project.project', 'partner_id')
+{
+    'name': 'Conalequipo Sale Customization',
+    'version': '1.0',
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
+    'category': '',
+    'description': """ Add field for Municipality and delivery cost in the
+    sale order.""",
+    'depends': ['base', 'delivery', 'sales_team', 'sale', 'website_quote'],
+    'data': [
+        'views/municipality.xml'
+    ],
+    'demo': [''],
+    'test': [''],
+    'installable': True,
+}
