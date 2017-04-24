@@ -77,8 +77,7 @@ class SaleOrder(Model):
                                 'product_id': new.product_id.id,
                                 'price_unit': new.price_unit,
                                 'tax_id': new.tax_id,
-                                'is_delivery': False
-                        })]
+                                'is_delivery': False})]
                     })
                 self.write({'carrier_id': None})
 
@@ -93,9 +92,9 @@ class SaleOrder(Model):
         :param city: The text field for the city of the address to merge.
         :param municipality: the text for the municipality to merge.
         :param state: The text for the state to merge.
-        :param zip: the text for the zip code of the address. 
-        :param country: the text for the name of the country.
-        :return: merge string with 
+        :param zip: the text for the zip code of the address.
+        :param country: the text for the name of the country
+        :return: merge string with
         street+street2+city+municipality+state+zip+country
         """
         new_string = street+', '+street2+', '+city+', '+municipality+', '
