@@ -30,7 +30,7 @@ class SaleOrder(Model):
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping",
                                    compute="_get_merge_address")
-    invoice_address = fields.Text(string="Billing", 
+    invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
 
     @api.multi

@@ -14,7 +14,10 @@ class SaleOrder(models.Model):
     def check_limit(self):
         partner = self.partner_id
         moveline_obj = self.env['account.move.line']
-        movelines = moveline_obj.search([('partner_id', '=', partner.id),('account_id.user_type_id.name', 'in', ['Receivable', 'Payable']), ('full_reconcile_id', '=', False)])
+        movelines = moveline_obj.search([('partner_id', '=', partner.id),
+                                         ('account_id.user_type_id.name',
+                                          'in', ['Receivable', 'Payable']),
+                                         ('full_reconcile_id', '=', False)])
 
         debit, credit = 0.0, 0.0
         today_dt = datetime.strftime(datetime.now().date(), DF)
@@ -25,11 +28,15 @@ class SaleOrder(models.Model):
 
         if (credit - debit + self.amount_total) > partner.credit_limit:
             if not partner.over_credit:
-                msg = 'Can not confirm Sale Order, Total mature due Amount %s as on %s !\nCheck Partner Accounts or Credit Limits !' % (credit - debit, today_dt)
+                msg = 'Can not confirm Sale Order, Total mature due Amount' \
+                      ' %s as on %s !\nCheck Partner Accounts' \
+                      ' or Credit Limits !' % (credit - debit, today_dt)
                 raise UserError(_('Credit Over Limits !\n' + msg))
                 return False
             else:
-                partner.write({'credit_limit': credit - debit + self.amount_total})
+                partner.write({
+                    'credit_limit': credit - debit + self.amount_total
+                               })
                 return True
         else:
             return True
