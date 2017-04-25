@@ -28,8 +28,10 @@ class SaleOrder(Model):
 
     projects_id = fields.Many2one('project.project', string="Project")
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping")
-    invoice_address = fields.Text(string="Billing")
+    shipping_address = fields.Text(string="Shipping",
+                                   compute="_get_merge_address")
+    invoice_address = fields.Text(string="Billing", 
+                                  compute="_get_merge_address")
 
     @api.multi
     @api.onchange('partner_id')
@@ -38,8 +40,8 @@ class SaleOrder(Model):
         if self.partner_id:
             self.projects_id = False
 
-    @api.onchange('project_id')
-    def onchange_project_id(self):
+    @api.depends('project_id')
+    def _get_merge_address(self):
         if self.projects_id:
             p = self.projects_id
             self.shipping_address = self.merge_address(
