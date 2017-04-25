@@ -52,8 +52,8 @@ class projectWorks(models.Model):
     city = fields.Char()
     state_id = fields.Many2one(
         "res.country.state", string='State', ondelete='restrict')
-    municipality_id = fields.Many2one(
-        'res.country.municipality', string='Municipality', ondelete='restrict')
+    municipality_id = fields.Many2one('res.country.municipality',
+                                      string='Municipality')
     country_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
     street2_1 = fields.Char()
@@ -62,7 +62,7 @@ class projectWorks(models.Model):
     city2 = fields.Char()
     state2_id = fields.Many2one(
         "res.country.state", string='State', ondelete='restrict')
-    municipality2_id = fields.Many2one(
-        'res.country.municipality', string='Municipality', ondelete='restrict')
+    municipality2_id = fields.Many2one('res.country.municipality',
+                                       string='Municipality')
     country2_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')

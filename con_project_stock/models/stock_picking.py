@@ -28,8 +28,10 @@ class StockPicking(Model):
 
     project_id = fields.Many2one('project.project', string="Project")
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping")
-    invoice_address = fields.Text(string="Billing")
+    shipping_address = fields.Text(string="Shipping",
+                                   compute="_get_merge_address")
+    invoice_address = fields.Text(string="Billing",
+                                  compute="_get_merge_address")
 
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
@@ -37,13 +39,13 @@ class StockPicking(Model):
         if self.partner_id:
             self.project_id = False
 
-    @api.onchange('project_id')
-    def onchange_project_id(self):
+    @api.depends('project_id')
+    def _get_merge_address(self):
         if self.project_id:
             p = self.project_id
             self.shipping_address = self.merge_address(
                 p.street1 or '', p.street1_2 or '', p.city or '',
-                p.state_id.name or '',
+                p.municipality2_id.name or '', p.state_id.name or '',
                 p.zip or '', p.country_id.name or '')
             self.invoice_address = self.merge_address(
                 p.street2_1 or '', p.street2_2 or '', p.city2 or '',
