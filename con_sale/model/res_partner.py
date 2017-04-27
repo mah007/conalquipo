@@ -27,4 +27,3 @@ class ResPartner(models.Model):
 
     municipality_id = fields.Many2one('res.country.municipality',
                                       string='Municipality')
-
