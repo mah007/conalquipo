@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <menuitem id="menu_vehicle" name="Vehicle" parent="stock.menu_stock_config_settings" groups="stock.group_stock_manager" sequence="60"/>
+
+        <record id="view_vehicle_tree" model="ir.ui.view">
+            <field name="name">vehicle.tree</field>
+            <field name="model">vehicle</field>
+            <field name="arch" type="xml">
+                <tree string="Vehicle">
+                    <field name="holder"/>
+                    <field name="license_plate"/>
+                    <field name="mark"/>
+                    <field name="reference"/>
+                    <field name="model"/>
+                    <field name="type"/>
+                    <field name="capacity"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_vehicle_form" model="ir.ui.view">
+            <field name="name">vehicle.form</field>
+            <field name="model">vehicle</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle">
+                    <sheet>
+                        <group col="4">
+                            <field name="holder"/>
+                            <field name="license_plate"/>
+                            <field name="mark"/>
+                            <field name="reference"/>
+                            <field name="model"/>
+                            <field name="type"/>
+                            <field name="color"/>
+                            <field name="num_motor"/>
+                            <field name="num_chasis"/>
+                            <field name="capacity"/>
+                            <field name="traffic"/>
+                            <field name="licence_date"/>
+                            <field name="soat"/>
+                            <field name="tec_mechanic"/>
+                            <field name="gravamen"/>
+                            <field name="bearing"/>
+                            <field name="affiliation"/>
+                            <field name="state"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_vehicle" model="ir.actions.act_window">
+            <field name="name">Vehicle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vehicle</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_vehicle_tree"/>
+            <field name="help"></field>
+        </record>
+
+        <menuitem action="action_vehicle" id="menu_action_delivery_carrier_form" parent="menu_vehicle" sequence="1"/>
+
+        <record id="view_vehicle_type_form" model="ir.ui.view">
+            <field name="name">vehicle.type.form</field>
+            <field name="model">vehicle.type</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle Type">
+                    <group col="4">
+                        <field name="code"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_vehicle_state_form" model="ir.ui.view">
+            <field name="name">vehicle.state.form</field>
+            <field name="model">vehicle.state</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle State">
+                    <group col="4">
+                        <field name="code"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </odoo>

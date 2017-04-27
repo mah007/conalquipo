@@ -28,7 +28,7 @@ class SaleOrder(Model):
 
     carrier_type = fields.Selection(
         [('client', 'Client'), ('company', 'Company')],
-        string='Carrier Responsible', default='fixed')
+        string='Carrier Responsible', default='client')
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
@@ -52,7 +52,26 @@ class SaleOrder(Model):
                                 'product_id': new.product_id.id,
                                 'price_unit': new.price_unit,
                                 'tax_id': new.tax_id,
-                                'is_delivery': False
-                        })]
+                                'is_delivery': False})]
                     })
                 self.write({'carrier_id': None})
+
+    @staticmethod
+    def merge_address(street, street2, city, municipality,
+                      state, zip, country):
+        """
+        This function receive text fields for merge the address fields.
+        :param street: The text field for the address to merge.
+        :param street2: The text field for the second line of
+         the address to merge.
+        :param city: The text field for the city of the address to merge.
+        :param municipality: the text for the municipality to merge.
+        :param state: The text for the state to merge.
+        :param zip: the text for the zip code of the address.
+        :param country: the text for the name of the country
+        :return: merge string with
+        street+street2+city+municipality+state+zip+country
+        """
+        new_string = street+', '+street2+', '+city+', '+municipality+', '
+        new_string += state+','+zip+', '+country
+        return new_string

@@ -20,6 +20,31 @@
 ##############################################################################
 
 from odoo import api, fields, models
+import logging
+
+_logger = logging.getLogger(__name__)
+
+
+class ResCountryMunicipality(models.Model):
+    _name = 'res.country.municipality'
+
+    _description = "Municipality"
+    _order = 'sequence, id'
+
+    ''''''
+    sequence = fields.Integer(help="Determine the display order", default=10)
+    name = fields.Char(string="Name")
+    state_id = fields.Many2one('res.country.state', string='State')
+    code = fields.Char(string="Code")
+    invoicing_area_id = fields.Many2one('invoicing.area',
+                                        string='Invoicing Area', index=True)
+
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    municipality_id = fields.Many2one('res.country.municipality',
+                                      string='Municipality')
 
 
 class DeliveryCarrier(models.Model):
@@ -28,7 +53,14 @@ class DeliveryCarrier(models.Model):
     municipality_ids = fields.Many2many('res.country.municipality',
                                         'delivery_carrier_municipality_rel',
                                         'carrier_id',
-                                        'municipality_ids', 'Municipality')
+                                        'municipality_ids', 'Municipality',
+                                        track_visibility='onchange'
+                                        )
+
+    products = fields.Many2many(comodel_name='product.template',
+                                string='Product',
+                                search='delivery_carrier_products',
+                                track_visibility='onchange')
 
     @api.onchange('state_ids')
     def onchange_states(self):
@@ -37,3 +69,12 @@ class DeliveryCarrier(models.Model):
         self.municipality_ids = [(6, 0, self.municipality_ids.ids +
                                   self.municipality_ids.mapped('state_id.id'))
                                  ]
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    area_delivery_carrier = fields.Many2many(comodel_name='delivery.carrier',
+                                             string='Area',
+                                             search='delivery_carrier_rel',
+                                             track_visibility='onchange')
