@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, models, _
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.exceptions import UserError
@@ -35,8 +35,7 @@ class SaleOrder(models.Model):
                 return False
             else:
                 partner.write({
-                    'credit_limit': credit - debit + self.amount_total
-                               })
+                    'credit_limit': credit - debit + self.amount_total})
                 return True
         else:
             return True

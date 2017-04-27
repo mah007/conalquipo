@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions
-from odoo.tools.translate import _
+from odoo import models, fields, api
 
 
 class projectWorks(models.Model):

@@ -27,12 +27,19 @@
     'category': '',
     'description': """ Add field for Municipality and delivery cost in the
     sale order.""",
-    'depends': ['base', 'delivery', 'sales_team', 'sale', 'stock', 'con_sale',
-                'con_project_works', 'website_quote', 'con_project_stock'],
+    'depends': [
+        'base_setup', 'base', 'delivery', 'sales_team', 'sale',
+        'web_planner', 'mail', 'report', 'stock', 'con_sale',
+        'con_project_works', 'website_quote', 'con_project_stock'
+    ],
     'data': [
-        'views/sale_order.xml'
+        'views/sale_order.xml',
+        'views/vehicle.xml',
+        'views/invoicing_area.xml',
+        'views/delivery_carrier.xml'
     ],
     'demo': [''],
     'test': [''],
     'installable': True,
+    'post_init_hook': '_auto_install_l10n',
 }
