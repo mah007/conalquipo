@@ -62,6 +62,11 @@ class DeliveryCarrier(models.Model):
                                 search='delivery_carrier_products',
                                 track_visibility='onchange')
 
+    delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
+                                            'delivery_carrier_id',
+                                            string='Lines Delivery Carrier '
+                                                   'Cost', copy=True)
+
     @api.onchange('state_ids')
     def onchange_states(self):
         self.country_ids = [(6, 0, self.country_ids.ids +
@@ -78,3 +83,19 @@ class ProductTemplate(models.Model):
                                              string='Area',
                                              search='delivery_carrier_rel',
                                              track_visibility='onchange')
+
+
+class DeliveryCarrierCost(models.Model):
+    _name = 'delivery.carrier.cost'
+
+    vehicle = fields.Many2one(comodel_name='vehicle', string='Vehicle',
+                              ndelete='cascade', index=True, copy=False,
+                              track_visibility='onchange')
+
+    cost = fields.Float(string='Cost', track_visibility='onchange')
+
+    delivery_carrier_id = fields.Many2one('delivery.carrier',
+                                          string='Delivery Carrier',
+                                          ondelete='cascade', index=True,
+                                          copy=False,
+                                          track_visibility='onchange')

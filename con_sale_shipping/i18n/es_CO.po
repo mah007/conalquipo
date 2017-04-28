@@ -128,3 +128,18 @@ msgstr "Municipio"
 #: model:ir.ui.view,arch_db:stock.view_template_property_form
 msgid "Carrier Area"
 msgstr "Zona de Acarreo"
+
+#. module: con_sale_shipping
+#: model:ir.ui.view,arch_db:con_sale_shipping.view_delivery_carrier_form_inherit
+msgid "Cost for Vehicle"
+msgstr "Costo por Vehículo"
+
+#. module: con_sale_shipping
+#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: con_sale_shipping
+#: model:ir.model.fields,field_description:con_sale_shipping.field_cost
+msgid "Cost"
+msgstr "Costo"
