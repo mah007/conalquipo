@@ -170,3 +170,33 @@ msgstr "Conductor"
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_assistant_id
 msgid "Assistant"
 msgstr "Ayudante"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Carrier Responsible:</strong></span>"
+msgstr "<span><strong>Responsable de Acarreo:</strong></span>"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Carrier:</strong></span>"
+msgstr "<span><strong>Acarreo:</strong></span>"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Vehicle:</strong></span>"
+msgstr "<span><strong>Vehículo:</strong></span>"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Driver:</strong></span>"
+msgstr "<span><strong>Conductor:</strong></span>"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Assistant:</strong></span>"
+msgstr "<span><strong>Ayudante:</strong></span>"
