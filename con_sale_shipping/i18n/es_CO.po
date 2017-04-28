@@ -143,3 +143,30 @@ msgstr "Vehículo"
 #: model:ir.model.fields,field_description:con_sale_shipping.field_cost
 msgid "Cost"
 msgstr "Costo"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_carrier_id
+msgid "Carrier"
+msgstr "Acarreo"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_carrier_type
+msgid "Carrier Responsible"
+msgstr "Responsable de Acarreo"
+
+#. module: con_sale_shipping
+#: model:ir.model.fields,field_description:con_sale_shipping.field_stock_picking_vehicle_id
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_vehicle_client
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_driver_id
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_driver_client
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_assistant_id
+msgid "Assistant"
+msgstr "Ayudante"
