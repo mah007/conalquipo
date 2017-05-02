@@ -64,22 +64,24 @@
                         <xpath expr="//field[@name='carrier_id']" position="before">
                             <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
                         </xpath>
-                      <xpath expr="//field[@name='carrier_id']" position="after">
-                            <field name="vehicle_id" widget="many2many_tags" class="oe_inline"
-                                   attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}"/>
+                        <xpath expr="//group[@name='carrier_data']" position="after">
+                            <group name="info_carrier">
+                                <field name="stock_picking_delivery" mode="tree" nolabel="1"
+                                    attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}">
+                                    <tree editable="bottom">
+                                         <field name="type_responsible"/>
+                                         <field name="responsible"/>
+                                         <field name="vehicle_id"/>
+                                    </tree>
+                                </field>
 
-                            <field name="driver_id" widget="many2many_tags" class="oe_inline"
-                                   attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}"/>
+                                <field name="vehicle_client" class="oe_inline" label="Vehicle Client"
+                                attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
 
-                            <field name="assistant_id" widget="many2many_tags" class="oe_inline"
-                                   attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}"/>
-
-                            <field name="vehicle_client" class="oe_inline"
-                                   attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
-
-                            <field name="driver_client"  class="oe_inline"
-                                   attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
-                      </xpath>
+                                <field name="driver_client"  class="oe_inline" label="Driver Client"
+                                attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
+                            </group>
+                        </xpath>
                   </data>
                 </field>
         </record>
