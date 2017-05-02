@@ -1,0 +1,77 @@
+<odoo>
+
+        <template id="report_shipping_inherit" inherit_id="stock.report_picking">
+            <xpath expr="//div[@class='col-xs-5 col-xs-offset-1']" position="after">
+                <div name="info_carrier" class="col-xs-5 col-xs-offset-0">
+                    <span><strong>Carrier Responsible:</strong></span>
+                    <span t-field="o.carrier_type"/><br/>
+                    <t t-if="o.carrier_type == 'company'">
+                        <span><strong>Carrier:</strong></span>
+                        <span t-field="o.carrier_id"/><br/>
+                        <span><strong>Vehicle:</strong></span>
+                        <span t-field="o.vehicle_id.license_plate"/><br/>
+                        <span><strong>Driver:</strong></span>
+                        <span t-field="o.driver_id.name"/><br/>
+                        <span><strong>Assistant:</strong></span>
+                        <span t-field="o.assistant_id.name"/><br/>
+                    </t>
+                    <t t-if="o.carrier_type == 'client'">
+                        <span><strong>Vehicle:</strong></span>
+                        <span t-field="o.vehicle_client"/><br/>
+                        <span><strong>Driver:</strong></span>
+                        <span t-field="o.driver_client"/><br/>
+                    </t>
+
+                </div>
+            </xpath>
+            <xpath expr="//th[5]" position="replace" />
+            <xpath expr="//td[5]" position="replace" />
+            <xpath expr="//div[@name='partner_header']" position="replace">
+                 <div t-if="o.partner_id" name="partner_header">
+                    <div t-field="o.partner_id"
+                       t-options='{"widget": "contact", "fields": ["name", "phone", "fax", "address"], "no_marker": True, "phone_icons": True}'/>
+                    <p t-if="o.sudo().partner_id.vat">VAT: <span t-field="o.sudo().partner_id.vat"/></p>
+                </div>
+            </xpath>
+
+             <xpath expr="//div[@class='col-xs-6']" position="replace">
+                 <div class="col-xs-6">
+                    <div t-if="o.move_lines and o.move_lines[0].partner_id and o.move_lines[0].partner_id.id != o.partner_id.id">
+                        <span><strong>Delivery Address:</strong></span>
+                        <div t-field="o.move_lines[0].partner_id"
+                            t-options='{"widget": "contact", "fields": ["name", "phone", "fax", "address"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+                    <div t-if="o.picking_type_id.code != 'internal' and (not o.move_lines or not o.move_lines[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
+                        <span><strong>Warehouse Address:</strong></span>
+                        <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                            t-options='{"widget": "contact", "fields": ["name", "phone", "fax", "address"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+                </div>
+            </xpath>
+
+        </template>
+         <template id="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
+            <xpath expr="//div[@name='customer_address']" position="before">
+                <div name="info_carrier" class="col-xs-4 pull-left">
+                    <span><strong>Carrier Responsible:</strong></span>
+                    <span t-field="o.carrier_type"/><br/>
+                    <t t-if="o.carrier_type == 'company'">
+                        <span><strong>Carrier:</strong></span>
+                        <span t-field="o.carrier_id"/><br/>
+                        <span><strong>Vehicle:</strong></span>
+                        <span t-field="o.vehicle_id.license_plate"/><br/>
+                        <span><strong>Driver:</strong></span>
+                        <span t-field="o.driver_id.name"/><br/>
+                        <span><strong>Assistant:</strong></span>
+                        <span t-field="o.assistant_id.name"/><br/>
+                    </t>
+                    <t t-if="o.carrier_type == 'client'">
+                         <span><strong>Vehicle:</strong></span>
+                        <span t-field="o.vehicle_client"/><br/>
+                        <span><strong>Driver:</strong></span>
+                        <span t-field="o.driver_client"/><br/>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+</odoo>

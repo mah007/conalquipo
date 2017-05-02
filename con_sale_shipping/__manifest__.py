@@ -36,7 +36,8 @@
         'views/sale_order.xml',
         'views/vehicle.xml',
         'views/invoicing_area.xml',
-        'views/delivery_carrier.xml'
+        'views/delivery_carrier.xml',
+        'report/report_stockpicking.xml'
     ],
     'demo': [''],
     'test': [''],
