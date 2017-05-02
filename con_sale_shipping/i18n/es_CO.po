@@ -156,18 +156,21 @@ msgstr "Responsable de Acarreo"
 
 #. module: con_sale_shipping
 #: model:ir.model.fields,field_description:con_sale_shipping.field_stock_picking_vehicle_id
-#: model:ir.model.fields,field_description:delivery.field_stock_picking_vehicle_client
 msgid "Vehicle"
 msgstr "Vehículo"
 
 #. module: delivery
-#: model:ir.model.fields,field_description:delivery.field_stock_picking_driver_id
-#: model:ir.model.fields,field_description:delivery.field_stock_picking_driver_client
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_type_responsible
+msgid "Type Responsible"
+msgstr "Tipo de Responsable"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_type_responsible
 msgid "Driver"
 msgstr "Conductor"
 
 #. module: delivery
-#: model:ir.model.fields,field_description:delivery.field_stock_picking_assistant_id
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_type_responsible
 msgid "Assistant"
 msgstr "Ayudante"
 
@@ -186,8 +189,14 @@ msgstr "<span><strong>Acarreo:</strong></span>"
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_delivery_document
 #: model:ir.ui.view,arch_db:stock.report_picking
-msgid "<span><strong>Vehicle:</strong></span>"
-msgstr "<span><strong>Vehículo:</strong></span>"
+msgid "<span><strong>Vehicle(s):</strong></span>"
+msgstr "<span><strong>Vehículo(s):</strong></span>"
+
+#. module: stock
+#: model:ir.ui.view,arch_db:stock.report_delivery_document
+#: model:ir.ui.view,arch_db:stock.report_picking
+msgid "<span><strong>Tracking Reference:</strong></span>"
+msgstr "<span><strong>Referencia de seguimiento:</strong></span>"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_delivery_document
@@ -198,5 +207,15 @@ msgstr "<span><strong>Conductor:</strong></span>"
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_delivery_document
 #: model:ir.ui.view,arch_db:stock.report_picking
-msgid "<span><strong>Assistant:</strong></span>"
-msgstr "<span><strong>Ayudante:</strong></span>"
+msgid "<span><strong>Vehicle:</strong></span>"
+msgstr "<span><strong>Vehículo:</strong></span>"
+
+#. module: delivery
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_driver_client
+msgid "Driver Client"
+msgstr "Conductor Cliente"
+
+#. module: con_sale_shipping
+#: model:ir.model.fields,field_description:delivery.field_stock_picking_vehicle_client
+msgid "Vehicle Client"
+msgstr "Vehículo Cliente"

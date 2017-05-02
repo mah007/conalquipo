@@ -107,21 +107,35 @@ class StockPicking(models.Model):
     carrier_type = fields.Selection(related='sale_id.carrier_type',
                                     readonly=True)
 
-    vehicle_id = fields.Many2many(comodel_name='vehicle',  string='Vehicle',
-                                  search='_search_vehicle_id',
-                                  track_visibility='onchange')
-
-    driver_id = fields.Many2many(comodel_name='hr.employee', string='Driver',
-                                 search='_search_driver_id',
-                                 track_visibility='onchange')
-
-    assistant_id = fields.Many2many(comodel_name='hr.employee',
-                                    string='Assistant',
-                                    search='_search_assistant_id',
-                                    track_visibility='onchange')
-
     vehicle_client = fields.Char(string='Vehicle',
                                  track_visibility='onchange')
 
     driver_client = fields.Char(string='Driver',
                                 track_visibility='onchange')
+
+    stock_picking_delivery = fields.One2many('stock.picking.delivery',
+                                             'stock_picking_id',
+                                             string='Lines Delivery',
+                                             copy=True)
+
+
+class StockPickingDelivery(models.Model):
+    _name = 'stock.picking.delivery'
+
+    stock_picking_id = fields.Many2one('stock.picking',
+                                       string='Stock Picking',
+                                       ondelete='cascade', index=True,
+                                       copy=False,
+                                       track_visibility='onchange')
+
+    type_responsible = fields.Selection([('driver', 'Driver'),
+                                         ('assistant', 'Assistant')],
+                                        string='Type Responsible',
+                                        default='driver')
+
+    responsible = fields.Many2one(comodel_name='hr.employee',
+                                  string='Responsible',
+                                  track_visibility='onchange')
+
+    vehicle_id = fields.Many2one(comodel_name='vehicle', string='Vehicle',
+                                 track_visibility='onchange')
