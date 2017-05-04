@@ -19,7 +19,32 @@
 #
 ##############################################################################
 
-from . import delivery_carrier
-from . import sale_order
-from . import vehicle
-from . import invoicing_area
+{
+    'name': 'Product availability',
+    'version': '1.1',
+    'category': 'Products',
+    'sequence': 10,
+    'summary': 'Adds custom states to products that'
+               ' can be changed at specific times of the workflow.',
+    'depends': [
+        'base', 'con_profile',
+    ],
+    'description':
+    """
+        Adds custom states to products that can be changed
+         at specific times of the workflow.
+    """,
+    'data': [
+        'views/product.xml',
+        'views/product_states.xml',
+    ],
+    'qweb': [
+    ],
+    'demo': [
+    ],
+    'test': [
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}
