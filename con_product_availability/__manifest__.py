@@ -35,7 +35,7 @@
          at specific times of the workflow.
     """,
     'data': [
-        'views/res_partner.xml',
+        'views/product.xml',
     ],
     'qweb': [
     ],

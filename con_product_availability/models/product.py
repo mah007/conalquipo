@@ -23,6 +23,12 @@ from odoo.models import Model, api
 from odoo import fields
 
 
+class ProductTemplate(Model):
+    _inherit = "product.template"
+
+    state_id = fields.Many2one('product.states', string="State")
+
+
 class ProductProduct(Model):
     _inherit = "product.product"
 

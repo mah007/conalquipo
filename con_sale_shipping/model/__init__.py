@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-import delivery_carrier
-import sale_order
-import vehicle
-import invoicing_area
+from . import delivery_carrier
+from . import sale_order
+from . import vehicle
+from . import invoicing_area
