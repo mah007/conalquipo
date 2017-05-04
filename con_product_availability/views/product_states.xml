@@ -10,6 +10,7 @@
                     <field name="sequence" widget="handle"/>
                     <field colspan="4" name="name"/>
                     <field name="description"/>
+                    <field name="unavailable"/>
                 </tree>
             </field>
         </record>
@@ -25,6 +26,7 @@
                         <group>
                             <field name="sequence"/>
                             <field name="description"/>
+                            <field name="unavailable"/>
                         </group>
                     </group>
                     </sheet>
@@ -33,10 +35,10 @@
         </record>
 
         <record model="ir.ui.view" id="product_states_view_search">
-            <field name="name">product.pricelist.search</field>
-            <field name="model">product.pricelist</field>
+            <field name="name">product.states.search</field>
+            <field name="model">product.states</field>
             <field name="arch" type="xml">
-                <search string="Products Price Search">
+                <search string="Products State Search">
                     <field name="name" string="Products States"/>
                 </search>
             </field>
@@ -48,7 +50,7 @@
             <field name="res_model">product.states</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="product_pricelist_view_search" />
+            <field name="search_view_id" ref="product_states_view_search" />
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Click to create a new state.
@@ -59,6 +61,9 @@
               </p>
             </field>
         </record>
+
+
+        <menuitem action="product_states_action" id="menu_product_states_form" parent="stock.menu_stock_inventory_control" sequence="1"/>
 
     </data>
 </odoo>

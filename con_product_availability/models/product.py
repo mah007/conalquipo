@@ -47,3 +47,7 @@ class ProductStates(Model):
                                    " will be ordered following this sequence")
     description = fields.Text(string="Description",
                               help="A little description about the state")
+    unavailable = fields.Boolean(string="Make the product unavailable when "
+                                        "the product have this state",
+                                 help="Make the product unavailable when "
+                                        "the product have this state")

@@ -36,6 +36,7 @@
     """,
     'data': [
         'views/product.xml',
+        'views/product_states.xml',
     ],
     'qweb': [
     ],
