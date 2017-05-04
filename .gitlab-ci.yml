@@ -1,6 +1,6 @@
 variables:
   PROJECT: "con_profile"
-  ADDONS_PATH: "/home/gitlab-runner/odoo/addons,./CON"
+  ADDONS_PATH: "/home/gitlab-runner/odoo-10.0/addons,./CON"
   ODOO_REPO: "/home/gitlab-runner/odoo-10.0"
   ODOO_VERSION: "10.0"
 
