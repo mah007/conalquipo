@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo.models import Model, api
+from odoo.models import Model
 from odoo import fields
 
 
