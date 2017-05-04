@@ -1,9 +1,9 @@
 variables:
   PROJECT: "con_profile"
   ADDONS_PATH: "/home/gitlab-runner/odoo/addons,./CON"
-  ODOO_REPO: &ODOO_REPO "/home/gitlab-runner/odoo-"
-  ODOO_VERSION: &ODOO_VERSION "10.0"
-  ODOO_PATH: !concat [*ODOO_REPO, *ODOO_VERSION]
+  ODOO_REPO: "/home/gitlab-runner/odoo-"
+  ODOO_VERSION: "10.0"
+  ODOO_PATH: "/home/gitlab-runner/odoo-10.0"
 
 stages:
   - cq_check
