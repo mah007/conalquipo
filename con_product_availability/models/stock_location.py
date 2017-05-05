@@ -19,33 +19,14 @@
 #
 ##############################################################################
 
-{
-    'name': 'Product availability',
-    'version': '1.1',
-    'category': 'Products',
-    'sequence': 10,
-    'summary': 'Adds custom states to products that'
-               ' can be changed at specific times of the workflow.',
-    'depends': [
-        'base', 'con_profile',
-    ],
-    'description':
-    """
-        Adds custom states to products that can be changed
-         at specific times of the workflow.
-    """,
-    'data': [
-        'views/product.xml',
-        'views/product_states.xml',
-        'views/stock_location.xml',
-    ],
-    'qweb': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from odoo.models import Model
+from odoo import fields, api
+
+
+class StockLocation(Model):
+    _inherit = "stock.location"
+
+    set_product_state = fields.Boolean(
+        string="Change the state to all products when arrive to this location")
+
+    product_state = fields.Many2one(string="Set state")

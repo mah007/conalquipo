@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record id="view_product_availability_stock_location_form" model="ir.ui.view">
+            <field name="name">product.availability.stock.location.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="barcode" position="after">
+                        <field name="set_product_state" />
+                        <field name="product_state"
+                               attrs="{'invisible:[('set_product_state', '=', False)]'}"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+    </odoo>
