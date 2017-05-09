@@ -19,5 +19,14 @@
 #
 ##############################################################################
 
-from . import product
-from . import stock_location
+from odoo.models import Model
+from odoo import fields, api
+
+
+class StockLocation(Model):
+    _inherit = "stock.location"
+
+    set_product_state = fields.Boolean(
+        string="Change the state to all products when arrive to this location")
+
+    product_state = fields.Many2one('product.states', string="Set state")

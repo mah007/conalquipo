@@ -42,5 +42,4 @@
     'demo': [''],
     'test': [''],
     'installable': True,
-    'post_init_hook': '_auto_install_l10n',
 }
