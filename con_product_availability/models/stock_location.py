@@ -29,4 +29,4 @@ class StockLocation(Model):
     set_product_state = fields.Boolean(
         string="Change the state to all products when arrive to this location")
 
-    product_state = fields.Many2one(string="Set state")
+    product_state = fields.Many2one('product.states', string="Set state")
