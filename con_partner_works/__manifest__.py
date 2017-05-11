@@ -2,19 +2,21 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Project Management for works',
+    'name': 'Partner works',
     'version': '1.1',
-    'category': 'Project Management',
+    'category': 'Partners',
     'sequence': 10,
-    'summary': 'Projects, Works',
-    'depends': ['project', 'con_client_code', 'sale', 'con_sale'],
+    'summary': 'Partners, Works',
+    'depends': ['base'],
     'description':
     """
-        Project Management for works
+        Work information for partners\n
+        Extend the class partner and added new fields for work information
+        and country address format.
     """,
     'data': [
-        'views/project.xml',
-        'views/sale_order.xml',
+        'views/res_partner.xml',
+        'views/municipality.xml',
     ],
     'qweb': [
     ],

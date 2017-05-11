@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- SIMPLIFIED PROJECT VIEW -->
+    <record id="res_partner_form_works" model="ir.ui.view">
+      <field name="name">res.partner.form.work</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <field name="type" position="after">
+          <field name="is_work" />
+          <field name="partner_code" required="1"/>
+        </field>
+
+        <field name="street2" position="after">
+          <field name="municipality_id" placeholder="Municipality"/>
+        </field>
+        <notebook position="inside">
+            <page string="Work" name="work" attrs="{'invisible': [('is_work', '!=', True)]}">
+              <group>
+                <group name="g1" col="4" colspan="4">
+                  <field name="work_code" attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_date_creation"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="invoice_limit_date"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="legal_responsible"  attrs="{'required': [('is_work', '=', True)]}"/>
+                </group>
+              </group>
+              <group>
+                <group name="g2" col="4" colspan="4">
+                  <field name="contract_number"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_responsible"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_resident"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_storer"  attrs="{'required': [('is_work', '=', True)]}"/>
+                </group>
+              </group>
+              <group>
+                <group name="g3" col="4" colspan="4">
+                  <field name="work_contract"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_phone"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="owner_phone"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="work_interventor"  attrs="{'required': [('is_work', '=', True)]}"/>
+                  <field name="interventor_phone"  attrs="{'required': [('is_work', '=', True)]}"/>
+                </group>
+              </group>
+              <group name="g4" string="Observations">
+                  <field name="observations" nolabel="1"/>
+              </group>
+            </page>
+          </notebook>
+      </field>
+    </record>
+
+    </data>
+</openerp>

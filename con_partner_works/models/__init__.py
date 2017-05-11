@@ -19,11 +19,5 @@
 #
 ##############################################################################
 
-
-from odoo import models, fields
-
-
-class ResPartnerCode(models.Model):
-    _inherit = "res.partner"
-
-    partner_code = fields.Char(string='Partner Code', required=True)
+from . import res_country_municipality
+from . import res_partner
