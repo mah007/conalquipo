@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+
+        <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">inherit.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="partner_invoice_id"
+                           groups="sale.group_delivery_invoice_address"
+                           context="{'default_type':'invoice',
+                           'show_address': 1}"
+                    options="{&quot;always_reload&quot;: True}"
+                    />
+                    <field name="partner_shipping_id"
+                           groups="sale.group_delivery_invoice_address"
+                           context="{'default_type':'delivery',
+                            'show_address': 1}"
+                    options="{&quot;always_reload&quot;: True}"
+                    />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

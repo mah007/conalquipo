@@ -19,10 +19,28 @@
 #
 ##############################################################################
 
-from odoo import models, fields
+{
+    'name': "CON Project in Stock",
 
+    'summary': """
+        Conalequipos's Project information for each customer on Stock form.
+    """,
 
-class ResPartnerProject(models.Model):
-    _inherit = "res.partner"
+    'description': """
+        Conalequipos's Project information for each customer on Stock form.
+    """,
 
-    project_ids = fields.One2many('project.project', 'partner_id')
+    'author': "Ingeniería Aplicaciones y Software",
+    'website': "http://www.ias.com.co",
+    'category': 'stock',
+    'version': '0.1',
+    'depends': ['base', 'stock', 'con_partner_works'],
+    'data': [
+        'views/stock_picking.xml',
+    ],
+    'qweb': [],
+    'images': [],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}
