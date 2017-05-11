@@ -10,7 +10,7 @@
                 <field name="location_dest_id" position="after">
                     <field name="project_id" domain="[('partner_id', '=', partner_id)]}"/>
                 </field>
-                 <xpath expr="//group[contains(@class, 'hidden-xs')]" position="after">
+                 <xpath expr="//notebook" position="before">
                     <group name="address_client_details" class="hidden-xs">
                         <group string="Shipping Address">
                             <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
