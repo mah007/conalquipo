@@ -19,11 +19,14 @@
 #
 ##############################################################################
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
 
-    municipality_id = fields.Many2one('res.country.municipality',
-                                      string='Municipality')
+    @api.model
+    def _get_sale_order_type(self):
+        return [('rent', 'Rent'), ('sale', 'Sale')]
+
+    order_type = fields.Selection('_get_sale_order_type', string="Type")

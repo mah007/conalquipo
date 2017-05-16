@@ -27,7 +27,7 @@
     'summary': 'Adds custom states to products that'
                ' can be changed at specific times of the workflow.',
     'depends': [
-        'base', 'con_profile',
+        'base', 'stock', 'product', 'mrp'
     ],
     'description':
     """

@@ -9,6 +9,30 @@
                     <field name="categ_id" position="after">
                         <field name="state_id" />
                     </field>
+                    <xpath expr="//div[@name='options']" position="inside">
+                            <div>
+                                <field name="rental"/>
+                                <label for="rental"/>
+                            </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="view_product_availability_product_product_form" model="ir.ui.view">
+            <field name="name">product.availability.product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="categ_id" position="after">
+                        <field name="state_id" />
+                    </field>
+                    <xpath expr="//div[@name='options']" position="inside">
+                            <div>
+                                <field name="rental"/>
+                                <label for="rental"/>
+                            </div>
+                    </xpath>
                 </data>
             </field>
         </record>
@@ -20,6 +44,9 @@
                 <data>
                     <field name="default_code" position="after">
                         <field name="state_id" />
+                    </field>
+                    <field name="active" position="after">
+                        <field name="rental" />
                     </field>
                 </data>
             </field>

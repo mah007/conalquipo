@@ -18,21 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from odoo.models import Model
+from odoo.addons import decimal_precision as dp
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_round
+from odoo.models import Model, api, _
 from odoo import fields
-
-
-class ProductTemplate(Model):
-    _inherit = "product.template"
-
-    state_id = fields.Many2one('product.states', string="State")
-
-
-class ProductProduct(Model):
-    _inherit = "product.product"
-
-    state_id = fields.Many2one('product.states', string="State")
 
 
 class ProductStates(Model):
@@ -47,7 +37,42 @@ class ProductStates(Model):
                                    " will be ordered following this sequence")
     description = fields.Text(string="Description",
                               help="A little description about the state")
+    default_value = fields.Boolean(string="Set as a default value"
+                                          " when the product is created")
     unavailable = fields.Boolean(string="Make the product unavailable when "
                                         "the product have this state",
                                  help="Make the product unavailable when "
                                         "the product have this state")
+
+
+class ProductTemplate(Model):
+    _inherit = "product.template"
+
+    def _get_default_state(self):
+            return self.env['product.states'].search(
+                [('default_value', '=', 'True')], limit=1) or False
+
+    state_id = fields.Many2one('product.states', string="State",
+                               default=_get_default_state)
+    # ~ This field exist in product.template
+    # but i don't found the used of this in the Odoo 10.0e code because
+    # that i've decided create this field again.
+    rental = fields.Boolean('Can be Rent')
+    # ~
+
+
+class ProductProduct(Model):
+    _inherit = "product.product"
+
+    def _get_default_state(self):
+            return self.env['product.states'].search(
+                [('default_value', '=', 'True')], limit=1) or False
+
+    state_id = fields.Many2one('product.states', string="State",
+                               default=_get_default_state)
+
+
+class MrpBom(Model):
+    _inherit = "mrp.bom"
+
+    type = fields.Selection(selection_add=[('components', 'Components')])

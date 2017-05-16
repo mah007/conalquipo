@@ -32,7 +32,11 @@ class StockPicking(Model):
                                          required=True,
                                          states={
                                              'draft': [('readonly', False)],
-                                             'sent': [('readonly', False)]
+                                             'partially_available':
+                                                 [('readonly', False)],
+                                             'done': [('readonly', False)],
+                                             'waiting': [('readonly', False)],
+                                             'assigned': [('readonly', False)]
                                          },
                                          help="Invoice address for "
                                               "current sales order.")
@@ -42,7 +46,12 @@ class StockPicking(Model):
                                           required=True,
                                           states={
                                               'draft': [('readonly', False)],
-                                              'sent': [('readonly', False)]},
+                                              'partially_available':
+                                                  [('readonly', False)],
+                                              'done': [('readonly', False)],
+                                              'waiting': [('readonly', False)],
+                                              'assigned': [('readonly', False)]
+                                          },
                                           help="Delivery address for"
                                                " current sales order.")
 

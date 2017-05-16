@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record model="ir.ui.view" id="view_sale_order_form_inherit">
+             <field name="name">sale.order.form</field>
+             <field name="inherit_id" ref="sale.view_order_form"/>
+             <field name="model">sale.order</field>
+             <field name="arch" type="xml">
+               <field name="payment_term_id" position="after">
+                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+               </field>
+               <field name="partner_invoice_id" position="replace">
+                    <field name="partner_invoice_id"
+                           groups="sale.group_delivery_invoice_address"
+                           context="{'default_type':'invoice',
+                           'show_address': 1}"
+                    options="{&quot;always_reload&quot;: True}"
+                    />
+               </field>
+               <field name="partner_shipping_id" position="replace">
+                    <field name="partner_shipping_id"
+                           groups="sale.group_delivery_invoice_address"
+                           context="{'default_type':'invoice',
+                           'show_address': 1}"
+                    options="{&quot;always_reload&quot;: True}"
+                    />
+               </field>
+
+             </field>
+        </record>
+    </odoo>

@@ -29,7 +29,7 @@
     sale order.""",
     'depends': ['base', 'delivery', 'sales_team', 'sale', 'website_quote'],
     'data': [
-        'views/municipality.xml'
+       'views/sale_order_view.xml'
     ],
     'demo': [''],
     'test': [''],

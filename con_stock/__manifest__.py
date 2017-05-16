@@ -20,14 +20,14 @@
 ##############################################################################
 
 {
-    'name': "CON Project in Stock",
+    'name': "CON Stock",
 
     'summary': """
-        Conalequipos's Project information for each customer on Stock form.
+        Conalequipos's behavior customization for Stock form.
     """,
 
     'description': """
-        Conalequipos's Project information for each customer on Stock form.
+        Conalequipos's behavior customization for Stock form.
     """,
 
     'author': "Ingeniería Aplicaciones y Software",

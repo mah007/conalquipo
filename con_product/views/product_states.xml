@@ -27,6 +27,7 @@
                             <field name="sequence"/>
                             <field name="description"/>
                             <field name="unavailable"/>
+                            <field name="default_value"/>
                         </group>
                     </group>
                     </sheet>
