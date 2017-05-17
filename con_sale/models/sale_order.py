@@ -25,8 +25,16 @@ from odoo import fields, models, api
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.model
-    def _get_sale_order_type(self):
-        return [('rent', 'Rent'), ('sale', 'Sale')]
+    # ~ Please if you need add new option in this fields use the following
+    # method: field_name = fields.Selection(selection_add=[('a', 'A')]
+    order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
+                                  string="Type", default="sale")
 
-    order_type = fields.Selection('_get_sale_order_type', string="Type")
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    start_date = fields.Date(string="Start")
+    end_date = fields.Date(string="End")
+    order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
+                                  string="Type")
