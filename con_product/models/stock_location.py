@@ -49,6 +49,8 @@ class StockPicking(Model):
 class StockMove(Model):
     _inherit = "stock.move"
 
+    has_components = fields.Boolean(string="Has components?")
+
     def action_explode(self):
         """ Explodes pickings """
         # in order to explode a move, we must
@@ -62,6 +64,9 @@ class StockMove(Model):
             return self
         bom = self.env['mrp.bom'].sudo()._bom_find(product=self.product_id)
         if not bom or bom.type not in ['phantom', 'components']:
+            return self
+
+        if self.has_components:
             return self
 
         phantom_moves = self.env['stock.move']
@@ -82,7 +87,9 @@ class StockMove(Model):
         # ~ If the list is a product components with copy the main product
         # for make a stock traceability
         if bom.type in ['components']:
-            processed_moves += self.sudo().copy()
+            move = self.sudo().copy()
+            move.has_components = True
+            processed_moves += move
 
         if not self.split_from and self.procurement_id:
             # Check if procurements have been made to wait for
