@@ -18,10 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from odoo.addons import decimal_precision as dp
-from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_round
-from odoo.models import Model, api, _
+
+from odoo.models import Model
 from odoo import fields
 
 
