@@ -87,8 +87,8 @@ class ResPartner(models.Model):
             if self._context.get('show_address_only'):
                 name = partner._display_address(without_company=True)
             if self._context.get('show_address'):
-                name = name + "\n" + \
-                       partner._display_address(without_company=True)
+                name = name + "\n" + partner._display_address(
+                    without_company=True)
             name = name.replace('\n\n', '\n')
             name = name.replace('\n\n', '\n')
             if self._context.get('show_email') and partner.email:
@@ -100,7 +100,7 @@ class ResPartner(models.Model):
 
     @api.multi
     def _display_address(self, without_company=False):
-        ''' The purpose of this function is to build and 
+        ''' The purpose of this function is to build and
         return an address formatted accordingly to the
         standards of the country where it belongs.
         :param address: browse record of the res.partner to format
