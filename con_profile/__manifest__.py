@@ -33,9 +33,8 @@
     'website': "http://www.ias.com.co",
     'category': 'Base Profile',
     'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'delivery', 'odoo_outlook', 'sale',
-                'con_sale', 'con_partner_works', 'purchase',
-                'stock', 'con_product'],
+    'depends': ['base', 'crm', 'project', 'delivery', 'odoo_outlook',
+                'sale', 'purchase', 'stock'],
     'data': [
     ],
     'qweb': [],
