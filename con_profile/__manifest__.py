@@ -34,9 +34,8 @@
     'category': 'Base Profile',
     'version': '0.1',
     'depends': ['base', 'crm', 'project', 'delivery', 'odoo_outlook', 'sale',
-                'con_sale', 'con_client_code', 'con_project_works', 'purchase',
-                'stock', 'con_customer_projects', 'con_project_stock',
-                'con_sale_shipping'],
+                'con_sale', 'con_partner_works', 'purchase',
+                'stock', 'con_product'],
     'data': [
     ],
     'qweb': [],
