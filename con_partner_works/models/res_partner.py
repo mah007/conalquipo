@@ -18,8 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 
 from odoo import models, fields, api
+
+_logger = logging.getLogger(__name__)
 
 ADDRESS_FIELDS = ('street', 'street2', 'municipality_id',
                   'zip', 'city', 'state_id', 'country_id')
@@ -74,14 +77,18 @@ class ResPartner(models.Model):
 
             if partner.company_name or partner.parent_id:
                 if name and partner.type in ['invoice', 'delivery', 'other']:
-                    print "Is Here!!! Not Name and Partner Type in In-Del-Other"
-                    name = dict(self.fields_get(['type'])['type']['selection'])[partner.type]
+                    _logger.info('Is Here!!! Not Name and Partner '
+                                 'Type in In-Del-Other')
+                    name = dict(self.fields_get(
+                        ['type'])['type']['selection'])[partner.type]
                 if not partner.is_company:
-                    name = "%s, %s" % (partner.commercial_company_name or partner.parent_id.name, name)
+                    name = "%s, %s" % (partner.commercial_company_name or
+                                       partner.parent_id.name, name)
             if self._context.get('show_address_only'):
                 name = partner._display_address(without_company=True)
             if self._context.get('show_address'):
-                name = name + "\n" + partner._display_address(without_company=True)
+                name = name + "\n" + partner._display_address(
+                    without_company=True)
             name = name.replace('\n\n', '\n')
             name = name.replace('\n\n', '\n')
             if self._context.get('show_email') and partner.email:
@@ -93,10 +100,9 @@ class ResPartner(models.Model):
 
     @api.multi
     def _display_address(self, without_company=False):
-        ''' The purpose of this function is to build and 
+        ''' The purpose of this function is to build and
         return an address formatted accordingly to the
         standards of the country where it belongs.
-
         :param address: browse record of the res.partner to format
         :returns: the address formatted in a display that fit its
          country habits (or the default ones
@@ -110,8 +116,8 @@ class ResPartner(models.Model):
             "%(street)s\n%(street2)s\n%(muni_name)s %(city)s" \
             " %(state_code)s %(zip)s\n%(country_name)s"
         args = {
-            'muni_code' : self.municipality_id.code or '',
-            'muni_name' : self.municipality_id.name or '',
+            'muni_code': self.municipality_id.code or '',
+            'muni_name': self.municipality_id.name or '',
             'state_code': self.state_id.code or '',
             'state_name': self.state_id.name or '',
             'country_code': self.country_id.code or '',
