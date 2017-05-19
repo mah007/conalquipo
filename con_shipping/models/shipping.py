@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models, _
+from odoo.exceptions import AccessError, UserError, ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -217,3 +218,67 @@ class SaleOrder(models.Model):
 
         else:
             super(SaleOrder, self).delivery_set()
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    carrier_type = fields.Selection(related='sale_id.carrier_type',
+                                    readonly=True)
+
+    vehicle_id = fields.Many2one(comodel_name='fleet.vehicle',
+                                 string='Vehicle',
+                                 related='sale_id.vehicle',
+                                 onchange='onchange_vehicle_id',
+                                 track_visibility='onchange')
+
+    vehicle_client = fields.Char(string='Vehicle',
+                                 track_visibility='onchange')
+
+    driver_client = fields.Char(string='Driver',
+                                track_visibility='onchange')
+
+    driver_ids = fields.One2many('shipping.driver', 'stock_picking_id',
+                                 string='Shipping Driver', copy=True)
+
+    @api.onchange('vehicle_id')
+    def onchange_vehicle_id(self):
+        res = {}
+        if not self.vehicle_id or not self.carrier_id:
+            return res
+        if self.carrier_id:
+            veh_carrier = self.env['delivery.carrier.cost'].search(
+                [('delivery_carrier_id', '=', self.carrier_id.id)], limit=10)
+            veh_ids = []
+            for veh in veh_carrier:
+                veh_ids.append(veh.vehicle.id)
+
+            if self.vehicle_id.id not in veh_ids:
+                self.vehicle_id = self.vehicle_id.id
+                res['warning'] = {'title': _('Warning'), 'message': _(
+                    'Selected vehicle is not available for the shipping '
+                    'area. please select another vehicle.')}
+                self.vehicle_id = self.vehicle_id.id
+            else:
+                return res
+
+        return res
+
+
+class ShippingDriver(models.Model):
+    _name = 'shipping.driver'
+
+    driver_ids = fields.Many2one(comodel_name='hr.employee',
+                                 string='Driver', ondelete='cascade',
+                                 index=True, copy=False,
+                                 track_visibility='onchange')
+
+    type_hr = fields.Selection([('driver', 'Driver'),
+                                ('assistant', 'Assistant')],
+                               string='HR Type', default='driver')
+
+    stock_picking_id = fields.Many2one('stock.picking',
+                                       string='Stock Picking',
+                                       ondelete='cascade', index=True,
+                                       copy=False, track_visibility='onchange')
+
