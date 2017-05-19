@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record model="ir.ui.view" id="fleet_vehicle_view_form_inherit">
+              <field name="name">fleet.vehicle.form</field>
+              <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+              <field name="model">fleet.vehicle</field>
+              <field name="arch" type="xml">
+                   <xpath expr="//field[@name='driver_id']" position="before">
+                       <field name="holder"/>
+                   </xpath>
+                   <xpath expr="//field[@name='vin_sn']" position="before">
+                       <field name="num_motor"/>
+                   </xpath>
+                   <xpath expr="//field[@name='seats']" position="before">
+                       <field name="type"/>
+                       <field name="capacity"/>
+                   </xpath>
+                   <xpath expr="//field[@name='color']" position="after">
+                       <field name="mark"/>
+                       <field name="model"/>
+                       <field name="reference"/>
+                   </xpath>
+                   <xpath expr="//group[2]/group[2]" position="after">
+                       <group name="bearing_information">
+                            <group string="Bearing information">
+                                <field name="traffic" />
+                                <field name="licence_date" />
+                                <field name="soat" />
+                                <field name="tec_mechanic" />
+                                <field name="gravamen" />
+                                <field name="bearing" />
+                                <field name="affiliation" />
+                            </group>
+                        </group>
+                   </xpath>
+              </field>
+        </record>
+        <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
+              <field name="name">delivery.carrier.form</field>
+              <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+              <field name="model">delivery.carrier</field>
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='state_ids']" position="after">
+                       <field name="municipality_ids" widget="many2many_tags"/>
+                   </xpath>
+                   <xpath expr="//page[2]" position="after">
+                        <page string="Cost for Vehicle" name="vehicle">
+                            <group>
+                                <group>
+                                    <field name="delivery_carrier_cost" mode="tree" nolabel="1">
+                                         <tree editable="bottom">
+                                             <field name="vehicle"/>
+                                             <field name="cost"/>
+                                         </tree>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                  </xpath>
+              </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_order_form_inherit">
+             <field name="name">sale.order.form</field>
+             <field name="inherit_id" ref="sale.view_order_form"/>
+             <field name="model">sale.order</field>
+             <field name="arch" type="xml">
+               <field name="payment_term_id" position="after">
+                 <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+               </field>
+             </field>
+        </record>
+        <record id="view_order_form_with_carrier_inherit" model="ir.ui.view">
+            <field name="name">delivery.sale.order.form.view.with_carrier</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//label[@for='carrier_id']" position="replace" />
+                    <xpath expr="//div[@name='carrier_selection']" position="replace" />
+                    <xpath expr="//field[@name='payment_term_id']" position="after">
+                        <field name="carrier_id" context="{'order_id': id}"
+                           attrs="{'readonly':[('state','not in',('draft','sent'))],
+                                   'invisible': [('carrier_type','!=', 'company')]}"/>
+                        <field name="vehicle" attrs="{'readonly':[('state','not in',('draft','sent'))],
+                         'invisible': [('carrier_type','!=', 'company')]}" string="Vehicle"/>
+
+                        <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
+                               attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
+                        <button name="delivery_set" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
+                                    attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','not in',('draft','sent')), ('carrier_type', '!=', 'company')]}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </odoo>

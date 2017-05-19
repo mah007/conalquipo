@@ -20,7 +20,7 @@
 ##############################################################################
 
 from odoo.models import Model
-from odoo import fields, api
+from odoo import fields
 
 
 class StockLocation(Model):
