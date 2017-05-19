@@ -18,10 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from odoo.addons import decimal_precision as dp
-from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_round
-from odoo.models import Model, api, _
+from odoo.models import Model
 from odoo import fields
 
 
@@ -38,7 +35,8 @@ class ProductStates(Model):
     description = fields.Text(string="Description",
                               help="A little description about the state")
     default_value = fields.Boolean(string="Set as a default value"
-                                          " when the product is created")
+                                          " when the product is created",
+                                   default=False)
     unavailable = fields.Boolean(string="Make the product unavailable when "
                                         "the product have this state",
                                  help="Make the product unavailable when "
@@ -50,7 +48,7 @@ class ProductTemplate(Model):
 
     def _get_default_state(self):
             return self.env['product.states'].search(
-                [('default_value', '=', 'True')], limit=1) or False
+                [('default_value', '=', True)], limit=1) or False
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
@@ -59,6 +57,12 @@ class ProductTemplate(Model):
     # that i've decided create this field again.
     rental = fields.Boolean('Can be Rent')
     # ~
+    components = fields.Boolean(string="Has components?",
+                                help="if this field is true the bills "
+                                     "of material of the product is treated "
+                                     "as a set of components adding this "
+                                     "product in the picking",
+                                default=False)
 
 
 class ProductProduct(Model):
@@ -66,13 +70,7 @@ class ProductProduct(Model):
 
     def _get_default_state(self):
             return self.env['product.states'].search(
-                [('default_value', '=', 'True')], limit=1) or False
+                [('default_value', '=', True)], limit=1) or False
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
-
-
-class MrpBom(Model):
-    _inherit = "mrp.bom"
-
-    type = fields.Selection(selection_add=[('components', 'Components')])

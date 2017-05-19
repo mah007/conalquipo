@@ -8,6 +8,7 @@
                 <data>
                     <field name="categ_id" position="after">
                         <field name="state_id" />
+                        <field name="components" />
                     </field>
                     <xpath expr="//div[@name='options']" position="inside">
                             <div>

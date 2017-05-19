@@ -19,33 +19,30 @@
 #
 ##############################################################################
 
-{
-    'name': 'Product availability',
-    'version': '1.1',
-    'category': 'Products',
-    'sequence': 10,
-    'summary': 'Adds custom states to products that'
-               ' can be changed at specific times of the workflow.',
-    'depends': [
-        'base', 'stock', 'product', 'mrp', 'sale',
-    ],
-    'description':
-    """
-        Adds custom states to products that can be changed
-         at specific times of the workflow.
-    """,
-    'data': [
-        'views/product.xml',
-        'views/product_states.xml',
-        'views/stock_location.xml',
-    ],
-    'qweb': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from odoo.models import Model, api
+
+
+class PurchaseOrder(Model):
+    _inherit = "purchase.order"
+
+    @api.multi
+    def button_confirm(self):
+        res = super(PurchaseOrder, self).button_confirm()
+        self._add_product_with_components()
+        return res
+
+    @api.multi
+    def _add_product_with_components(self):
+        for po in self:
+            for ln in po.order_line:
+                if ln.product_id.components:
+                    for pk in po.picking_ids:
+                        for mv in pk.move_lines:
+                            mv.copy({
+                                'product_id': ln.product_id.id,
+                                'product_uom_qty': ln.product_uom_qty,
+                                'picking_id': pk.id,
+                                'not_explode': True,
+                            })
+                            break
+        return True
