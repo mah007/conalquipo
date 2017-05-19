@@ -20,7 +20,6 @@
 ##############################################################################
 
 from odoo import api, fields, models, _
-from odoo.exceptions import AccessError, UserError, ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -281,4 +280,3 @@ class ShippingDriver(models.Model):
                                        string='Stock Picking',
                                        ondelete='cascade', index=True,
                                        copy=False, track_visibility='onchange')
-
