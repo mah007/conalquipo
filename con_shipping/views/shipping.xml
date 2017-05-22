@@ -94,4 +94,52 @@
             </field>
         </record>
 
+        <record id="view_picking_withcarrier_out_form_inherit" model="ir.ui.view">
+            <field name="name">delivery.stock.picking_withcarrier.form.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='carrier_id']" position="replace">
+                       <field name="carrier_id"  class="oe_inline" options="{'no_create': True, 'no_open': True}"
+                       attrs="{'readonly': [('state', '=', 'done')],
+                               'invisible': [('carrier_type','!=', 'company')]}"/>
+                    </xpath>
+
+
+                    <xpath expr="//field[@name='carrier_id']" position="before">
+                        <field name="carrier_type" widget="radio" />
+                    </xpath>
+                    <xpath expr="//field[@name='carrier_id']" position="after">
+                        <field name="vehicle_id" class="oe_inline"
+                               attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}"/>
+
+                        <field name="vehicle_client" class="oe_inline"
+                               attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
+
+                        <field name="driver_client"  class="oe_inline"
+                               attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'client')]}"/>
+
+                    </xpath>
+
+                    <xpath expr="//label[@for='carrier_tracking_ref']" position="replace"/>
+                    <xpath expr="//div[@name='tracking']" position="replace"/>
+
+                    <xpath expr="//field[@name='carrier_type']" position="before">
+                        <field name="carrier_tracking_ref" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                     </xpath>
+
+                    <xpath expr="//page[@name='extra']" position="inside">
+                        <group>
+                            <field name="driver_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')], 'invisible': [('carrier_type','!=', 'company')]}">
+                                 <tree editable="bottom">
+                                     <field name="driver_ids"/>
+                                     <field name="type_hr"/>
+                                 </tree>
+                            </field>
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record>
     </odoo>

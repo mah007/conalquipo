@@ -7,7 +7,8 @@
     'category': 'Sale',
     'sequence': 10,
     'summary': 'Delivery',
-    'depends': ['base_setup', 'base', 'delivery', 'fleet', 'mail'],
+    'depends': ['base_setup', 'base', 'delivery', 'fleet', 'mail',
+                'stock'],
     'description':
     """
         Work information for shipping.
