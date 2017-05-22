@@ -56,8 +56,10 @@ class StockMove(Model):
 
     def action_explode(self):
         """ Explodes pickings """
-        # in order to explode a move, we must have a picking_type_id on that move because otherwise the move
-        # won't be assigned to a picking and it would be weird to explode a move into several if they aren't
+        # in order to explode a move, we must have a picking
+        # _type_id on that move because otherwise the move
+        # won't be assigned to a picking and it would be
+        #  weird to explode a move into several if they aren't
         # all grouped in the same picking.
 
         # ~ This validations is for the products with components
@@ -71,8 +73,8 @@ class StockMove(Model):
             return self
         phantom_moves = self.env['stock.move']
         processed_moves = self.env['stock.move']
-        factor = self.product_uom._compute_quantity(self.product_uom_qty,
-                                                    bom.product_uom_id) / bom.product_qty
+        factor = self.product_uom._compute_quantity(
+            self.product_uom_qty, bom.product_uom_id) / bom.product_qty
         boms, lines = bom.sudo().explode(self.product_id, factor,
                                          picking_type=bom.picking_type_id)
         for bom_line, line_data in lines:
@@ -87,11 +89,12 @@ class StockMove(Model):
             if len(moves) == 1:
                 self.procurement_id.write({'state': 'done'})
         if processed_moves and self.state == 'assigned':
-            # Set the state of resulting moves according to 'assigned' as the original move is assigned
+            # Set the state of resulting moves according
+            #  to 'assigned' as the original move is assigned
             processed_moves.write({'state': 'assigned'})
         # delete the move with original product which is not relevant anymore
         if self.product_id.components:
-            processed_moves |= self.sudo.copy({'not_explode': True})
+            processed_moves |= self.sudo().copy({'not_explode': True})
 
         self.sudo().unlink()
         return processed_moves
