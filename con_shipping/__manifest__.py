@@ -13,7 +13,9 @@
     """
         Work information for shipping.
     """,
-    'data': ['views/shipping.xml'],
+    'data': ['views/shipping.xml',
+             'reports/report_stockpicking.xml'
+             ],
     'qweb': [
     ],
     'demo': [
