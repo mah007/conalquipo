@@ -38,3 +38,4 @@ class SaleOrderLine(models.Model):
     end_date = fields.Date(string="End")
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type")
+    product_inv_uom = fields.Many2one('product.uom', string="Invoice Unit UOM")
