@@ -112,8 +112,8 @@ class PackOperation(models.Model):
                            drawings or specifications.
                        </p>'''),
             'limit': 80,
-            'context': "{'default_res_model': '%s','default_res_id': %d}" % (
-            'product.product', self.product_id.id)
+            'context': "{'default_res_model': '%s','default_res_id': %d}" %
+                       ('product.product', self.product_id.id)
         }
 
 
