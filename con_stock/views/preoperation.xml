@@ -41,7 +41,25 @@
             <xpath expr="//field[@name='qty_done']" position="after">
                 <field name="is_operated" invisible="1"/>
                 <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"/>
+                <button name="action_see_instructive" String="Instructive" type="object" icon="fa-file" attrs="{'invisible': [('is_operated', '=', True)]}"/>
             </xpath>
         </field>
      </record>
+
+     <record id="con_view_picking_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="con_shipping.view_picking_form_inherit"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//header" position="after">
+                    <field name="m_instructive" invisible="1"/>
+                    <div class="alert alert-warning" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('m_instructive','=',False)]}">
+                        Some equipment does not have operator. Please remember to print the instructions for each of them.
+                    </div>
+                </xpath>
+            </data>
+        </field>
+    </record>
 </odoo>
