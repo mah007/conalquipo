@@ -29,7 +29,8 @@
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
                 <t t-foreach="o.pack_operation_product_ids" t-as="product_ids">
-                    <div>
+                    <t t-if="product_ids.is_operated">
+                        <div>
                         <div style="page-break-inside: avoid !important;">
                             <table style="width: 100%;">
                                 <colgroup>
@@ -185,6 +186,8 @@
                         <br/>
                         <br/>
                     </div>
+
+                    </t>
                 </t>
             </div>
         </t>
