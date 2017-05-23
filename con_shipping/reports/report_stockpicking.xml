@@ -1,0 +1,454 @@
+<odoo>
+    <template id="report_delivery_document_con">
+        <t t-call="report.html_container">
+             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+            <div class="header">
+                <div class="row">
+                        <table style="border: 1px solid; top: -100px; width: 100%;">
+                            <colgroup>
+                                <col width='20%' />
+                                <col width='60%' />
+                                <col width='20%' />
+                            </colgroup>
+                            <tr>
+                                <td rowspan="2"  style="border: 1px solid;"><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/></td>
+                                <td  style="border: 1px solid; padding:5px; text-align:center;"><strong><span t-field="o.picking_type_id.name"/></strong>  </td>
+                                <td rowspan="2"  style="border: 1px solid; padding:5px;">
+                                    <span> Código</span><br/>
+                                    <span>Versión:</span><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; text-align:center;"> <strong> No. <span t-field="o.name"/></strong> </td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="page">
+                <table style="border: 1px solid; width: 100%; font-size:10px">
+                    <colgroup>
+                        <col width='30%' />
+                        <col width='40%' />
+                        <col width='30%' />
+                    </colgroup>
+                    <tr>
+                        <td style="border: 1px solid; padding:5px;"><span>Empresa:</span> <span t-field="o.partner_id.parent_id"/></td>
+                        <td style="border: 1px solid; padding:5px;"><span>Fecha:</span>  <span t-field="o.min_date"/>    <span>Tel:</span></td>
+                        <td style="border: 1px solid; padding:5px;"><span>Acarreo:</span>
+                            <span t-field="o.carrier_type"/>
+                            <span t-field="o.receipts_carrier_type"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid; padding:5px;"><span>Nit:</span> <span t-field="o.partner_id.vat"/></td>
+                        <td style="border: 1px solid; padding:5px;"><span>Dirección:</span>
+                            <span t-field="o.partner_shipping_id.child_ids.street"/>
+                        </td>
+                        <td style="border: 1px solid; padding:5px;"><span>placa:</span>
+                            <span t-field="o.vehicle_id.license_plate"/>
+                            <span t-field="o.receipts_vehicle_id.license_plate"/>
+                            <span t-field="o.vehicle_client"/>
+                            <span t-field="o.receipts_vehicle_client"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid; padding:5px;"><span>Obra:</span>
+                                <span t-field="o.partner_id.name"/>
+                        </td>
+                        <td style="border: 1px solid; padding:5px;"><span>Barrio:</span>
+                                <span t-field="o.partner_shipping_id.child_ids.city"/>
+                        </td>
+                        <td style="border: 1px solid; padding:5px;"><span>Conductor:</span>
+
+                            <t t-foreach="o.driver_ids" t-as="d">
+                                <t t-if="d.type_hr == 'driver'">
+                                    <span t-field="d.driver_ids.name"/>
+                                </t>
+                            </t>
+                            <span t-field="o.driver_client"/>
+                            <t t-if="o.picking_type_id.id == 4">
+                                  <t t-foreach="o.receipts_driver_ids" t-as="rd">
+                                        <t t-if="rd.type_hr == 'driver'">
+                                            <span t-field="rd.driver_ids.name"/>
+                                        </t>
+                                  </t>
+                                 <span t-field="o.receipts_driver_client"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid; padding:5px;"><span>Código:</span>
+                            <span t-field="o.partner_id.work_code"/>
+                        </td>
+                        <td style="border: 1px solid; padding:5px;"><span>E-mail:</span> <span t-field="o.partner_id.email"/></td>
+                        <td style="border: 1px solid; padding:5px;"><span>Código Acarreo:</span>  <span t-field="o.carrier_tracking_ref"/></td>
+                    </tr>
+                </table>
+                <table style="width: 100%; font-size:12px">
+                    <tr>
+                        <td colspan="2" width='50%' style="border: 1px solid; border-top:none; padding:5px;">
+                            <span> Generated By: </span> <span t-field="o.write_uid.name"/>
+                        </td>
+                        <td width='50%' style="border: 1px solid; border-top:none; padding:5px;">
+                            <span> In: </span><span t-field="o.location_id"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="border: 1px solid;  width: 100%; font-size:12px;">
+                    <colgroup>
+                        <col width='10%' />
+                        <col width='40%' />
+                        <col width='5%' />
+                        <col width='5%' />
+                        <col width='10%' />
+                        <col width='20%' />
+                        <col width='10%' />
+                    </colgroup>
+                    <tr style="font-weight:bold;">
+                        <td style="border: 1px solid; text-align: center;"><span>Código</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Descripción:</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Und.</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Min.</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Cantidad En Obra:</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Cantidad Remitida:</span></td>
+                        <td style="border: 1px solid; text-align: center;"><span>Saldo En Obra:</span></td>
+                    </tr>
+                     <tr t-foreach="o.move_lines" t-as="move">
+                        <td style="padding:5px;"><span t-field="move.product_id.default_code"/></td>
+                        <td style="padding:5px;"><span t-field="move.product_id"/></td>
+                        <td style="padding:5px;"><span t-field="move.product_uom"/></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"><span t-field="move.ordered_qty"/></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                    </tr>
+                     <tr>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                        <td style="padding:5px;"></td>
+                    </tr>
+                </table>
+                 <br/>
+                <t t-if="o.picking_type_id.id == 4">
+                     <table style="border: 1px solid; width: 100%; font-size:12px;">
+                        <colgroup>
+                            <col width='30%' />
+                            <col width='15%' />
+                            <col width='15%' />
+                            <col width='20%' />
+                            <col width='10%' />
+                            <col width='10%' />
+
+                        </colgroup>
+                        <tr>
+                            <td style="border: 1px solid; padding:5px;"><span>Solicita:</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Cargo:</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Rad:</span></td>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Entrega <br/> Oportuna</span>
+                                <div style="width:10px; height:20px; float: right;" />
+                                <div name="no" style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:3px; font-size:10px;">No</div>
+                                <div style="width:10px; height:20px; float: right;" />
+                                <div name="yes" style="border: 1px solid; width:20px;
+                                        height:20px; float: right; padding-left:5px; font-size:10px;">Si</div>
+
+                            </td>
+                            <td style="border: 1px solid; padding:5px;"><span>Hora <br/> Acor</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Hora <br/> Entr</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border: 1px solid; padding:5px;">
+                                <span>Verificacion Competencia Operador:</span><br/>
+
+                                <div style="width:10px; height:10px; float: right;" />
+
+                                <div  style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;" />
+                                <div style="width:5px; height:20px; float: right;" />
+                                <div style="float: right;" ><span>Otro. </span></div>
+
+                                <div style="width:5px; height:20px; float: right;" />
+                                <div  style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;" />
+                                 <div style="width:5px; height:10px; float: right;" />
+                                <div style="float: right;" ><span>Oper. </span></div>
+
+                                <div style="width:10px; height:20px; float: right;" />
+                                <div  style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;">R</div>
+                                <div style="width:10px; height:20px; float: right;" />
+
+                                <div style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;">M</div>
+                                 <div style="width:10px; height:20px; float: right;" />
+
+                                <div  style="border: 1px solid; width:20px;
+                                        height:20px; float: right; padding-left:5px; margin-ring:5px;">B</div>
+                            </td>
+                            <td colspan="2" style="border: 1px solid; padding:5px;">
+                                <span>Entrega Instrucciones <br/> Operación:</span>
+                                <div style="width:10px; height:20px; float: right;" />
+                                <div name="no" style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:3px; font-size:10px;">No</div>
+                                <div style="width:10px; height:20px; float: right;" />
+                                <div name="yes" style="border: 1px solid; width:20px;
+                                        height:20px; float: right; padding-left:5px; font-size:10px;">Si</div>
+                            </td>
+                            <td style="border: 1px solid; padding:5px;"><span>Oper:</span></td>
+                        </tr>
+                    </table>
+                     <table style="border: 1px solid; width: 100%; font-size:12px">
+                        <colgroup>
+                            <col width='20%' />
+                            <col width='5%' />
+                            <col width='5%' />
+                            <col width='20%' />
+                            <col width='20%' />
+                            <col width='30%' />
+
+                        </colgroup>
+                        <tr style="font-weight:bold;">
+                            <td style="border: 1px solid; padding:5px;"><span>Verificación Interna</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>B</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>NC</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Firma Revisado</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Observaciones:</span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Revisa y Recibe el Equipo en Buenas Condiciones</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding:5px;"><span>Funcionamiento:</span></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;">
+
+                                <div  style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;" />
+                                <div style="width:10px; height:10px; float: right;" />
+                                <div style="float: right; font-size:10px;" ><span>En Obra </span></div>
+                                <div style="width:10px; height:10px; float: right;" />
+
+                                <div  style="border: 1px solid; width:20px;
+                                    height:20px; float: right; padding-left:5px; margin-ring:5px;" />
+
+                                <div style="float: right; width:60px; font-size:10px;" ><span>En Bodega</span></div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding:5px;"><span>Condiciones Externas:</span></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Firma</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding:5px;"><span>Limpieza:</span></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Nombre</span></td>
+                        </tr>
+
+                         <tr>
+                            <td style="border: 1px solid; padding:5px;"><span>Despacha:</span></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;"></td>
+                            <td style="border: 1px solid; padding:5px;">
+                                <span>C.C</span><br/>
+                                <span>Cargo</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid; text-align:center; font-size:10px;">
+                                <span><strong>
+                                    El Cliente se Compromete al buen uso y mantenimiento del equipo a su cargo. El equipo se entrega
+                                    trabajando adecuadamente y en buena forma al hacerse la devolución por parte de la obra se exigirá lo mismo.
+                                    El equipo enviado en esta remisión no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras no sea devulto.
+                                </strong></span><br/>
+                                <span style="font-weight:bold;" t-field="o.company_id.name"/> <span style="font-weight:bold;" t-field="o.company_id.street"/>
+                               <strong>PBX:</strong>  <span style="font-weight:bold;" t-field="o.company_id.phone"/> <span style="font-weight:bold;" t-field="o.company_id.email"/>
+                                <span style="font-weight:bold;" t-field="o.company_id.city"/> - <span style="font-weight:bold;" t-field="o.company_id.country_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+                <t t-if="o.picking_type_id.id == 1">
+                    <table style="border: 1px solid;  width: 100%; font-size:12px;">
+                        <colgroup>
+                        <col width='20%' />
+                        <col width='10%' />
+                        <col width='10%' />
+                        <col width='10%' />
+                        <col width='10%' />
+                        <col width='10%' />
+                        <col width='4%' />
+                        <col width='16%' />
+                    </colgroup>
+                        <tr>
+                            <td rowspan="2" style="padding-left:5px; padding-top:10px;"><span>Anuncia Devolución:</span></td>
+                            <td rowspan="2"><span>Cargo:</span></td>
+                            <td rowspan="2"><span>Fecha:</span></td>
+                            <td rowspan="2"><span>Hora:</span></td>
+                            <td style="border: 1px solid; padding-left:5px;" rowspan="2"><span>Entregó En:</span></td>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Obra:</span></td>
+                            <td style="border: 1px solid;"><br/></td>
+                            <td style="border: 1px solid; padding-left:5px; height:25px;"><span>H. Llegada:</span></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding-left:5px;">Conalquipo</td>
+                            <td style="border: 1px solid;"><br/></td>
+                            <td style="border: 1px solid;padding-left:5px;">H. Salida:</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table style="border: 1px solid;  width: 100%; font-size:12px;">
+                        <colgroup>
+                            <col width='13%' />
+                            <col width='3%' />
+                            <col width='3%' />
+                            <col width='12%' />
+                            <col width='25%' />
+                            <col width='28%' />
+                        </colgroup>
+                        <tr>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Verificación Recibo</span></td>
+                            <td style="border: 1px solid; padding-left:5px;"><span>B</span></td>
+                            <td style="border: 1px solid; padding-left:2px;"><span>NC</span></td>
+                            <td style="padding-left:5px;"><span>Firma Revisado</span></td>
+                            <td style="padding-left:5px; border-left: 1px solid;"><span>Observaciones:</span></td>
+                            <td style="border-left: 1px solid; padding-left:5px;">
+                                <span>Entregó Equipo<br/>
+                                    Recoger más Equipo
+                                </span>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                                <div style="border: 1px solid; float: right; width:20px; font-size:10px;padding-left:2px;" ><span>No</span></div>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                                <div style="border: 1px solid; float: right; width:20px; font-size:10px; padding-left:5px;" ><span>Si</span></div>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Funcionamiento</span></td>
+                            <td style="border: 1px solid;"></td>
+                            <td style="border: 1px solid;"></td>
+                            <td></td>
+                            <td style="border-left: 1px solid;"></td>
+                            <td style="border-left: 1px solid; padding-left:5px;">
+                                <span style=" float: left;">Inmediatamente </span>
+                                <div style="width:10px; float: left;" ><br/></div>
+                                <div style="border: 1px solid; width:20px; font-size:10px; float: left;" ><br/></div>
+                                <div style="width:10px; float: left;" ><br/></div>
+                                <span style=" float: left;">Después</span>
+                                <div style="width:10px; float: left;" ><br/></div>
+                                <div style="border: 1px solid; width:20px; font-size:10px; float: left;" ><br/></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Condiciones Externas</span></td>
+                            <td style="border: 1px solid;"></td>
+                            <td style="border: 1px solid;"></td>
+                            <td></td>
+                            <td style="border-left: 1px solid;"></td>
+                            <td style="border-left: 1px solid; padding-left:5px;"><span>Firma:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid; padding-left:5px;"><span>Limpieza</span></td>
+                            <td style="border: 1px solid;"></td>
+                            <td style="border: 1px solid;"></td>
+                            <td></td>
+                            <td style="border-left: 1px solid;"></td>
+                            <td style="border-left: 1px solid; padding-left:5px;"><span>Nombre:</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left:5px; padding-top:5px; +">
+                                <span>Recibe:</span>
+                            </td>
+                            <td></td>
+                            <td style="border-right: 1px solid"></td>
+                            <td></td>
+                            <td style="border: 1px solid; padding-left:5px;">
+                                <span>Recogida Oportuna:</span>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                                <div style="border: 1px solid; float: right; width:20px; font-size:10px; padding-left:2px;" ><span>No</span></div>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                                <div style="border: 1px solid; float: right; width:20px; font-size:10px; padding-left:5px;" ><span>Si</span></div>
+                                <div style="float: right; width:20px; font-size:10px;" ><br/></div>
+                                <br/>
+                                <span>Hora Dev:</span>
+                            </td>
+                            <td style="border-left: 1px solid; padding-left:5px;">
+                                <span>C.C:</span><br/>
+                                <span>CARGO:</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid; padding-left:5px; font-size:10px; text-align:center;">
+                                <span style="font-weight:bold;" >El Cliente se compromete al buen uso del quipo a su cargo. El equipo es entregado trabajando
+                                    adecuadamente y en buena forma al hacerse la devolución por parte de la obra se exigirá lo mismo.
+                                </span><br/>
+                                <span style="font-weight:bold;" t-field="o.company_id.name"/> <span style="font-weight:bold;" t-field="o.company_id.street"/>
+                               <strong>PBX:</strong>  <span style="font-weight:bold;" t-field="o.company_id.phone"/> <span style="font-weight:bold;" t-field="o.company_id.email"/>
+                                <span style="font-weight:bold;" t-field="o.company_id.city"/> - <span style="font-weight:bold;" t-field="o.company_id.country_id.name"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+
+                 <br/>
+
+
+            </div>
+        </t>
+    </template>
+    <template id="report_delivery_con">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="con_shipping.report_delivery_document_con" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+
+    <report
+        string="Movimiento de Inventario"
+        id="action_report_delivery_con"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="con_shipping.report_delivery_con"
+        file="con_shipping.report_delivery_con"
+    />
+
+    <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="after">
+                  <button name="%(action_report_delivery_con)d" string="Print" states="done" type="action" groups="base.group_user"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

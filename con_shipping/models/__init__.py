@@ -19,3 +19,6 @@
 #
 ##############################################################################
 import shipping
+import vehicle_shipping
+import delivery_carrier
+import stock_picking
