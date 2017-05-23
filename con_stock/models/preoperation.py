@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from pygments.lexer import _inherit
+
 from odoo import fields, models, api
 from calendar import monthrange
 import datetime
@@ -99,7 +99,8 @@ class StockPicking(models.Model):
         calen = {}
         for day in xrange(1, days[1]+1):
             day = int(day)
-            my_date = datetime.datetime(year=now.year, month=now.month, day=day)
+            my_date = datetime.datetime(year=now.year, month=now.month,
+                                        day=day)
             name = calendar.day_name[my_date.weekday()]
             calen.update({day: [my_date.strftime('%Y-%m-%d'), name]})
 
@@ -117,7 +118,7 @@ class StockPicking(models.Model):
         now = datetime.datetime.now()
         fortnight = ""
         if now.day < 15 or now.day == 15:
-             fortnight = "Primera"
+            fortnight = "Primera"
         else:
             fortnight = "Segunda"
 
