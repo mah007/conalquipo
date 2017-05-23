@@ -34,9 +34,12 @@
     'website': "http://www.ias.com.co",
     'category': 'stock',
     'version': '0.1',
-    'depends': ['base', 'stock', 'con_partner_works'],
+    'depends': ['base', 'stock', 'con_partner_works',
+                'hr', 'product', 'report', 'mail'],
     'data': [
         'views/stock_picking.xml',
+        'reports/preoperation_report.xml',
+        'views/preoperation.xml',
     ],
     'qweb': [],
     'images': [],
