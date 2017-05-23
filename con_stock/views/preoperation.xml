@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_form_inherit">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='calendar_id']" position="after">
+                  <field name="is_operator" groups="base.group_no_one"/>
+                  <field name="product_ids" class="oe_no_button" onchange="onchange_is_operator"
+                             widget="many2many_tags"  attrs="{'invisible': [('is_operator','=', False)]}" />
+              </xpath>
+          </field>
+    </record>
+
+    <record id="con_product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.common.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[@name='notes']" position="after">
+                 <page name="operators" string="Operators">
+                     <group name="is_operated">
+                        <field name="is_operated" String="Is Operated"/>
+                     </group>
+                     <separator string="Operators"/>
+                     <group name="operators">
+                            <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                                 widget="many2many_tags" nolabel="1"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+                     </group>
+                 </page>
+              </xpath>
+         </field>
+    </record>
+
+     <record id="con_view_picking_form_inh" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+         <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_done']" position="after">
+                <field name="is_operated" invisible="1"/>
+                <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"/>
+            </xpath>
+        </field>
+     </record>
+</odoo>
