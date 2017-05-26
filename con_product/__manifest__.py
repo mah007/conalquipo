@@ -27,7 +27,7 @@
     'summary': 'Adds custom states to products that'
                ' can be changed at specific times of the workflow.',
     'depends': [
-        'base', 'stock', 'product', 'mrp', 'sale',
+        'base', 'stock', 'product', 'mrp', 'sale'
     ],
     'description':
     """
@@ -38,6 +38,7 @@
         'views/product.xml',
         'views/product_states.xml',
         'views/stock_location.xml',
+        'views/product_characteristic.xml',
     ],
     'qweb': [
     ],

@@ -19,13 +19,13 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
              <xpath expr="//page[@name='notes']" position="after">
-                 <page name="operators" string="Operators">
-                     <group name="is_operated">
-                        <field name="is_operated" String="Is Operated"/>
+                 <page name="characteristic" string="Characteristic">
+                     <group>
+                         <separator string="Operators"/>
                      </group>
-                     <separator string="Operators"/>
-                     <group name="operators">
-                            <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                     <group name="operated" col="2">
+                         <field name="is_operated" String="Is Operated"/>
+                         <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
                                  widget="many2many_tags" nolabel="1"  attrs="{'invisible': [('is_operated','=', False)]}"/>
                      </group>
                  </page>
