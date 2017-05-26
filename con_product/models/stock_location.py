@@ -49,6 +49,7 @@ class StockPicking(Model):
 class StockMove(Model):
     _inherit = "stock.move"
 
+    manual_create = fields.Boolean(string="Not Auto", default=False)
     not_explode = fields.Boolean(string="Don't explode",
                                  help="This flag don't repeat "
                                       "the method explode for this move",
@@ -93,8 +94,8 @@ class StockMove(Model):
             #  to 'assigned' as the original move is assigned
             processed_moves.write({'state': 'assigned'})
         # delete the move with original product which is not relevant anymore
-        if self.product_id.components:
-            processed_moves |= self.sudo().copy({'not_explode': True})
+        if self.manual_create:
+            self.sudo().copy({'not_explode': True})
 
         self.sudo().unlink()
         return processed_moves
