@@ -20,13 +20,20 @@
         <field name="arch" type="xml">
              <xpath expr="//page[@name='notes']" position="after">
                  <page name="characteristic" string="Characteristic">
-                     <group>
-                         <separator string="Operators"/>
-                     </group>
-                     <group name="operated" col="2">
-                         <field name="is_operated" String="Is Operated"/>
-                         <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
-                                 widget="many2many_tags" nolabel="1"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+                     <group name="characteristic">
+                         <group name="operated" >
+                             <field name="is_operated" String="Is Operated"/>
+                             <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                                     widget="many2many_tags"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+                         </group>
+                          <group name="characteristics" style="width:50%;">
+                                 <field name="characteristic" mode="tree" nolabel="1" >
+                                     <tree editable="bottom" >
+                                         <field name="product_id" invisible="1"/>
+                                         <field name="characteristic_id"/>
+                                     </tree>
+                                </field>
+                         </group>
                      </group>
                  </page>
               </xpath>

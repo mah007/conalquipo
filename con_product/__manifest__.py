@@ -38,7 +38,6 @@
         'views/product.xml',
         'views/product_states.xml',
         'views/stock_location.xml',
-        'views/product_characteristic.xml',
     ],
     'qweb': [
     ],

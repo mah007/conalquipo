@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from odoo.models import Model
-from odoo import fields
+from odoo import fields, api
 
 
 class Characteristic(Model):
@@ -51,3 +51,11 @@ class ProductTemplate(Model):
                                      'product_id',
                                      string='Product Characteristic',
                                      copy=True, track_visibility='onchange')
+
+    @api.onchange('characteristic')
+    def onchange_characteristic(self):
+        print
+        if self.characteristic:
+            for char in self.characteristic:
+                char.product_id = self._origin.id
+            self.update({'characteristic': self.characteristic})
