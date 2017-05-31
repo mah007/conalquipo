@@ -78,3 +78,15 @@ class StockPicking(Model):
             'partner_shipping_id': addr['delivery'],
         }
         self.update(values)
+
+
+class PackOperation(Model):
+    _inherit = "stock.pack.operation"
+
+    type_sp = fields.Integer(related='picking_id.picking_type_id.id')
+
+    mechanic_rem = fields.Many2one(comodel_name='hr.employee',
+                                   string='Mechanic (Rem)')
+    mechanic_dev = fields.Many2one(comodel_name='hr.employee',
+                                   string='Mechanic (Dev)')
+    observation = fields.Char(string="Observation")

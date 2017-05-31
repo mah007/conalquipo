@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
-
         <record id="view_stock_picking_form_inherit" model="ir.ui.view">
             <field name="name">inherit.stock.picking.form</field>
             <field name="model">stock.picking</field>
@@ -21,7 +20,24 @@
                     options="{&quot;always_reload&quot;: True}"
                     />
                 </field>
+
             </field>
         </record>
+        <record id="view_pack_operation_details_form_inherit" model="ir.ui.view">
+            <field name="name">stock.pack.operation.details.form.inherit</field>
+            <field name="model">stock.pack.operation</field>
+            <field name="inherit_id" ref="stock.view_pack_operation_details_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[3]" position="after">
+                    <group string="Other Information" >
+                        <field name="type_sp" invisible="1"/>
+                         <field name="mechanic_rem" attrs="{'invisible': [('type_sp','!=', 4)]}"/>
+                         <field name="mechanic_dev" attrs="{'invisible': [('type_sp','!=', 1)]}"/>
+                         <field name="observation"  colspan="3"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>

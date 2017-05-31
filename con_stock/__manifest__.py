@@ -43,6 +43,7 @@
         'views/preoperation.xml',
         'views/ir_attachment_view.xml',
         'views/product_characteristic.xml',
+        'reports/delivery_output_equipment.xml',
     ],
     'qweb': [],
     'images': [],

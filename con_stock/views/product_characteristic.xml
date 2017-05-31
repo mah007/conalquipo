@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-     <record id="characteristic_form_view" model="ir.ui.view">
+    <record id="characteristic_form_view" model="ir.ui.view">
         <field name="name">characteristic.form</field>
         <field name="model">characteristic</field>
         <field name="arch" type="xml">
@@ -26,11 +26,11 @@
         </field>
     </record>
 
-    <menuitem action="con_product.characteristic_form_action" id="menu_purchase_characteristic_form_action"
+    <menuitem action="con_stock.characteristic_form_action" id="menu_purchase_characteristic_form_action"
              parent="purchase.menu_product_in_config_purchase" sequence="10" />
-    <menuitem action="con_product.characteristic_form_action" id="menu_characteristic_form_action"
+    <menuitem action="con_stock.characteristic_form_action" id="menu_characteristic_form_action"
                parent="sale.prod_config_main" sequence="8" />
-    <menuitem action="con_product.characteristic_form_action" id="menu_stock_characteristic_form_action"
+    <menuitem action="con_stock.characteristic_form_action" id="menu_stock_characteristic_form_action"
         parent="stock.menu_product_in_config_stock" sequence="6" />
 
 </odoo>
