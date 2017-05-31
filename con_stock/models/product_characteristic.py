@@ -54,7 +54,6 @@ class ProductTemplate(Model):
 
     @api.onchange('characteristic')
     def onchange_characteristic(self):
-        print
         if self.characteristic:
             for char in self.characteristic:
                 char.product_id = self._origin.id
