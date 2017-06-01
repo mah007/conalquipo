@@ -133,7 +133,7 @@ class StockPicking(models.Model):
             my_date = datetime.datetime(year=now.year, month=now.month,
                                         day=day)
             name = calendar.day_name[my_date.weekday()]
-            calen.update({day: [my_date.strftime('%Y-%m-%d'), name]})
+            calen.update({day: [my_date.strftime('%d'), name]})
 
         return calen
 
@@ -164,3 +164,8 @@ class StockPicking(models.Model):
                     self.update({'is_preoperation': True})
                 else:
                     self.update({'m_instructive': True})
+
+    @api.multi
+    def year(self):
+        now = datetime.datetime.now()
+        return now.year

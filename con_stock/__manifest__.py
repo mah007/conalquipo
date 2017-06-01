@@ -41,6 +41,7 @@
         'reports/preoperation_report.xml',
         'views/preoperation.xml',
         'views/ir_attachment_view.xml',
+        'reports/control_equipment_operator.xml',
     ],
     'qweb': [],
     'images': [],
