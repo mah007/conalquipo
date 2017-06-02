@@ -29,3 +29,36 @@ msgstr "Transferir"
 #: model:ir.ui.view,arch_db:con_shipping.view_picking_form_inherit
 msgid "Some equipment does not have operator. Please remember to print the instructions for each of them."
 msgstr "Algunos equipos no poseen operador. Por favor recuerde imprimir el instructivo para cada uno de ellos."
+
+#. module: con_product
+#: model:ir.ui.menu,name:con_sale_shipping.menu_purchase_characteristic_form_action
+#: model:ir.ui.menu,name:con_sale_shipping.menu_characteristic_form_action
+#: model:ir.ui.menu,name:con_sale_shipping.menu_stock_characteristic_form_action
+msgid "Characteristic the product"
+msgstr "Característica del producto"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.characteristic_form_view
+msgid "Characteristic"
+msgstr "Característica"
+
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_pack_operation_details_form_inherit
+msgid "Other Information"
+msgstr "Otra Información"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_mechanic_rem
+msgid "Mechanic (Rem)"
+msgstr "Mecánico (Rem)"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_mechanic_dev
+msgid "Mechanic (Dev)"
+msgstr "Mecánico (Rev)"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_mechanic_dev
+msgid "Observation"
+msgstr "Observación"
