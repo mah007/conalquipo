@@ -61,6 +61,7 @@ class PackOperation(models.Model):
     @api.multi
     @api.onchange('product_id', 'product_uom_id', 'operator_ids')
     def onchange_product_id(self):
+
         doamin = {}
         if self.product_id:
 
@@ -79,6 +80,8 @@ class PackOperation(models.Model):
                     {'operator_ids': [('id', 'in',
                                        self.product_id.employee_ids.ids)]})
             if not self.is_operated:
+                self.update({'is_operated': self.product_id.is_operated})
+            else:
                 self.update({'is_operated': self.product_id.is_operated})
 
             res = {'domain': doamin}

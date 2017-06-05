@@ -21,3 +21,4 @@
 
 from . import stock_picking
 from . import preoperation
+from . import product_characteristic

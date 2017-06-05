@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* con_project_stock
+#	* con_stock
 #
 msgid ""
 msgstr ""
@@ -15,17 +15,62 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: con_project_stock
-#: model:ir.model.fields,field_description:con_project_stock.field_stock_picking_project_id
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_project_id
 msgid "Project"
 msgstr "Proyecto"
 
-#. module: con_project_stock
-#: model:ir.model,name:con_project_stock.model_stock_picking
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
 
 #. module: con_stock
-#: model:ir.ui.view,arch_db:con_shipping.view_picking_form_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_picking_form_inherit
 msgid "Some equipment does not have operator. Please remember to print the instructions for each of them."
 msgstr "Algunos equipos no poseen operador. Por favor recuerde imprimir el instructivo para cada uno de ellos."
+
+#. module: con_stock
+#: model:ir.ui.menu,name:con_stock.menu_purchase_characteristic_form_action
+#: model:ir.ui.menu,name:con_stock.menu_characteristic_form_action
+#: model:ir.ui.menu,name:con_stock.menu_stock_characteristic_form_action
+msgid "Characteristic the product"
+msgstr "Característica del producto"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.characteristic_form_view
+msgid "Characteristic"
+msgstr "Característica"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_pack_operation_details_form_inherit
+msgid "Other Information"
+msgstr "Otra Información"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_mechanic_rem
+msgid "Mechanic (Rem)"
+msgstr "Mecánico (Rem)"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_mechanic_dev
+msgid "Mechanic (Dev)"
+msgstr "Mecánico (Dev)"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_observation
+#: model:ir.model.fields,field_description:con_stock.field_observation
+msgid "Observation"
+msgstr "Observación"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_is_mechanic
+#: model:ir.model.fields,field_description:product.field_is_mechanic
+msgid "Is Mechanic"
+msgstr "Mecánico"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_is_operated
+#: model:ir.model.fields,field_description:product.field_is_operated
+msgid "Is Operated"
+msgstr "Es Operado"

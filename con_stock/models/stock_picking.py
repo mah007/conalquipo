@@ -21,6 +21,9 @@
 
 from odoo.models import Model, api
 from odoo import fields
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(Model):
@@ -55,6 +58,10 @@ class StockPicking(Model):
                                           help="Delivery address for"
                                                " current sales order.")
 
+    receives_maintenance = fields.Many2one(comodel_name='hr.employee',
+                                           string='Receives in maintenance',
+                                           track_visibility='onchange')
+
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
         """
@@ -78,3 +85,17 @@ class StockPicking(Model):
             'partner_shipping_id': addr['delivery'],
         }
         self.update(values)
+
+
+class PackOperation(Model):
+    _inherit = "stock.pack.operation"
+
+    type_sp = fields.Integer(related='picking_id.picking_type_id.id')
+    is_mechanic = fields.Boolean(
+        related='product_id.product_tmpl_id.is_mechanic', string='Is Mechanic')
+
+    mechanic_rem = fields.Many2one(comodel_name='hr.employee',
+                                   string='Mechanic (Rem)')
+    mechanic_dev = fields.Many2one(comodel_name='hr.employee',
+                                   string='Mechanic (Dev)')
+    observation = fields.Char(string="Observation")
