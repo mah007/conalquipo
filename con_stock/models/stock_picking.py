@@ -62,6 +62,10 @@ class StockPicking(Model):
                                            string='Receives in maintenance',
                                            track_visibility='onchange')
 
+    pack_detail_product = fields.One2many(
+        'stock.pack.detail.product', 'picking_id', 'pack Detail Product',
+        domain=[('product_id', '!=', False)])
+
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
         """
@@ -87,15 +91,66 @@ class StockPicking(Model):
         self.update(values)
 
 
-class PackOperation(Model):
-    _inherit = "stock.pack.operation"
+class StockPickingDetailProduct(Model):
+    _name = "stock.pack.detail.product"
 
-    type_sp = fields.Integer(related='picking_id.picking_type_id.id')
-    is_mechanic = fields.Boolean(
-        related='product_id.product_tmpl_id.is_mechanic', string='Is Mechanic')
+    picking_id = fields.Many2one('stock.picking', 'Stock Picking')
 
-    mechanic_rem = fields.Many2one(comodel_name='hr.employee',
-                                   string='Mechanic (Rem)')
-    mechanic_dev = fields.Many2one(comodel_name='hr.employee',
-                                   string='Mechanic (Dev)')
+    product_id = fields.Many2one('product.product', 'Product',
+                                 ondelete="cascade")
+
+    operator_ids = fields.Many2one(comodel_name='hr.employee',
+                                   string='Operator')
+
     observation = fields.Char(string="Observation")
+
+    @api.multi
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        doamin = {}
+        if self.product_id:
+
+            if not self.operator_ids:
+                self.operator_ids = self.product_id.employee_ids.ids
+                doamin.update(
+                    {'operator_ids': [('id', 'in',
+                                       self.product_id.employee_ids.ids)]})
+            # if not self.is_operated:
+            #     self.update({'is_operated': self.product_id.is_operated})
+            # else:
+            #     self.update({'is_operated': self.product_id.is_operated})
+
+            res = {'domain': doamin}
+        else:
+            res = {'domain': {'product_uom_id': []}}
+        return res
+
+    @api.multi
+    def action_see_instructive(self):
+        domain = [
+            '|',
+            '&', ('res_model', '=', 'product.product'),
+            ('res_id', '=', self.product_id.id),
+            '&', ('res_model', '=', 'product.template'),
+            ('res_id', '=', self.product_id.product_tmpl_id.id)]
+        attachment_view = \
+            self.env.ref('con_stock.view_document_file_kanban_instructive')
+        return {
+            'name': _('Attachments'),
+            'domain': domain,
+            'res_model': 'ir.attachment',
+            'type': 'ir.actions.act_window',
+            'view_id': attachment_view.id,
+            'views': [(attachment_view.id, 'kanban'), (False, 'form')],
+            'view_mode': 'kanban,tree,form',
+            'view_type': 'form',
+            'help': _('''<p class="oe_view_nocontent_create">
+                                   Click to upload files to your product.
+                               </p><p>
+                                   Use this feature to store any files, like
+                                   drawings or specifications.
+                               </p>'''),
+            'limit': 80,
+            'context': "{'default_res_model': '%s','default_res_id': %d}" %
+                       ('product.product', self.product_id.id)
+        }

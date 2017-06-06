@@ -69,8 +69,3 @@ msgstr "Observación"
 msgid "Is Mechanic"
 msgstr "Mecánico"
 
-#. module: con_stock
-#: model:ir.model.fields,field_description:con_stock.field_is_operated
-#: model:ir.model.fields,field_description:product.field_is_operated
-msgid "Is Operated"
-msgstr "Es Operado"

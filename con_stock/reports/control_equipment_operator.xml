@@ -30,8 +30,8 @@
                 </div>
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
-                <t t-foreach="o.pack_operation_product_ids" t-as="product_ids">
-                    <t t-if="product_ids.is_operated">
+                <t t-foreach="o.move_lines" t-as="product_ids">
+                    <!--<t t-if="product_ids.is_operated">-->
                         <div style="page-break-before:always;">
                             <table style="width: 100%; border: 1px solid; font-size: 12px;">
                                 <colgroup>
@@ -432,7 +432,7 @@
                                  </tr>
                              </table>
                          </div>
-                    </t>
+                    <!--</t>-->
                 </t>
             </div>
         </t>
@@ -444,13 +444,12 @@
         </t>
     </template>
     <report
-        string="Control Tiempo de Equipo y Operador"
-        id="action_report_preoperation_con"
+        string="Tiempo de Equipo y Operador"
+        id="action_report_equipment_operator"
         model="stock.picking"
         report_type="qweb-pdf"
         name="con_stock.report_equipment_operator"
         file="con_stock.report_equipment_operator"
-        menu = "True"
     />
 
 </odoo>

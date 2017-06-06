@@ -177,7 +177,7 @@
             </div>
         </t>
     </template>
-        <template id="report_delivey_output">
+    <template id="report_delivey_output">
         <t t-foreach="docs" t-as="o">
             <t t-call="con_stock.report_delivey_output_equipment" t-lang="o.partner_id.lang"/>
         </t>

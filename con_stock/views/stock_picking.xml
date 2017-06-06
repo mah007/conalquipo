@@ -28,49 +28,5 @@
 
             </field>
         </record>
-
-        <record id="view_pack_operation_details_form_inherit" model="ir.ui.view">
-            <field name="name">stock.pack.operation.details.form.inherit</field>
-            <field name="model">stock.pack.operation</field>
-            <field name="inherit_id" ref="stock.view_pack_operation_details_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//group[3]" position="after">
-                    <group string="Other Information" >
-                         <field name="type_sp" invisible="1"/>
-                         <field name="picking_id" invisible="1"/>
-                         <field name="is_operated" invisible="1"/>
-                         <field name="is_mechanic" readonly="1"/>
-                         <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"/>
-                         <field name="mechanic_rem" attrs="{'invisible': [('type_sp','!=', 4)]}"/>
-                         <field name="mechanic_dev" attrs="{'invisible': [('type_sp','!=', 1)]}"/>
-                         <field name="fresh_record" invisible="1"/>
-                         <field name="state" invisible="1"/>
-                         <field name="observation"  colspan="3"/>
-                    </group>
-                </xpath>
-
-                <xpath expr="//field[@name='product_id']" position="attributes">
-                    <attribute name="readonly"></attribute>
-                    <attribute name="attrs">{'readonly': [('product_id','!=', False)]}</attribute>
-                </xpath>
-
-            </field>
-        </record>
-
-        <record id="con_view_picking_form_inh" model="ir.ui.view">
-        <field name="name">stock.picking.form</field>
-        <field name="model">stock.picking</field>
-         <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='pack_operation_product_ids']//tree" position="attributes">
-                <attribute name="editable"></attribute>
-            </xpath>
-            <xpath expr="//field[@name='qty_done']" position="after">
-                <field name="is_operated" invisible="1"/>
-                <button name="action_see_instructive" String="Instructive" type="object" icon="fa-file" attrs="{'invisible': [('is_operated', '=', True)]}"/>
-            </xpath>
-        </field>
-     </record>
-
     </data>
 </openerp>
