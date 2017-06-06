@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class SaleOrder(models.Model):
@@ -33,6 +33,22 @@ class SaleOrder(models.Model):
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
+
+    @api.multi
+    def _get_available_product(self):
+        domain = [('sale_ok', '=', True)]
+        available_state = self.env['product.states'].search(
+            [('unavailable', '=', True)])
+
+        if available_state:
+            domain.append(('state_id', 'not in', available_state._ids))
+
+        return domain
+
+    product_id = fields.Many2one('product.product', string='Product',
+                                 domain=_get_available_product,
+                                 change_default=True,
+                                 ondelete='restrict', required=True)
 
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")

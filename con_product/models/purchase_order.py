@@ -40,7 +40,7 @@ class PurchaseOrder(Model):
                         for mv in pk.move_lines:
                             mv.copy({
                                 'product_id': ln.product_id.id,
-                                'product_uom_qty': ln.product_uom_qty,
+                                'product_uom_qty': ln.product_qty,
                                 'picking_id': pk.id,
                                 'not_explode': True,
                             })

@@ -139,6 +139,10 @@
                                  </tree>
                             </field>
                         </group>
+                        <group name="entry_exit_times" string="Entrance and exit of the work">
+                            <field name="entry_date" />
+                            <field name="exit_date" />
+                        </group>
                     </xpath>
 
                     <xpath expr="//field[@name='carrier_id']" position="before">

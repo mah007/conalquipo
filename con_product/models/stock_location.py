@@ -53,7 +53,7 @@ class StockMove(Model):
     not_explode = fields.Boolean(string="Don't explode",
                                  help="This flag don't repeat "
                                       "the method explode for this move",
-                                 defualt=False)
+                                 default=False)
 
     def action_explode(self):
         """ Explodes pickings """

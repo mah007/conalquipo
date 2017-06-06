@@ -68,6 +68,15 @@ class StockPicking(models.Model):
     receipts_driver_ids = fields.One2many('shipping.driver',
                                           'stock_picking_id',
                                           string='Shipping Driver', copy=True)
+    entry_date = fields.Datetime(string="Entry Hour",
+                                 help="In this field you must add "
+                                      "the date an hours of delivery "
+                                      "in the work")
+
+    exit_date = fields.Datetime(string="Exit Hour",
+                                help="In this field you must add "
+                                     "the date an hours of "
+                                     "in the stock")
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
