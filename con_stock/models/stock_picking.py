@@ -148,6 +148,14 @@ class StockPicking(Model):
 
         return move.state
 
+    @api.multi
+    def is_mechanic(self, product):
+        result = self.env['stock.pack.mechanic'].search([
+            ('picking_id', '=', self.id),
+            ('product_id', '=', product.product_id.id)], limit=1)
+
+        return result
+
 
 class StockPickingDetailProduct(Model):
     _name = "stock.pack.detail.product"

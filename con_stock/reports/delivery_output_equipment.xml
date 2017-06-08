@@ -25,8 +25,9 @@
                 </div>
             </div>
             <div class="page">
-                 <t t-foreach="o.pack_operation_product_ids" t-as="product_ids">
-                     <t t-if="product_ids.is_mechanic">
+                 <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
+                      <t t-set="product_m" t-value="o.is_mechanic(product_ids)"/>
+                     <t t-if="product_m.is_mechanic">
                         <div style="page-break-before:always;">
                           <table style="width: 100%; border: 1px solid; font-size:12px;">
                                 <colgroup>
@@ -37,7 +38,14 @@
                                 </colgroup>
                                 <tr>
                                     <td style="padding-left:5px;border: 1px solid;"><span>Cliente</span></td>
-                                    <td   style="border: 1px solid;padding-left: 5px;" colspan="3"><span t-field="o.partner_id.parent_id"/></td>
+                                    <td   style="border: 1px solid;padding-left: 5px;" colspan="3">
+                                         <t t-if="o.partner_id.parent_id">
+                                            <span t-field="o.partner_id.parent_id"/>
+                                        </t>
+                                        <t t-if="(not o.partner_id.parent_id)">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="padding-left:5px; border: 1px solid;"><span>Obra</span></td>
@@ -129,9 +137,9 @@
                                 </tr>
                                 <tr>
                                     <td style="padding-left:5px; font-weight:bold;"><span>Nombre:</span></td>
-                                    <td style="padding-left:5px;"><span><t t-esc="product_ids.mechanic_rem.name"/></span></td>
+                                    <td style="padding-left:5px;"><span><t t-esc="product_m.mechanic_ids.name"/></span></td>
                                     <td style="padding-left:5px; border-left: 1px solid; font-weight:bold;"><span>Nombre:</span></td>
-                                    <td style="padding-left:5px; border-right: 1px solid; "><span><t t-esc="product_ids.mechanic_dev.name"/></span></td>
+                                    <td style="padding-left:5px; border-right: 1px solid; "><span><t t-esc="product_m.mechanic_ids.name"/></span></td>
                                 </tr>
                                 <tr>
                                      <td  colspan="6" style="text-align:center; border:1px solid; font-size:10px;">
@@ -165,7 +173,10 @@
                                  </tr>
                                  <tr>
                                     <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold;"><span>Semáforo</span></td>
-                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"><t t-esc="product_ids.product_id.state_id.name"/></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;">
+                                         <t t-set="state" t-value="o.state_product(product_ids)"/>
+                                         <t t-esc="state"/>
+                                     </td>
                                  </tr>
                           </table>
                           <br/>
