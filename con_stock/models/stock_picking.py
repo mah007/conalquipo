@@ -69,6 +69,8 @@ class StockPicking(Model):
     pack_mechanic_ids = fields.One2many('stock.pack.mechanic', 'picking_id',
                                         'pack Mechanic')
 
+    print_clause = fields.Boolean('Print Clause', default=False)
+
     @api.model
     def create(self, vals):
         res = super(StockPicking, self).create(vals)
@@ -155,6 +157,19 @@ class StockPicking(Model):
             ('product_id', '=', product.product_id.id)], limit=1)
 
         return result
+
+    @api.onchange('move_lines')
+    def onchange_move_lines(self):
+
+        if self.pack_detail_product_ids:
+
+            for ids in self.pack_detail_product_ids:
+                if ids.product_t_id.clause:
+                    self.update({'print_clause': True})
+                if ids.operator_ids:
+                    self.update({'is_preoperation': True})
+                else:
+                    self.update({'m_instructive': True})
 
 
 class StockPickingDetailProduct(Model):

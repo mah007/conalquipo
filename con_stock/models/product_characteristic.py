@@ -53,6 +53,7 @@ class ProductTemplate(Model):
                                      'product_id',
                                      string='Product Characteristic',
                                      copy=True, track_visibility='onchange')
+    clause = fields.Boolean(string='Clause', default=False)
 
     @api.onchange('characteristic')
     def onchange_characteristic(self):
@@ -60,3 +61,9 @@ class ProductTemplate(Model):
             for char in self.characteristic:
                 char.product_id = self._origin.id
             self.update({'characteristic': self.characteristic})
+
+
+class ResCompany(Model):
+    _inherit = 'res.company'
+
+    clause = fields.Char(string='Clause')
