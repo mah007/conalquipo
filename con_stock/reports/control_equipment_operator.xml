@@ -31,7 +31,8 @@
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
                 <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
-                    <t t-if="product_ids.is_operated">
+                     <t t-set="state" t-value="o.state_product(product_ids)"/>
+                    <t t-if="product_ids.is_operated and state == 'done'">
                         <div style="page-break-before:always;">
                             <table style="width: 100%; border: 1px solid; font-size: 12px;">
                                 <colgroup>

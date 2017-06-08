@@ -139,6 +139,14 @@ class StockPicking(Model):
         }
         self.update(values)
 
+    @api.multi
+    def state_product(self, product):
+        move = self.env['stock.move'].search([
+            ('picking_id', '=', self.id),
+            ('product_id', '=', product.product_id.id)], limit=1)
+
+        return move.state
+
 
 class StockPickingDetailProduct(Model):
     _name = "stock.pack.detail.product"
