@@ -66,7 +66,8 @@ class StockPicking(Model):
                                               'picking_id',
                                               'pack Detail Product')
 
-    pack_mechanic_ids = fields.One2many('stock.pack.mechanic', 'picking_id', 'pack Mechanic')
+    pack_mechanic_ids = fields.One2many('stock.pack.mechanic', 'picking_id',
+                                        'pack Mechanic')
 
     @api.model
     def create(self, vals):
@@ -157,7 +158,7 @@ class StockPickingDetailProduct(Model):
                                  ondelete="cascade")
 
     product_t_id = fields.Many2one(related='product_id.product_tmpl_id',
-                                      String="Product Tem", ondelete="cascade")
+                                   String="Product Tem", ondelete="cascade")
 
     is_operated = fields.Boolean(
         related='product_id.product_tmpl_id.is_operated', string='Is Operated')

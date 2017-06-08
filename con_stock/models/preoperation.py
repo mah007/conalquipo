@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api, _
+from odoo import fields, models, api
 from calendar import monthrange
 import datetime
 import logging
