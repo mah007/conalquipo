@@ -26,7 +26,8 @@
             </div>
             <div class="page">
                  <t t-foreach="o.pack_operation_product_ids" t-as="product_ids">
-                      <div style="page-break-before:always;">
+                     <t t-if="product_ids.is_mechanic">
+                        <div style="page-break-before:always;">
                           <table style="width: 100%; border: 1px solid; font-size:12px;">
                                 <colgroup>
                                     <col width='10%' />
@@ -156,11 +157,11 @@
                                  </tr>
                                  <tr>
                                      <td style="padding-left: 5px; border:1px solid;  border-right:none; font-weight:bold;"><span>Entregó (Log.)</span></td>
-                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"><span t-field="o.write_uid.name"/></td>
                                  </tr>
                                  <tr>
                                      <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold; "><span>Recibió (Mtto)</span></td>
-                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"><span t-field="o.receives_maintenance.name"/></td>
                                  </tr>
                                  <tr>
                                     <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold;"><span>Semáforo</span></td>
@@ -170,12 +171,13 @@
                           <br/>
                           <br/>
                      </div>
+                     </t>
                  </t>
                 <br/>
             </div>
         </t>
     </template>
-        <template id="report_delivey_output">
+    <template id="report_delivey_output">
         <t t-foreach="docs" t-as="o">
             <t t-call="con_stock.report_delivey_output_equipment" t-lang="o.partner_id.lang"/>
         </t>

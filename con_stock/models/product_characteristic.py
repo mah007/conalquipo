@@ -47,6 +47,8 @@ class ProductCharacteristic(Model):
 class ProductTemplate(Model):
     _inherit = "product.template"
 
+    is_mechanic = fields.Boolean('Is Mechanic')
+
     characteristic = fields.One2many('product.characteristic',
                                      'product_id',
                                      string='Product Characteristic',

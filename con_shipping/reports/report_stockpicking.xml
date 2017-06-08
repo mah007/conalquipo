@@ -438,17 +438,4 @@
         file="con_shipping.report_delivery_con"
     />
 
-    <record id="view_picking_form_inherit" model="ir.ui.view">
-        <field name="name">stock.picking.form</field>
-        <field name="model">stock.picking</field>
-        <field eval="12" name="priority"/>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="arch" type="xml">
-            <data>
-                <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="after">
-                  <button name="%(action_report_delivery_con)d" string="Print" states="done" type="action" groups="base.group_user"/>
-                </xpath>
-            </data>
-        </field>
-    </record>
 </odoo>

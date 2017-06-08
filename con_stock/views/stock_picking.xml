@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
-        <record id="view_stock_picking_form_inherit" model="ir.ui.view">
-            <field name="name">inherit.stock.picking.form</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="partner_invoice_id"
-                           groups="sale.group_delivery_invoice_address"
-                           context="{'default_type':'invoice',
-                           'show_address': 1}"
-                    options="{&quot;always_reload&quot;: True}"
-                    />
-                    <field name="partner_shipping_id"
-                           groups="sale.group_delivery_invoice_address"
-                           context="{'default_type':'delivery',
-                            'show_address': 1}"
-                    options="{&quot;always_reload&quot;: True}"
-                    />
-                </field>
 
-            </field>
-        </record>
-        <record id="view_pack_operation_details_form_inherit" model="ir.ui.view">
-            <field name="name">stock.pack.operation.details.form.inherit</field>
-            <field name="model">stock.pack.operation</field>
-            <field name="inherit_id" ref="stock.view_pack_operation_details_form"/>
+         <record id="view_pack_detail_product_inherit" model="ir.ui.view">
+            <field name="name">pack.detail.product.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="con_shipping.view_picking_withcarrier_out_form_inherit"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[3]" position="after">
-                    <group string="Other Information" >
-                        <field name="type_sp" invisible="1"/>
-                         <field name="mechanic_rem" attrs="{'invisible': [('type_sp','!=', 4)]}"/>
-                         <field name="mechanic_dev" attrs="{'invisible': [('type_sp','!=', 1)]}"/>
-                         <field name="observation"  colspan="3"/>
-                    </group>
+                 <xpath expr="//page[@name='info_shipping']" position="after">
+                     <page name='detail_product' string="Detail Product">
+                        <group>
+                             <field name="pack_detail_product_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')]}" nolabel="1">
+                                     <tree editable="bottom" create="false" delete="false">
+                                         <field name="product_id" readonly="1" />
+                                         <field name="product_t_id" invisible="1" />
+                                         <field name="is_operated" invisible="1"/>
+                                         <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"  />
+                                         <field name="observation"  colspan="3"/>
+                                         <button name="action_see_instructive" String="Instructive" type="object" icon="fa-file" attrs="{'invisible': [('is_operated', '=', True)]}"/>
+                                     </tree>
+                             </field>
+                        </group>
+                     </page>
+                     <page name='mechanical_revision' string="Mechanical revision">
+                        <group>
+                             <field name="pack_mechanic_ids" mode="tree"  nolabel="1">
+                                     <tree editable="bottom" create="false" delete="false">
+                                         <field name="product_id" readonly="1"/>
+                                         <field name="is_mechanic" invisible="1"/>
+                                         <field name="mechanic_ids" attrs="{'invisible': [('is_mechanic','=', False)]}"/>
+                                         <field name="broken"/>
+                                     </tree>
+                             </field>
+                        </group>
+                    </page>
                 </xpath>
             </field>
-        </record>
+       </record>
 
     </data>
 </openerp>

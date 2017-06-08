@@ -29,7 +29,7 @@
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
                 <t t-foreach="o.pack_operation_product_ids" t-as="product_ids">
-                    <t t-if="product_ids.is_operated">
+                    <!--<t t-if="product_ids.is_operated">-->
                         <div>
                         <div style="page-break-inside: avoid !important;">
                             <table style="width: 100%;">
@@ -187,7 +187,7 @@
                         <br/>
                     </div>
 
-                    </t>
+                    <!--</t>-->
                 </t>
             </div>
         </t>
@@ -211,7 +211,7 @@
         <field name="name">stock.picking.form</field>
         <field name="model">stock.picking</field>
         <field eval="12" name="priority"/>
-        <field name="inherit_id" ref="con_shipping.view_picking_form_inherit"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//button[@name='button_scrap']" position="after">
