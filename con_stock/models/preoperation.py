@@ -91,16 +91,6 @@ class StockPicking(models.Model):
         return fortnight
 
     @api.multi
-    @api.onchange('pack_operation_product_ids')
-    def onchange_pack_operation_product_ids(self):
-        if self.pack_operation_product_ids:
-            for ids in self.pack_operation_product_ids:
-                if ids.operator_ids:
-                    self.update({'is_preoperation': True})
-                else:
-                    self.update({'m_instructive': True})
-
-    @api.multi
     def year(self):
         now = datetime.datetime.now()
         return now.year

@@ -54,9 +54,12 @@ class StockPicking(models.Model):
 
     Hr_output = fields.Float(string='Hour Output', track_visibility='onchange')
 
-    person_receives = fields.Many2one(comodel_name='hr.employee',
-                                      string='Person receives',
-                                      track_visibility='onchange')
+    person_receives = fields.Char(string='Person receives',
+                                  track_visibility='onchange')
+    person_identification_id = fields.Char(string='Person identification',
+                                           track_visibility='onchange')
+    person_job_id = fields.Char(string='Person identification',
+                                track_visibility='onchange')
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):

@@ -30,8 +30,8 @@
                 </div>
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
-                <t t-foreach="o.move_lines" t-as="product_ids">
-                    <!--<t t-if="product_ids.is_operated">-->
+                <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
+                    <t t-if="product_ids.is_operated">
                         <div style="page-break-before:always;">
                             <table style="width: 100%; border: 1px solid; font-size: 12px;">
                                 <colgroup>
@@ -44,7 +44,15 @@
                                 </colgroup>
                                 <tr>
                                     <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Cliente</span></td>
-                                    <td style="padding-left:5px; border: 1px solid;"><span t-field="o.partner_id.parent_id"/></td>
+                                    <td style="padding-left:5px; border: 1px solid;">
+                                        <t t-if="o.partner_id.parent_id">
+                                            <span t-field="o.partner_id.parent_id"/>
+                                        </t>
+                                        <t t-if="(not o.partner_id.parent_id)">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+
+                                    </td>
                                     <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Obra</span></td>
                                     <td style="padding-left:5px; border: 1px solid;"><span t-field="o.partner_id.name"/></td>
                                     <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Código</span></td>
@@ -432,7 +440,7 @@
                                  </tr>
                              </table>
                          </div>
-                    <!--</t>-->
+                    </t>
                 </t>
             </div>
         </t>

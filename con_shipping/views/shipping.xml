@@ -154,10 +154,12 @@
                                       <field name="shipping_weight"/>
                                       <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
                                   </group>
-                                  <group col="2">
+                                  <group col="2" name="construction_receives" string="Info Remission On Site">
                                         <field name="Hr_entry" widget='float_time'/>
                                         <field name="Hr_output" widget='float_time'/>
                                         <field name="person_receives"/>
+                                        <field name="person_identification_id"/>
+                                        <field name="person_job_id"/>
                                   </group>
                                   <group>
                                        <field name="driver_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')],
