@@ -54,7 +54,7 @@ class Product(models.Model):
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    is_preoperation = fields.Boolean('Repor Reoperation', default=False)
+    is_preoperation = fields.Boolean('Report Reoperation', default=False)
 
     m_instructive = fields.Boolean('Instructive Menssage', default=False)
 

@@ -22,10 +22,13 @@
                  <page name="characteristic" string="Characteristic">
                      <group name="characteristic">
                          <group name="operated" >
-                             <field name="is_mechanic"/>
-                             <field name="is_operated" String="Is Operated"/>
+                             <field name="clause" string="Clause"/>
+                             <field name="is_mechanic" string="Is Machanic"/>
+                             <field name="is_operated" string="Is Operated"/>
                              <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                                    string="Operated"
                                      widget="many2many_tags"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+
                          </group>
                           <group name="characteristics" style="width:50%;">
                                  <field name="characteristic" mode="tree" nolabel="1" >
