@@ -19,5 +19,23 @@
 #
 ##############################################################################
 
-from . import sale_order
-from . import partner_warnings
+from odoo import fields, models, api
+
+
+class PartnerWarnings(models.Model):
+    _name = "partner.warnings"
+
+    name = fields.Char(string='Code')
+    warning_type = fields.Selection([('sale_warn', 'In Sale'),
+                                     ('picking_warn', 'In Picking')])
+    message_type = fields.Selection([('no-message', 'Message'),
+                                     ('warning', 'Warning'),
+                                     ('block', 'Block')], string="Type")
+    message_body = fields.Text(string="Message")
+
+
+class ResPartner(models.Model):
+    _inherit = "res.partner"
+
+    trust_code = fields.Many2one('partner.warnings', string="Trust Code")
+

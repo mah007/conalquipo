@@ -30,6 +30,49 @@ class SaleOrder(models.Model):
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="sale")
 
+    @api.onchange('partner_id')
+    def onchange_partner_id_warning(self):
+        super(SaleOrder, self).onchange_partner_id_warning()
+
+        print "Estoy en esta funcion locoteeee!!!"
+
+        warning = {}
+        title = False
+        message = False
+        partner = self.partner_id
+
+        if partner.trust_code:
+            print "Ya voy por aca"
+            if partner.trust_code.message_type == 'no-message' and \
+                    partner.parent_id:
+                partner = partner.parent_id
+                print "encontre otro partner"
+
+            if partner.trust_code.message_type != 'no-message':
+                print "Si hay mensaje"
+                if partner.trust_code.message_type != 'block' and \
+                        partner.parent_id and \
+                                partner.trust_code.message_type == 'block':
+                    print "Cai en otro if pal partner"
+                    partner = partner.parent_id
+
+                title = ("Warning for %s") % partner.name
+                message = partner.trust_code.message_body
+                warning = {
+                    'title': title,
+                    'message': message,
+                }
+
+                if partner.trust_code.message_type == 'block':
+                    self.update({'partner_id': False,
+                                 'partner_invoice_id': False,
+                                 'partner_shipping_id': False,
+                                 'pricelist_id': False})
+                    return {'warning': warning}
+
+            if warning:
+                return {'warning': warning}
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
