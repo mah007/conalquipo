@@ -47,36 +47,23 @@ class StockPicking(models.Model):
 
     driver_ids = fields.One2many('shipping.driver', 'stock_picking_id',
                                  string='Shipping Driver', copy=True)
+    vehicle_client = fields.Char(string='Vehicle',
+                                 track_visibility='onchange')
 
-    receipts_carrier_type = fields.Selection([('client', 'Client'),
-                                              ('company', 'Company')],
-                                             string='Carrier Responsible',
-                                             default='client')
+    Hr_entry = fields.Float(string='Hour Entry', track_visibility='onchange')
 
-    receipts_vehicle_id = fields.Many2one(comodel_name='fleet.vehicle',
-                                          string='Vehicle',
-                                          ondelete='cascade',
-                                          index=True, copy=False,
-                                          track_visibility='onchange')
-
-    receipts_vehicle_client = fields.Char(string='Vehicle',
-                                          track_visibility='onchange')
-
-    receipts_driver_client = fields.Char(string='Driver',
-                                         track_visibility='onchange')
+    Hr_output = fields.Float(string='Hour Output', track_visibility='onchange')
 
     receipts_driver_ids = fields.One2many('shipping.driver',
                                           'stock_picking_id',
                                           string='Shipping Driver', copy=True)
-    entry_date = fields.Datetime(string="Entry Hour",
-                                 help="In this field you must add "
-                                      "the date an hours of delivery "
-                                      "in the work")
 
-    exit_date = fields.Datetime(string="Exit Hour",
-                                help="In this field you must add "
-                                     "the date an hours of "
-                                     "in the stock")
+    person_receives = fields.Char(string='Person receives',
+                                  track_visibility='onchange')
+    person_identification_id = fields.Char(string='Person identification',
+                                           track_visibility='onchange')
+    person_job_id = fields.Char(string='Person identification',
+                                track_visibility='onchange')
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
@@ -114,7 +101,7 @@ class StockPicking(models.Model):
             vehicle = self.env['fleet.vehicle'].search([('id', 'in',
                                                          veh_ids)], limit=10)
 
-            domain = {'receipts_vehicle_id': [('id', 'in', vehicle.ids)]}
+            domain = {'vehicle_id': [('id', 'in', vehicle.ids)]}
 
         return {'domain': domain}
 

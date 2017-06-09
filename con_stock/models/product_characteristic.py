@@ -47,10 +47,13 @@ class ProductCharacteristic(Model):
 class ProductTemplate(Model):
     _inherit = "product.template"
 
+    is_mechanic = fields.Boolean('Is Mechanic')
+
     characteristic = fields.One2many('product.characteristic',
                                      'product_id',
                                      string='Product Characteristic',
                                      copy=True, track_visibility='onchange')
+    clause = fields.Boolean(string='Clause', default=False)
 
     @api.onchange('characteristic')
     def onchange_characteristic(self):
@@ -58,3 +61,9 @@ class ProductTemplate(Model):
             for char in self.characteristic:
                 char.product_id = self._origin.id
             self.update({'characteristic': self.characteristic})
+
+
+class ResCompany(Model):
+    _inherit = 'res.company'
+
+    clause = fields.Char(string='Clause')

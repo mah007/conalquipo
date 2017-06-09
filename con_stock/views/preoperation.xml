@@ -22,9 +22,13 @@
                  <page name="characteristic" string="Characteristic">
                      <group name="characteristic">
                          <group name="operated" >
-                             <field name="is_operated" String="Is Operated"/>
+                             <field name="clause" string="Clause"/>
+                             <field name="is_mechanic" string="Is Machanic"/>
+                             <field name="is_operated" string="Is Operated"/>
                              <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                                    string="Operated"
                                      widget="many2many_tags"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+
                          </group>
                           <group name="characteristics" style="width:50%;">
                                  <field name="characteristic" mode="tree" nolabel="1" >
@@ -40,24 +44,11 @@
          </field>
     </record>
 
-     <record id="con_view_picking_form_inh" model="ir.ui.view">
-        <field name="name">stock.picking.form</field>
-        <field name="model">stock.picking</field>
-         <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='qty_done']" position="after">
-                <field name="is_operated" invisible="1"/>
-                <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"/>
-                <button name="action_see_instructive" String="Instructive" type="object" icon="fa-file" attrs="{'invisible': [('is_operated', '=', True)]}"/>
-            </xpath>
-        </field>
-     </record>
-
      <record id="con_view_picking_form_view_inherit" model="ir.ui.view">
         <field name="name">stock.picking.form</field>
         <field name="model">stock.picking</field>
         <field eval="12" name="priority"/>
-        <field name="inherit_id" ref="con_shipping.view_picking_form_inherit"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//header" position="after">
