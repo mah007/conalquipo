@@ -30,8 +30,7 @@ class StockPicking(models.Model):
 
     type_sp = fields.Integer(related='picking_type_id.id')
 
-    carrier_type = fields.Selection(related='sale_id.carrier_type',
-                                    readonly=True)
+    carrier_type = fields.Selection(related='sale_id.carrier_type')
 
     vehicle_id = fields.Many2one(comodel_name='fleet.vehicle',
                                  string='Vehicle',
