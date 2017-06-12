@@ -113,16 +113,7 @@ class StockPicking(Model):
     def write(self, vals):
 
         res = super(StockPicking, self).write(vals)
-
-        if vals.get('move_lines'):
-            for move in vals['move_lines']:
-                if len(move) == 3:
-                    if move[2]:
-                        if not move[2].get('picking_id'):
-                            self.env['stock.move'].search(
-                                [('id', '=', move[1])]).write(
-                                {'picking_id': self.id})
-
+        self.move_lines(vals)
         moves = self.env['stock.move'].search([('picking_id', '=', self.id)])
         detail_product = self.env['stock.pack.detail.product']
         mechanic = self.env['stock.pack.mechanic']
@@ -150,6 +141,16 @@ class StockPicking(Model):
                         mechanic.search([('product_id', '=', d)]).unlink()
 
         return res
+    
+    def move_lines(self, vals):
+        if vals.get('move_lines'):
+            for move in vals['move_lines']:
+                if len(move) == 3:
+                    if move[2]:
+                        if not move[2].get('picking_id'):
+                            self.env['stock.move'].search(
+                                [('id', '=', move[1])]).write(
+                                {'picking_id': self.id})
 
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
@@ -221,8 +222,8 @@ class StockPicking(Model):
                         }).id
                     )
                 self.update({'move_lines': mv_lines})
-        self.update({'default_type_id':
-                         self._context.get('default_picking_type_id')})
+        self.update({'default_type_id': self._context.get(
+            'default_picking_type_id')})
 
 
 class StockPickingDetailProduct(Model):
@@ -297,10 +298,10 @@ class StockMove(Model):
     _inherit = "stock.move"
 
     qty_sent = fields.Integer(compute='_quantity_sent',
-                                   string='Quantity On Site')
+                              string='Quantity On Site')
 
     qty_refund = fields.Integer(compute='_quantity_refund',
-                                   string='Quantity Refund')
+                                string='Quantity Refund')
 
     @api.one
     def _quantity_sent(self):
@@ -314,7 +315,7 @@ class StockMove(Model):
             for sr in stcok_r:
                 for mv in sr.move_lines:
                     if self.product_id.id == mv.product_id.id:
-                         res += mv.product_uom_qty
+                        res += mv.product_uom_qty
 
         self.qty_sent = res
 
