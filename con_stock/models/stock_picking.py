@@ -71,9 +71,32 @@ class StockPicking(Model):
 
     print_clause = fields.Boolean('Print Clause', default=False)
 
+    print_control_eo = fields.Boolean('Print Control Equipment Operator',
+                                      default=False)
+
+    delivery_order_id = fields.Many2one('stock.picking', 'Delivery Order',
+                                        copy=False, index=True,
+                                        states={
+                                            'done': [('readonly', True)],
+                                            'cancel': [('readonly', True)]},
+                                        domain="[('type_sp', '=', 4),"
+                                               "('state', '=', 'done')]",
+                                        invisible=True)
+    default_type_id = fields.Integer(string="default type")
+
     @api.model
     def create(self, vals):
+
         res = super(StockPicking, self).create(vals)
+
+        if vals.get('move_lines'):
+            for move in vals['move_lines']:
+                if len(move) == 3:
+                    if not move[2].get('picking_id'):
+                        self.env['stock.move'].search(
+                            [('id', '=', move[1])]).write(
+                            {'picking_id': res.id})
+
         moves = self.env['stock.move'].search([('picking_id', '=', res.id)])
         for move in moves:
             if move.product_id:
@@ -90,6 +113,16 @@ class StockPicking(Model):
     def write(self, vals):
 
         res = super(StockPicking, self).write(vals)
+
+        if vals.get('move_lines'):
+            for move in vals['move_lines']:
+                if len(move) == 3:
+                    if move[2]:
+                        if not move[2].get('picking_id'):
+                            self.env['stock.move'].search(
+                                [('id', '=', move[1])]).write(
+                                {'picking_id': self.id})
+
         moves = self.env['stock.move'].search([('picking_id', '=', self.id)])
         detail_product = self.env['stock.pack.detail.product']
         mechanic = self.env['stock.pack.mechanic']
@@ -148,7 +181,7 @@ class StockPicking(Model):
             ('picking_id', '=', self.id),
             ('product_id', '=', product.product_id.id)], limit=1)
 
-        return move.state
+        return move
 
     @api.multi
     def is_mechanic(self, product):
@@ -158,7 +191,7 @@ class StockPicking(Model):
 
         return result
 
-    @api.onchange('move_lines')
+    @api.onchange()
     def onchange_move_lines(self):
 
         if self.pack_detail_product_ids:
@@ -170,6 +203,26 @@ class StockPicking(Model):
                     self.update({'is_preoperation': True})
                 else:
                     self.update({'m_instructive': True})
+
+    @api.onchange('delivery_order_id')
+    def onchange_delivery_order_id(self):
+
+        mv_lines = []
+        if self.delivery_order_id:
+            if self.delivery_order_id.move_lines:
+                for mv in self.delivery_order_id.move_lines:
+                    mv_lines.append(
+                        mv.copy({
+                            'picking_id': '',
+                            'location_id': mv.location_dest_id.id,
+                            'location_dest_id': mv.location_id.id,
+                            'state': 'draft',
+                            'picking_type_id': 1
+                        }).id
+                    )
+                self.update({'move_lines': mv_lines})
+        self.update({'default_type_id':
+                         self._context.get('default_picking_type_id')})
 
 
 class StockPickingDetailProduct(Model):
@@ -238,6 +291,53 @@ class StockPickingMechanic(Model):
                                    string='Mechanic')
 
     broken = fields.Boolean(string="Broken")
+
+
+class StockMove(Model):
+    _inherit = "stock.move"
+
+    qty_sent = fields.Integer(compute='_quantity_sent',
+                                   string='Quantity On Site')
+
+    qty_refund = fields.Integer(compute='_quantity_refund',
+                                   string='Quantity Refund')
+
+    @api.one
+    def _quantity_sent(self):
+        res = 0
+        if self.origin:
+            stcok_r = self.env['stock.picking'].search(
+                [('state', '=', 'done'),
+                 ('origin', '=', self.origin),
+                 ('id', '!=', self.picking_id.id)])
+
+            for sr in stcok_r:
+                for mv in sr.move_lines:
+                    if self.product_id.id == mv.product_id.id:
+                         res += mv.product_uom_qty
+
+        self.qty_sent = res
+
+    @api.one
+    def _quantity_refund(self):
+        res = 0
+        stcok_d = []
+        if self.picking_id:
+            stcok_r = self.env['stock.picking'].search(
+                [('state', '=', 'done'),
+                 ('origin', '=', self.origin)])
+
+            for r in stcok_r:
+                stcok_d.append(self.env['stock.picking'].search([
+                    ('state', '=', 'done'),
+                    ('delivery_order_id', '=', r.id)]))
+
+            for sp in stcok_d:
+                for mv in sp.move_lines:
+                    if self.product_id.id == mv.product_id.id:
+                        res += mv.product_uom_qty
+
+        self.qty_refund = res
 
 
 class SaleOrder(Model):

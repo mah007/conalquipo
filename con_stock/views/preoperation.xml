@@ -57,6 +57,10 @@
                         Some equipment does not have operator. Please remember to print the instructions for each of them.
                     </div>
                 </xpath>
+
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="receives_maintenance"/>
+                </xpath>
             </data>
         </field>
     </record>

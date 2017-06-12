@@ -90,7 +90,9 @@
                         <col width='10%' />
                         <col width='40%' />
                         <col width='5%' />
-                        <col width='5%' />
+                         <t t-if="o.picking_type_id.id == 4">
+                            <col width='5%' />
+                         </t>
                         <col width='10%' />
                         <col width='20%' />
                         <col width='10%' />
@@ -99,25 +101,65 @@
                         <td style="border: 1px solid; text-align: center;"><span>Código</span></td>
                         <td style="border: 1px solid; text-align: center;"><span>Descripción:</span></td>
                         <td style="border: 1px solid; text-align: center;"><span>Und.</span></td>
-                        <td style="border: 1px solid; text-align: center;"><span>Min.</span></td>
+                         <t t-if="o.picking_type_id.id == 4">
+                            <td style="border: 1px solid; text-align: center;"><span>Min.</span></td>
+                        </t>
+
                         <td style="border: 1px solid; text-align: center;"><span>Cantidad En Obra:</span></td>
-                        <td style="border: 1px solid; text-align: center;"><span>Cantidad Remitida:</span></td>
+
+                        <td style="border: 1px solid; text-align: center;">
+                             <t t-if="o.picking_type_id.id == 4">
+                                <span>Cantidad Remitida:</span>
+                            </t>
+                            <t t-if="o.picking_type_id.id == 1">
+                                <span>Cantidad Devuelta:</span>
+                            </t>
+
+                        </td>
+
                         <td style="border: 1px solid; text-align: center;"><span>Saldo En Obra:</span></td>
                     </tr>
                      <tr t-foreach="o.move_lines" t-as="move">
                         <td style="padding:5px; border-right: 1px solid;"><span t-field="move.product_id.default_code"/></td>
                         <td style="padding:5px; border-left 1px solid; border-right: 1px solid;"><span t-field="move.product_id"/></td>
                         <td style="padding:5px; border-left 1px solid; border-right: 1px solid;"><span t-field="move.product_uom"/></td>
-                        <td style="padding:5px; border-right: 1px solid;"></td>
-                        <td style="padding:5px; border-left 1px solid; border-right: 1px solid;"><span t-field="move.ordered_qty"/></td>
-                        <td style="padding:5px; border-right: 1px solid;"></td>
-                        <td style="padding:5px; border-left 1px solid;"></td>
+                         <t t-if="o.picking_type_id.id == 4">
+                             <td style="padding:5px; border-right: 1px solid;"></td>
+                         </t>
+                        <td style="padding:5px; border-left 1px solid; border-right: 1px solid;">
+                            <t t-esc="int(move.qty_sent - move.qty_refund)" />
+                        </td>
+                        <td style="padding:5px; border-right: 1px solid;">
+                            <t t-if="move.state == 'done'" >
+                                <span t-field="move.product_uom_qty"/>
+                            </t>
+                             <t t-if="move.state != 'done'" >
+                                 <span>0</span>
+                            </t>
+
+                        </td>
+                        <td style="padding:5px; border-left 1px solid;">
+                            <t t-if="move.state == 'done'" >
+                                 <t t-if="o.picking_type_id.id == 4">
+                                    <t t-esc="int(move.qty_sent + move.product_uom_qty - move.qty_refund)" />
+                                 </t>
+                                 <t t-if="o.picking_type_id.id == 1">
+                                      <t t-esc="int(move.qty_sent - move.qty_refund)" />
+                                 </t>
+                            </t>
+                            <t t-if="move.state != 'done'" >
+                                <t t-esc="int(move.qty_sent - move.qty_refund)" />
+                            </t>
+
+                        </td>
                     </tr>
                      <tr>
                         <td style="border-right: 1px solid;"><br/></td>
                         <td style="border-left 1px solid; border-right: 1px solid;"><br/></td>
                         <td style="border-left 1px solid; border-right: 1px solid;"><br/></td>
-                        <td style="padding:5px; border-right: 1px solid;"><br/></td>
+                         <t t-if="o.picking_type_id.id == 4">
+                            <td style="padding:5px; border-right: 1px solid;"><br/></td>
+                         </t>
                         <td style="border-left 1px solid; border-right: 1px solid;"><br/></td>
                         <td style="border-right: 1px solid;"><br/></td>
                         <td style="border-left 1px solid;"><br/></td>

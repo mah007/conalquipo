@@ -31,8 +31,8 @@
             </div>
             <div class="page" style="page-break-inside: avoid !important;">
                 <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
-                     <t t-set="state" t-value="o.state_product(product_ids)"/>
-                    <t t-if="product_ids.is_operated and state == 'done'">
+                     <t t-set="move" t-value="o.state_product(product_ids)"/>
+                    <t t-if="product_ids.is_operated and move.state == 'done'">
                         <div style="page-break-before:always;">
                             <table style="width: 100%; border: 1px solid; font-size: 12px;">
                                 <colgroup>
@@ -459,6 +459,23 @@
         report_type="qweb-pdf"
         name="con_stock.report_equipment_operator"
         file="con_stock.report_equipment_operator"
+        menu="False"
     />
+
+     <record id="control_view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='state']" position="before">
+                    <button name="%(action_report_equipment_operator)d" string="Control Tiempo"
+                          type="action" attrs="{'invisible': ['|',('state', 'in', '[done]'), ('type_sp', '!=', '4')]}"/>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
 
 </odoo>
