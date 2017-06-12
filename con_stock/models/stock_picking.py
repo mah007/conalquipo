@@ -141,7 +141,7 @@ class StockPicking(Model):
                         mechanic.search([('product_id', '=', d)]).unlink()
 
         return res
-    
+
     def move_lines(self, vals):
         if vals.get('move_lines'):
             for move in vals['move_lines']:
