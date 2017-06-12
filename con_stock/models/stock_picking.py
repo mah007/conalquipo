@@ -113,7 +113,7 @@ class StockPicking(Model):
     def write(self, vals):
 
         res = super(StockPicking, self).write(vals)
-        self.move_lines(vals)
+        self.fun_move_lines(vals)
         moves = self.env['stock.move'].search([('picking_id', '=', self.id)])
         detail_product = self.env['stock.pack.detail.product']
         mechanic = self.env['stock.pack.mechanic']
@@ -142,7 +142,7 @@ class StockPicking(Model):
 
         return res
 
-    def move_lines(self, vals):
+    def fun_move_lines(self, vals):
         if vals.get('move_lines'):
             for move in vals['move_lines']:
                 if len(move) == 3:
