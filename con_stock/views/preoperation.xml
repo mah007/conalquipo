@@ -6,7 +6,8 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
           <field name="arch" type="xml">
               <xpath expr="//field[@name='calendar_id']" position="after">
-                  <field name="is_operator" groups="base.group_no_one"/>
+                  <field name="is_operator"/>
+                  <field name="availability" widget="radio" attrs="{'invisible': [('is_operator','=', False)]}"/>
                   <field name="product_ids" class="oe_no_button" onchange="onchange_is_operator"
                              widget="many2many_tags"  attrs="{'invisible': [('is_operator','=', False)]}" />
               </xpath>

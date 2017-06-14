@@ -242,7 +242,8 @@ class StockPickingDetailProduct(Model):
 
     operator_ids = \
         fields.Many2one(comodel_name='hr.employee', string='Operator',
-                        domain="[('product_ids', '=', product_t_id)]")
+                        domain="[('product_ids', '=', product_t_id),"
+                               "('availability', '=', 'available')]")
 
     observation = fields.Char(string="Observation")
 
@@ -275,6 +276,37 @@ class StockPickingDetailProduct(Model):
             'context': "{'default_res_model': '%s','default_res_id': %d}" %
                        ('product.product', self.product_id.id)
         }
+
+    @api.model
+    def create(self, vals):
+        res = super(StockPickingDetailProduct, self).create(vals)
+        if vals.get('operator_ids'):
+            self.env['hr.employee'].search([
+                ('id', '=', vals.get('operator_ids'))], limit=1).write(
+                {'availability': 'not_available'})
+        return res
+
+    @api.multi
+    def write(self, vals):
+        if self.operator_ids:
+
+            if vals.get('operator_ids'):
+                if self.is_operated != vals.get('operator_ids').id:
+                    self.env['hr.employee'].search([
+                        ('id', '=', self.operator_ids.id)], limit=1).write(
+                        {'availability': 'available'})
+            else:
+                self.env['hr.employee'].search([
+                    ('id', '=', self.operator_ids.id)], limit=1).write(
+                    {'availability': 'available'})
+
+        res = super(StockPickingDetailProduct, self).write(vals)
+
+        if vals.get('operator_ids'):
+            self.env['hr.employee'].search([
+                ('id', '=', vals.get('operator_ids'))], limit=1).write(
+                {'availability': 'not_available'})
+        return res
 
 
 class StockPickingMechanic(Model):
