@@ -131,18 +131,16 @@
 
                           </table>
                           <table style="width: 100%; border: 1px solid; font-size:11px;">
+                              <colgroup>
+                                  <col width='20%'/>
+                                  <col width='80%'/>
+                              </colgroup>
                                 <tr>
-                                    <td colspan="2" style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Mecánico (Manten) Revisó Salida - (E1)</span></td>
-                                    <td colspan="2" style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Mecánico (Manten) Revisó Entrada - (E2)</span></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-left:5px; font-weight:bold;"><span>Nombre:</span></td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Mecánico (Manten)</span></td>
                                     <td style="padding-left:5px;"><span><t t-esc="product_m.mechanic_ids.name"/></span></td>
-                                    <td style="padding-left:5px; border-left: 1px solid; font-weight:bold;"><span>Nombre:</span></td>
-                                    <td style="padding-left:5px; border-right: 1px solid; "><span><t t-esc="product_m.mechanic_ids.name"/></span></td>
                                 </tr>
                                 <tr>
-                                     <td  colspan="6" style="text-align:center; border:1px solid; font-size:10px;">
+                                     <td  colspan="2" style="text-align:center; border:1px solid; font-size:10px;">
                                          <span style="font-weight:bold;">E1:</span>
                                          <span>Entrega del Equipo al Conductor/</span>
                                          <span style="font-weight:bold;">R:</span>
@@ -174,8 +172,7 @@
                                  <tr>
                                     <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold;"><span>Semáforo</span></td>
                                      <td style="padding-left: 5px; border:1px solid; border-left:none;">
-                                         <t t-set="state" t-value="o.state_product(product_ids)"/>
-                                         <t t-esc="state"/>
+                                          <span t-field="product_ids.product_id.state_id"/>
                                      </td>
                                  </tr>
                           </table>
