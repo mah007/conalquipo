@@ -23,6 +23,7 @@
                            'show_address': 1}"
                     options="{&quot;always_reload&quot;: True}"
                     />
+                   <field name="trust"/>
                </field>
                  <field name="order_line" position="replace">
                           <field name="order_line" mode="tree,kanban" context="{'default_order_type': order_type}"

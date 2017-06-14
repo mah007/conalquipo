@@ -29,6 +29,42 @@ class SaleOrder(models.Model):
     # method: field_name = fields.Selection(selection_add=[('a', 'A')]
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="sale")
+    trust = fields.Many2one(related='partner_id.trust_code', string="Trust")
+
+    @api.onchange('partner_id')
+    def onchange_partner_id_trust(self):
+        warning = {}
+        title = False
+        message = False
+        partner = self.partner_id
+
+        if partner.trust_code:
+            if partner.trust_code.message_type == 'no-message' and \
+                    partner.parent_id:
+                partner = partner.parent_id
+
+            if partner.trust_code.message_type != 'no-message':
+                if partner.trust_code.message_type != 'block' and \
+                        partner.parent_id and \
+                        partner.trust_code.message_type == 'block':
+                    partner = partner.parent_id
+
+                title = ("Warning for %s") % partner.name
+                message = partner.trust_code.message_body
+                warning = {
+                    'title': title,
+                    'message': message,
+                }
+
+                if partner.trust_code.message_type == 'block':
+                    self.update({'partner_id': False,
+                                 'partner_invoice_id': False,
+                                 'partner_shipping_id': False,
+                                 'pricelist_id': False})
+                    return {'warning': warning}
+
+            if warning:
+                return {'warning': warning}
 
 
 class SaleOrderLine(models.Model):
