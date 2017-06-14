@@ -36,10 +36,19 @@ class HrEmployee(models.Model):
                                    string='Product', search='hr_products',
                                    track_visibility='onchange')
 
+    availability = fields.Selection([('available', 'Available'),
+                                     ('not_available', 'Not Available')],
+                                    default='available',
+                                    string="Availability",
+                                    readonly=True)
+
     @api.onchange('is_operator')
     def onchange_is_operator(self):
         if not self.is_operator:
                 self.write({'product_ids': None})
+        else:
+            if not self.availability:
+                self.update({'availability': 'available'})
 
 
 class Product(models.Model):
