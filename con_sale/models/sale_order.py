@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
             if partner.trust_code.message_type != 'no-message':
                 if partner.trust_code.message_type != 'block' and \
                         partner.parent_id and \
-                                partner.trust_code.message_type == 'block':
+                        partner.trust_code.message_type == 'block':
                     partner = partner.parent_id
 
                 title = ("Warning for %s") % partner.name
@@ -65,7 +65,6 @@ class SaleOrder(models.Model):
 
             if warning:
                 return {'warning': warning}
-
 
 
 class SaleOrderLine(models.Model):

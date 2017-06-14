@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class PartnerWarnings(models.Model):
@@ -38,4 +38,3 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     trust_code = fields.Many2one('partner.warnings', string="Trust Code")
-
