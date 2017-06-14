@@ -29,31 +29,24 @@ class SaleOrder(models.Model):
     # method: field_name = fields.Selection(selection_add=[('a', 'A')]
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="sale")
+    trust = fields.Many2one(related='partner_id.trust_code', string="Trust")
 
     @api.onchange('partner_id')
-    def onchange_partner_id_warning(self):
-        super(SaleOrder, self).onchange_partner_id_warning()
-
-        print "Estoy en esta funcion locoteeee!!!"
-
+    def onchange_partner_id_trust(self):
         warning = {}
         title = False
         message = False
         partner = self.partner_id
 
         if partner.trust_code:
-            print "Ya voy por aca"
             if partner.trust_code.message_type == 'no-message' and \
                     partner.parent_id:
                 partner = partner.parent_id
-                print "encontre otro partner"
 
             if partner.trust_code.message_type != 'no-message':
-                print "Si hay mensaje"
                 if partner.trust_code.message_type != 'block' and \
                         partner.parent_id and \
                                 partner.trust_code.message_type == 'block':
-                    print "Cai en otro if pal partner"
                     partner = partner.parent_id
 
                 title = ("Warning for %s") % partner.name
@@ -72,6 +65,7 @@ class SaleOrder(models.Model):
 
             if warning:
                 return {'warning': warning}
+
 
 
 class SaleOrderLine(models.Model):
