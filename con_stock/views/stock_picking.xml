@@ -10,7 +10,7 @@
                  <xpath expr="//page[@name='info_shipping']" position="after">
                      <page name='detail_product' string="Detail Product">
                         <group>
-                             <field name="pack_detail_product_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')]}" nolabel="1">
+                             <field name="pack_detail_product_ids" mode="tree" nolabel="1">
                                      <tree editable="bottom" create="false" delete="false">
                                          <field name="product_id" readonly="1" />
                                          <field name="product_t_id" invisible="1" />
