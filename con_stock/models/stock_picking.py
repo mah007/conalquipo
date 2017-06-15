@@ -288,21 +288,19 @@ class StockPickingDetailProduct(Model):
                 ('id', '=', vals.get('operator_ids'))], limit=1).write(
                 {'availability': 'not_available'})
 
-            emp = self.env['hr.employee'].search([
-                ('id', '=', vals.get('operator_ids'))], limit=1)
-
-            message = self.env['mail.message'].create({
+            emp = self.env['hr.employee'].search([('id', '=',
+                                                   vals.get('operator_ids'))],
+                                                 limit=1)
+            self.env['mail.message'].create({
                 'model': 'stock.picking',
-                'res_id': self.picking_id.group_id.id,
-                'subject': '',
+                'res_id': self.picking_id.id,
+                'subject': 'Asignción de Operador',
+                'subtype_id': 2,
                 'message_type': 'notification',
-                'author_id': self.write_uid.id,
-                'body': _('Se asigna el operador:  %s . al equipo: %s')
-                        % (emp.name, self.product_t_id.name)
-            })
-
-            self.env['stock.picking'].search(
-                ['id', '=', self.picking_id]).update({'message_ids': message})
+                'author_id': self.env.user.partner_id.id,
+                'body':
+                    _('<p>&nbsp; Se Asigna el Operador %s al Equipo %s </p>')
+                    % (emp.name, self.product_t_id.name)})
 
         return res
 
