@@ -64,7 +64,8 @@ class StockPicking(Model):
 
     pack_detail_product_ids = fields.One2many('stock.pack.detail.product',
                                               'picking_id',
-                                              'pack Detail Product')
+                                              'pack Detail Product',
+                                              track_visibility='always')
 
     pack_mechanic_ids = fields.One2many('stock.pack.mechanic', 'picking_id',
                                         'pack Mechanic')
@@ -221,6 +222,7 @@ class StockPicking(Model):
                             'picking_type_id': 1
                         }).id
                     )
+
                 self.update({'move_lines': mv_lines})
         self.update({'default_type_id': self._context.get(
             'default_picking_type_id')})
@@ -243,7 +245,8 @@ class StockPickingDetailProduct(Model):
     operator_ids = \
         fields.Many2one(comodel_name='hr.employee', string='Operator',
                         domain="[('product_ids', '=', product_t_id),"
-                               "('availability', '=', 'available')]")
+                               "('availability', '=', 'available')]",
+                        track_visibility='always')
 
     observation = fields.Char(string="Observation")
 
@@ -284,6 +287,23 @@ class StockPickingDetailProduct(Model):
             self.env['hr.employee'].search([
                 ('id', '=', vals.get('operator_ids'))], limit=1).write(
                 {'availability': 'not_available'})
+
+            emp = self.env['hr.employee'].search([
+                ('id', '=', vals.get('operator_ids'))], limit=1)
+
+            message = self.env['mail.message'].create({
+                'model': 'stock.picking',
+                'res_id': self.picking_id.group_id.id,
+                'subject': '',
+                'message_type': 'notification',
+                'author_id': self.write_uid.id,
+                'body': _('Se asigna el operador:  %s . al equipo: %s')
+                        % (emp.name, self.product_t_id.name)
+            })
+
+            self.env['stock.picking'].search(
+                ['id', '=', self.picking_id]).update({'message_ids': message})
+
         return res
 
     @api.multi
@@ -291,7 +311,7 @@ class StockPickingDetailProduct(Model):
         if self.operator_ids:
 
             if vals.get('operator_ids'):
-                if self.is_operated != vals.get('operator_ids').id:
+                if self.operator_ids.id != vals.get('operator_ids'):
                     self.env['hr.employee'].search([
                         ('id', '=', self.operator_ids.id)], limit=1).write(
                         {'availability': 'available'})
@@ -306,6 +326,22 @@ class StockPickingDetailProduct(Model):
             self.env['hr.employee'].search([
                 ('id', '=', vals.get('operator_ids'))], limit=1).write(
                 {'availability': 'not_available'})
+
+            emp = self.env['hr.employee'].search([
+                ('id', '=', vals.get('operator_ids'))], limit=1)
+
+            self.env['mail.message'].create({
+                'model': 'stock.picking',
+                'res_id': self.picking_id.id,
+                'subject': 'Asignción de Operador',
+                'subtype_id': 2,
+                'message_type': 'notification',
+                'author_id': self.env.user.partner_id.id,
+                'body':
+                    _('<p>&nbsp; Se Asigna el Operador %s al Equipo %s </p>')
+                    % (emp.name, self.product_t_id.name)
+            })
+
         return res
 
 
