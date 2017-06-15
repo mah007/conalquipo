@@ -21,3 +21,4 @@
 
 from . import sale_order
 from . import partner_warnings
+from . import stock_picking
