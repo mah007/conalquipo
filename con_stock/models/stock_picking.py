@@ -327,8 +327,9 @@ class StockPickingDetailProduct(Model):
                 ('id', '=', vals.get('operator_ids'))], limit=1).write(
                 {'availability': 'not_available'})
 
-            emp = self.env['hr.employee'].search([
-                ('id', '=', vals.get('operator_ids'))], limit=1)
+            emp = self.env['hr.employee'].search([('id', '=',
+                                                   vals.get('operator_ids'))],
+                                                 limit=1)
 
             self.env['mail.message'].create({
                 'model': 'stock.picking',
