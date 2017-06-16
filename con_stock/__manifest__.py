@@ -46,6 +46,7 @@
         'views/stock_picking.xml',
         'reports/clause.xml',
         'reports/preoperation_report.xml',
+        'reports/operator_report_views.xml',
     ],
     'qweb': [],
     'images': [],
