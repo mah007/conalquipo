@@ -19,7 +19,7 @@ class PurchaseReport(models.Model):
                                      ('not_available', 'Not Available')],
                                     string="Availability", readonly=True)
     picking = fields.Many2one('stock.picking', 'Stock Picking', readonly=True)
-    construction = fields.Many2one('res.partner', 'Construction', 
+    construction = fields.Many2one('res.partner', 'Construction',
                                    readonly=True)
     product = fields.Many2one('product.product', 'Product', readonly=True)
     start_date = fields.Date(string="Start", readonly=True)
