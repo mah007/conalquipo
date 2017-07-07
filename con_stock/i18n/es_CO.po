@@ -121,11 +121,6 @@ msgid "Observation"
 msgstr "Observación"
 
 #. module: con_stock:
-#: model:ir.ui.view,arch_d:con_stock.view_pack_detail_product_inherit
-msgid "Mechanical revision"
-msgstr "Revisión Mecánica"
-
-#. module: con_stock:
 #: model:ir.ui.view,arch_db:con_stock.view_pack_detail_product_inherit
 msgid "Detail Product"
 msgstr "Detalle Producto"
@@ -155,7 +150,7 @@ msgid "Not Available"
 msgstr "No Disponible"
 
 #. module: con_stock:
-#: model:ir.actions.act_window,name",con_stock.action_operator_report_all
+#: model:ir.actions.act_window,name:con_stock.action_operator_report_all
 #: model:ir.ui.menu,name:con_stock.menu_operator_report
 #: model:ir.ui.view,arch_db:con_stock.view_operator_pivot
 #: model:ir.ui.view,arch_db:con_stock.view_operator_report_graph
@@ -174,3 +169,18 @@ msgstr "Obra"
 #: model:ir.model.fields,field_description:con_stock.field_operator_report_picking
 msgid "Stock Picking"
 msgstr "Orden de Entrega"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_receives_maintenance
+msgid "Receives in maintenance"
+msgstr "Recibe En Mantenimiento"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db:con_stock.view_pack_detail_product_inherit
+msgid "Mechanical revision"
+msgstr "Revisión Mecánica"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_mechanic_mechanic_ids
+msgid "Mechanic"
+msgstr "Mecánica"
