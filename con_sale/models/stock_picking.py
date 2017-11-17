@@ -23,7 +23,7 @@ from odoo import models, api
 
 
 class StockPicking(models.Model):
-    _name = "stock.picking"
+    _inherit = "stock.picking"
 
     @api.onchange('partner_id')
     def onchange_partner_id_trust(self):
@@ -53,8 +53,8 @@ class StockPicking(models.Model):
                 if partner.trust_code.message_type == 'block':
                     self.update({'partner_id': False,
                                  'partner_invoice_id': False,
-                                 'partner_shipping_id': False,
-                                 'pricelist_id': False})
+                                 'partner_shipping_id': False
+                                 })
                     return {'warning': warning}
 
             if warning:
