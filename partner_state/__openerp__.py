@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Ingeniería, Aplicaciones y Software S.A.S
-#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
+#    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
+#    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import sale_order
-from . import partner_warnings
-from . import stock_picking
+{
+    'name': 'Partner State',
+    'version': '9.0.1.0.0',
+    'category': 'Base',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'depends': [
+        'base',
+    ],
+    'data': [
+        'security/partner_state_security.xml',
+        'security/ir.model.access.csv',
+        'data/res_company_data.xml',
+        'data/res_users_data.xml',
+        'views/res_partner_state_field_view.xml',
+        'views/company_view.xml',
+        'views/partner_view.xml',
+    ],
+    'demo': [
+        'demo/res.partner.state_field.csv'
+    ],
+    'installable': True,
+}

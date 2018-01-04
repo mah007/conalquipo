@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="report_invoice_document_vet" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@class='page']" position="inside">
+            <t t-if="o.add_bom and o.pack_operation_ids">
+                <tr/>
+                <h4>Components</h4>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="text-right">Quantity Ordered</th>
+                            <th class="text-right">Quantity Delivered</th>
+                            <th class="text-right">Serial Number</th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <tr t-foreach="o.pack_operation_ids" t-as="operation">
+                            <td><span t-field="operation.product_id.name"/></td>
+                            <td class="text-right"><span t-field="operation.product_qty"/></td>
+                            <td class="text-right"><span t-field="operation.qty_done"/></td>
+                            <td class="text-right">
+                                <span>
+                                    <t t-foreach="operation.pack_lot_ids" t-as="lot">
+                                        <span t-field="lot.lot_id.name"/>
+                                    </t>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

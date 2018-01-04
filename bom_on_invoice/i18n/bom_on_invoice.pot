@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* bom_on_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-19 14:57+0000\n"
+"PO-Revision-Date: 2017-04-19 14:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bom_on_invoice
+#: model:ir.ui.view,arch_db:bom_on_invoice.report_invoice_document_vet
+msgid "Components"
+msgstr "Components"
+
+#. module: bom_on_invoice
+#: model:ir.model.fields,field_description:bom_on_invoice.field_account_invoice_add_bom
+msgid "Display BOM Products on Invoice Report"
+msgstr "Display BOM Products on Invoice Report"
+
+#. module: bom_on_invoice
+#: model:ir.model,name:bom_on_invoice.model_account_invoice
+msgid "Invoice"
+msgstr "Invoice"
+
+#. module: bom_on_invoice
+#: model:ir.ui.view,arch_db:bom_on_invoice.report_invoice_document_vet
+msgid "Product"
+msgstr "Product"
+
+#. module: bom_on_invoice
+#: model:ir.ui.view,arch_db:bom_on_invoice.report_invoice_document_vet
+msgid "Quantity Delivered"
+msgstr "Quantity Delivered"
+
+#. module: bom_on_invoice
+#: model:ir.ui.view,arch_db:bom_on_invoice.report_invoice_document_vet
+msgid "Quantity Ordered"
+msgstr "Quantity Ordered"
+
+#. module: bom_on_invoice
+#: model:ir.ui.view,arch_db:bom_on_invoice.report_invoice_document_vet
+msgid "Serial Number"
+msgstr "Serial Number"
+
