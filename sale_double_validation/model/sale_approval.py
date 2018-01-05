@@ -47,7 +47,7 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm(self):
         approbal = self.env.user.company_id.sale_approval
-        print approbal
+        print(approbal)
         for order in self:
             order.state = 'sale' if not approbal else 'waiting'
             order.confirmation_date = fields.Datetime.now()

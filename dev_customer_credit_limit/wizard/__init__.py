@@ -5,4 +5,4 @@
 #    Copyright (C) 2015 Devintelle Software Solutions (<http://devintellecs.com>).
 #
 ##############################################################################
-import customer_limit_wizard
+from . import customer_limit_wizard

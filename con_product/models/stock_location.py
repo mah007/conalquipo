@@ -40,9 +40,9 @@ class StockPicking(Model):
         # ~ Change the product state when is moved to other location.
         for picking in self:
             for move in picking.move_lines:
-                print "Validando Product Rental"
+                print ("Validando Product Rental")
                 if move.product_id.rental:
-                    print "Product Rental Ok"
+                    print ("Product Rental Ok")
                     move.product_id.write(
                         {'state_id': move.location_dest_id.product_state.id})
         return result
