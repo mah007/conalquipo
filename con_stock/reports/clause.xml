@@ -22,7 +22,7 @@
         </t>
     </template>
     <report
-        string="CLause"
+        string="Clause"
         id="action_report_clause_con"
         model="stock.picking"
         report_type="qweb-pdf"

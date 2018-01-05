@@ -27,6 +27,7 @@
     sale order.""",
     'depends': ['base', 'sales_team', 'sale', 'website_quote'],
     'data': ['views/sale_order_view.xml'],
+
     'installable': True,
     'auto_install': False,
     'application': True,

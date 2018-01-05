@@ -30,7 +30,7 @@
         Conalequipos's behavior customization for Stock form.
     """,
 
-    'author': "Ingeniería Aplicaciones y Software",
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'website': "http://www.ias.com.co",
     'category': 'stock',
     'version': '0.1',
@@ -46,6 +46,7 @@
         'views/stock_picking.xml',
         'reports/clause.xml',
         'reports/preoperation_report.xml',
+        'reports/operator_report_views.xml',
     ],
     'qweb': [],
     'images': [],

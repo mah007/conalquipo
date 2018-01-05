@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record model="ir.ui.view" id="view_sale_order_form_inherit">
+             <field name="name">sale.order.form</field>
+             <field name="inherit_id" ref="sale.view_order_form"/>
+             <field name="model">sale.order</field>
+             <field name="arch" type="xml">
+               <button name="action_confirm" position="after">
+                 <button name="action_approval" states="waiting" class="btn-primary"
+                         string="Approval Sale" type="object"
+                         groups="sale_double_validation.sale_approval_team"/>
+               </button>
+               <field name="confirmation_date" position="after">
+                   <field name="approval_date"/>
+               </field>
+             </field>
+        </record>
+    </odoo>

@@ -61,8 +61,7 @@ class StockPicking(models.Model):
                                   track_visibility='onchange')
     person_identification_id = fields.Char(string='Person identification',
                                            track_visibility='onchange')
-    person_job_id = fields.Char(string='Person identification',
-                                track_visibility='onchange')
+    post = fields.Char(string='post', track_visibility='onchange')
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):

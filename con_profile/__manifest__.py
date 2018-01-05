@@ -29,7 +29,7 @@
         Conalequipo's Odoo Installation profile.
     """,
 
-    'author': "Ingeniería Aplicaciones y Software",
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'website': "http://www.ias.com.co",
     'category': 'Base Profile',
     'version': '0.1',

@@ -4,6 +4,7 @@
 {
     'name': 'Shipping',
     'version': '1.1',
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': 'Sale',
     'sequence': 10,
     'summary': 'Delivery',

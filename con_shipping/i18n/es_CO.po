@@ -19,103 +19,103 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: con_sale_shipping
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_order_form_with_carrier_inherit
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.view_order_form_with_carrier_inherit
 msgid "Set price"
 msgstr "Configurar precio"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_sale_order_carrier_type
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_sale_order_carrier_type
 msgid "Carrier Responsible"
 msgstr "Responsable de Acarreo"
 
-#. module: con_sale_shipping
-#: model:ir.ui.menu,name:con_sale_shipping.menu_country_municipality
-#: model:ir.actions.act_window,name:con_sale_shipping.action_country_municipality
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_country_municipality_form
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_country_municipality_tree
+#. module: con_shipping
+#: model:ir.ui.menu,name:con_shipping.menu_country_municipality
+#: model:ir.actions.act_window,name:con_shipping.action_country_municipality
+#: model:ir.ui.view,arch_db:con_shipping.view_country_municipality_form
+#: model:ir.ui.view,arch_db:con_shipping.view_country_municipality_tree
 msgid "Municipalities"
 msgstr "Municipios"
 
-#. module: con_sale_shipping
-#: model:ir.ui.menu,name:con_sale_shipping.menu_vehicle
-#: model:ir.ui.menu,name:con_sale_shipping.menu_action_delivery_carrier_form
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_vehicle_form
+#. module: con_shipping
+#: model:ir.ui.menu,name:con_shipping.menu_vehicle
+#: model:ir.ui.menu,name:con_shipping.menu_action_delivery_carrier_form
+#: model:ir.ui.view,arch_db:con_shipping.view_vehicle_form
 #: model:ir.ui.view,arch_db:marketing_campaign.view_vehicle_tree
-#: model:ir.actions.act_window,name:con_sale_shipping.action_vehicle
+#: model:ir.actions.act_window,name:con_shipping.action_vehicle
 msgid "Vehicle"
 msgstr "Vehículo"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_holder
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_holder
 msgid "Holder"
 msgstr "Propietario"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_mark
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_vehicle_mark
 msgid "Mark"
 msgstr "Marca"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_num_chasis
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_vehicle_num_chasis
 msgid "Number Chasis"
 msgstr "No Chasis"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_traffic
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_traffic
 msgid "Traffic"
 msgstr "Transito"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_gravamen
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_gravamen
 msgid "Gravamen"
 msgstr "Semaforización"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_affiliation
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_affiliation
 msgid "Affiliation"
 msgstr "Afiliación"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_license_plate
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_vehicle_license_plate
 msgid "license Plate"
 msgstr "Placa"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_num_motor
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_num_motor
 msgid "Number Motor"
 msgstr "No. Motor"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_licence_date
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_licence_date
 msgid "Licence Date"
 msgstr "Fecha Licencia"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_tec_mechanic
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_tec_mechanic
 msgid "Tec Mechanic"
 msgstr "Tecnomecanica"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle_bearing
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_bearing
 msgid "Bearing"
 msgstr "IMP Rodamiento"
 
-#. module: con_sale_shipping
-#: model:ir.ui.menu,name:con_sale_shipping.menu_invoicing_area
-#: model:ir.actions.act_window,name:con_sale_shipping.action_invoicing_area
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_invoicing_area_tree
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_invoicing_area_form
+#. module: con_shipping
+#: model:ir.ui.menu,name:con_shipping.menu_invoicing_area
+#: model:ir.actions.act_window,name:con_shipping.action_invoicing_area
+#: model:ir.ui.view,arch_db:con_shipping.view_invoicing_area_tree
+#: model:ir.ui.view,arch_db:con_shipping.view_invoicing_area_form
 msgid "Invoicing Area"
 msgstr "Zonas de Facturación"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_country_municipality
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_country_municipality
 msgid "Municipality"
 msgstr "Municipio"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_country_municipality
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_country_municipality
 msgid "Municipality"
 msgstr "Municipio"
 
@@ -124,23 +124,28 @@ msgstr "Municipio"
 msgid "Municipality"
 msgstr "Municipio"
 
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_delivery_carrier_municipality_ids
+msgid "Municipality"
+msgstr "Municipio"
+
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_template_property_form
 msgid "Carrier Area"
 msgstr "Zona de Acarreo"
 
-#. module: con_sale_shipping
-#: model:ir.ui.view,arch_db:con_sale_shipping.view_delivery_carrier_form_inherit
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.view_delivery_carrier_form_inherit
 msgid "Cost for Vehicle"
 msgstr "Costo por Vehículo"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_vehicle
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_vehicle
 msgid "Vehicle"
 msgstr "Vehículo"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_cost
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_cost
 msgid "Cost"
 msgstr "Costo"
 
@@ -149,13 +154,13 @@ msgstr "Costo"
 msgid "Carrier"
 msgstr "Acarreo"
 
-#. module: delivery
+#. module: con_shipping
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_carrier_type
 msgid "Carrier Responsible"
 msgstr "Responsable de Acarreo"
 
-#. module: con_sale_shipping
-#: model:ir.model.fields,field_description:con_sale_shipping.field_stock_picking_vehicle_id
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_vehicle_id
 msgid "Vehicle"
 msgstr "Vehículo"
 
@@ -167,12 +172,7 @@ msgstr "Tipo de Responsable"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_type_responsible
 msgid "Driver"
-msgstr "Conductor"
-
-#. module: delivery
-#: model:ir.model.fields,field_description:delivery.field_stock_picking_type_responsible
-msgid "Assistant"
-msgstr "Ayudante"
+msgstr "Personal"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_delivery_document
@@ -215,7 +215,7 @@ msgstr "<span><strong>Vehículo:</strong></span>"
 msgid "Driver Client"
 msgstr "Conductor Cliente"
 
-#. module: con_sale_shipping
+#. module: con_shipping
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_vehicle_client
 msgid "Vehicle Client"
 msgstr "Vehículo Cliente"
@@ -231,3 +231,85 @@ msgstr "<span><strong>Generado Por:</strong></span>"
 #: model:ir.ui.view,arch_db:stock.report_picking
 msgid "<span><strong>In:</strong></span>"
 msgstr "<span><strong>En:</strong></span>"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_mark
+msgid "Mark"
+msgstr "Marca"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.fleet_vehicle_view_form_inherit
+msgid "Bearing information"
+msgstr "Información De Rodamiento"
+
+#. module: con_shipping:
+#: selection:sale.order,carrier_type:0
+msgid "Client"
+msgstr "Cliente"
+
+#. module: con_shipping:
+#: selection:sale.order,carrier_type:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: con_shipping:
+#: model:ir.ui.view,arch_db:con_shipping.view_picking_withcarrier_out_form_inherit
+msgid "Info Shipping"
+msgstr "Info De Envío"
+
+#. module: con_shipping:
+#: model:ir.ui.view,arch_db:con_shipping.view_picking_withcarrier_out_form_inherit
+msgid "Info Remission On Site"
+msgstr "Remisión de información en Obra"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_sale_order_carrier_type
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_carrier_type
+msgid "Carrier Responsible"
+msgstr "Responsable de Acarreo"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_driver_ids
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_receipts_driver_ids
+msgid "Shipping Driver"
+msgstr "Conductor de envío"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_shipping_driver_type_hr
+msgid "HR Type"
+msgstr "Función"
+
+#. module: con_shipping:
+#: selection:shipping.driver,type_hr:0
+msgid "Assistant"
+msgstr "Ayudante"
+
+#. module: con_shipping:
+#: selection:shipping.driver,type_hr:0
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_Hr_entry
+msgid "Hour Entry"
+msgstr "Hora de Entrada"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_Hr_output
+msgid "Hour Output"
+msgstr "Hora de Salida"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_person_receives
+msgid "Person receives"
+msgstr "Persona Que Recibe"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_person_identification_id
+msgid "Person identification"
+msgstr "Cédula De La Persona"
+
+#. module: con_shipping:
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_post
+msgid "post"
+msgstr "Cargo De La Persona"

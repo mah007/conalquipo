@@ -69,3 +69,118 @@ msgstr "Observación"
 msgid "Is Mechanic"
 msgstr "Mecánico"
 
+#. module:con_stock
+#: model:ir.model.fields,field_description:con_stock.field_hr_employee_availability
+msgid "Availability"
+msgstr "Disponibilidad"
+
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_mechanic_broken
+msgid "Broken"
+msgstr "Roto"
+
+#. module: con_stock:
+#:model:ir.actions.report.xml,name:con_stock.action_report_clause_con
+#:model:ir.ui.view,arch_db:con_stock.con_product_template_form_view_inherit
+#:model:ir.ui.view,arch_db:con_stock.con_view_picking_form_clause
+#:model:ir.ui.view,arch_db:con_stock.view_company_form_inherit
+msgid "Clause"
+msgstr "Cláusula"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db:con_stock.characteristic_form_view
+#: model:ir.ui.view,arch_db:con_stock.con_product_template_form_view_inherit
+#: model:ir.model,name:con_stock.model_characteristic
+#: model:ir.model,name:con_stock.model_product_characteristic
+msgid "Characteristic"
+msgstr "Caracteristica"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db:con_stock.con_product_template_form_view_inherit
+#: model:ir.model.fields,field_description:con_stock.field_product_template_is_mechanic
+msgid "Is Mechanic"
+msgstr "Es Mecánico"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_product_template_is_operated
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_detail_product_is_operated
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_mechanic_is_mechanic
+#: model:ir.ui.view,arch_db:con_stock.con_product_template_form_view_inherit,
+msgid "Is Operated"
+msgstr "Es Operado"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db;con_stock.con_product_template_form_view_inherit
+msgid "Operated"
+msgstr "Operador"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_detail_product_observation
+msgid "Observation"
+msgstr "Observación"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db:con_stock.view_pack_detail_product_inherit
+msgid "Detail Product"
+msgstr "Detalle Producto"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_delivery_order_id
+msgid "Delivery Order"
+msgstr "Orden de Entrega"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_hr_employee_availability
+#: model:ir.model.fields,field_description:con_stock.field_operator_report_availability
+#: model:ir.ui.view,arch_db:con_stock.view_operator_report_search
+msgid "Availability"
+msgstr "Disponibilidad"
+
+#. module: con_stock:
+#: selection:hr.employee,availability
+#: selection:operator.report,availability
+msgid "Available"
+msgstr "Disponible"
+
+#. module: con_stock:
+#: selection:hr.employee,availability
+#: selection:operator.report,availability
+msgid "Not Available"
+msgstr "No Disponible"
+
+#. module: con_stock:
+#: model:ir.actions.act_window,name:con_stock.action_operator_report_all
+#: model:ir.ui.menu,name:con_stock.menu_operator_report
+#: model:ir.ui.view,arch_db:con_stock.view_operator_pivot
+#: model:ir.ui.view,arch_db:con_stock.view_operator_report_graph
+#: model:ir.ui.view,arch_db:con_stock.view_operator_report_search
+#: model:ir.ui.view,arch_db:con_stock.view_operator_report_tree
+msgid "Operator Availability"
+msgstr "Disponibilidad del Operador"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_operator_report_construction
+#: model:ir.ui.view,arch_db:con_stock.view_operator_report_search
+msgid "Construction"
+msgstr "Obra"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_operator_report_picking
+msgid "Stock Picking"
+msgstr "Orden de Entrega"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_receives_maintenance
+msgid "Receives in maintenance"
+msgstr "Recibe En Mantenimiento"
+
+#. module: con_stock:
+#: model:ir.ui.view,arch_db:con_stock.view_pack_detail_product_inherit
+msgid "Mechanical revision"
+msgstr "Revisión Mecánica"
+
+#. module: con_stock:
+#: model:ir.model.fields,field_description:con_stock.field_stock_pack_mechanic_mechanic_ids
+msgid "Mechanic"
+msgstr "Mecánica"
