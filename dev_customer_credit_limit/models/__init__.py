@@ -6,5 +6,5 @@
 #
 ##############################################################################
 
-import partner
-import sale
+from . import partner
+from . import sale
