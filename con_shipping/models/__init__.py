@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import shipping
-import vehicle_shipping
-import delivery_carrier
-import stock_picking
+from . import shipping
+from . import vehicle_shipping
+from . import delivery_carrier
+from . import stock_picking

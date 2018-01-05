@@ -12,7 +12,6 @@ class SaleOrderLine(models.Model):
         'product_uom_qty',
         'product_id')
     def _fnct_line_stock(self):
-        available = False
         available = self.product_id.with_context(
             warehouse=self.order_id.warehouse_id.id
         ).qty_available - self.product_uom_qty

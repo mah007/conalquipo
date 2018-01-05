@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-import sync_outlook
-import mail_message
+from . import sync_outlook
+from . import mail_message
