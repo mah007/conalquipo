@@ -127,6 +127,7 @@
                               <group>
                                   <group col="2">
                                       <field name="type_sp"  invisible="1"/>
+                                      <field name="location_id" />
 
                                       <field name="carrier_tracking_ref" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
 
