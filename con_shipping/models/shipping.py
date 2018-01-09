@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models, _
+from odoo import models, fields, api, _
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -126,14 +126,14 @@ class SaleOrder(models.Model):
             super(SaleOrder, self)._compute_delivery_price()
 
     @api.multi
-    def delivery_set(self):
+    def set_delivery_line(self):
 
         if self.vehicle:
-            self._delivery_unset()
+            self._remove_delivery_line()
             veh_carrier = self.env['delivery.carrier.cost'].search(
                 [('vehicle', '=', self.vehicle.id)], limit=1)
 
             self._create_delivery_line(self.carrier_id, veh_carrier.cost)
 
         else:
-            super(SaleOrder, self).delivery_set()
+            super(SaleOrder, self).set_delivery_line()

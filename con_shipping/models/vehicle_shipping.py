@@ -25,6 +25,17 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class VehicleType(models.Model):
+    _name = 'fleet.vehicle.type'
+    _description = "Vehicle Type"
+    _order = 'sequence, id'
+
+    sequence = fields.Integer(help="Determine the display order", default=10,
+                              invisible=True)
+    code = fields.Char(string="Code")
+    name = fields.Char(string="Name")
+
+
 class FleetVehicle(models.Model):
     _inherit = 'fleet.vehicle'
 
@@ -32,7 +43,7 @@ class FleetVehicle(models.Model):
                              track_visibility='onchange')
     mark = fields.Char(string="Mark", track_visibility='onchange')
     reference = fields.Char(string="Reference", track_visibility='onchange')
-    type = fields.Many2one('vehicle.type', string='Type',
+    type = fields.Many2one('fleet.vehicle.type', string='Type',
                            track_visibility='onchange')
     model = fields.Integer(string="Model", track_visibility='onchange')
     num_motor = fields.Char(string="Number Motor", track_visibility='onchange')
@@ -51,15 +62,3 @@ class FleetVehicle(models.Model):
                           track_visibility='onchange')
     affiliation = fields.Date('Affiliation', default=fields.Date.context_today,
                               track_visibility='onchange')
-
-
-class VehicleType(models.Model):
-    _name = 'fleet.vehicle.type'
-
-    _description = "Vehicle Type"
-    _order = 'sequence, id'
-
-    sequence = fields.Integer(help="Determine the display order", default=10,
-                              invisible=True)
-    code = fields.Char(string="Code")
-    name = fields.Char(string="Name")

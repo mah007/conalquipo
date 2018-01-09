@@ -108,7 +108,7 @@ class ShippingDriver(models.Model):
     _name = 'shipping.driver'
 
     driver_ids = fields.Many2one(comodel_name='hr.employee',
-                                 string='Driver', ondelete='cascade',
+                                 string='Employee', ondelete='cascade',
                                  index=True, copy=False,
                                  track_visibility='onchange')
 
