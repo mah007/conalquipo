@@ -63,6 +63,17 @@ class StockPicking(models.Model):
     carrier_tracking_ref = fields.Char(string='Tracking Reference',
                                        compute='_carrier_tracking_ref')
 
+    @api.onchange('carrier_type')
+    def onchange_carrier_type(self):
+
+        if self.carrier_type == 'client':
+            self.carrier_id = False
+            self.vehicle_id = False
+        else:
+            self.vehicle_client = ''
+            self.driver_client = ''
+
+
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
         res = {}
@@ -104,27 +115,20 @@ class StockPicking(models.Model):
         return {'domain': domain}
 
     @api.one
-    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id',
-                 'vehicle_client',)
+    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id', 'vehicle_client')
     def _carrier_tracking_ref(self):
         ref = ""
-        if self.scheduled_date:
-            ref += str(self.scheduled_date)
 
-        if self.carrier_id.id:
-            ref += str(self.carrier_id.id)
+        if self.carrier_id:
+            ref = str(self.scheduled_date) + str(self.carrier_id.id) \
+                  + str(self.vehicle_id.license_plate or '')\
+                  + str(self.location_id.location_id.name or '')
+        else:
+            ref = str(self.scheduled_date) + str(self.vehicle_client or '') \
+                  + self.location_id.location_id.name
 
-        if self.vehicle_id:
-            ref += self.vehicle_id.license_plate
-        elif self.vehicle_client:
-            ref += self.vehicle_client
-
-        if self.location_id:
-            ref += self.location_id.location_id.name
-
-        ref = str(ref).replace("-", "").replace(" ", "").replace(":", "")
-
-        self.carrier_tracking_ref = ref
+        self.carrier_tracking_ref = str(ref).replace(
+            "-", "").replace(" ", "").replace(":", "")
 
 
 class ShippingDriver(models.Model):

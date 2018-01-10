@@ -129,8 +129,7 @@
                                       <field name="type_sp"  invisible="1"/>
                                       <field name="location_id" />
 
-                                      <field name="carrier_tracking_ref" class="oe_inline"
-                                             readonly ="1"/>
+                                      <field name="carrier_tracking_ref"/>
 
                                       <field name="carrier_type" widget="radio"/>
 
