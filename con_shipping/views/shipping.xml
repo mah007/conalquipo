@@ -89,7 +89,7 @@
 
                         <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
                                attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
-                        <button name="delivery_set" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
+                        <button name="set_delivery_line" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
                                     attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','not in',('draft','sent')), ('carrier_type', '!=', 'company')]}"/>
                     </xpath>
                 </data>
@@ -127,12 +127,13 @@
                               <group>
                                   <group col="2">
                                       <field name="type_sp"  invisible="1"/>
+                                      <field name="location_id" />
 
-                                      <field name="carrier_tracking_ref" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                      <field name="carrier_tracking_ref"/>
 
                                       <field name="carrier_type" widget="radio"/>
 
-                                      <field name="carrier_id"  class="oe_inline" options="{'no_create': True, 'no_open': True}"
+                                      <field name="carrier_id"  class="oe_inline"
                                             attrs="{'readonly': [('state', '=', 'done')],
                                            'invisible': [('carrier_type','!=', 'company')]}"/>
 

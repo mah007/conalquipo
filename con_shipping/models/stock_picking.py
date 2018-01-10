@@ -38,9 +38,6 @@ class StockPicking(models.Model):
                                  onchange='onchange_vehicle_id',
                                  track_visibility='onchange')
 
-    vehicle_client = fields.Char(string='Vehicle',
-                                 track_visibility='onchange')
-
     driver_client = fields.Char(string='Driver',
                                 track_visibility='onchange')
 
@@ -62,6 +59,20 @@ class StockPicking(models.Model):
     person_identification_id = fields.Char(string='Person identification',
                                            track_visibility='onchange')
     post = fields.Char(string='post', track_visibility='onchange')
+
+    carrier_tracking_ref = fields.Char(string='Tracking Reference',
+                                       compute='_carrier_tracking_ref')
+
+    @api.onchange('carrier_type')
+    def onchange_carrier_type(self):
+
+        if self.carrier_type == 'client':
+            self.carrier_id = False
+            self.vehicle_id = False
+        else:
+            self.vehicle_client = ''
+            self.driver_client = ''
+
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
@@ -103,12 +114,28 @@ class StockPicking(models.Model):
 
         return {'domain': domain}
 
+    @api.one
+    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id', 'vehicle_client')
+    def _carrier_tracking_ref(self):
+        ref = ""
+
+        if self.carrier_id:
+            ref = str(self.scheduled_date) + str(self.carrier_id.id) \
+                  + str(self.vehicle_id.license_plate or '')\
+                  + str(self.location_id.location_id.name)
+        else:
+            ref = str(self.scheduled_date) + str(self.vehicle_client or '') \
+                  + self.location_id.location_id.name
+
+        self.carrier_tracking_ref = str(ref).replace(
+            "-", "").replace(" ", "").replace(":", "")
+
 
 class ShippingDriver(models.Model):
     _name = 'shipping.driver'
 
     driver_ids = fields.Many2one(comodel_name='hr.employee',
-                                 string='Driver', ondelete='cascade',
+                                 string='Employee', ondelete='cascade',
                                  index=True, copy=False,
                                  track_visibility='onchange')
 
