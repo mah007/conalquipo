@@ -38,9 +38,6 @@ class StockPicking(models.Model):
                                  onchange='onchange_vehicle_id',
                                  track_visibility='onchange')
 
-    vehicle_client = fields.Char(string='Vehicle',
-                                 track_visibility='onchange')
-
     driver_client = fields.Char(string='Driver',
                                 track_visibility='onchange')
 
@@ -62,6 +59,9 @@ class StockPicking(models.Model):
     person_identification_id = fields.Char(string='Person identification',
                                            track_visibility='onchange')
     post = fields.Char(string='post', track_visibility='onchange')
+
+    carrier_tracking_ref = fields.Char(string='Tracking Reference',
+                                       compute='_carrier_tracking_ref')
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
@@ -102,6 +102,29 @@ class StockPicking(models.Model):
             domain = {'vehicle_id': [('id', 'in', vehicle.ids)]}
 
         return {'domain': domain}
+
+    @api.one
+    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id',
+                 'vehicle_client',)
+    def _carrier_tracking_ref(self):
+        ref = ""
+        if self.scheduled_date:
+            ref += str(self.scheduled_date)
+
+        if self.carrier_id.id:
+            ref += str(self.carrier_id.id)
+
+        if self.vehicle_id:
+            ref += self.vehicle_id.license_plate
+        elif self.vehicle_client:
+            ref += self.vehicle_client
+
+        if self.location_id:
+            ref += self.location_id.location_id.name
+
+        ref = str(ref).replace("-", "").replace(" ", "").replace(":", "")
+
+        self.carrier_tracking_ref = ref
 
 
 class ShippingDriver(models.Model):

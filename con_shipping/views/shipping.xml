@@ -129,11 +129,12 @@
                                       <field name="type_sp"  invisible="1"/>
                                       <field name="location_id" />
 
-                                      <field name="carrier_tracking_ref" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                      <field name="carrier_tracking_ref" class="oe_inline"
+                                             readonly ="1"/>
 
                                       <field name="carrier_type" widget="radio"/>
 
-                                      <field name="carrier_id"  class="oe_inline" options="{'no_create': True, 'no_open': True}"
+                                      <field name="carrier_id"  class="oe_inline"
                                             attrs="{'readonly': [('state', '=', 'done')],
                                            'invisible': [('carrier_type','!=', 'company')]}"/>
 
