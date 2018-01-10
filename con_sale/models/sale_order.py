@@ -35,23 +35,17 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     @api.multi
-    def _get_available_product(self):
-        domain = [('sale_ok', '=', True)]
-        available_state = self.env['product.states'].search(
-            [('unavailable', '=', True)])
+    def _prepare_invoice_line(self, qty):
+        """
+        Prepare the dict of values to create the new invoice line for a sales order line.
 
-        if available_state:
-            domain.append(('state_id', 'not in', available_state._ids))
-
-        return domain
-
-    product_id = fields.Many2one('product.product', string='Product',
-                                 domain=_get_available_product,
-                                 change_default=True,
-                                 ondelete='restrict', required=True)
+        :param qty: float quantity to invoice
+        """
+        res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
+        res['uom_id'] = self.product_inv_uom.id
+        return res
 
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
-    order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
-                                  string="Type")
-    product_inv_uom = fields.Many2one('product.uom', string="Invoice Unit UOM")
+    order_type = fields.Selection(related='order_id.order_type', string="Type Order")
+    bill_uom = fields.Many2one('product.uom', string='Unit of Measure', required=True)

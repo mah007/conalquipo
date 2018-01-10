@@ -72,8 +72,8 @@ msgstr "En Ventas"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_inv_uom
-msgid "Invoice Unit UOM"
-msgstr "Und. Fact. UOM"
+msgid "Invoice Unit"
+msgstr "Und. Fact."
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
