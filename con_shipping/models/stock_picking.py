@@ -122,7 +122,7 @@ class StockPicking(models.Model):
         if self.carrier_id:
             ref = str(self.scheduled_date) + str(self.carrier_id.id) \
                   + str(self.vehicle_id.license_plate or '')\
-                  + str(self.location_id.location_id.name or '')
+                  + str(self.location_id.location_id.name)
         else:
             ref = str(self.scheduled_date) + str(self.vehicle_client or '') \
                   + self.location_id.location_id.name
