@@ -1,0 +1,201 @@
+<odoo>
+    <template id="report_delivey_output_equipment">
+        <t t-call="report.html_container">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+            <div class="header">
+                <div class="row">
+                        <table style="border: 1px solid; top: -100px; width: 100%;">
+                            <colgroup>
+                                <col width='20%' />
+                                <col width='60%' />
+                                <col width='20%' />
+                            </colgroup>
+                            <tr>
+                                <td rowspan="2"  style="border: 1px solid;"><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/></td>
+                                <td  style="border: 1px solid; padding:5px; text-align:center;"> <strong>CONTROL DE ENTREGA Y RECIBO DE EQUIPO</strong>  </td>
+                                <td rowspan="2"  style="border: 1px solid; padding:5px;">
+                                    <span> Código</span><br/>
+                                    <span>Versión:</span><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; text-align:center;"> <strong> FORMATO.</strong> </td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="page">
+                 <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
+                      <t t-set="product_m" t-value="o.is_mechanic(product_ids)"/>
+                     <t t-if="product_m.is_mechanic">
+                        <div style="page-break-before:always;">
+                          <table style="width: 100%; border: 1px solid; font-size:12px;">
+                                <colgroup>
+                                    <col width='10%' />
+                                    <col width='40%' />
+                                    <col width='10%' />
+                                    <col width='40%' />
+                                </colgroup>
+                                <tr>
+                                    <td style="padding-left:5px;border: 1px solid;"><span>Cliente</span></td>
+                                    <td   style="border: 1px solid;padding-left: 5px;" colspan="3">
+                                         <t t-if="o.partner_id.parent_id">
+                                            <span t-field="o.partner_id.parent_id"/>
+                                        </t>
+                                        <t t-if="(not o.partner_id.parent_id)">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid;"><span>Obra</span></td>
+                                    <td  style="border: 1px solid;padding-left: 5px;"><span t-field="o.partner_id.name"/></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span>Código</span></td>
+                                    <td  style="border: 1px solid; padding-left: 5px;"><span t-field="o.partner_id.work_code"/></td>
+                                </tr>
+                                <t t-if="o.picking_type_id.id == 4">
+                                    <tr>
+                                        <td style="padding-left:5px; border: 1px solid;"><span>Rem. No.</span></td>
+                                        <td  style="border: 1px solid;padding-left: 5px;"><span t-field="o.name"/> </td>
+                                        <td style="padding-left:5px; border: 1px solid;"><span>Fecha</span></td>
+                                        <td  style="border: 1px solid; padding-left: 5px;"><span t-field="o.min_date"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.picking_type_id.id == 1">
+                                     <tr>
+                                        <td style="padding-left:5px; border: 1px solid;"><span>Dev. No.</span></td>
+                                        <td  style="border-bottom: 1px solid; padding-left: 5px;"><span t-field="o.name"/></td>
+                                        <td style="padding-left:5px; border: 1px solid;"><span>Fecha</span></td>
+                                        <td  style="border-bottom: 1px solid; padding-left: 5px;"><span t-field="o.min_date"/></td>
+                                    </tr>
+                                </t>
+                           </table>
+                          <br/>
+                          <table style="width: 100%; border: 1px solid; font-size:12px;">
+                                <colgroup>
+                                    <col width='15%' />
+                                    <col width='35%' />
+                                    <col width='15%' />
+                                    <col width='35%' />
+                                </colgroup>
+                                 <tr>
+                                     <td style="padding-left:5px; font-weight:bold;"><span>Equipo:</span></td>
+                                     <td style="border-bottom:1px solid; "><t t-esc="product_ids.product_id.name"/></td>
+                                     <td style="padding-left:5px; font-weight:bold;"><span>Nro:</span></td>
+                                     <td style="border-bottom:1px solid;"><t t-esc="product_ids.product_id.default_code"/></td>
+                                 </tr>
+                               <tr>
+                                  <td colspan="4" style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Observaciones Generales del producto:</span></td>
+                              </tr>
+                              <tr>
+                                  <td colspan="4" style="padding-left:5px; border: 1px solid;">
+                                      <t t-esc="product_ids.observation"/><br/>
+                                  </td>
+                              </tr>
+                          </table>
+                          <table style="width: 100%; border: 1px solid; font-size:12px;">
+                                <colgroup>
+                                    <col width='30%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='50%' />
+                                </colgroup>
+                                <tr>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>Características</span></td>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>E1</span></td>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>R</span></td>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>D</span></td>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>E2</span></td>
+                                    <td style="text-align:center; border: 1px solid; font-weight:bold;"><span>Observaciones</span></td>
+                                </tr>
+                                <t t-foreach="product_ids.product_id.characteristic" t-as="characteristic">
+                                    <tr>
+                                        <td style="padding-left:5px; border: 1px solid;"><t t-esc="characteristic.characteristic_id.name"/></td>
+                                        <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                        <td style="padding-left:5px;border: 1px solid;"><span></span><br/></td>
+                                        <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                        <td style="padding-left:5px;border: 1px solid;"><span></span><br/></td>
+                                        <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                    </tr>
+                                </t>
+                              <tr>
+                                <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                <td style="padding-left:5px;border: 1px solid;"><span></span><br/></td>
+                                <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                                <td style="padding-left:5px;border: 1px solid;"><span></span><br/></td>
+                                <td style="padding-left:5px; border: 1px solid;"><span></span><br/></td>
+                              </tr>
+
+                          </table>
+                          <table style="width: 100%; border: 1px solid; font-size:11px;">
+                              <colgroup>
+                                  <col width='20%'/>
+                                  <col width='80%'/>
+                              </colgroup>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Mecánico (Manten)</span></td>
+                                    <td style="padding-left:5px;"><span><t t-esc="product_m.mechanic_ids.name"/></span></td>
+                                </tr>
+                                <tr>
+                                     <td  colspan="2" style="text-align:center; border:1px solid; font-size:10px;">
+                                         <span style="font-weight:bold;">E1:</span>
+                                         <span>Entrega del Equipo al Conductor/</span>
+                                         <span style="font-weight:bold;">R:</span>
+                                         <span>Recibo del Equipo en Obra/</span>
+                                         <span style="font-weight:bold;">D:</span>
+                                         <span>Devolución del Equipo en Obra/</span>
+                                         <span style="font-weight:bold;">E2:</span>
+                                         <span>Entrega del Equipo en Bodega</span>
+                                     </td>
+                                 </tr>
+                          </table>
+                          <br/>
+                          <table style="width: 100%; border: 1px solid; font-size:10px;">
+                                <colgroup>
+                                    <col width='15%' />
+                                    <col width='85%' />
+                                </colgroup>
+                                 <tr>
+                                     <td  colspan="2" style="text-align:center; border:1px solid; font-weight:bold;"><span>Control Entrega y Recigo de Equipo al Departamento de Mantenimiento</span></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="padding-left: 5px; border:1px solid;  border-right:none; font-weight:bold;"><span>Entregó (Log.)</span></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"><span t-field="o.write_uid.name"/></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold; "><span>Recibió (Mtto)</span></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;"><span t-field="o.receives_maintenance.name"/></td>
+                                 </tr>
+                                 <tr>
+                                    <td style="padding-left: 5px; border:1px solid; border-right:none; font-weight:bold;"><span>Semáforo</span></td>
+                                     <td style="padding-left: 5px; border:1px solid; border-left:none;">
+                                          <span t-field="product_ids.product_id.state_id"/>
+                                     </td>
+                                 </tr>
+                          </table>
+                          <br/>
+                          <br/>
+                     </div>
+                     </t>
+                 </t>
+                <br/>
+            </div>
+        </t>
+    </template>
+    <template id="report_delivey_output">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="con_stock.report_delivey_output_equipment" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+    <report
+        string="Entrega y Recibo de Equipos"
+        id="action_report_delivey_output"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="con_stock.report_delivey_output"
+        file="con_stock.report_delivey_output"
+    />
+</odoo>

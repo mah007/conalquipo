@@ -1,0 +1,231 @@
+<odoo>
+    <template id="report_preoperation_equipment_con">
+        <t t-call="report.html_container">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+            <t t-set="calendar" t-value="o.num_day()"/>
+            <t t-set="month" t-value="o.month()"/>
+            <t t-set="fortnight" t-value="o.fortnight()"/>
+            <div class="header">
+                <div class="row">
+                        <table style="border: 1px solid; top: -100px; width: 100%;">
+                            <colgroup>
+                                <col width='20%' />
+                                <col width='60%' />
+                                <col width='20%' />
+                            </colgroup>
+                            <tr>
+                                <td rowspan="2"  style="border: 1px solid;"><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/></td>
+                                <td  style="border: 1px solid; padding:5px; text-align:center;"><strong>INSPECCIÓN  DE PREOPERACIÓN DE EQUIPO CON OPERADOR</strong></td>
+                                <td rowspan="2"  style="border: 1px solid; padding:5px;">
+                                    <span> Código</span><br/>
+                                    <span>Versión:</span><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; text-align:center;"> <strong> FORMATO.</strong> </td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="page">
+                  <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
+                    <t t-if="product_ids.is_operated">
+                        <div>
+                        <div style="page-break-inside: avoid !important;">
+                            <table style="width: 100%;">
+                                <colgroup>
+                                    <col width='10%' />
+                                    <col width='20%' />
+                                    <col width='5%' />
+                                    <col width='15%' />
+                                    <col width='10%' />
+                                    <col width='25%' />
+                                    <col width='5%' />
+                                    <col width='10%' />
+                                </colgroup>
+                                <tr>
+                                    <td>Empresa:</td>
+                                    <td style="border-bottom: 1px solid;">
+                                         <t t-if="o.partner_id.parent_id">
+                                            <span t-field="o.partner_id.parent_id"/>
+                                        </t>
+                                        <t t-if="(not o.partner_id.parent_id)">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+                                    </td>
+                                    <td><span>Mes:</span> </td>
+                                    <td style="border-bottom: 1px solid; text-align:center;"><t t-esc="month"/></td>
+                                    <td><span>Equipo:</span> </td>
+                                    <td colspan="2" style="border-bottom: 1px solid; text-align:center;"> <t t-esc="product_ids.product_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Obra:</td>
+                                    <td style="border-bottom: 1px solid;"><span t-field="o.partner_id.name"/></td>
+                                    <td><span>Quincena:</span></td>
+                                    <td style="border-bottom: 1px solid; text-align:center;"> <t t-esc="fortnight"/></td>
+                                    <td><span>Operador:</span></td>
+                                    <td colspan="3" style="border-bottom: 1px solid; text-align:center;"> <t t-esc="product_ids.operator_ids.name"/></td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid;">
+                                <tr>
+                                   <td style="width: 30%; height:40px; border: 1px solid; text-align:center;">Caracteristicas</td>
+                                    <t t-foreach="range(1, 31)" t-as="i">
+                                        <td style="border: 1px solid; border-bottom:none;"></td>
+
+                                    </t>
+                                </tr>
+                                <tr>
+                                   <td style="width: 30%; height:40px; border: 1px solid; text-align:center;">Fecha</td>
+                                    <t t-foreach="range(1, 31)" t-as="i">
+                                        <td style="border: 1px solid; border-top:none;"></td>
+
+                                    </t>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid;">
+                                <tr>
+                                   <td style="width: 30%; border: 1px solid; text-align:center;">Diario</td>
+                                    <t t-foreach="range(1, 31)" t-as="i">
+                                        <td style="border: 1px solid;"></td>
+
+                                    </t>
+                                </tr>
+                                <tr>
+                                   <td style="width: 30%; border: 1px solid; text-align:center;">Semanal</td>
+                                    <t t-foreach="range(1, 31)" t-as="i">
+                                        <td style="border: 1px solid;"></td>
+
+                                    </t>
+                                </tr>
+                            </table>
+                              <br/>
+                            <table style="width: 100%; border: 1px solid; padding-left:5px;">
+                                <tr>
+                                   <td style="width: 10%; text-align:center;">Fecha</td>
+                                   <td style="width: 5%; text-align:center; border: 1px solid;">Día</td>
+                                   <td style="width: 15%; text-align:center;">Horometro</td>
+                                    <t t-foreach="range(1, 32)" t-as="i">
+                                        <td style="border: 1px solid;"></td>
+
+                                    </t>
+                                </tr>
+                                <t t-foreach="calendar" t-as="day">
+                                    <tr>
+                                        <td style="border: 1px solid; padding-left:5px; font-size:10px;">
+                                            <t t-esc="calendar[day][0]"/>
+                                        </td>
+                                        <td style="border: 1px solid; padding-left:5px; font-size:10px;">
+                                            <t t-esc="calendar[day][1]" />
+                                        </td>
+                                         <t t-foreach="range(1, 33)" t-as="i">
+                                            <td style="border: 1px solid;"></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>Revisado (En Buen Estado)</td>
+                                    <td> Pendiente por Cambio / Ajuste / Reparacion</td>
+                                    <td> - No Aplica</td>
+                                </tr>
+                            </table>
+                             <table style="width: 100%; border: 1px solid; font-size:10px; text-align:center; ">
+                                <tr>
+                                    <td><strong>Cualquier anomalia o reparación, favor reportarla inmediatamente al
+                                        Departamento de Mantenimiento de CONALQUPO y para el equipo.</strong></td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid; font-size: 10px;">
+                                <tr>
+                                    <td style="border: 1px solid; padding-left:5px; height:25px;">Firma:</td>
+                                    <td colspan="4" style="text-align:center; border: 1px solid; font-size: 11px;"><strong>Supervisorde equipo con operador</strong></td>
+                                    <td style="border: 1px solid; padding-left:5px;">Firma:</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid; padding-left:5px; height:25px;">Nombre:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Nombre:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Nombre:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Nombre:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Nombre:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Nombre:</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid; padding-left:5px; height:25px;"><strong>Operador:</strong></td>
+                                    <td style="border: 1px solid; padding-left:5px;">Fecha:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Fecha:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Fecha:</td>
+                                    <td style="border: 1px solid; padding-left:5px;">Fecha:</td>
+                                    <td style="border: 1px solid; padding-left:5px;"><strong>Dpto Mant y Mont</strong></td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </div>
+                        <div style="page-break-inside: avoid !important;">
+                            <table style="width: 100%; border: 1px solid;">
+                                <colgroup>
+                                    <col width='20%' />
+                                    <col width='60%' />
+                                    <col width='20%' />
+                                </colgroup>
+                                <tr>
+                                    <td colspan="3" style="text-align:center;font-weight:bold;">OBSERVACIONES</td>
+                                </tr>
+                                 <tr>
+                                    <td style="text-align:center; font-weight:bold; border: 1px solid;">Fecha</td>
+                                    <td style="text-align:center; font-weight:bold; border: 1px solid;">Descripción</td>
+                                    <td style="text-align:center; font-weight:bold; border: 1px solid;">Firma</td>
+                                </tr>
+                                <t t-foreach="range(0, 39)" t-as="h">
+                                    <tr>
+                                        <td style="border: 1px solid;"><br/></td>
+                                        <td style="border: 1px solid;"><br/></td>
+                                        <td style="border: 1px solid;"><br/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="report_preoperation_con">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="con_stock.report_preoperation_equipment_con" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+    <report
+        string="Preoperacion de Equipos"
+        id="action_report_preoperation_con"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="con_stock.report_preoperation_con"
+        file="con_stock.report_preoperation_con"
+        menu= "False"
+    />
+
+    <record id="con_view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//button[@name='button_scrap']" position="inside">
+                    <field name="is_preoperation" invisible="1" />
+                    <button name="%(action_report_preoperation_con)d" string="Preoperacion"
+                          type="action" attrs="{'invisible': [('is_preoperation','=', False)]}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

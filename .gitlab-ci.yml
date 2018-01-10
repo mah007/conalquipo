@@ -1,7 +1,7 @@
 variables:
-  ODOO_REPO: "/home/gitlab-runner/odoo"
   PROJECT: "con_profile"
-  ADDONS_PATH: "/home/gitlab-runner/odoo/addons,./CON"
+  ADDONS_PATH: "/home/gitlab-runner/odoo-10.0e/odoo/addons,/home/gitlab-runner/odoo-10.0/addons,./CON"
+  ODOO_REPO: "/home/gitlab-runner/odoo-10.0"
   ODOO_VERSION: "10.0"
 
 stages:
@@ -23,8 +23,6 @@ tests:
   script:
   - dropdb --if-exists $CI_BUILD_REF
   - cd $ODOO_REPO
-  - git checkout $ODOO_VERSION
-  - git pull origin $ODOO_VERSION
   - cd -
   - createdb --encoding=UTF8 --locale=en_US.UTF-8 --template=template0 -D ramdisk $CI_BUILD_REF
   - cd ..
