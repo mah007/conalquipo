@@ -25,37 +25,37 @@ from odoo import models, api
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.onchange('partner_id')
-    def onchange_partner_id_trust(self):
-        warning = {}
-        title = False
-        message = False
-        partner = self.partner_id
-
-        if partner.trust_code:
-            if partner.trust_code.message_type == 'no-message' and \
-                    partner.parent_id:
-                partner = partner.parent_id
-
-            if partner.trust_code.message_type != 'no-message':
-                if partner.trust_code.message_type != 'block' and \
-                        partner.parent_id and \
-                                partner.trust_code.message_type == 'block':
-                    partner = partner.parent_id
-
-                title = ("Warning for %s") % partner.name
-                message = partner.trust_code.message_body
-                warning = {
-                    'title': title,
-                    'message': message,
-                }
-
-                if partner.trust_code.message_type == 'block':
-                    self.update({'partner_id': False,
-                                 'partner_invoice_id': False,
-                                 'partner_shipping_id': False
-                                 })
-                    return {'warning': warning}
-
-            if warning:
-                return {'warning': warning}
+    # @api.onchange('partner_id')
+    # def onchange_partner_id_trust(self):
+    #     warning = {}
+    #     title = False
+    #     message = False
+    #     partner = self.partner_id
+    #
+    #     if partner.trust_code:
+    #         if partner.trust_code.message_type == 'no-message' and \
+    #                 partner.parent_id:
+    #             partner = partner.parent_id
+    #
+    #         if partner.trust_code.message_type != 'no-message':
+    #             if partner.trust_code.message_type != 'block' and \
+    #                     partner.parent_id and \
+    #                             partner.trust_code.message_type == 'block':
+    #                 partner = partner.parent_id
+    #
+    #             title = ("Warning for %s") % partner.name
+    #             message = partner.trust_code.message_body
+    #             warning = {
+    #                 'title': title,
+    #                 'message': message,
+    #             }
+    #
+    #             if partner.trust_code.message_type == 'block':
+    #                 self.update({'partner_id': False,
+    #                              'partner_invoice_id': False,
+    #                              'partner_shipping_id': False
+    #                              })
+    #                 return {'warning': warning}
+    #
+    #         if warning:
+    #             return {'warning': warning}
