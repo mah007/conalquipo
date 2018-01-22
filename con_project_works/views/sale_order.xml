@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <record id="sale_orderform_com" model="ir.ui.view">
+      <field name="name">sale.order.form.con</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+
+        <field name="partner_id" position="after">
+            <field name="projects_id" string="Works"/>
+        </field>
+            <xpath expr="//sheet/notebook" position="before">
+                <div>
+                    <group name="address_client_details" class="hidden-xs">
+                        <group string="Shipping Address">
+                            <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                        </group>
+                        <group string="Invoice Address">
+                            <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                        </group>
+                    </group>
+                </div>
+            </xpath>
+      </field>
+    </record>
+
+
+
+    <record id="sale_order_tree_con" model="ir.ui.view">
+      <field name="name">sale.order.tree.con</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_quotation_tree"/>
+      <field name="arch" type="xml">
+
+        <field name="name" position="after">
+            <field name="projects_id" string="Works"/>
+        </field>
+
+      </field>
+    </record>
+</odoo>
