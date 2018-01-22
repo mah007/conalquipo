@@ -38,4 +38,15 @@
 
       </field>
     </record>
+
+            <record model="ir.ui.view" id="view_sale_order_tree_inherit">
+             <field name="name">sale.order.tree.inherit</field>
+             <field name="inherit_id" ref="sale.view_order_tree"/>
+             <field name="model">sale.order</field>
+             <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="projects_id"/>
+                </field>
+             </field>
+        </record>
 </odoo>
