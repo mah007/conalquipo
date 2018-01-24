@@ -1,0 +1,393 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_project_works
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-23 19:38+0000\n"
+"PO-Revision-Date: 2018-01-23 14:52-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.0.5\n"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Accept Emails From"
+msgstr "Aceptar correos desde"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Address"
+msgstr "Dirección"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_sale_order_invoice_address
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: con_project_works
+#: model:ir.model,name:con_project_works.model_delivery_carrier
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "Choose a Project Email"
+msgstr "Escoja un correo electrónico de proyecto"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_city
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "City"
+msgstr "Ciudad"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_city2
+msgid "City2"
+msgstr "City2"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_code
+msgid "Code"
+msgstr "Código"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: con_project_works
+#: model:ir.model,name:con_project_works.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_country2_id
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_country_id
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Country"
+msgstr "País"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "Create"
+msgstr "Crear"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: con_project_works
+#: model:ir.model.fields,help:con_project_works.field_res_country_municipality_sequence
+msgid "Determine the display order"
+msgstr "Determine el orden de visualización"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_email
+msgid "Email"
+msgstr "Correo electrónico"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Email Alias"
+msgstr "Alias de Correo"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Emails"
+msgstr "Correos"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_interventor_phone
+msgid "Interventor Phone"
+msgstr "Teléfono interventor"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+#: model:ir.ui.view,arch_db:con_project_works.sale_orderform_com
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_invoice_limit_date
+msgid "Invoice limit date"
+msgstr "Fecha limite de facturación"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_invoicing_area_id
+msgid "Invoicing Area"
+msgstr "Área de facturación"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_legal_cont_responsible
+msgid "Legal Responsible"
+msgstr "Responsable legal"
+
+#. module: con_project_works
+#: model:ir.actions.act_window,name:con_project_works.action_country_municipality
+#: model:ir.ui.menu,name:con_project_works.menu_country_municipality
+msgid "Municipalities"
+msgstr "Municipios"
+
+#. module: con_project_works
+#: model:ir.model,name:con_project_works.model_res_country_municipality
+#: model:ir.model.fields,field_description:con_project_works.field_delivery_carrier_municipality_ids
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_municipality2_id
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_municipality_id
+#: model:ir.model.fields,field_description:con_project_works.field_res_partner_municipality_id
+#: model:ir.model.fields,field_description:con_project_works.field_res_users_municipality_id
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+#: model:ir.ui.view,arch_db:con_project_works.view_country_municipality_form
+#: model:ir.ui.view,arch_db:con_project_works.view_country_municipality_tree
+#: model:ir.ui.view,arch_db:con_project_works.view_partner_address_form_inherit
+#: model:ir.ui.view,arch_db:con_project_works.view_partner_form_inherit
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_observations
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Observations"
+msgstr "Observaciones"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_owner_phone
+msgid "Owner Phone"
+msgstr "Teléfono de propietario"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_partner_code
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Partner Code"
+msgstr "Código de cliente"
+
+#. module: con_project_works
+#: model:ir.model,name:con_project_works.model_project_project
+#: model:ir.model.fields,field_description:con_project_works.field_sale_order_projects_id
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Project Manager"
+msgstr "Responsable de proyecto"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "Project Name"
+msgstr "Nombre del proyecto"
+
+#. module: con_project_works
+#: model:ir.model,name:con_project_works.model_sale_order
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Responsibles"
+msgstr "Responsables"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_sale_order_shipping_address
+msgid "Shipping"
+msgstr "Envío"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+#: model:ir.ui.view,arch_db:con_project_works.sale_orderform_com
+msgid "Shipping Address"
+msgstr "Dirección de envío"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_state2_id
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_state_id
+#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_state_id
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "State"
+msgstr "Estado"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_street1
+msgid "Street1"
+msgstr "Calle1"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_street1_2
+msgid "Street1 2"
+msgstr "Calle1 2"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_street2_1
+msgid "Street2 1"
+msgstr "Calle2 1"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_street2_2
+msgid "Street2 2"
+msgstr "Calle2 2"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Time Scheduling"
+msgstr "Programación de Tiempo"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_code
+msgid "Work Code"
+msgstr "Código de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_interventor
+msgid "Work Interventor"
+msgstr "Interventor de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_owner
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Work Owner"
+msgstr "Propietario de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_phone
+msgid "Work Phone"
+msgstr "Teléfono de Trabajo"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_resident
+msgid "Work Resident"
+msgstr "Residente de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_responsible
+msgid "Work Responsible"
+msgstr "Responsable de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_storer
+msgid "Work Storer"
+msgstr "Almacenista de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_contact
+msgid "Work contact"
+msgstr "Contacto de obra"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_work_date_creation
+msgid "Work date creation"
+msgstr "Fecha creación de obra"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.sale_order_tree_con
+#: model:ir.ui.view,arch_db:con_project_works.sale_orderform_com
+msgid "Works"
+msgstr "Obras"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "ZIP"
+msgstr "C.P."
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_zip
+msgid "Zip"
+msgstr "Zip"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_zip2
+msgid "Zip2"
+msgstr "Zip2"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "contact"
+msgstr "Contacto"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_contact_number
+msgid "contact Number"
+msgstr "Número de contacto"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "contact Work information"
+msgstr "Información de obra"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
+msgid "e.g. Office Party"
+msgstr "e.g. Fiesta en la oficina"

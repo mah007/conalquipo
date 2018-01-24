@@ -28,15 +28,15 @@ class projectWorks(models.Model):
         string='Partner Code', compute='_get_partner_code', store=True)
     legal_cont_responsible = fields.Many2one(
         'res.partner', string='Legal Responsible')
-    contract_number = fields.Char(string='Contract Number')
+    contact_number = fields.Char(string='contact Number')
     work_responsible = fields.Many2one(
         'res.partner', string='Work Responsible')
     work_resident = fields.Many2one(
         'res.partner', string='Work Resident')
     work_storer = fields.Many2one(
         'res.partner', string='Work Storer')
-    work_contract = fields.Many2one(
-        'res.partner', string='Work Contract')
+    work_contact = fields.Many2one(
+        'res.partner', string='Work contact')
     work_phone = fields.Char(string='Work Phone')
     work_owner = fields.Many2one(
         'res.partner', string='Work Owner')

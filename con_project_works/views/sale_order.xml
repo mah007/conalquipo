@@ -7,24 +7,24 @@
       <field name="arch" type="xml">
 
         <field name="partner_id" position="after">
-            <field name="projects_id" string="Works"/>
+            <field name="projects_id" string="Works" context="{'default_partner_id': partner_id}"/>
         </field>
-            <xpath expr="//sheet/notebook" position="before">
-                <div>
-                    <group name="address_client_details" class="hidden-xs">
-                        <group string="Shipping Address">
-                            <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
-                        </group>
-                        <group string="Invoice Address">
-                            <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
-                        </group>
+
+        <xpath expr="//sheet/notebook" position="before">
+            <div>
+                <group name="address_client_details" class="hidden-xs">
+                    <group string="Shipping Address">
+                        <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
                     </group>
-                </div>
-            </xpath>
+                    <group string="Invoice Address">
+                        <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                    </group>
+                </group>
+            </div>
+        </xpath>
+
       </field>
     </record>
-
-
 
     <record id="sale_order_tree_con" model="ir.ui.view">
       <field name="name">sale.order.tree.con</field>
@@ -39,14 +39,17 @@
       </field>
     </record>
 
-            <record model="ir.ui.view" id="view_sale_order_tree_inherit">
-             <field name="name">sale.order.tree.inherit</field>
-             <field name="inherit_id" ref="sale.view_order_tree"/>
-             <field name="model">sale.order</field>
-             <field name="arch" type="xml">
-                <field name="name" position="after">
-                    <field name="projects_id"/>
-                </field>
-             </field>
-        </record>
+    <record model="ir.ui.view" id="view_sale_order_tree_inherit">
+      <field name="name">sale.order.tree.inherit</field>
+      <field name="inherit_id" ref="sale.view_order_tree"/>
+      <field name="model">sale.order</field>
+      <field name="arch" type="xml">
+
+          <field name="name" position="after">
+              <field name="projects_id"/>
+          </field>
+
+       </field>
+    </record>
+
 </odoo>

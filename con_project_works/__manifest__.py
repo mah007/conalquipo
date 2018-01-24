@@ -15,7 +15,7 @@
     'data': [
         'views/project.xml',
         'views/sale_order.xml',
-	'views/municipality.xml',
+        'views/municipality.xml',
     ],
     'qweb': [
     ],

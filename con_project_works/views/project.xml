@@ -103,18 +103,18 @@
                 </group>
               </group>
             </page>
-            <page name="Contract Work information" string="Contract Work information">
+            <page name="contact Work information" string="contact Work information">
               <group>
-                <group string="Contract" required="1">
+                <group string="contact" required="1">
                   <field name="legal_cont_responsible" required="1"/>
-                  <field name="contract_number" required="1"/>
+                  <field name="contact_number" required="1"/>
                   <field name="work_phone" required="1"/>
                 </group>
                 <group string="Responsibles">
                   <field name="work_responsible" required="1"/>
                   <field name="work_resident" required="1"/>
                   <field name="work_storer" required="1"/>
-                  <field name="work_contract" required="1"/>
+                  <field name="work_contact" required="1"/>
                   <field name="work_interventor" required="1"/>
                   <field name="interventor_phone" required="1"/>
                 </group>

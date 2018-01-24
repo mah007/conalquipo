@@ -1,97 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <odoo>
+<odoo>
 
-        <record model="ir.ui.view" id="view_sale_order_form_inherit">
-             <field name="name">sale.order.form</field>
-             <field name="inherit_id" ref="sale.view_order_form"/>
-             <field name="model">sale.order</field>
-             <field name="arch" type="xml">
-               <field name="payment_term_id" position="after">
-                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
-               </field>
-               <!--<field name="partner_invoice_id" position="replace">-->
-                    <!--<field name="partner_invoice_id"-->
-                           <!--groups="sale.group_delivery_invoice_address"-->
-                           <!--context="{'default_type':'invoice',-->
-                           <!--'show_address': 1}"-->
-                    <!--options="{&quot;always_reload&quot;: True}"-->
-                    <!--/>-->
-               <!--</field>-->
-               <!--<field name="partner_shipping_id" position="replace">-->
-                    <!--<field name="partner_shipping_id"-->
-                           <!--groups="sale.group_delivery_invoice_address"-->
-                           <!--context="{'default_type':'invoice',-->
-                           <!--'show_address': 1}"-->
-                    <!--options="{&quot;always_reload&quot;: True}"-->
-                    <!--/>-->
-               <!--</field>-->
+    <record model="ir.ui.view" id="view_sale_order_form_inherit">
+         <field name="name">sale.order.form</field>
+         <field name="inherit_id" ref="sale.view_order_form"/>
+         <field name="model">sale.order</field>
+         <field name="arch" type="xml">
+           <field name="payment_term_id" position="after">
+             <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+           </field>
 
-                 <xpath expr="//field[@name='order_line']" position="attributes">
-                        <attribute name="context">{'default_order_type': order_type}</attribute>
-                 </xpath>
+             <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">{'default_order_type': order_type}</attribute>
+             </xpath>
 
-                 <xpath expr="//field[@name='order_line']/form/group/group[2]//label[@for='analytic_tag_ids']" position="before">
-                     <field name="order_type" invisible="1"/>
-                     <field name="bill_uom" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
-                     <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
-                     <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
-                     <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
-                     <field name="product_subleased" invisible="1"/>
-                 </xpath>
+             <xpath expr="//field[@name='order_line']/form/group/group[2]//label[@for='analytic_tag_ids']" position="before">
+                 <field name="order_type" invisible="1"/>
+                 <field name="bill_uom" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
+                 <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
+                 <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
+                 <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+                 <field name="product_subleased" invisible="1"/>
+             </xpath>
 
-                 <xpath expr="//field[@name='order_line']/tree" position="attributes">
-                        <attribute name="create">true</attribute>
-                        <attribute name="editable"/>
-                  </xpath>
+             <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="create">true</attribute>
+                    <attribute name="editable"/>
+              </xpath>
 
-                  <xpath expr="//group[@name='technical']" position="after">
-                       <group string="Subleased Product Orders" name="purchases">
-                           <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
-                       </group>
-                 </xpath>
+              <xpath expr="//group[@name='technical']" position="after">
+                   <group string="Subleased Product Orders" name="purchases">
+                       <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
+                   </group>
+             </xpath>
 
-                 <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
-                        <field name="owner_id"/>
-                  </xpath>
+             <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
+                    <field name="owner_id"/>
+              </xpath>
 
-             </field>
-        </record>
-
-        <record id="action_rent" model="ir.actions.act_window">
-            <field name="name">Rent Orders</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">sale.order</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
-            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
-            <field name="context">{"default_order_type":'rent'}</field>
-            <field name="domain">[('order_type', '=', 'rent')]</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Create a Rent Orders.
-                </p><p>
-                    Once the quotation is confirmed, it becomes a sales order.
-                    You'll be able to invoice it and collect payments.
-                    From the <i>Sales Orders</i> menu, you can track delivery
-                    orders or services.
-                </p>
-            </field>
-        </record>
-
-        <menuitem id="menu_rent_order"
-                name="Rent Orders"
-                action="con_sale.action_rent"
-                parent="sale.sale_order_menu"
-                sequence="10" groups="sales_team.group_sale_salesman"/>
+         </field>
+    </record>
 
     <record id="invoice_form" model="ir.ui.view">
-            <field name="name">account.invoice.form</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
-            <field name="arch" type="xml">
-                 <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
-                        <field name="owner_id" />
-                  </xpath>
-            </field>
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
+                    <field name="owner_id" />
+              </xpath>
+        </field>
     </record>
-    </odoo>
+</odoo>
