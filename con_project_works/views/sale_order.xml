@@ -7,7 +7,7 @@
       <field name="arch" type="xml">
 
         <field name="partner_id" position="after">
-            <field name="projects_id" string="Works" context="{'default_partner_id': partner_id}"/>
+            <field name="project_id" string="Works" context="{'default_partner_id': partner_id}"/>
         </field>
 
         <xpath expr="//sheet/notebook" position="before">
@@ -33,7 +33,7 @@
       <field name="arch" type="xml">
 
         <field name="name" position="after">
-            <field name="projects_id" string="Works"/>
+            <field name="project_id" string="Works"/>
         </field>
 
       </field>
@@ -46,7 +46,7 @@
       <field name="arch" type="xml">
 
           <field name="name" position="after">
-              <field name="projects_id"/>
+              <field name="project_id"/>
           </field>
 
        </field>

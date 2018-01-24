@@ -26,7 +26,7 @@ from odoo import fields
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
-    projects_id = fields.Many2one('project.project', string="Project")
+    project_id = fields.Many2one('project.project', string="Project")
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping",
                                    compute="_get_merge_address")
@@ -38,12 +38,12 @@ class SaleOrder(Model):
     def onchange_partner_id(self):
         super(SaleOrder, self).onchange_partner_id()
         if self.partner_id:
-            self.projects_id = False
+            self.project_id = False
 
-    @api.depends('projects_id')
+    @api.depends('project_id')
     def _get_merge_address(self):
-        if self.projects_id:
-            p = self.projects_id
+        if self.project_id:
+            p = self.project_id
             self.shipping_address = self.merge_address(
                 p.street1 or '', p.street1_2 or '', p.city or '',
                 p.municipality_id.name or '', p.state_id.name or '',

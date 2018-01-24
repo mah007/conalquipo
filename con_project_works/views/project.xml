@@ -52,6 +52,7 @@
               <field name="user_id" string="Project Manager"
                 attrs="{'readonly':[('active','=',False)]}" required="1"/>
               <field name="partner_id" string="Customer" required="1"/>
+              <field name="business_name" string="Business name" required="1" domain="[('parent_id', '=', partner_id)]"/>
               <field name="partner_code" string="Partner Code" readonly="1"/>
             </group>
           </group>
@@ -63,6 +64,7 @@
               <group>
                 <group string="Shipping Address">
                   <div class="o_address_format">
+                    <field name="phone1" placeholder="Phone..." required="1"/>
                     <field name="street1" placeholder="Street..."
                       class="o_address_street" required="1"/>
                     <field name="street1_2" placeholder="Street 2..."
@@ -85,6 +87,7 @@
                 </group>
                 <group string="Invoice Address">
                   <div class="o_address_format">
+                    <field name="phone2" placeholder="Phone..." required="1"/>
                     <field name="street2_1" placeholder="Street..."
                       class="o_address_street" required="1"/>
                     <field name="street2_2" placeholder="Street 2..."

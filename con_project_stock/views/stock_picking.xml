@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <field name="location_dest_id" position="after">
-                    <field name="project_id" domain="[('partner_id', '=', partner_id)]}"/>
+                    <field name="project_id" domain="[('partner_id', '=', partner_id)]}" context="{'default_project_id': project_id}"/>
                 </field>
                  <xpath expr="//notebook" position="before">
                     <group name="address_client_details" class="hidden-xs">
