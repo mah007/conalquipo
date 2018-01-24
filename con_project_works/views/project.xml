@@ -52,6 +52,7 @@
               <field name="user_id" string="Project Manager"
                 attrs="{'readonly':[('active','=',False)]}" required="1"/>
               <field name="partner_id" string="Customer" required="1"/>
+              <field name="business_name" string="Business name" required="1" domain="[('parent_id', '=', partner_id)]"/>
               <field name="partner_code" string="Partner Code" readonly="1"/>
             </group>
           </group>

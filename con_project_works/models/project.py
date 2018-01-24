@@ -43,6 +43,8 @@ class projectWorks(models.Model):
     owner_phone = fields.Char(string='Owner Phone')
     work_interventor = fields.Many2one(
         'res.partner', string='Work Interventor')
+    business_name = fields.Many2one(
+        'res.partner', string='Business name')
     interventor_phone = fields.Char(string='Interventor Phone')
     street1 = fields.Char()
     street1_2 = fields.Char()
