@@ -21,7 +21,7 @@
                        <field name="reference"/>
                    </xpath>
                    <xpath expr="//group[2]/group[2]" position="after">
-                       <group name="bearing_information">
+                       <group name="bearing_information" colspan="2">
                             <group string="Bearing information">
                                 <field name="traffic" />
                                 <field name="licence_date" />

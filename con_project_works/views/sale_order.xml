@@ -24,8 +24,6 @@
       </field>
     </record>
 
-
-
     <record id="sale_order_tree_con" model="ir.ui.view">
       <field name="name">sale.order.tree.con</field>
       <field name="model">sale.order</field>
