@@ -48,6 +48,7 @@ class projectWorks(models.Model):
     interventor_phone = fields.Char(string='Interventor Phone')
     street1 = fields.Char()
     street1_2 = fields.Char()
+    phone1 = fields.Char(string='Phone')
     zip = fields.Char(change_default=True)
     city = fields.Char()
     state_id = fields.Many2one(
@@ -58,6 +59,7 @@ class projectWorks(models.Model):
         'res.country', string='Country', ondelete='restrict')
     street2_1 = fields.Char()
     street2_2 = fields.Char()
+    phone2 = fields.Char(string='Phone')
     zip2 = fields.Char(change_default=True)
     city2 = fields.Char()
     state2_id = fields.Many2one(

@@ -64,6 +64,7 @@
               <group>
                 <group string="Shipping Address">
                   <div class="o_address_format">
+                    <field name="phone1" placeholder="Phone..." required="1"/>
                     <field name="street1" placeholder="Street..."
                       class="o_address_street" required="1"/>
                     <field name="street1_2" placeholder="Street 2..."
@@ -86,6 +87,7 @@
                 </group>
                 <group string="Invoice Address">
                   <div class="o_address_format">
+                    <field name="phone2" placeholder="Phone..." required="1"/>
                     <field name="street2_1" placeholder="Street..."
                       class="o_address_street" required="1"/>
                     <field name="street2_2" placeholder="Street 2..."
