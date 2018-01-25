@@ -44,7 +44,7 @@
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Nit:</span> <span t-field="o.partner_id.vat"/></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Dirección:</span>
-                                    <span t-field="o.partner_shipping_id.child_ids.street"/>
+                                    <span t-field="o.project_id.street1"/>
                                 </td>
                                 <td style="border: 1px solid; padding:5px;"><span>placa:</span>
                                     <span t-field="o.vehicle_id.license_plate"/>
@@ -56,7 +56,7 @@
                                         <span t-field="o.partner_id.name"/>
                                 </td>
                                 <td style="border: 1px solid; padding:5px;"><span>Barrio:</span>
-                                        <span t-field="o.partner_shipping_id.child_ids.city"/>
+                                        <span t-field="o.project_id.city"/>
                                 </td>
                                 <td style="border: 1px solid; padding:5px;"><span>Conductor:</span>
 
@@ -70,7 +70,7 @@
                             </tr>
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Código:</span>
-                                    <span t-field="o.partner_id.work_code"/>
+                                    <span t-field="o.project_id.work_code"/>
                                 </td>
                                 <td style="border: 1px solid; padding:5px;"><span>E-mail:</span> <span t-field="o.partner_id.email"/></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Código Acarreo:</span>  <span t-field="o.carrier_tracking_ref"/></td>

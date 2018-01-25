@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_form_inherit">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='resource_calendar_id']" position="after">
+                  <field name="is_operator"/>
+                  <field name="availability" widget="radio" attrs="{'invisible': [('is_operator','=', False)]}"/>
+                  <field name="product_ids" class="oe_no_button" onchange="onchange_is_operator"
+                             widget="many2many_tags"  attrs="{'invisible': [('is_operator','=', False)]}" />
+              </xpath>
+          </field>
+    </record>
+
+    <record id="con_product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.common.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[@name='notes']" position="after">
+                 <page name="characteristic" string="Characteristic">
+                     <group name="characteristic">
+                         <group name="operated" >
+                             <field name="clause" string="Clause"/>
+                             <field name="is_mechanic" string="Is Machanic"/>
+                             <field name="is_operated" string="Is Operated"/>
+                             <field name="employee_ids" class="oe_no_button" onchange="onchange_operator_required"
+                                    string="Operated"
+                                     widget="many2many_tags"  attrs="{'invisible': [('is_operated','=', False)]}"/>
+
+                         </group>
+                          <group name="characteristics" style="width:50%;">
+                                 <field name="characteristic" mode="tree" nolabel="1" >
+                                     <tree editable="bottom" >
+                                         <field name="product_id" invisible="1"/>
+                                         <field name="characteristic_id"/>
+                                     </tree>
+                                </field>
+                         </group>
+                     </group>
+                 </page>
+              </xpath>
+         </field>
+    </record>
+
+     <record id="con_view_picking_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//header" position="after">
+                    <field name="m_instructive" invisible="1"/>
+                    <div class="alert alert-warning" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('m_instructive','=',False)]}">
+                        Some equipment does not have operator. Please remember to print the instructions for each of them.
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="receives_maintenance"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

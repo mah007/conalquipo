@@ -7,7 +7,8 @@
     'category': 'Project Management',
     'sequence': 10,
     'summary': 'Projects, Works',
-    'depends': ['base', 'project', 'con_client_code', 'sale', 'con_sale'],
+    'depends': ['base', 'project', 'con_client_code', 'sale', 'con_sale',
+                'delivery'],
     'description':
     """
         Project Management for works
