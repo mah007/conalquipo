@@ -52,6 +52,9 @@
                     <field name="bill_uom" />
                     <field name="bill_uom_qty" />
               </xpath>
+             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
+                    <field name="uom_id" />
+              </xpath>
         </field>
     </record>
 </odoo>

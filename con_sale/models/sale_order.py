@@ -106,16 +106,14 @@ class SaleOrderLine(models.Model):
         :param qty: float quantity to invoice
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        res['uom_id'] = self.bill_uom.id
+
+        res['bill_uom'] = self.bill_uom.id
         res['bill_uom_qty'] = self.bill_uom_qty
         return res
 
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
     def _get_invoice_qty(self):
         for line in self:
-            if line.order_id.order_type == 'sale':
-                super(SaleOrderLine, self)._get_invoice_qty()
-            else:
                 qty_invoiced = 0.0
                 for invoice_line in line.invoice_lines:
                     if invoice_line.invoice_id.state != 'cancel':

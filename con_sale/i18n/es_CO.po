@@ -160,3 +160,13 @@ msgstr "Subarrendador"
 #: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_owner_id
 msgid "Owner"
 msgstr "Propietario"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom_qty
+msgid "Quantity of Sale"
+msgstr "Cantidad de venta"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom
+msgid "Unit of Measure of Sale"
+msgstr "Unidad de medida de venta"
