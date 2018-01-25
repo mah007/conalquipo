@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+
+         <record id="view_pack_detail_product_inherit" model="ir.ui.view">
+            <field name="name">pack.detail.product.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="con_shipping.view_picking_withcarrier_out_form_inherit"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//page[@name='info_shipping']" position="after">
+                     <page name='detail_product' string="Detail Product">
+                        <group>
+                             <field name="pack_detail_product_ids" mode="tree" nolabel="1">
+                                     <tree editable="bottom" create="false" delete="false">
+                                         <field name="product_id" readonly="1" />
+                                         <field name="product_t_id" invisible="1" />
+                                         <field name="is_operated" invisible="1"/>
+                                         <field name="operator_ids" attrs="{'invisible': [('is_operated','=', False)]}"  />
+                                         <field name="observation"  colspan="3"/>
+                                         <button name="action_see_instructive" String="Instructive" type="object" icon="fa-file" attrs="{'invisible': [('is_operated', '=', True)]}"/>
+                                     </tree>
+                             </field>
+                        </group>
+                     </page>
+                     <page name='mechanical_revision' string="Mechanical revision">
+                        <group>
+                             <field name="pack_mechanic_ids" mode="tree"  nolabel="1">
+                                     <tree editable="bottom" create="false" delete="false">
+                                         <field name="product_id" readonly="1"/>
+                                         <field name="is_mechanic" invisible="1"/>
+                                         <field name="mechanic_ids" attrs="{'invisible': [('is_mechanic','=', False)]}"/>
+                                         <field name="broken"/>
+                                     </tree>
+                             </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+       </record>
+
+
+         <record id="delivery_view_picking_form_view_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field eval="12" name="priority"/>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='origin']" position="after">
+                        <field name="default_type_id" invisible="1" />
+                        <field name="delivery_order_id" attrs="{'invisible': [('default_type_id', '!=', 1)]}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>

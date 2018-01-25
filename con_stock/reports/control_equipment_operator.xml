@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_equipment_operator_con">
+        <t t-call="web.html_container">
+            <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+            <t t-set="calendar" t-value="o.num_day()"/>
+            <t t-set="month" t-value="o.month()"/>
+            <t t-set="fortnight" t-value="o.fortnight()"/>
+            <t t-set="year" t-value="o.year()"/>
+            <div class="header">
+                <div class="row">
+                        <table style="border: 1px solid; top: -100px; width: 100%;">
+                            <colgroup>
+                                <col width='20%' />
+                                <col width='60%' />
+                                <col width='20%' />
+                            </colgroup>
+                            <tr>
+                                <td rowspan="2"  style="border: 1px solid;"><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/></td>
+                                <td  style="border: 1px solid; padding:5px; text-align:center;"> <strong>CONTROL TIEMPO DE EQUIPO Y OPERADOR</strong>  </td>
+                                <td rowspan="2"  style="border: 1px solid; padding:5px;">
+                                    <span> Código</span><br/>
+                                    <span>Versión:</span><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; text-align:center;"> <strong> FORMATO.</strong> </td>
+                            </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="page" style="page-break-inside: avoid !important;">
+                <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
+                     <t t-set="move" t-value="o.state_product(product_ids)"/>
+                    <t t-if="product_ids.is_operated and move.state == 'done'">
+                        <div style="page-break-before:always;">
+                            <table style="width: 100%; border: 1px solid; font-size: 12px;">
+                                <colgroup>
+                                    <col width='10%' />
+                                    <col width='20%' />
+                                    <col width='10%' />
+                                    <col width='20%' />
+                                    <col width='10%' />
+                                    <col width='20%' />
+                                </colgroup>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Cliente</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;">
+                                        <t t-if="o.partner_id.parent_id">
+                                            <span t-field="o.partner_id.parent_id"/>
+                                        </t>
+                                        <t t-if="(not o.partner_id.parent_id)">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+
+                                    </td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Obra</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span t-field="o.partner_id.name"/></td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Código</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span t-field="o.partner_id.work_code"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Año</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span><t t-esc="year" /></span></td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Mes</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span><t t-esc="month"/></span></td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Quincena</span></td>
+                                    <td style="padding-left:5px; border: 1px solid;"><span><t t-esc="fortnight"/></span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Equipo</span></td>
+                                    <td colspan="2" style="padding-left:5px; border: 1px solid;"><span><t t-esc="product_ids.product_id.name"/></span></td>
+                                    <td style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Operador</span></td>
+                                    <td colspan="2" style="padding-left:5px; border: 1px solid;"><span><t t-esc="product_ids.operator_ids.name"/></span></td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid; ">
+                                <colgroup>
+                                    <col width='4%' />
+                                    <col width='4%' />
+                                    <col width='8%' />
+                                    <col width='8%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='2%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='2%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='5%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                    <col width='3%' />
+                                </colgroup>
+
+                                <tr>
+                                    <td colspan="6" style="text-align:center; border: 1px solid; font-weight:bold;" ><span>Tiempo Equipo</span></td>
+                                    <td colspan="11" style="text-align:center; border: 1px solid; font-weight:bold;"><span>Tiempo Operador</span></td>
+                                    <td colspan="9" style="text-align:center; border: 1px solid; font-weight:bold;"><span>Horas por Cobrar</span></td>
+                                </tr>
+                                <tr style="font-size: 10px; font-weight:bold;">
+                                    <td style="text-align:center; border: 1px solid;" ><span>Fecha</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Día</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Empieza</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Termina</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Hrs<br/>Trab</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Hrs. X<br/>Cobr</span></td>
+                                    <td colspan="3" style="text-align:center; border: 1px solid;" ><span>Mañana</span></td>
+                                    <td colspan="3" style="text-align:center; border: 1px solid;" ><span>Tarde</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Vo. Bo.<br/>Obra</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Vo. Bo.<br/>Audit</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>Hrs.<br/>Trab</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S4</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S6</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S7</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S8</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S9</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S14</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S15</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S16</span></td>
+                                    <td style="text-align:center; border: 1px solid;" ><span>S17</span></td>
+                                </tr>
+
+                                <t t-foreach="calendar" t-as="day">
+                                    <tr style="font-size: 9px;">
+                                        <td style="border: 1px solid; text-align:center;font-size:10px;">
+                                            <t t-esc="calendar[day][0]"/>
+                                        </td>
+                                        <td style="border: 1px solid; text-align:center; font-size:10px; width:2%;">
+                                           <t t-esc="calendar[day][1]"/>
+                                        </td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;">a</td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;">a</td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        </tr>
+                                    </t>
+                            </table>
+                            <table style="width: 100%; border: 1px solid; font-size: 12px;">
+                                <colgroup>
+                                    <col width='25%' />
+                                    <col width='25%' />
+                                    <col width='25%' />
+                                    <col width='25%' />
+                                </colgroup>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid;font-weight:bold;" ><span>Total Horas Equipo</span></td>
+                                    <td  style="padding-left:5px; border: 1px solid;"><span></span></td>
+                                    <td  style="padding-left:5px; border: 1px solid; font-weight:bold;"><span>Total Horas Operador</span></td>
+                                    <td  style="padding-left:5px; border: 1px solid;"><span></span></td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid; font-size: 12px;">
+                                 <tr>
+                                     <td style="text-align:center; border: 1px solid;font-weight:bold;">
+                                         <span>Horario Asignado Por La Obra Para El Operador</span>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td style="padding-left:5px; border: 1px solid;font-weight:bold;">
+                                             <span>Nota:</span><br/><br/>
+                                     </td>
+                                 </tr>
+                             </table>
+                            <br/>
+                            <table style="width: 100%; border: 1px solid; font-size: 12px;">
+                                <colgroup>
+                                    <col width='12%' />
+                                    <col width='22%' />
+                                    <col width='22%' />
+                                    <col width='22%' />
+                                    <col width='22%' />
+                                </colgroup>
+                                <tr>
+                                    <td rowspan="3" style="text-align:center; border: 1px solid;font-weight:bold; padding-top:10px;">
+                                        <span>Tiempos De Operador</span>
+                                    </td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S4</span><span> Horas Ordinarias</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S6</span><span> Horas Diurnas</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S7</span><span> Horas Extras Nocturnas</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S8</span><span> Horas Nocturna Operador</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S14</span><span> Recargo Hora Extra Diurna</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S15</span><span> Rcargo Hora Nocturna</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S16</span><span> Recargo Hora Extra Nocturna</span></td>
+                                     <td style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S17</span><span> Recargo Hora Extra Festiva</span></td>
+                                </tr>
+                                 <tr>
+                                    <td colspan="4" style="padding-left:5px; border: 1px solid; font-size: 10px;"><span style="font-weight:bold;">S9</span><span> Horas Festivas</span></td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%; font-size: 10px; font-weight:bold;">
+                                 <tr>
+                                     <td style="padding-left:5px;"><span>* Las Casillas Sombreadas Son Para Uso De Conalquipo S.A.S.</span></td>
+                                 </tr>
+                             </table>
+                            <table style="width: 100%;  border: 1px solid;">
+                                 <tr>
+                                     <td colspan="4" style="padding-left:5px; font-weight:bold;
+                                        font-size: 11px; border: 1px solid; border-bottom:none;"><span>Vo. Bo. Obra-Cliente</span></td>
+                                     <td colspan="2" style="padding-left:5px; font-weight:bold;
+                                        font-size: 11px; border: 1px solid; border-bottom:none;"><span>Revisó Conalquipo</span></td>
+                                     <td colspan="2" style="padding-left:5px; font-weight:bold;
+                                        font-size: 11px; border: 1px solid; border-bottom:none;"><span>Aprobó Conalquipo</span></td>
+                                     <td rowspan="4" style="text-align:center; font-weight:bold;
+                                        font-size: 11px;"><span>Autorizo</span></td>
+                                 </tr>
+                                  <tr>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none;border-top:none; "><span>Firma:</span></td>
+                                      <td  colspan="3" style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none; border-top:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none; border-top:none;"><span>Firma:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                         border: 1px solid; border-left:none; border-top:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none; border-top:none;"><span>Firma:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none; border-top:none;"><span></span></td>
+                                 </tr>
+                                 <tr>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid;  border-right:none;"><span>Nombre:</span></td>
+                                      <td  colspan="3" style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid;  border-right:none;"><span>Nombre:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid;  border-right:none;"><span>Nombre:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                 </tr>
+                                  <tr>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none;"><span>Cargo:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none; border-right:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none;border-left:none;"><span>Telefono:</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none;"><span>Coor. P.S</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                      <td  style="padding-left:5px; font-weight:bold; font-size: 10px;
+                                        border: 1px solid; border-right:none;"><span>Dir. P.S</span></td>
+                                      <td  style="padding-left:5px;font-size: 10px;
+                                        border: 1px solid; border-left:none;"><span></span></td>
+                                 </tr>
+                             </table>
+                        </div>
+                         <div style="page-break-before:always;">
+                             <table style="width: 100%; border: 1px solid;">
+                                 <colgroup>
+                                     <col width="5%" />
+                                     <col width="7%" />
+                                     <col width="18%" />
+                                     <col width="10%" />
+                                     <col width="10%" />
+                                     <col width="20%" />
+                                     <col width="15%" />
+                                     <col width="15%" />
+                                 </colgroup>
+                                 <tr style="font-weight:bold; font-size: 12px;">
+                                     <td style="border: 1px solid;  text-align:center;"  rowspan="2"><span>Fecha</span></td>
+                                     <td style="border: 1px solid; text-align:center;" rowspan="2"><span>Dia</span></td>
+                                     <td style="border: 1px solid; text-align:center;" rowspan="2"><span>Cantidad De Perforaciones</span></td>
+                                     <td style="border: 1px solid; text-align:center;" rowspan="2"><span>Roca</span></td>
+                                     <td style="border: 1px solid; text-align:center;" rowspan="2"><span>Concreto</span></td>
+                                     <td style="border: 1px solid; text-align:center;" rowspan="2"><span>MTS Profundidad</span></td>
+                                     <td style="border: 1px solid; text-align:center;" colspan="2"><span>Entrego</span></td>
+                                 </tr>
+                                 <tr style="font-weight:bold; font-size: 12px;">
+                                     <td style="border: 1px solid; text-align:center;">Broca</td>
+                                     <td style="border: 1px solid; text-align:center;">Barrena</td>
+                                 </tr>
+                                 <t t-foreach="calendar" t-as="day">
+                                    <tr style="font-size: 9px;">
+                                        <td style="border: 1px solid; text-align:center;font-size:10px;">
+                                            <t t-esc="calendar[day][0]"/>
+                                        </td>
+                                        <td style="border: 1px solid; text-align:center; font-size:10px;">
+                                           <t t-esc="calendar[day][1]"/>
+                                        </td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                        <td style="text-align:center; border: 1px solid;"></td>
+                                    </tr>
+                                 </t>
+                                 <tr>
+                                     <td colspan="8" style="border: 1px solid; font-size:10px; padding-left:5px; font-weight:bold;">
+                                         <span>Supervisor Asignado Por La Obra:</span>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td colspan="8" style="font-size:10px; padding-left:5px; font-weight:bold;">
+                                         <span>Observaciones Al Servicio:</span>
+                                     </td>
+                                 </tr>
+                                 <tr style="border-right: 1px solid;"><td><br/></td></tr>
+                                 <tr style="border-right: 1px solid;"><td><br/></td></tr>
+                                 <tr style="border-right: 1px solid;"><td><br/></td></tr>
+                                 <tr style="border-bottom: 1px solid;"><td><br/></td></tr>
+                                 <tr>
+                                     <td colspan="8" style="font-size:10px; padding-left:5px;">
+                                         <span>Favor Calificar de 5 a 1, Siendo 5 (Excelente), 4 (Muy Bueno), 3 (Bueno), 2 (Aceptable) y 1 (Deficiente).</span>
+                                     </td>
+                                 </tr>
+                             </table>
+                             <table style="width: 100%; border: 1px solid; font-size:12px;">
+                                 <colgroup>
+                                     <col width="25%"/>
+                                     <col width="25%"/>
+                                     <col width="25%"/>
+                                     <col width="25%"/>
+                                 </colgroup>
+                                 <tr>
+                                     <td colspan="8" style="font-size:10px; padding-left:5px; border: 1px solid; border-bottom:none;">
+                                         <span>El Desempeño y Otros Del Operador:</span>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td><br/></td>
+                                     <td rowspan="4">
+                                         <table style="border: 1px solid; width: 75%;">
+                                             <tr>
+                                                 <td style="border: 1px solid; text-align:center; height:25px;">5</td>
+                                                 <td style="border: 1px solid; text-align:center;">4</td>
+                                                 <td style="border: 1px solid; text-align:center;">3</td>
+                                                 <td style="border: 1px solid; text-align:center;">2</td>
+                                                 <td style="border: 1px solid; text-align:center;">1</td>
+                                             </tr>
+                                             <tr>
+                                                 <td style="border: 1px solid; height:25px;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                             </tr>
+                                             <tr>
+                                                 <td style="border: 1px solid; height:25px;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                             </tr>
+                                             <tr>
+                                                 <td style="border: 1px solid; height:25px;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                             </tr>
+                                         </table>
+                                     </td>
+                                     <td> <br/></td>
+                                     <td rowspan="4"  style="border: 1px solid; border-top:none; border-left:none;">
+                                         <table  style="border: 1px solid; width: 75%;">
+                                             <tr>
+                                                 <td style="border: 1px solid; text-align:center;height:25px;">5</td>
+                                                 <td style="border: 1px solid; text-align:center;">4</td>
+                                                 <td style="border: 1px solid; text-align:center;">3</td>
+                                                 <td style="border: 1px solid; text-align:center;">2</td>
+                                                 <td style="border: 1px solid; text-align:center;">1</td>
+                                             </tr>
+                                             <tr>
+                                                 <td style="border: 1px solid; height:25px;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                             </tr>
+                                             <tr>
+                                                 <td style="border: 1px solid; height:25px;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                                 <td style="border: 1px solid;"><br/></td>
+                                             </tr>
+                                         </table>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td style="font-size:10px; padding-top:6pX; padding-left:5px;"><span>Competencia (Capacidad  Para Realizar Su Trabajo)</span></td>
+                                     <td style="font-size:10px; padding-top:6pX; padding-left:5px;"><span>Utilizacion De Implementos De Seg.</span></td>
+                                 </tr>
+                                  <tr>
+                                     <td style="font-size:10px; padding-top:6pX; padding-left:5px;"><span>Colaboración</span></td>
+                                     <td style="font-size:10px; padding:6pX; padding-left:5px;"><span>Presentaciónn personal.</span></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="font-size:10px; padding-top:6pX; padding-left:5px;"><span>Trato Con Directivos Y Personal.</span></td>
+                                     <td style="border-bottom: 1px solid;"></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="border: 1px solid; font-size:10px; padding-left:5px;" colspan="4">
+                                         <span style="font-weight:bold;">Nota:</span>
+                                         <span>Cuando Su Calificación sea 3,2 ó 1 Favor COmentar El Por Qué en "Observaciones".</span></td>
+                                 </tr>
+                             </table>
+                         </div>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+     <template id="report_equipment_operator">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="con_stock.report_equipment_operator_con" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+    <report
+        string="Tiempo de Equipo y Operador"
+        id="action_report_equipment_operator"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="con_stock.report_equipment_operator"
+        file="con_stock.report_equipment_operator"
+        menu="False"
+    />
+
+     <record id="control_view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field eval="12" name="priority"/>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='state']" position="before">
+                    <button name="%(action_report_equipment_operator)d" string="Control Tiempo"
+                          type="action" attrs="{'invisible': ['|',('state', 'in', '[done]'), ('type_sp', '!=', '4')]}"/>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+</odoo>
