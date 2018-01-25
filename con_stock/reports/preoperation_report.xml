@@ -27,7 +27,8 @@
                     </table>
                 </div>
             </div>
-            <div class="page">
+             <div class="article o_report_layout_standard">
+                <div class="page">
                   <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
                     <t t-if="product_ids.is_operated">
                         <div>
@@ -195,6 +196,7 @@
                     </div>
                     </t>
                 </t>
+            </div>
             </div>
         </t>
     </template>

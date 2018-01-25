@@ -24,7 +24,8 @@
                     </table>
                 </div>
             </div>
-            <div class="page">
+             <div class="article o_report_layout_standard">
+                <div class="page">
                  <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
                       <t t-set="product_m" t-value="o.is_mechanic(product_ids)"/>
                      <t t-if="product_m.is_mechanic">
@@ -182,6 +183,7 @@
                      </t>
                  </t>
                 <br/>
+            </div>
             </div>
         </t>
     </template>

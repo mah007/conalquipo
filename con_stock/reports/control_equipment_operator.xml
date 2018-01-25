@@ -29,7 +29,8 @@
                     </table>
                 </div>
             </div>
-            <div class="page" style="page-break-inside: avoid !important;">
+            <div class="article o_report_layout_standard">
+                <div class="page" style="page-break-inside: avoid !important;">
                 <t t-foreach="o.pack_detail_product_ids" t-as="product_ids">
                      <t t-set="move" t-value="o.state_product(product_ids)"/>
                     <t t-if="product_ids.is_operated and move.state == 'done'">
@@ -443,6 +444,7 @@
                          </div>
                     </t>
                 </t>
+            </div>
             </div>
         </t>
     </template>
