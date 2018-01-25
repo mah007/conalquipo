@@ -49,14 +49,14 @@ class SaleOrder(models.Model):
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
-        if self.carrier_type == 'company' and self.projects_id:
+        if self.carrier_type == 'company' and self.project_id:
             delivery = self.env['delivery.carrier'].search(
                 [('country_ids', '=',
-                  self.projects_id.country_id.id),
+                  self.project_id.country_id.id),
                  ('state_ids', '=',
-                  self.projects_id.state_id.id),
+                  self.project_id.state_id.id),
                  ('municipality_ids', '=',
-                  self.projects_id.municipality_id.id)],
+                  self.project_id.municipality_id.id)],
                 limit=1
                 )
             self.update({
