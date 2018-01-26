@@ -76,3 +76,18 @@ class StockPicking(Model):
         for num in xrange(len(values)):
             out_str += values[num]
         return out_str
+
+class SaleOrder(Model):
+    _inherit = 'sale.order'
+
+    @api.multi
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        self._propagate_picking_project()
+        return res
+
+    @api.multi
+    def _propagate_picking_project(self):
+        for picking in self.picking_ids:
+            picking.write({'project_id': self.project_id.id})
+        return True
