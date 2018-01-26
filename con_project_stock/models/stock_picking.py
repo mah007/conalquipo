@@ -45,16 +45,18 @@ class StockPicking(Model):
             p = self.project_id
             self.shipping_address = self.merge_address(
                 p.street1 or '', p.street1_2 or '', p.city or '',
-                p.municipality2_id.name or '', p.state_id.name or '',
-                p.zip or '', p.country_id.name or '')
+                p.municipality_id.name or '', p.state_id.name or '',
+                p.zip or '', p.country_id.name or '', p.phone1 or '',
+                p.email or '')
             self.invoice_address = self.merge_address(
                 p.street2_1 or '', p.street2_2 or '', p.city2 or '',
                 p.municipality2_id.name or '', p.state2_id.name or '',
-                p.zip2 or '', p.country2_id.name or '')
+                p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
+                p.email or '')
 
     @staticmethod
     def merge_address(street, street2, city, municipality,
-                      state, zip, country):
+                      state, zip, country, phone, email):
         """
         This function receive text fields for merge the address fields.
         :param street: The text field for the address to merge.
@@ -68,6 +70,9 @@ class StockPicking(Model):
         :return: merge string with
         street+street2+city+municipality+state+zip+country
         """
-        new_string = street+', '+street2+', '+city+', '+municipality+', '
-        new_string += state+','+zip+', '+country
-        return new_string
+        values = [street, ', ', street2, ', ', city, ', ', municipality, ', '
+            , state, ',', zip, ', ', country, ', ', phone, ', ', email]
+        out_str = ''
+        for num in xrange(len(values)):
+            out_str += values[num]
+        return out_str
