@@ -20,6 +20,6 @@
 ##############################################################################
 
 from . import product
-from . import sale_order
+# from . import sale_order
 from . import stock_location
-from . import purchase_order
+# from . import purchase_order

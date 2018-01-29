@@ -76,7 +76,6 @@ class SaleOrder(models.Model):
         self._add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
-
         return res
 
     @api.multi
