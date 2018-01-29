@@ -170,3 +170,30 @@ msgstr "Cantidad de venta"
 #: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom
 msgid "Unit of Measure of Sale"
 msgstr "Unidad de medida de venta"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:42
+#: model:ir.ui.view,arch_db:con_sale.sale_order_view_search_inherit_quotation
+#, python-format
+msgid "Merged"
+msgstr "Fusionada"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_merged_in
+msgid "Merged In"
+msgstr "Fusionada En"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty
+msgid "Quantity to Sale"
+msgstr "Cantidad de Venta"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_qty_shipped
+msgid "Quantity to be shipped"
+msgstr "Cantidad a Despachar"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
+msgid "Unit of Measure to Sale"
+msgstr "Unidad de medida de Venta"

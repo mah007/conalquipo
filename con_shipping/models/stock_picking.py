@@ -126,7 +126,7 @@ class StockPicking(models.Model):
                   + str(self.location_id.location_id.name)
         else:
             ref = str(self.scheduled_date) + str(self.vehicle_client or '') \
-                  + self.location_id.location_id.name
+                  + str(self.location_id.location_id.name or '')
 
         self.carrier_tracking_ref = str(ref).replace(
             "-", "").replace(" ", "").replace(":", "")

@@ -23,6 +23,7 @@ from odoo import fields, models, api, _
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.addons import decimal_precision as dp
+from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -38,6 +39,11 @@ class SaleOrder(models.Model):
 
     purchase_ids = fields.One2many('purchase.order', 'sale_order_id',
                                    string='Purchase Orders')
+    state = fields.Selection(selection_add=[
+        ('merged', _('Merged')),
+    ])
+
+    merged_in = fields.Char('Merged In')
 
     @api.onchange('state')
     def onchange_state(self):
@@ -49,7 +55,24 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+
+        if self.partner_id:
+            order_id = self.search([('partner_id', '=', self.partner_id.id),
+                                    ('state', '=', 'sale')], limit=1)
+            if order_id:
+                for line in self.order_line:
+                    line_copy = line.copy({'order_id': order_id.id})
+                    order_id.write({'order_line': [(4, line_copy.id)]})
+                self.update({'state': 'merged',
+                             'merged_in': order_id.name,
+                             'confirmation_date': fields.Datetime.now()
+                             })
+                if self.env.context.get('send_email'):
+                    self.force_quotation_send()
+                res = True
+            else:
+                res = super(SaleOrder, self).action_confirm()
+
         self._add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
@@ -108,7 +131,8 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
 
         res['bill_uom'] = self.bill_uom.id
-        res['bill_uom_qty'] = self.bill_uom_qty
+        res['qty_shipped'] = self.product_uom_qty
+        res['quantity'] = self.bill_uom_qty
         return res
 
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
@@ -128,16 +152,16 @@ class SaleOrderLine(models.Model):
     end_date = fields.Date(string="End")
     order_type = fields.Selection(related='order_id.order_type',
                                   string="Type Order", default='sale')
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure')
+    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
 
     owner_id = fields.Many2one('res.partner', string='Supplier',
                                 states=READONLY_STATES_OWNER,
                                 change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
 
-    bill_uom_qty = fields.Float('Quantity',
+    bill_uom_qty = fields.Float('Quantity to Sale',
                                 digits=dp.get_precision(
-                                    'Product Unit of Measure'))
+                                'Product Unit of Measure'))
 
     @api.onchange('owner_id')
     def onchange_owner_id(self):
@@ -178,12 +202,204 @@ class SaleOrderLine(models.Model):
 
         return line
 
+    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
+                 'bill_uom_qty')
+    def _compute_amount(self):
+        """
+        Compute the amounts of the SO line.
+        """
+        for line in self:
+            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = line.tax_id.compute_all(price, line.order_id.currency_id,
+                                            line.bill_uom_qty,
+                                            product=line.product_id,
+                                            partner=line.order_id.partner_shipping_id)
+            line.update({
+                'price_tax': sum(
+                    t.get('amount', 0.0) for t in taxes.get('taxes', [])),
+                'price_total': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
+
+    @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
+                 'qty_invoiced', 'bill_uom_qty')
+    def _compute_invoice_status(self):
+        """
+        Compute the invoice status of a SO line. Possible statuses:
+        - no: if the SO is not in status 'sale' or 'done', we consider that there is nothing to
+          invoice. This is also hte default value if the conditions of no other status is met.
+        - to invoice: we refer to the quantity to invoice of the line. Refer to method
+          `_get_to_invoice_qty()` for more information on how this quantity is calculated.
+        - upselling: this is possible only for a product invoiced on ordered quantities for which
+          we delivered more than expected. The could arise if, for example, a project took more
+          time than expected but we decided not to invoice the extra cost to the client. This
+          occurs onyl in state 'sale', so that when a SO is set to done, the upselling opportunity
+          is removed from the list.
+        - invoiced: the quantity invoiced is larger or equal to the quantity ordered.
+        """
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
+        for line in self:
+            if line.state not in ('sale', 'done'):
+                line.invoice_status = 'no'
+            elif not float_is_zero(line.qty_to_invoice,
+                                   precision_digits=precision):
+                line.invoice_status = 'to invoice'
+            elif line.state == 'sale' and line.product_id.invoice_policy == 'order' and \
+                            float_compare(line.qty_delivered,
+                                          line.product_uom_qty,
+                                          precision_digits=precision) == 1:
+                line.invoice_status = 'upselling'
+            elif float_compare(line.qty_invoiced, line.product_uom_qty,
+                               precision_digits=precision) >= 0:
+                line.invoice_status = 'invoiced'
+            else:
+                line.invoice_status = 'no'
+
+    @api.depends('qty_invoiced', 'qty_delivered', 'product_uom_qty',
+                 'order_id.state', 'bill_uom_qty')
+    def _get_to_invoice_qty(self):
+        """
+        Compute the quantity to invoice. If the invoice policy is order, the quantity to invoice is
+        calculated from the ordered quantity. Otherwise, the quantity delivered is used.
+        """
+        for line in self:
+            if line.order_id.state in ['sale', 'done']:
+                if line.product_id.invoice_policy == 'order':
+                    line.qty_to_invoice = line.bill_uom_qty - line.qty_invoiced
+                else:
+                    line.qty_to_invoice = line.qty_delivered - line.qty_invoiced
+            else:
+                line.qty_to_invoice = 0
+
+    @api.depends('price_total', 'product_uom_qty', 'bill_uom_qty')
+    def _get_price_reduce_tax(self):
+        for line in self:
+            line.price_reduce_taxinc = line.price_total / line.bill_uom_qty if line.bill_uom_qty else 0.0
+
+    @api.depends('price_subtotal', 'product_uom_qty', 'bill_uom_qty')
+    def _get_price_reduce_notax(self):
+        for line in self:
+            line.price_reduce_taxexcl = line.price_subtotal / line.bill_uom_qty if line.bill_uom_qty else 0.0
+
+    @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty',
+                  'tax_id', 'bill_uom_qty')
+    def _onchange_discount(self):
+        self.discount = 0.0
+        if not (self.product_id and self.product_uom and
+                self.order_id.partner_id and self.order_id.pricelist_id and
+                self.order_id.pricelist_id.discount_policy == 'without_discount' and
+                self.env.user.has_group('sale.group_discount_per_so_line')):
+            return
+
+        context_partner = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order)
+        pricelist_context = dict(context_partner, uom=self.product_uom.id)
+
+        price, rule_id = self.order_id.pricelist_id.with_context(pricelist_context).get_product_price_rule(self.product_id, self.bill_uom_qty or 1.0, self.order_id.partner_id)
+        new_list_price, currency_id = self.with_context(context_partner)._get_real_price_currency(self.product_id, rule_id, self.bill_uom_qty, self.product_uom, self.order_id.pricelist_id.id)
+
+        if new_list_price != 0:
+            if self.order_id.pricelist_id.currency_id.id != currency_id:
+                # we need new_list_price in the same currency as price, which is in the SO's pricelist's currency
+                new_list_price = self.env['res.currency'].browse(currency_id).with_context(context_partner).compute(new_list_price, self.order_id.pricelist_id.currency_id)
+            discount = (new_list_price - price) / new_list_price * 100
+            if discount > 0:
+                self.discount = discount
+
+    @api.onchange('product_uom', 'product_uom_qty', 'bill_uom_qty')
+    def product_uom_change(self):
+        if not self.product_uom or not self.product_id:
+            self.price_unit = 0.0
+            return
+        if self.order_id.pricelist_id and self.order_id.partner_id:
+            product = self.product_id.with_context(
+                lang=self.order_id.partner_id.lang,
+                partner=self.order_id.partner_id.id,
+                quantity=self.bill_uom_qty,
+                date=self.order_id.date_order,
+                pricelist=self.order_id.pricelist_id.id,
+                uom=self.product_uom.id,
+                fiscal_position=self.env.context.get('fiscal_position')
+            )
+            self.price_unit = self.env[
+                'account.tax']._fix_tax_included_price_company(
+                self._get_display_price(product), product.taxes_id, self.tax_id,
+                self.company_id)
+
+    @api.multi
+    def _get_display_price(self, product):
+        # TO DO: move me in master/saas-16 on sale.order
+        if self.order_id.pricelist_id.discount_policy == 'with_discount':
+            return product.with_context(pricelist=self.order_id.pricelist_id.id).price
+        final_price, rule_id = self.order_id.pricelist_id.get_product_price_rule(self.product_id, self.bill_uom_qty or 1.0, self.order_id.partner_id)
+        context_partner = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order)
+        base_price, currency_id = self.with_context(context_partner)._get_real_price_currency(self.product_id, rule_id, self.bill_uom_qty, self.product_uom, self.order_id.pricelist_id.id)
+        if currency_id != self.order_id.pricelist_id.currency_id.id:
+            base_price = self.env['res.currency'].browse(currency_id).with_context(context_partner).compute(base_price, self.order_id.pricelist_id.currency_id)
+        # negative discounts (= surcharge) are included in the display price
+        return max(base_price, final_price)
+
+    @api.multi
+    @api.onchange('product_id')
+    def product_id_change(self):
+        if not self.product_id:
+            return {'domain': {'product_uom': []}}
+
+        vals = {}
+        domain = {'product_uom': [
+            ('category_id', '=', self.product_id.uom_id.category_id.id)]}
+        if not self.product_uom or (
+            self.product_id.uom_id.id != self.product_uom.id):
+            vals['product_uom'] = self.product_id.uom_id
+            vals['product_uom_qty'] = 1.0
+            vals['bill_uom_qty'] = 1.0
+
+        product = self.product_id.with_context(
+            lang=self.order_id.partner_id.lang,
+            partner=self.order_id.partner_id.id,
+            quantity=vals.get('bill_uom_qty') or self.bill_uom_qty,
+            date=self.order_id.date_order,
+            pricelist=self.order_id.pricelist_id.id,
+            uom=self.product_uom.id
+        )
+
+        result = {'domain': domain}
+
+        title = False
+        message = False
+        warning = {}
+        if product.sale_line_warn != 'no-message':
+            title = _("Warning for %s") % product.name
+            message = product.sale_line_warn_msg
+            warning['title'] = title
+            warning['message'] = message
+            result = {'warning': warning}
+            if product.sale_line_warn == 'block':
+                self.product_id = False
+                return result
+
+        name = product.name_get()[0][1]
+        if product.description_sale:
+            name += '\n' + product.description_sale
+        vals['name'] = name
+
+        self._compute_tax_id()
+
+        if self.order_id.pricelist_id and self.order_id.partner_id:
+            vals['price_unit'] = self.env[
+                'account.tax']._fix_tax_included_price_company(
+                self._get_display_price(product), product.taxes_id, self.tax_id,
+                self.company_id)
+        self.update(vals)
+
+        return result
+
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     owner_id = fields.Many2one('res.partner', 'Owner')
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
-    bill_uom_qty = fields.Float('Quantity of Sale',
-                                digits=dp.get_precision(
-                                    'Product Unit of Measure'))
+    qty_shipped = fields.Float('Quantity to be shipped',
+                               digits=dp.get_precision(
+                                   'Product Unit of Measure'))
