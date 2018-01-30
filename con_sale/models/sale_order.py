@@ -22,6 +22,7 @@
 from odoo import fields, models, api, _
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.addons import decimal_precision as dp
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -52,7 +53,6 @@ class SaleOrder(models.Model):
         self._add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
-
         return res
 
     @api.multi
@@ -105,15 +105,14 @@ class SaleOrderLine(models.Model):
         :param qty: float quantity to invoice
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        res['uom_id'] = self.bill_uom.id
+
+        res['bill_uom'] = self.bill_uom.id
+        res['bill_uom_qty'] = self.bill_uom_qty
         return res
 
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
     def _get_invoice_qty(self):
         for line in self:
-            if line.order_id.order_type == 'sale':
-                super(SaleOrderLine, self)._get_invoice_qty()
-            else:
                 qty_invoiced = 0.0
                 for invoice_line in line.invoice_lines:
                     if invoice_line.invoice_id.state != 'cancel':
@@ -134,6 +133,10 @@ class SaleOrderLine(models.Model):
                                 states=READONLY_STATES_OWNER,
                                 change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
+
+    bill_uom_qty = fields.Float('Quantity',
+                                digits=dp.get_precision(
+                                    'Product Unit of Measure'))
 
     @api.onchange('owner_id')
     def onchange_owner_id(self):
@@ -179,3 +182,7 @@ class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     owner_id = fields.Many2one('res.partner', 'Owner')
+    bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
+    bill_uom_qty = fields.Float('Quantity of Sale',
+                                digits=dp.get_precision(
+                                    'Product Unit of Measure'))

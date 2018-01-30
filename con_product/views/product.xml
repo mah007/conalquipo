@@ -67,7 +67,7 @@
                       <field name="state_id" string="State"/>
                       <field name="color" widget="color" string="Color"/>
                       <field name="location_id" string="Location"/>
-                      <field name="components" />
+                      <!--<field name="components" />-->
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">

@@ -118,18 +118,17 @@ class StockPicking(models.Model):
     @api.one
     @api.depends('scheduled_date', 'carrier_id', 'vehicle_id', 'vehicle_client')
     def _carrier_tracking_ref(self):
-        ref = ""
-
         if self.carrier_id:
-            ref = str(self.scheduled_date) + str(self.carrier_id.id) \
-                  + str(self.vehicle_id.license_plate or '')\
-                  + str(self.location_id.location_id.name)
+            ref = "".join([str(self.scheduled_date), str(self.carrier_id.id),
+                           str(self.vehicle_id.license_plate or ''),
+                           str(self.location_id.location_id.name or '')])
         else:
-            ref = str(self.scheduled_date) + str(self.vehicle_client or '') \
-                  + self.location_id.location_id.name
+            ref = "".join([str(self.scheduled_date),
+                           str(self.vehicle_client or ''),
+                           self.location_id.location_id.name or ''])
 
-        self.carrier_tracking_ref = str(ref).replace(
-            "-", "").replace(" ", "").replace(":", "")
+        self.carrier_tracking_ref = str(ref).replace("-", "")\
+            .replace(" ", "").replace(":", "")
 
 
 class ShippingDriver(models.Model):
