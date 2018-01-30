@@ -2,17 +2,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Show mrp repairs option in stock picking',
+    'name': 'Show mrp repairs option in stock move',
     'version': '1.1',
     'category': 'MRP Repairs',
     'sequence': 10,
     'summary': 'MRP Repairs',
     'depends': [
-        'mrp_repair'
+        'stock', 'mrp_repair'
     ],
     'description':
     """
-        Show mrp repairs option in stock picking
+        Show mrp repairs option in stock move
     """,
     'data': [
         'views/stock_picking.xml',

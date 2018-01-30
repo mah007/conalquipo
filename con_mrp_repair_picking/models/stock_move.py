@@ -23,7 +23,7 @@
 from odoo import models, fields
 
 
-class StockPickingMRPRepair(models.Model):
-    _inherit = "stock.picking"
+class StockMoveMRPRepair(models.Model):
+    _inherit = "stock.move"
 
     mrp_repair_id = fields.Many2one('mrp.repair', string='Repair request')
