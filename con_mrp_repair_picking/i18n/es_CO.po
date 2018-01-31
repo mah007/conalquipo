@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20171030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-30 21:13+0000\n"
-"PO-Revision-Date: 2018-01-30 16:13-0500\n"
+"POT-Creation-Date: 2018-01-31 20:28+0000\n"
+"PO-Revision-Date: 2018-01-31 15:28-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,9 +18,20 @@ msgstr ""
 "X-Generator: Poedit 2.0.5\n"
 
 #. module: con_mrp_repair_picking
-#: model:ir.model.fields,field_description:con_mrp_repair_picking.field_stock_picking_mrp_repair_id
+#: model:ir.model.fields,field_description:con_mrp_repair_picking.field_stock_move_mrp_repair_id
+#: model:ir.model.fields,field_description:con_mrp_repair_picking.field_stock_picking_repair_requests
 msgid "Repair request"
 msgstr "Solicitud reparación"
+
+#. module: con_mrp_repair_picking
+#: model:ir.ui.view,arch_db:con_mrp_repair_picking.stock_picking_form
+msgid "Repair requests"
+msgstr "Solicitudes reparación"
+
+#. module: con_mrp_repair_picking
+#: model:ir.model,name:con_mrp_repair_picking.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Existencias"
 
 #. module: con_mrp_repair_picking
 #: model:ir.model,name:con_mrp_repair_picking.model_stock_picking
