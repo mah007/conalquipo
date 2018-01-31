@@ -19,48 +19,20 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models
+from odoo import fields, models
 import logging
 
 _logger = logging.getLogger(__name__)
 
 
-class DeliveryCarrier(models.Model):
-    _inherit = 'delivery.carrier'
-
-    municipality_ids = fields.One2many('res.country.municipality',
-                                       'delivery_carrier_id',
-                                       string='Municipality', copy=True,
-                                       track_visibility='onchange')
-    delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
-                                            'delivery_carrier_id',
-                                            string='Lines Delivery Carrier'
-                                                   'Cost', copy=True)
-
-    @api.onchange('state_ids')
-    def onchange_states(self):
-        """
-        Onchange function that update the country_ids and municipality_ids
-        with the correct municipality and country based on the given
-        State/Province.
-
-        :return: None
-        """
-        self.country_ids = [(6, 0, self.country_ids.ids +
-                             self.state_ids.mapped('country_id.id'))]
-        self.municipality_ids = [(6, 0, self.municipality_ids.ids +
-                                  self.municipality_ids.mapped('state_id.id'))
-                                 ]
-
-
 class DeliveryCarrierCost(models.Model):
     """
-    This model create a table for managed the cost by each vehicle 
+    This model create a table for managed the cost by each vehicle
     relational to the delivery carrier and make the followings links.
-    
+
     Fields:
         vehicle (int): Many2one field linked to `flee.vehicle` model.
-        delivery_carrier_id (int): Many2one field linked to 
+        delivery_carrier_id (int): Many2one field linked to
         `delivery.carrier` model.
     """
     _name = 'delivery.carrier.cost'
@@ -74,3 +46,13 @@ class DeliveryCarrierCost(models.Model):
                                           ondelete='cascade', index=True,
                                           copy=False,
                                           track_visibility='onchange')
+
+
+class DeliveryCarrier(models.Model):
+    _inherit = 'delivery.carrier'
+
+
+    delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
+                                            'delivery_carrier_id',
+                                            string='Lines Delivery Carrier'
+                                                   'Cost', copy=True)

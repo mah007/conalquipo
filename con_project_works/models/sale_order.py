@@ -41,6 +41,12 @@ class SaleOrder(Model):
 
     @api.depends('project_id')
     def _get_merge_address(self):
+        """
+        This function verify if a project has been selected and return a
+        merge address for shipping and invoice to the user.
+
+        :return: None
+        """
         if self.project_id:
             p = self.project_id
             self.shipping_address = self.merge_address(
@@ -59,6 +65,7 @@ class SaleOrder(Model):
                       state, zip, country, phone, email):
         """
         This function receive text fields for merge the address fields.
+
         :param street: The text field for the address to merge.
         :param street2: The text field for the second line of
          the address to merge.
@@ -67,8 +74,9 @@ class SaleOrder(Model):
         :param state: The text for the state to merge.
         :param zip: the text for the zip code of the address.
         :param country: the text for the name of the country.
-        :return: merge string with
-        street+street2+city+municipality+state+zip+country
+
+        :return: merge string with street+street2+city+municipality+state+zip
+        +country
         """
         values = [street, ', ', street2, ', ', city, ', ', municipality, ', '
             , state, ',', zip, ', ', country, ', ', phone, ', ', email]

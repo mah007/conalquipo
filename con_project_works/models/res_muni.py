@@ -51,13 +51,20 @@ class ResPartner(models.Model):
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
-    municipality_ids = fields.Many2many('res.country.municipality',
-                                        'delivery_carrier_municipality_rel',
-                                        'carrier_id',
-                                        'municipality_ids', 'Municipality')
+    municipality_ids = fields.One2many('res.country.municipality',
+                                       'delivery_carrier_id',
+                                       string='Municipality', copy=True,
+                                       track_visibility='onchange')
 
     @api.onchange('state_ids')
     def onchange_states(self):
+        """
+        Onchange function that update the country_ids and municipality_ids
+        with the correct municipality and country based on the given
+        State/Province.
+
+        :return: None
+        """
         self.country_ids = [(6, 0, self.country_ids.ids +
                              self.state_ids.mapped('country_id.id'))]
         self.municipality_ids = [(6, 0, self.municipality_ids.ids +

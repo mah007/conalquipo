@@ -14,6 +14,7 @@ class projectWorks(models.Model):
 
     @api.model
     def default_get(self, flds):
+        # ~Todo: What that hell is flds?, change to a descriptive variable name
         result = super(projectWorks, self).default_get(flds)
         return result
 
