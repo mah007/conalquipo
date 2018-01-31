@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Ingeniería, Aplicaciones y Software S.A.S
-#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2018 IAS Ingenieria, Aplicaciones y Software, S.A.S.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -31,10 +31,13 @@ class StockPickingMRPRepair(models.Model):
 
     @api.one
     def generate_repair_requests(self):
+        """
+        Method to create massive repair requests from stock
+        pickings
+        return: None
+        """
         mrp_repair_obj = self.env['mrp.repair']
         for l in self.move_lines:
-            _logger.warning('AQUIIIIII')
-            _logger.warning(l)
             vals = {
                 'product_id': l.product_id.id,
                 'partner_id': self.partner_id.id,

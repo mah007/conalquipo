@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Ingeniería, Aplicaciones y Software S.A.S
-#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2018 IAS Ingenieria, Aplicaciones y Software, S.A.S.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 
 from odoo import models, fields
 
