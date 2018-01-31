@@ -32,7 +32,6 @@ class DeliveryCarrier(models.Model):
                                        'delivery_carrier_id',
                                        string='Municipality', copy=True,
                                        track_visibility='onchange')
-
     delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
                                             'delivery_carrier_id',
                                             string='Lines Delivery Carrier'
@@ -40,7 +39,13 @@ class DeliveryCarrier(models.Model):
 
     @api.onchange('state_ids')
     def onchange_states(self):
+        """
+        Onchange function that update the country_ids and municipality_ids
+        with the correct municipality and country based on the given
+        State/Province.
 
+        :return: None
+        """
         self.country_ids = [(6, 0, self.country_ids.ids +
                              self.state_ids.mapped('country_id.id'))]
         self.municipality_ids = [(6, 0, self.municipality_ids.ids +
@@ -49,15 +54,21 @@ class DeliveryCarrier(models.Model):
 
 
 class DeliveryCarrierCost(models.Model):
+    """
+    This model create a table for managed the cost by each vehicle 
+    relational to the delivery carrier and make the followings links.
+    
+    Fields:
+        vehicle (int): Many2one field linked to `flee.vehicle` model.
+        delivery_carrier_id (int): Many2one field linked to 
+        `delivery.carrier` model.
+    """
     _name = 'delivery.carrier.cost'
 
-    vehicle = fields.Many2one(comodel_name='fleet.vehicle',
-                              string='Vehicle', ondelete='cascade',
-                              index=True, copy=False,
+    vehicle = fields.Many2one(comodel_name='fleet.vehicle', string='Vehicle',
+                              ondelete='cascade', index=True, copy=False,
                               track_visibility='onchange')
-
     cost = fields.Float(string='Cost', track_visibility='onchange')
-
     delivery_carrier_id = fields.Many2one('delivery.carrier',
                                           string='Delivery Carrier',
                                           ondelete='cascade', index=True,

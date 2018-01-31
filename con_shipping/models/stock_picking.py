@@ -159,7 +159,7 @@ class ShippingDriver(models.Model):
     driver_ids = fields.Many2one(
         'hr.employee', string='Employee', ondelete='cascade', index=True,
         copy=False, track_visibility='onchange')
-    type_hr = fields.Selection(
+    job_title = fields.Selection(
         [('driver', 'Driver'),('assistant', 'Assistant')], string='HR Type',
         default='driver')
     stock_picking_id = fields.Many2one(

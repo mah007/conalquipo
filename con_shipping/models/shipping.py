@@ -49,6 +49,12 @@ class SaleOrder(models.Model):
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
+        """
+        On changed method that allow adds automatically the cost product
+        shipping to the order lines, and deleted the product when the shipping
+        option is `Client`
+        :return: None
+        """
         if self.carrier_type == 'company' and self.project_id:
             delivery = self.env['delivery.carrier'].search(
                 [('country_ids', '=',
@@ -95,6 +101,15 @@ class SaleOrder(models.Model):
 
     @api.onchange('carrier_id')
     def onchange_carrier_id(self):
+        """
+        Overloaded function that checks the if a carrier is seated and
+        search all the vehicle linkeds to it and create a domain en polish
+        notation.
+
+        :return:
+            Dict(str, Dict(str, list(tuple))): A Dictionary of dictionaries
+            with domain values in polish notation list(tuple).
+        """
         super(SaleOrder, self).onchange_carrier_id()
         domain = {}
         if self.carrier_id:
@@ -108,6 +123,12 @@ class SaleOrder(models.Model):
 
     @api.depends('carrier_id', 'order_line')
     def _compute_delivery_price(self):
+        """
+        Overloaded function that verify the order state for update the field
+        delivery_price with the values of the carrier selected.
+
+        :return: None
+        """
         if self.vehicle:
             for order in self:
                 if order.state != 'draft':
@@ -125,6 +146,13 @@ class SaleOrder(models.Model):
 
     @api.multi
     def set_delivery_line(self):
+        """
+        Overloaded function that check is a vehicle is selected and create
+        the delivery line on orders lines and set the delivery price on the
+        order if not have a vehicle the function run a super over the function.
+
+        :return: None
+        """
         if self.vehicle:
             # self._remove_delivery_line()
             veh_carrier = self.env['delivery.carrier.cost'].search(
@@ -137,6 +165,18 @@ class SaleOrder(models.Model):
             super(SaleOrder, self).set_delivery_line()
 
     def _create_delivery_line(self, carrier, price_unit, receipt=False):
+        """
+        Overwrote function that create the line of the delivery on the sale
+        order lines, this function have been modified for add the delivery
+        output line and delivery input line by cargo cost.
+
+        :param carrier: carrier's recordset.
+        :param price_unit: price of the cargo.
+        :param receipt: Flag parameter that receipt a boolean value False
+         for only the output cargo and True for the output/input cargo.
+
+        :return: boolean value.
+        """
         # Apply fiscal position
         taxes = carrier.product_id.taxes_id.filtered(
             lambda t: t.company_id.id == self.company_id.id)
