@@ -19,13 +19,15 @@
 #
 ##############################################################################
 
-from odoo import models, api
+from odoo import models, api, fields
 import logging
 _logger = logging.getLogger(__name__)
 
 
 class StockPickingMRPRepair(models.Model):
     _inherit = "stock.picking"
+
+    repair_requests = fields.Boolean(string='Repair request')
 
     @api.one
     def generate_repair_requests(self):
@@ -44,4 +46,5 @@ class StockPickingMRPRepair(models.Model):
             _logger.warning(vals)
             repair = mrp_repair_obj.create(vals)
             l.mrp_repair_id = repair.id
+            self.repair_requests = True
 
