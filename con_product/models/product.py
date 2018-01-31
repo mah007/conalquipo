@@ -32,6 +32,12 @@ class ProductStates(Model):
     @api.multi
     @api.onchange('default_value')
     def get_default_value(self):
+        """
+        Function that check if other register have benn setted as default and
+        return a exception if exist other default value else return None
+
+        :return: None or Exception
+        """
         active_states = self.search([('default_value', '=', True)])
         if active_states and self.default_value:
             raise UserError(_("The following state '%s' is the actual default"
@@ -64,6 +70,7 @@ class ProductStates(Model):
     @api.model
     def create(self, values):
         record = super(ProductStates, self).create(values)
+        # ~ TODO: Make this validation using a method constraint.
         active_states = self.search([('default_value', '=', True),
                                      ('id', '!=', self.id)])
         if active_states and self.default_value:
@@ -74,6 +81,7 @@ class ProductStates(Model):
     @api.multi
     def write(self, values):
         record = super(ProductStates, self).write(values)
+        # ~ TODO: this should be solved using a method constraint
         active_states = self.search([('default_value', '=', True),
                                      ('id', '!=', self.id)])
         if active_states and self.default_value:
@@ -87,12 +95,24 @@ class ProductTemplate(Model):
 
     @api.multi
     def _get_default_state(self):
-            return self.env['product.states'].search(
+        """
+        This function get the default state configured on the product states
+        models and return to the `product_template` model else return False
+
+        :return: Recordset or False
+        """
+        return self.env['product.states'].search(
                 [('default_value', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('state_id')
     def get_default_values(self):
+        """
+        This function brings the default location of the product from the
+        state assigned to it.
+
+        :return: None
+        """
         if self.state_id:
             self.color = self.state_id.color
             location_obj = self.env['stock.location']
@@ -118,12 +138,24 @@ class ProductProduct(Model):
 
     @api.multi
     def _get_default_state(self):
-            return self.env['product.states'].search(
+        """
+        This function get the default state configured on the product states
+        models and return to the `product_template` model else return False
+
+        :return: Recordset or False
+        """
+        return self.env['product.states'].search(
                 [('default_value', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('state_id')
     def get_default_values(self):
+        """
+        This function brings the default location of the product from the
+        state assigned to it.
+
+        :return: None
+        """
         if self.state_id:
             self.color = self.state_id.color
             location_obj = self.env['stock.location']
