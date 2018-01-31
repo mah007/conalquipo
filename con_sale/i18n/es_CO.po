@@ -45,7 +45,7 @@ msgstr "Una vez confirmada la cotización, se convierte en un pedido de venta.\n
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_product_uom
 msgid "Product Unit of Measure"
-msgstr "Unidad de Medida del Producto"
+msgstr "Ud de M del Producto"
 
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_order
@@ -84,19 +84,9 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_sale_order_order_type
-msgid "Type"
-msgstr "Tipo"
-
-#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_order_type
 msgid "Type Order"
 msgstr "Tipo de orden"
-
-#. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
-msgid "Unit of Measure"
-msgstr "Unidad de Medida"
 
 #. module: sale_management
 #. openerp-web
@@ -164,12 +154,12 @@ msgstr "Propietario"
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom_qty
 msgid "Quantity of Sale"
-msgstr "Cantidad de venta"
+msgstr "Ctdad de venta"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom
 msgid "Unit of Measure of Sale"
-msgstr "Unidad de medida de venta"
+msgstr "Ud de M de venta"
 
 #. module: con_sale
 #: code:addons/con_sale/models/sale_order.py:42
@@ -186,14 +176,46 @@ msgstr "Fusionada En"
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty
 msgid "Quantity to Sale"
-msgstr "Cantidad de Venta"
+msgstr "Ctdad de Venta"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_qty_shipped
 msgid "Quantity to be shipped"
-msgstr "Cantidad a Despachar"
+msgstr "Ctdad a Despachar"
+
+#. module: con_sale
+#: selection:purchase.order,order_type:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: con_sale
+#: selection:purchase.order,order_type:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_bill_uom_qty
+msgid "Quantity to Purchase"
+msgstr "Ctdad de Compra"
+
+#. module: con_sale
+#: selection:purchase.order,order_type:0
+#: selection:sale.order,order_type:0
+msgid "Rent"
+msgstr "Arriendo"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_purchase_order_order_type
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_order_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_bill_uom
+msgid "Unit of Measure to Purchase"
+msgstr "Ud de M de Compra"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
 msgid "Unit of Measure to Sale"
-msgstr "Unidad de medida de Venta"
+msgstr "Ud de M de Venta"

@@ -6,9 +6,10 @@
          <field name="inherit_id" ref="sale.view_order_form"/>
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
-           <field name="payment_term_id" position="after">
-             <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
-           </field>
+
+             <field name="payment_term_id" position="after">
+                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('merged','sent'))]}"/>
+               </field>
 
              <xpath expr="//field[@name='order_line']" position="attributes">
                     <attribute name="context">{'default_order_type': order_type}</attribute>
@@ -61,18 +62,25 @@
         <field name="domain">[('state','!=','sale')]</field>
     </record>
 
+     <record id="sale.action_orders" model="ir.actions.act_window">
+         <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel', 'merged'))]</field>
+     </record>
+
     <record id="invoice_form" model="ir.ui.view">
         <field name="name">account.invoice.form</field>
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
+            <field name="date_due" position="after">
+                <field name="invoice_type" widget="radio" invisible="1"/>
+            </field>
              <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
                     <field name="owner_id" />
               </xpath>
              <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
-                    <field name="bill_uom" />
-                    <field name="qty_shipped"/>
-                    <field name="uom_id" />
+                    <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                    <field name="qty_shipped" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                    <field name="uom_id" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
               </xpath>
         </field>
     </record>
