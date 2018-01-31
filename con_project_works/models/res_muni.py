@@ -28,17 +28,18 @@ _logger = logging.getLogger(__name__)
 
 class ResCountryMunicipality(models.Model):
     _name = 'res.country.municipality'
-
     _description = "Municipality"
     _order = 'sequence, id'
 
-    ''''''
     sequence = fields.Integer(help="Determine the display order", default=10)
     name = fields.Char(string="Name")
     state_id = fields.Many2one('res.country.state', string='State')
     code = fields.Char(string="Code")
-    invoicing_area_id = fields.Many2one('invoicing.area',
-                                        string='Invoicing Area', index=True)
+    delivery_carrier_id = fields.Many2one('delivery.carrier',
+                                          string='Delivery Carrier',
+                                          ondelete='cascade', index=True,
+                                          copy=False,
+                                          track_visibility='onchange')
 
 
 class ResPartner(models.Model):
@@ -51,13 +52,20 @@ class ResPartner(models.Model):
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
-    municipality_ids = fields.Many2many('res.country.municipality',
-                                        'delivery_carrier_municipality_rel',
-                                        'carrier_id',
-                                        'municipality_ids', 'Municipality')
+    municipality_ids = fields.One2many('res.country.municipality',
+                                       'delivery_carrier_id',
+                                       string='Municipality', copy=True,
+                                       track_visibility='onchange')
 
     @api.onchange('state_ids')
     def onchange_states(self):
+        """
+        Onchange function that update the country_ids and municipality_ids
+        with the correct municipality and country based on the given
+        State/Province.
+
+        :return: None
+        """
         self.country_ids = [(6, 0, self.country_ids.ids +
                              self.state_ids.mapped('country_id.id'))]
         self.municipality_ids = [(6, 0, self.municipality_ids.ids +

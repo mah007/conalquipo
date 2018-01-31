@@ -159,18 +159,18 @@
                                       <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
                                   </group>
                                   <group col="2" name="construction_receives" string="Info Remission On Site">
-                                        <field name="Hr_entry" widget='float_time'/>
-                                        <field name="Hr_output" widget='float_time'/>
-                                        <field name="person_receives"/>
-                                        <field name="person_identification_id"/>
-                                        <field name="post"/>
+                                        <field name="in_hour" widget='float_time'/>
+                                        <field name="out_hour" widget='float_time'/>
+                                        <field name="responsible"/>
+                                        <field name="id_number"/>
+                                        <field name="job_title"/>
                                   </group>
                                   <group>
                                        <field name="driver_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')],
                                             'invisible': ['|',('carrier_type','!=', 'company')]}">
                                              <tree editable="bottom">
                                                  <field name="driver_ids"/>
-                                                 <field name="type_hr"/>
+                                                 <field name="job_title"/>
                                              </tree>
                                       </field>
                                   </group>
