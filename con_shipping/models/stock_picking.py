@@ -48,7 +48,7 @@ class StockPicking(models.Model):
     id_number = fields.Char(string='Person identification',
                             track_visibility='onchange')
     job_title = fields.Char(string='Job title', track_visibility='onchange')
-    tracking_ref = fields.Char(string='Tracking Reference',
+    carrier_tracking_ref = fields.Char(string='Tracking Reference',
                                compute='_carrier_tracking_ref')
 
     @api.onchange('carrier_type')

@@ -104,9 +104,9 @@
                 <data>
                     <xpath expr="//field[@name='carrier_id']" position="replace" />
 
-                    <xpath expr="//label[@for='tracking_ref']" position="replace"/>
+                    <xpath expr="//label[@for='carrier_tracking_ref']" position="replace"/>
 
-                    <xpath expr="//field[@name='tracking_ref']" position="replace"/>
+                    <xpath expr="//field[@name='carrier_tracking_ref']" position="replace"/>
 
                     <xpath expr="//div[@name='tracking']" position="replace"/>
 
@@ -129,7 +129,7 @@
                                       <field name="type_sp"  invisible="1"/>
                                       <field name="location_id" />
 
-                                      <field name="tracking_ref"/>
+                                      <field name="carrier_tracking_ref"/>
 
                                       <field name="carrier_type" widget="radio"/>
 

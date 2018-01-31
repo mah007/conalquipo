@@ -25,16 +25,6 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class Municipality(models.Model):
-    _inherit = 'res.country.municipality'
-
-    delivery_carrier_id = fields.Many2one('delivery.carrier',
-                                          string='Delivery Carrier',
-                                          ondelete='cascade', index=True,
-                                          copy=False,
-                                          track_visibility='onchange')
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -103,7 +93,7 @@ class SaleOrder(models.Model):
     def onchange_carrier_id(self):
         """
         Overloaded function that checks the if a carrier is seated and
-        search all the vehicle linkeds to it and create a domain en polish
+        search all the vehicle linked to it and create a domain en polish
         notation.
 
         :return:
