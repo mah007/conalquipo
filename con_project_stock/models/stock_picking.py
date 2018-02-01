@@ -61,8 +61,8 @@ class StockPicking(Model):
                 p.email or '')
 
     @staticmethod
-    def merge_address(street, street2, city, municipality,
-                      state, zip, country, phone, email):
+    def merge_address(street, street2, city, municipality, state, zip_code,
+                      country, phone, email):
         """
         This function receive text fields for merge the address fields.
 
@@ -72,18 +72,22 @@ class StockPicking(Model):
         :param city: The text field for the city of the address to merge.
         :param municipality: the text for the municipality to merge.
         :param state: The text for the state to merge.
-        :param zip: the text for the zip code of the address.
+        :param zip_code: the text for the zip code of the address.
         :param country: the text for the name of the country.
+        :param phone: the phone in text.
+        :param email: the email on string.
 
         :return: merge string with
         street+street2+city+municipality+state+zip+country
         """
-        values = [street, ', ', street2, ', ', city, ', ', municipality, ', '
-            , state, ',', zip, ', ', country, ', ', phone, ', ', email]
+        values = [street, ', ', street2, ', ', city, ', ', municipality, ', ',
+                  state, ',', zip_code, ', ', country, ', ', phone, ', ',
+                  email]
         out_str = ''
-        for num in xrange(len(values)):
+        for num in range(len(values)):
             out_str += values[num]
         return out_str
+
 
 class SaleOrder(Model):
     _inherit = 'sale.order'

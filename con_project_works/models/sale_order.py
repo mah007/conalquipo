@@ -62,7 +62,7 @@ class SaleOrder(Model):
                 p.email or '')
 
     @staticmethod
-    def merge_address(street, street2, city, municipality, state, zip,
+    def merge_address(street, street2, city, municipality, state, zip_code,
                       country, phone, email):
         """
         This function receive text fields for merge the address fields.
@@ -73,7 +73,7 @@ class SaleOrder(Model):
         :param city: The text field for the city of the address to merge.
         :param municipality: the text for the municipality to merge.
         :param state: The text for the state to merge.
-        :param zip: the text for the zip code of the address.
+        :param zip_code: the text for the zip code of the address.
         :param country: the text for the name of the country.
         :param email: the text for the email.
         :param phone: the text for the phone number.
@@ -81,7 +81,8 @@ class SaleOrder(Model):
         :return: merge string with all the givens parameters
         """
         values = [street, ', ', street2, ', ', city, ', ', municipality, ', ',
-                  state, ',', zip, ', ', country, ', ', phone, ', ', email]
+                  state, ',', zip_code, ', ', country, ', ', phone, ', ',
+                  email]
         out_str = ''
         for num in range(len(values)):
             out_str += values[num]
