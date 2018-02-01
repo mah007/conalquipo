@@ -1,8 +1,8 @@
 variables:
   PROJECT: "con_profile"
-  ADDONS_PATH: "/home/gitlab-runner/odoo-10.0e/odoo/addons,/home/gitlab-runner/odoo-10.0/addons,./CON"
-  ODOO_REPO: "/home/gitlab-runner/odoo-10.0"
-  ODOO_VERSION: "10.0"
+  ADDONS_PATH: "/home/gitlab-runner/odoo-11.0e/odoo/addons,./CON"
+  ODOO_REPO: "/home/gitlab-runner/odoo-11.0e"
+  ODOO_VERSION: "11.0"
 
 stages:
   - cq_check
@@ -14,6 +14,7 @@ flake8:
     - cq_check
   stage: cq_check
   script:
+  - source odoo-11-env/bin/activate
   - flake8 --config=.flake8 .
 
 tests:
