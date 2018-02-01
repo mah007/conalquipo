@@ -11,8 +11,8 @@ stages:
 
 flake8:
   before_script:
-  - apt-get -qq update
-  - apt-get -qq install -y python-virtualenv
+  - apk update
+  - apk add python-virtualenv
   - virtualenv -p python3 env-odoo
   - . env-odoo/bin/activate
   - pip3 install -r requirements.txt
