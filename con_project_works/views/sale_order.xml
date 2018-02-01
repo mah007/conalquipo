@@ -7,7 +7,7 @@
       <field name="arch" type="xml">
 
         <field name="partner_id" position="after">
-            <field name="project_id" string="Works" context="{'default_partner_id': partner_id}"/>
+            <field name="project_id" string="Works" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}"/>
         </field>
 
         <xpath expr="//sheet/notebook" position="before">
