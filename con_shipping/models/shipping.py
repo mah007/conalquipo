@@ -62,12 +62,12 @@ class SaleOrder(models.Model):
             if self.partner_id:
                 lines = list()
                 order_line = self.env['sale.order.line']
-                del_ids = order_line.search([
-                         ('order_id', '=', self._origin.id),
-                         ('is_delivery', '=', True)])._ids
-                link_ids = order_line.search([
-                         ('order_id', '=', self._origin.id),
-                         ('is_delivery', '!=', True)])
+                del_ids = order_line.search(
+                    [('order_id', '=', self._origin.id),
+                     ('is_delivery', '=', True)])._ids
+                link_ids = order_line.search(
+                    [('order_id', '=', self._origin.id),
+                     ('is_delivery', '!=', True)])
                 # ~ Data Backup
                 for new in link_ids:
                     lines.append({
