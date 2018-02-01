@@ -251,6 +251,8 @@ class SaleOrderLine(models.Model):
         if values.get('owner_id') and not self.purchase_order_line:
             self.function_management_buy(self)
         if self.purchase_order_line:
+            if values.get('product_uom_qty'):
+                values['product_qty'] = values.get('product_uom_qty')
             self.purchase_order_line.write(values)
         return res
 
