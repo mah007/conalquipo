@@ -20,7 +20,9 @@ tests:
   before_script:
     - virtualenv -p python3 odoo-11
     - source odoo-11/bin/activate
+    - cd $ODOO_REPO
     - pip3 install -r requirements.txt
+    - cd -
   tags:
     - odoo_test
   stage: odoo_test
