@@ -22,6 +22,7 @@
 from odoo.models import Model, api
 from odoo import fields
 
+
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
@@ -61,8 +62,8 @@ class SaleOrder(Model):
                 p.email or '')
 
     @staticmethod
-    def merge_address(street, street2, city, municipality,
-                      state, zip, country, phone, email):
+    def merge_address(street, street2, city, municipality, state, zip,
+                      country, phone, email):
         """
         This function receive text fields for merge the address fields.
 
@@ -74,13 +75,14 @@ class SaleOrder(Model):
         :param state: The text for the state to merge.
         :param zip: the text for the zip code of the address.
         :param country: the text for the name of the country.
+        :param email: the text for the email.
+        :param phone: the text for the phone number.
 
-        :return: merge string with street+street2+city+municipality+state+zip
-        +country
+        :return: merge string with all the givens parameters
         """
-        values = [street, ', ', street2, ', ', city, ', ', municipality, ', '
-            , state, ',', zip, ', ', country, ', ', phone, ', ', email]
+        values = [street, ', ', street2, ', ', city, ', ', municipality, ', ',
+                  state, ',', zip, ', ', country, ', ', phone, ', ', email]
         out_str = ''
-        for num in xrange(len(values)):
+        for num in range(len(values)):
             out_str += values[num]
         return out_str
