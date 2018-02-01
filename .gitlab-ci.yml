@@ -17,6 +17,9 @@ flake8:
   - flake8 --config=.flake8 .
 
 tests:
+  before_script:
+    - virtualenv -p python3 odoo-11
+    - source odoo-11/bin/activate
   tags:
     - odoo_test
   stage: odoo_test
