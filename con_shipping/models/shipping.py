@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -61,11 +61,11 @@ class SaleOrder(models.Model):
         else:
             if self.partner_id:
                 lines = list()
-                saleOrderLine = self.env['sale.order.line']
-                del_ids = saleOrderLine.search([
+                order_line = self.env['sale.order.line']
+                del_ids = order_line.search([
                          ('order_id', '=', self._origin.id),
                          ('is_delivery', '=', True)])._ids
-                link_ids = saleOrderLine.search([
+                link_ids = order_line.search([
                          ('order_id', '=', self._origin.id),
                          ('is_delivery', '!=', True)])
                 # ~ Data Backup
@@ -178,9 +178,8 @@ class SaleOrder(models.Model):
         for x in range(2):
             values = {
                 'order_id': self.id or self._origin.id,
-                'name': '{} - {}'.format(carrier.name,
-                                         'Entrega' if x == 0 else
-                'Recogida'),
+                'name': '{} - {}'.format(
+                    carrier.name, 'Entrega' if x == 0 else 'Recogida'),
                 'product_uom_qty': 1,
                 'product_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,
@@ -191,5 +190,6 @@ class SaleOrder(models.Model):
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
             self.update({'order_line': [(0, 0, values)]})
-            if not receipt: break
+            if not receipt:
+                break
         return True
