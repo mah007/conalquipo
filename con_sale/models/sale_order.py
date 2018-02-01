@@ -168,8 +168,8 @@ class SaleOrderLine(models.Model):
                 'origin': line.order_id.name,
                 'payment_term_id':
                     line.owner_id.property_supplier_payment_term_id.id,
-                'date_order': datetime.strptime(line.order_id.date_order,
-                                                DEFAULT_SERVER_DATETIME_FORMAT),
+                'date_order': datetime.strptime(
+                    line.order_id.date_order, DEFAULT_SERVER_DATETIME_FORMAT),
                 'fiscal_position_id': line.order_id.fiscal_position_id,
             }
             po = self.env['purchase.order'].create(purchase)
