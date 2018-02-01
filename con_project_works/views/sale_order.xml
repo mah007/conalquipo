@@ -31,8 +31,9 @@
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_quotation_tree"/>
       <field name="arch" type="xml">
-
+        <field name="partner_id" position="replace"/>
         <field name="name" position="after">
+            <field name="partner_id"/>
             <field name="project_id" string="Works"/>
         </field>
 
@@ -44,8 +45,9 @@
       <field name="inherit_id" ref="sale.view_order_tree"/>
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
-
+          <field name="partner_id" position="replace"/>
           <field name="name" position="after">
+              <field name="partner_id"/>
               <field name="project_id"/>
           </field>
 
