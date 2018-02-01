@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
     # ~ Please if you need add new option in this fields use the following
     # method: field_name = fields.Selection(selection_add=[('a', 'A')]
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
-                                  string="Type", default="sale")
+                                  string="Type", default="rent")
 
     purchase_ids = fields.One2many('purchase.order', 'sale_order_id',
                                    string='Purchase Orders')
