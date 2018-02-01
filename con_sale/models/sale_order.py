@@ -31,8 +31,6 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    # ~ Please if you need add new option in this fields use the following
-    # method: field_name = fields.Selection(selection_add=[('a', 'A')]
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="rent")
 
@@ -72,25 +70,27 @@ class SaleOrder(models.Model):
             else:
                 res = super(SaleOrder, self).action_confirm()
 
-        self._add_picking_owner()
+        self.function_add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
         return res
 
     @api.multi
-    def _add_picking_owner(self):
+    def function_add_picking_owner(self):
+        # This function adds the owner of the product to the
+        # corresponding line in the  output inventory movement
 
         for pk in self.picking_ids:
             for ml in pk.move_lines:
-                owner = self.product_subleased(ml.product_id)
+                owner = self.function_product_subleased(ml.product_id)
                 for mvl in ml.move_line_ids:
                     if owner:
                         mvl.write({'owner_id': owner.id})
 
-        return True
-
     @api.multi
-    def product_subleased(self, product):
+    def function_product_subleased(self, product):
+        # This function adds the owner of the product to the  corresponding
+        #  line on the invoice.
 
         for line in self.order_line:
             if line.product_id == product and line.product_subleased:
@@ -103,7 +103,7 @@ class SaleOrder(models.Model):
 
         for inv in self.invoice_ids:
             for inv_ids in inv.invoice_line_ids:
-                owner = self.product_subleased(inv_ids.product_id)
+                owner = self.function_product_subleased(inv_ids.product_id)
                 _logger.info(owner)
                 if owner:
                     inv_ids.write({'owner_id': owner.id})
@@ -119,6 +119,90 @@ class SaleOrderLine(models.Model):
         'done': [('readonly', True)],
         'cancel': [('readonly', True)],
     }
+
+    start_date = fields.Date(string="Start")
+    end_date = fields.Date(string="End")
+    order_type = fields.Selection(related='order_id.order_type',
+                                  string="Type Order", default='sale')
+    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
+
+    owner_id = fields.Many2one('res.partner', string='Supplier',
+                                states=READONLY_STATES_OWNER,
+                                change_default=True, track_visibility='always')
+    product_subleased = fields.Boolean(string="Subleased", default=False)
+
+    bill_uom_qty = fields.Float('Quantity to Sale',
+                                digits=dp.get_precision(
+                                'Product Unit of Measure'))
+
+    purchase_order_line = fields.One2many('purchase.order.line',
+                                          'sale_order_line_id',
+                                          string="Purchase Order Line",
+                                          readonly=True, copy=False)
+
+    @api.onchange('owner_id')
+    def onchange_owner_id(self):
+        # This function changes to true or false the field product_subleased
+        # depending on whether or not there is owner in the order line
+
+        if self.owner_id:
+            self.product_subleased = True
+        else:
+            self.product_subleased = False
+
+    @api.multi
+    def function_management_buy(self, line):
+        # This function creates the purchase or rental orders associated with
+        # this sale, if a purchase order already exists, the same supplier only
+        # adds a line to this order otherwise it creates the complete order
+        existing_purchase = False
+        for purchase in line.order_id.purchase_ids:
+            if purchase.partner_id.id == line.owner_id.id and \
+                    purchase.state == line.order_id.state:
+                    self.action_purchase_line_create(line, purchase)
+                    existing_purchase = True
+
+        if not existing_purchase:
+            po = self.action_purchase_create(line)
+            self.action_purchase_line_create(line, po)
+            line.order_id.write({'purchase_ids': [(4, po.id)]})
+
+    @api.multi
+    def function_purchase_create(self, line):
+        # This function forms the purchase data and creates it
+        # return: the new purchase
+        purchase = {
+            'partner_id': line.owner_id.id,
+            'company_id': line.company_id.id,
+            'currency_id': line.owner_id.property_purchase_currency_id.id or self.env.user.company_id.currency_id.id,
+            'origin': line.order_id.name,
+            'payment_term_id': line.owner_id.property_supplier_payment_term_id.id,
+            'date_order': datetime.strptime(line.order_id.date_order,
+                                            DEFAULT_SERVER_DATETIME_FORMAT),
+            'fiscal_position_id': line.order_id.fiscal_position_id,
+            'order_type': 'rent',
+        }
+        po = self.env['purchase.order'].create(purchase)
+        return po
+
+    @api.multi
+    def function_purchase_line_create(self, line, purchase):
+        # This function forms the data of the purchase line and creates it
+        pol = self.env['purchase.order.line'].create({
+            'name': line.product_id.name,
+            'product_qty': line.product_uom_qty,
+            'product_id': line.product_id.id,
+            'product_uom': line.product_uom.id,
+            'price_unit': line.price_unit,
+            'date_planned': datetime.strptime(
+                line.order_id.date_order, DEFAULT_SERVER_DATETIME_FORMAT),
+            'taxes_id': [(6, 0, line.tax_id.ids)],
+            'order_id': purchase.id,
+            'bill_uom': line.bill_uom.id,
+            'bill_uom_qty': line.bill_uom_qty,
+            'sale_order_line_id': line.id
+        })
+        line.write({'purchase_order_line': [(4, pol.id)]})
 
     @api.multi
     def _prepare_invoice_line(self, qty):
@@ -152,106 +236,23 @@ class SaleOrderLine(models.Model):
                         qty_invoiced = dict.get(invoice_line.invoice_id.type, lambda: 0)(qty_invoiced)
                 line.qty_invoiced = qty_invoiced
 
-    start_date = fields.Date(string="Start")
-    end_date = fields.Date(string="End")
-    order_type = fields.Selection(related='order_id.order_type',
-                                  string="Type Order", default='sale')
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
-
-    owner_id = fields.Many2one('res.partner', string='Supplier',
-                                states=READONLY_STATES_OWNER,
-                                change_default=True, track_visibility='always')
-    product_subleased = fields.Boolean(string="Subleased", default=False)
-
-    bill_uom_qty = fields.Float('Quantity to Sale',
-                                digits=dp.get_precision(
-                                'Product Unit of Measure'))
-
-    purchase_order_line = fields.One2many('purchase.order.line',
-                                          'sale_order_line_id',
-                                          string="Purchase Order Line",
-                                          readonly=True, copy=False)
-
-    @api.onchange('owner_id')
-    def onchange_owner_id(self):
-        if self.owner_id:
-            self.product_subleased = True
-
     @api.model
     def create(self, values):
 
         line = super(SaleOrderLine, self).create(values)
         if line.owner_id:
-            self.management_buy(line)
+            self.function_management_buy(line)
         return line
 
     @api.multi
     def write(self, values):
 
         res = super(SaleOrderLine, self).write(values)
-        if values.get('owner_id'):
-            self.management_buy(values)
-        if values.get('bill_uom_qty') or values.get('product_uom_qty'):
-            self.purchase_order_line.write({
-                'product_qty': self.product_uom_qty,
-                'bill_uom_qty': self.bill_uom_qty})
+        if values.get('owner_id') and not self.purchase_order_line:
+            self.function_management_buy(self)
+        if self.purchase_order_line:
+            self.purchase_order_line.write(values)
         return res
-
-    @api.multi
-    def management_buy(self, line):
-
-        if line.order_id.purchase_ids:
-            for purchase in line.order_id.purchase_ids:
-                if purchase.partner_id.id == line.owner_id.id and \
-                        purchase.state == line.order_id.state:
-                    for line in purchase.order_line:
-                        line.unlink()
-                        self.action_purchase_line_create(line, purchase)
-                else:
-                    po = self.action_purchase_create(line)
-                    self.action_purchase_line_create(line, po)
-                    line.order_id.write({'purchase_ids': [(4, po.id)]})
-        else:
-            po = self.action_purchase_create(line)
-            self.action_purchase_line_create(line, po)
-            line.order_id.write({'purchase_ids': [(4, po.id)]})
-
-        return True
-
-    @api.multi
-    def action_purchase_create(self, line):
-
-        purchase = {
-            'partner_id': line.owner_id.id,
-            'company_id': line.company_id.id,
-            'currency_id': line.owner_id.property_purchase_currency_id.id or self.env.user.company_id.currency_id.id,
-            'origin': line.order_id.name,
-            'payment_term_id': line.owner_id.property_supplier_payment_term_id.id,
-            'date_order': datetime.strptime(line.order_id.date_order,
-                                            DEFAULT_SERVER_DATETIME_FORMAT),
-            'fiscal_position_id': line.order_id.fiscal_position_id,
-            'order_type': 'rent',
-        }
-        po = self.env['purchase.order'].create(purchase)
-        return po
-
-    @api.multi
-    def action_purchase_line_create(self, line, purchase):
-       pol = self.env['purchase.order.line'].create({
-            'name': line.product_id.name,
-            'product_qty': line.product_uom_qty,
-            'product_id': line.product_id.id,
-            'product_uom': line.product_uom.id,
-            'price_unit': line.price_unit,
-            'date_planned': datetime.strptime(
-                line.order_id.date_order, DEFAULT_SERVER_DATETIME_FORMAT),
-            'taxes_id': [(6, 0, line.tax_id.ids)],
-            'order_id': purchase.id,
-            'bill_uom': line.bill_uom.id,
-            'bill_uom_qty': line.bill_uom_qty,
-            'sale_order_line_id': line.id
-        })
-       line.write({'purchase_order_line': [(4, pol.id)]})
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
                  'bill_uom_qty')
