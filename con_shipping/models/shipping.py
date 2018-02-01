@@ -71,14 +71,14 @@ class SaleOrder(models.Model):
                 # ~ Data Backup
                 for new in link_ids:
                     lines.append({
-                                'order_id': self._origin.id,
-                                'name': new.name,
-                                'product_uom_qty': new.product_uom_qty,
-                                'product_uom': new.product_uom.id,
-                                'product_id': new.product_id.id,
-                                'price_unit': new.price_unit,
-                                'tax_id': new.tax_id,
-                                'is_delivery': False
+                        'order_id': self._origin.id,
+                        'name': new.name,
+                        'product_uom_qty': new.product_uom_qty,
+                        'product_uom': new.product_uom.id,
+                        'product_id': new.product_id.id,
+                        'price_unit': new.price_unit,
+                        'tax_id': new.tax_id,
+                        'is_delivery': False
                     })
                 # ~ Deleted the records
                 self.update({
