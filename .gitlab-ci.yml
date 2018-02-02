@@ -20,6 +20,7 @@ tests:
   before_script:
     - virtualenv -p python3 odoo-11
     - source odoo-11/bin/activate
+    - pwd && ls
     - cd $ODOO_REPO
     - pip3 install -r requirements.txt
     - pip3 install PyPDF2
