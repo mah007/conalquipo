@@ -19,9 +19,9 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api, _
+from odoo import fields, models, api
 from odoo.addons import decimal_precision as dp
-from odoo.tools.float_utils import float_is_zero, float_compare
+from odoo.tools.float_utils import float_compare
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -47,9 +47,9 @@ class PurchaseOrderLine(models.Model):
                                     'Product Unit of Measure'))
 
     sale_order_line_id = fields.Many2one('sale.order.line',
-                                       'Sale Order Line',
-                                       ondelete='set null', index=True,
-                                       readonly=True)
+                                         'Sale Order Line',
+                                         ondelete='set null', index=True,
+                                         readonly=True)
 
     @api.depends('product_qty', 'price_unit', 'taxes_id', 'bill_uom_qty')
     def _compute_amount(self):

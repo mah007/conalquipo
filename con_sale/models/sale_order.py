@@ -22,7 +22,8 @@
 from odoo import fields, models, api, _
 from datetime import datetime
 from odoo.addons import decimal_precision as dp
-from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import float_is_zero, float_compare, \
+    DEFAULT_SERVER_DATETIME_FORMAT
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -130,8 +131,8 @@ class SaleOrderLine(models.Model):
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
 
     owner_id = fields.Many2one('res.partner', string='Supplier',
-                                states=READONLY_STATES_OWNER,
-                                change_default=True, track_visibility='always')
+                               states=READONLY_STATES_OWNER,
+                               change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
 
     bill_uom_qty = fields.Float('Quantity to Sale',
@@ -177,8 +178,8 @@ class SaleOrderLine(models.Model):
         purchase = {
             'partner_id': line.owner_id.id,
             'company_id': line.company_id.id,
-            'currency_id': line.owner_id.property_purchase_currency_id.id
-                           or self.env.user.company_id.currency_id.id,
+            'currency_id': line.owner_id.property_purchase_currency_id.id or
+                           self.env.user.company_id.currency_id.id,
             'origin': line.order_id.name,
             'payment_term_id':
                 line.owner_id.property_supplier_payment_term_id.id,
@@ -285,11 +286,10 @@ class SaleOrderLine(models.Model):
                 quantity = line.product_uom_qty
 
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = line.tax_id.compute_all(price, line.order_id.currency_id,
-                                            quantity,
-                                            product=line.product_id,
-                                            partner=
-                                            line.order_id.partner_shipping_id)
+            taxes = line.tax_id.compute_all(
+                price, line.order_id.currency_id, quantity,
+                product=line.product_id,
+                partner=line.order_id.partner_shipping_id)
             line.update({
                 'price_tax': sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', [])),
@@ -356,7 +356,8 @@ class SaleOrderLine(models.Model):
                 if line.product_id.invoice_policy == 'order':
                     line.qty_to_invoice = qty - line.qty_invoiced
                 else:
-                    line.qty_to_invoice = line.qty_delivered - line.qty_invoiced
+                    line.qty_to_invoice = line.qty_delivered - \
+                                          line.qty_invoiced
             else:
                 line.qty_to_invoice = 0
 
@@ -369,8 +370,9 @@ class SaleOrderLine(models.Model):
     @api.depends('price_subtotal', 'product_uom_qty', 'bill_uom_qty')
     def _get_price_reduce_notax(self):
         for line in self:
-            line.price_reduce_taxexcl = line.price_subtotal / line.bill_uom_qty\
-                if line.bill_uom_qty else 0.0
+            line.price_reduce_taxexcl = \
+                line.price_subtotal / line.bill_uom_qty \
+                    if line.bill_uom_qty else 0.0
 
     @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty',
                   'tax_id', 'bill_uom_qty')
@@ -378,8 +380,7 @@ class SaleOrderLine(models.Model):
         self.discount = 0.0
         if not (self.product_id and self.product_uom and
                 self.order_id.partner_id and self.order_id.pricelist_id and
-                self.order_id.pricelist_id.discount_policy ==
-                        'without_discount' and
+                self.order_id.pricelist_id.discount_policy == 'without_discount' and
                 self.env.user.has_group('sale.group_discount_per_so_line')):
             return
 
@@ -403,7 +404,8 @@ class SaleOrderLine(models.Model):
 
         if new_list_price != 0:
             if self.order_id.pricelist_id.currency_id.id != currency_id:
-                # we need new_list_price in the same currency as price, which is in the SO's pricelist's currency
+                # we need new_list_price in the same currency as price,
+                # which is in the SO's pricelist's currency
                 new_list_price = self.env['res.currency'].browse(
                     currency_id).with_context(context_partner).compute(
                     new_list_price, self.order_id.pricelist_id.currency_id)
