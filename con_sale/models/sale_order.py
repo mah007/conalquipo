@@ -381,10 +381,12 @@ class SaleOrderLine(models.Model):
                   'tax_id', 'bill_uom_qty')
     def _onchange_discount(self):
         self.discount = 0.0
+        discount_policy = self.order_id.pricelist_id.discount_policy
+        res_group = self.env.user.has_group('sale.group_discount_per_so_line')
         if not (self.product_id and self.product_uom and
-                self.order_id.partner_id and self.order_id.pricelist_id and
-                self.order_id.pricelist_id.discount_policy == 'without_discount'
-                and self.env.user.has_group('sale.group_discount_per_so_line')):
+                    self.order_id.partner_id and
+                    self.order_id.pricelist_id and
+                        discount_policy == 'without_discount' and res_group):
             return
 
         context_partner = dict(self.env.context,
