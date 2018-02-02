@@ -6,9 +6,10 @@
          <field name="inherit_id" ref="sale.view_order_form"/>
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
-           <field name="payment_term_id" position="after">
-             <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
-           </field>
+
+             <field name="payment_term_id" position="after">
+                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('merged','sent'))]}"/>
+               </field>
 
              <xpath expr="//field[@name='order_line']" position="attributes">
                     <attribute name="context">{'default_order_type': order_type}</attribute>
@@ -27,9 +28,9 @@
              <xpath expr="//field[@name='order_line']/tree" position="attributes">
                     <attribute name="create">true</attribute>
                     <attribute name="editable"/>
-              </xpath>
+             </xpath>
 
-              <xpath expr="//group[@name='technical']" position="after">
+             <xpath expr="//group[@name='technical']" position="after">
                    <group string="Subleased Product Orders" name="purchases">
                        <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
                    </group>
@@ -37,23 +38,49 @@
 
              <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
                     <field name="owner_id"/>
-              </xpath>
+             </xpath>
+
+             <xpath expr="//field[@name='validity_date']" position="after">
+                <field name="merged_in" readonly="1" attrs="{'invisible': [('merged_in','=', False)]}"/>
+             </xpath>
 
          </field>
     </record>
+
+     <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.quotation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
+         <field name="arch" type="xml">
+            <xpath expr="//filter[@name='sent']" position="after">
+                <filter string="Merged" name="merged" domain="[('state','=','merged')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale.action_quotations" model="ir.actions.act_window" >
+        <field name="domain">[('state','!=','sale')]</field>
+    </record>
+
+     <record id="sale.action_orders" model="ir.actions.act_window">
+         <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel', 'merged'))]</field>
+     </record>
 
     <record id="invoice_form" model="ir.ui.view">
         <field name="name">account.invoice.form</field>
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
+            <field name="date_due" position="after">
+                <field name="invoice_type" widget="radio" invisible="1"/>
+            </field>
              <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
                     <field name="owner_id" />
-                    <field name="bill_uom" />
-                    <field name="bill_uom_qty" />
               </xpath>
              <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
-                    <field name="uom_id" />
+                    <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                    <field name="qty_shipped" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                    <field name="uom_id" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
               </xpath>
         </field>
     </record>
