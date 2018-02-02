@@ -135,8 +135,8 @@ class SaleOrderLine(models.Model):
     product_subleased = fields.Boolean(string="Subleased", default=False)
 
     bill_uom_qty = fields.Float('Quantity to Sale',
-                                digits=dp.get_precision(
-                                'Product Unit of Measure'))
+                                digits=dp.get_precision('Product Unit'
+                                                        ' of Measure'))
 
     purchase_order_line = fields.One2many('purchase.order.line',
                                           'sale_order_line_id',
