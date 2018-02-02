@@ -219,3 +219,20 @@ msgstr "Ud de M de Compra"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
 msgid "Unit of Measure to Sale"
 msgstr "Ud de M de Venta"
+
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
+msgid "Unit of Measure to Sale"
+msgstr "Ud de M de Venta"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_sale_order_ids
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Sale Orders related"
+msgstr "Ordenes de Venta Relacionadas"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_sale_order_line_id
+msgid "Sale Order Line"
+msgstr "Línea de orden de venta"

@@ -8,7 +8,7 @@
          <field name="arch" type="xml">
 
              <field name="payment_term_id" position="after">
-                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','not in',('merged','sent'))]}"/>
+                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','in',('merged','sent'))]}"/>
                </field>
 
              <xpath expr="//field[@name='order_line']" position="attributes">
@@ -34,6 +34,9 @@
                    <group string="Subleased Product Orders" name="purchases">
                        <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
                    </group>
+                   <group string="Sale Orders related" name="sale_orders">
+                       <field name="sale_order_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
+                   </group>
              </xpath>
 
              <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
@@ -41,7 +44,7 @@
              </xpath>
 
              <xpath expr="//field[@name='validity_date']" position="after">
-                <field name="merged_in" readonly="1" attrs="{'invisible': [('merged_in','=', False)]}"/>
+                <field name="sale_order_id" readonly="1" attrs="{'invisible': [('sale_order_id','=', False)]}"/>
              </xpath>
 
          </field>
