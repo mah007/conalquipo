@@ -177,9 +177,11 @@ class SaleOrderLine(models.Model):
         purchase = {
             'partner_id': line.owner_id.id,
             'company_id': line.company_id.id,
-            'currency_id': line.owner_id.property_purchase_currency_id.id or self.env.user.company_id.currency_id.id,
+            'currency_id': line.owner_id.property_purchase_currency_id.id
+                           or self.env.user.company_id.currency_id.id,
             'origin': line.order_id.name,
-            'payment_term_id': line.owner_id.property_supplier_payment_term_id.id,
+            'payment_term_id':
+                line.owner_id.property_supplier_payment_term_id.id,
             'date_order': datetime.strptime(line.order_id.date_order,
                                             DEFAULT_SERVER_DATETIME_FORMAT),
             'fiscal_position_id': line.order_id.fiscal_position_id,
@@ -286,7 +288,8 @@ class SaleOrderLine(models.Model):
             taxes = line.tax_id.compute_all(price, line.order_id.currency_id,
                                             quantity,
                                             product=line.product_id,
-                                            partner=line.order_id.partner_shipping_id)
+                                            partner=
+                                            line.order_id.partner_shipping_id)
             line.update({
                 'price_tax': sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', [])),
@@ -299,16 +302,20 @@ class SaleOrderLine(models.Model):
     def _compute_invoice_status(self):
         """
         Compute the invoice status of a SO line. Possible statuses:
-        - no: if the SO is not in status 'sale' or 'done', we consider that there is nothing to
-          invoice. This is also hte default value if the conditions of no other status is met.
-        - to invoice: we refer to the quantity to invoice of the line. Refer to method
-          `_get_to_invoice_qty()` for more information on how this quantity is calculated.
-        - upselling: this is possible only for a product invoiced on ordered quantities for which
-          we delivered more than expected. The could arise if, for example, a project took more
-          time than expected but we decided not to invoice the extra cost to the client. This
-          occurs onyl in state 'sale', so that when a SO is set to done, the upselling opportunity
+        - no: if the SO is not in status 'sale' or 'done', we consider that
+        there is nothing to invoice. This is also hte default value if the
+        conditions of no other status is met.
+        - to invoice: we refer to the quantity to invoice of the line. Refer to
+        metho _get_to_invoice_qty()` for more information on how this quantity
+        is calculated.
+        - upselling: this is possible only for a product invoiced on ordered
+        quantities for which we delivered more than expected. The could arise
+        if, for example, a project took more time than expected but we decided
+        not to invoice the extra cost to the client. This occurs onyl in state
+        'sale', so that when a SO is set to done, the upselling opportunity
           is removed from the list.
-        - invoiced: the quantity invoiced is larger or equal to the quantity ordered.
+        - invoiced: the quantity invoiced is larger or equal to the quantity
+        ordered.
         """
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
@@ -318,10 +325,11 @@ class SaleOrderLine(models.Model):
             elif not float_is_zero(line.qty_to_invoice,
                                    precision_digits=precision):
                 line.invoice_status = 'to invoice'
-            elif line.state == 'sale' and line.product_id.invoice_policy == 'order' and \
-                            float_compare(line.qty_delivered,
-                                          line.product_uom_qty,
-                                          precision_digits=precision) == 1:
+            elif line.state == 'sale' \
+                    and line.product_id.invoice_policy == 'order' \
+                    and float_compare(line.qty_delivered,
+                                      line.product_uom_qty,
+                                      precision_digits=precision) == 1:
                 line.invoice_status = 'upselling'
             elif float_compare(line.qty_invoiced, line.product_uom_qty,
                                precision_digits=precision) >= 0:
@@ -333,8 +341,9 @@ class SaleOrderLine(models.Model):
                  'order_id.state', 'bill_uom_qty')
     def _get_to_invoice_qty(self):
         """
-        Compute the quantity to invoice. If the invoice policy is order, the quantity to invoice is
-        calculated from the ordered quantity. Otherwise, the quantity delivered is used.
+        Compute the quantity to invoice. If the invoice policy is order, the
+        quantity to invoice is calculated from the ordered quantity.
+        Otherwise, the quantity delivered is used.
         """
         for line in self:
             qty = 0.0
@@ -354,12 +363,14 @@ class SaleOrderLine(models.Model):
     @api.depends('price_total', 'product_uom_qty', 'bill_uom_qty')
     def _get_price_reduce_tax(self):
         for line in self:
-            line.price_reduce_taxinc = line.price_total / line.bill_uom_qty if line.bill_uom_qty else 0.0
+            line.price_reduce_taxinc = line.price_total / line.bill_uom_qty\
+                if line.bill_uom_qty else 0.0
 
     @api.depends('price_subtotal', 'product_uom_qty', 'bill_uom_qty')
     def _get_price_reduce_notax(self):
         for line in self:
-            line.price_reduce_taxexcl = line.price_subtotal / line.bill_uom_qty if line.bill_uom_qty else 0.0
+            line.price_reduce_taxexcl = line.price_subtotal / line.bill_uom_qty\
+                if line.bill_uom_qty else 0.0
 
     @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty',
                   'tax_id', 'bill_uom_qty')
@@ -367,24 +378,35 @@ class SaleOrderLine(models.Model):
         self.discount = 0.0
         if not (self.product_id and self.product_uom and
                 self.order_id.partner_id and self.order_id.pricelist_id and
-                self.order_id.pricelist_id.discount_policy == 'without_discount' and
+                self.order_id.pricelist_id.discount_policy ==
+                        'without_discount' and
                 self.env.user.has_group('sale.group_discount_per_so_line')):
             return
 
-        context_partner = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order)
+        context_partner = dict(self.env.context,
+                               partner_id=self.order_id.partner_id.id,
+                               date=self.order_id.date_order)
         pricelist_context = dict(context_partner, uom=self.product_uom.id)
         qty = 0.0
         if self.bill_uom_qty > 0:
             qty = self.bill_uom_qty
         else:
             qty = self.product_uom_qty
-        price, rule_id = self.order_id.pricelist_id.with_context(pricelist_context).get_product_price_rule(self.product_id, qty or 1.0, self.order_id.partner_id)
-        new_list_price, currency_id = self.with_context(context_partner)._get_real_price_currency(self.product_id, rule_id, qty, self.product_uom, self.order_id.pricelist_id.id)
+        price, rule_id = self.order_id.pricelist_id.with_context(
+            pricelist_context).get_product_price_rule(self.product_id,
+                                                      qty or 1.0,
+                                                      self.order_id.partner_id)
+        new_list_price, currency_id = self.with_context(
+            context_partner)._get_real_price_currency(
+            self.product_id, rule_id, qty, self.product_uom,
+            self.order_id.pricelist_id.id)
 
         if new_list_price != 0:
             if self.order_id.pricelist_id.currency_id.id != currency_id:
                 # we need new_list_price in the same currency as price, which is in the SO's pricelist's currency
-                new_list_price = self.env['res.currency'].browse(currency_id).with_context(context_partner).compute(new_list_price, self.order_id.pricelist_id.currency_id)
+                new_list_price = self.env['res.currency'].browse(
+                    currency_id).with_context(context_partner).compute(
+                    new_list_price, self.order_id.pricelist_id.currency_id)
             discount = (new_list_price - price) / new_list_price * 100
             if discount > 0:
                 self.discount = discount
@@ -393,12 +415,23 @@ class SaleOrderLine(models.Model):
     def _get_display_price(self, product):
         # TO DO: move me in master/saas-16 on sale.order
         if self.order_id.pricelist_id.discount_policy == 'with_discount':
-            return product.with_context(pricelist=self.order_id.pricelist_id.id).price
-        final_price, rule_id = self.order_id.pricelist_id.get_product_price_rule(self.product_id, self.bill_uom_qty or 1.0, self.order_id.partner_id)
-        context_partner = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order)
-        base_price, currency_id = self.with_context(context_partner)._get_real_price_currency(self.product_id, rule_id, self.bill_uom_qty, self.product_uom, self.order_id.pricelist_id.id)
+            return product.with_context(pricelist=self.order_id.pricelist_id.id
+                                        ).price
+        final_price, rule_id = \
+            self.order_id.pricelist_id.get_product_price_rule(
+                self.product_id, self.bill_uom_qty or 1.0,
+                self.order_id.partner_id)
+        context_partner = dict(self.env.context,
+                               partner_id=self.order_id.partner_id.id,
+                               date=self.order_id.date_order)
+        base_price, currency_id = self.with_context(
+            context_partner)._get_real_price_currency(
+            self.product_id, rule_id, self.bill_uom_qty, self.product_uom,
+            self.order_id.pricelist_id.id)
         if currency_id != self.order_id.pricelist_id.currency_id.id:
-            base_price = self.env['res.currency'].browse(currency_id).with_context(context_partner).compute(base_price, self.order_id.pricelist_id.currency_id)
+            base_price = self.env['res.currency'].browse(
+                currency_id).with_context(context_partner).compute(
+                base_price, self.order_id.pricelist_id.currency_id)
         # negative discounts (= surcharge) are included in the display price
         return max(base_price, final_price)
 
@@ -425,8 +458,8 @@ class SaleOrderLine(models.Model):
             )
             self.price_unit = self.env[
                 'account.tax']._fix_tax_included_price_company(
-                self._get_display_price(product), product.taxes_id, self.tax_id,
-                self.company_id)
+                self._get_display_price(product), product.taxes_id,
+                self.tax_id, self.company_id)
 
 
 class AccountInvoiceLine(models.Model):
