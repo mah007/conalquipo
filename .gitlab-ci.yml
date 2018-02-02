@@ -34,6 +34,7 @@ tests:
   - createdb --encoding=UTF8 --locale=en_US.UTF-8 --template=template0 -D ramdisk $CI_BUILD_REF
   - cd ..
   # - $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --log-level=warn --stop-after-init
+  - source odoo-11/bin/activate
   - coverage run $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --test-enable --log-level=warn --stop-after-init
   - coverage html
   - coverage report -i
