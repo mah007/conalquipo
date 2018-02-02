@@ -36,8 +36,8 @@
     'depends': ['base', 'crm', 'project', 'delivery',
                 'sale', 'purchase', 'stock', 'stock_real_availability',
                 'con_client_code', 'con_project_works',
-                'con_project_translates', 'con_project_stock',
-                'con_sale','con_shipping'],
+                'con_project_translates', 'con_project_stock', 'con_sale',
+                'con_shipping'],
     'data': [
     ],
     'qweb': [],

@@ -19,8 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api, _
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo import fields, models
 
 
 class PurchaseOrder(models.Model):

@@ -50,4 +50,3 @@ class StockPickingMRPRepair(models.Model):
             repair = mrp_repair_obj.create(vals)
             l.mrp_repair_id = repair.id
             self.repair_requests = True
-

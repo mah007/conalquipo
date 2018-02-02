@@ -101,8 +101,8 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        return self.env['product.states'].search(
-                [('default_value', '=', True)], limit=1) or False
+        return self.env['product.states'].search([
+            ('default_value', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('state_id')
@@ -144,8 +144,8 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        return self.env['product.states'].search(
-                [('default_value', '=', True)], limit=1) or False
+        return self.env['product.states'].search([
+            ('default_value', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('state_id')
