@@ -44,12 +44,13 @@ class StockPicking(models.Model):
     receipts_driver_ids = fields.One2many(
         'shipping.driver', 'stock_picking_id', string='Shipping Driver',
         copy=True)
-    responsible = fields.Char(string='Responsible', track_visibility='onchange')
+    responsible = fields.Char(string='Responsible',
+                              track_visibility='onchange')
     id_number = fields.Char(string='Person identification',
                             track_visibility='onchange')
     job_title = fields.Char(string='Job title', track_visibility='onchange')
     carrier_tracking_ref = fields.Char(string='Tracking Reference',
-                               compute='_carrier_tracking_ref')
+                                       compute='_carrier_tracking_ref')
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
@@ -66,7 +67,6 @@ class StockPicking(models.Model):
         else:
             self.vehicle_client = ''
             self.driver_client = ''
-
 
     @api.onchange('vehicle_id')
     def onchange_vehicle_id(self):
@@ -115,7 +115,8 @@ class StockPicking(models.Model):
         return {'domain': domain}
 
     @api.one
-    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id', 'vehicle_client')
+    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id',
+                 'vehicle_client')
     def _carrier_tracking_ref(self):
         """
         This function merge the following fields in a simple string,
@@ -133,9 +134,8 @@ class StockPicking(models.Model):
         else:
             ref = [str(self.scheduled_date), str(self.vehicle_client or ''),
                    self.location_id.location_id.name or '']
-        self.carrier_tracking_ref = \
-            str("".join(ref)).replace("-", "").\
-                replace(" ", "").replace(":", "")
+        self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
+            replace(" ", "").replace(":", "")
 
 
 class ShippingDriver(models.Model):
@@ -159,9 +159,9 @@ class ShippingDriver(models.Model):
     driver_ids = fields.Many2one(
         'hr.employee', string='Employee', ondelete='cascade', index=True,
         copy=False, track_visibility='onchange')
-    job_title = fields.Selection(
-        [('driver', 'Driver'),('assistant', 'Assistant')], string='HR Type',
-        default='driver')
+    job_title = fields.Selection([('driver', 'Driver'),
+                                  ('assistant', 'Assistant')],
+                                 string='HR Type', default='driver')
     stock_picking_id = fields.Many2one(
         'stock.picking', string='Stock Picking', ondelete='cascade',
         index=True, copy=False, track_visibility='onchange')

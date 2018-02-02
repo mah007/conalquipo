@@ -51,7 +51,6 @@ class DeliveryCarrierCost(models.Model):
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
-
     delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
                                             'delivery_carrier_id',
                                             string='Lines Delivery Carrier'

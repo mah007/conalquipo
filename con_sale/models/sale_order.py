@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api, _
+from odoo import fields, models, api
 from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
@@ -207,7 +207,8 @@ class SaleOrderLine(models.Model):
     @api.multi
     def _prepare_invoice_line(self, qty):
         """
-        Prepare the dict of values to create the new invoice line for a sales order line.
+        Prepare the dict of values to create the new invoice line
+        for a sales order line.
 
         :param qty: float quantity to invoice
         """
@@ -229,11 +230,20 @@ class SaleOrderLine(models.Model):
                 qty_invoiced = 0.0
                 for invoice_line in line.invoice_lines:
                     if invoice_line.invoice_id.state != 'cancel':
-                        dict = {
-                            'out_invoice': lambda qty_invoice: qty_invoice + invoice_line.uom_id._compute_quantity(invoice_line.quantity, line.product_uom, rent=True),
-                            'out_refund': lambda qty_invoiced: qty_invoiced - invoice_line.uom_id._compute_quantity(invoice_line.quantity, line.product_uom, rent=True)
+                        data = {
+                            'out_invoice': lambda qty_invoice:
+                            qty_invoice +
+                            invoice_line.uom_id._compute_quantity(
+                                invoice_line.quantity, line.product_uom,
+                                rent=True),
+                            'out_refund': lambda qty_invoiced:
+                            qty_invoiced -
+                            invoice_line.uom_id._compute_quantity(
+                                invoice_line.quantity, line.product_uom,
+                                rent=True)
                         }
-                        qty_invoiced = dict.get(invoice_line.invoice_id.type, lambda: 0)(qty_invoiced)
+                        qty_invoiced = data.get(invoice_line.invoice_id.type,
+                                                lambda: 0)(qty_invoiced)
                 line.qty_invoiced = qty_invoiced
 
     @api.model

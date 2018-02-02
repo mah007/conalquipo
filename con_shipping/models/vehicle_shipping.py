@@ -37,7 +37,6 @@ class VehicleType(models.Model):
     _description = "Vehicle Type"
     _order = 'sequence, id'
 
-
     sequence = fields.Integer(help="Determine the display order", default=10,
                               invisible=True)
     code = fields.Char(string="Code")
