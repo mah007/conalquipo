@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
