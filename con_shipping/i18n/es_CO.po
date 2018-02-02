@@ -738,7 +738,7 @@ msgstr "delivery.carrier.cost"
 
 #. module: con_shipping
 #: model:ir.model.fields,field_description:con_shipping.field_stock_picking_post
-msgid "post"
+msgid "job_title"
 msgstr "Cargo De La Persona"
 
 #. module: con_shipping
