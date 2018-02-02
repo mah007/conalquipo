@@ -27,14 +27,9 @@ tests:
   - createdb --encoding=UTF8 --locale=en_US.UTF-8 --template=template0 -D ramdisk $CI_BUILD_REF
   - cd ..
   # - $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --log-level=warn --stop-after-init
-  - virtualenv -p python3 odoo-11
-  - source odoo-11/bin/activate
-  - cd $ODOO_REPO
-  - pip3 install -r requirements.txt
-  - cd ..
-  - coverage run $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --test-enable --log-level=warn --stop-after-init
-  - coverage html
-  - coverage report -i
+  - coverage3 run $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --test-enable --log-level=warn --stop-after-init
+  - coverage3 html
+  - coverage3 report -i
   - grep pc_cov htmlcov/index.html | egrep -o "[0-9]+\%" | awk '{ print "covered " $1;}'
   - dropdb --if-exists $CI_BUILD_REF
 
