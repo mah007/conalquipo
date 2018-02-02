@@ -178,8 +178,9 @@ class SaleOrderLine(models.Model):
         purchase = {
             'partner_id': line.owner_id.id,
             'company_id': line.company_id.id,
-            'currency_id': line.owner_id.property_purchase_currency_id.id or
-                           self.env.user.company_id.currency_id.id,
+            'currency_id':
+                line.owner_id.property_purchase_currency_id.id or
+                self.env.user.company_id.currency_id.id,
             'origin': line.order_id.name,
             'payment_term_id':
                 line.owner_id.property_supplier_payment_term_id.id,
@@ -356,8 +357,8 @@ class SaleOrderLine(models.Model):
                 if line.product_id.invoice_policy == 'order':
                     line.qty_to_invoice = qty - line.qty_invoiced
                 else:
-                    line.qty_to_invoice = line.qty_delivered - \
-                                          line.qty_invoiced
+                    line.qty_to_invoice = \
+                        (line.qty_delivered - line.qty_invoiced)
             else:
                 line.qty_to_invoice = 0
 
@@ -370,9 +371,11 @@ class SaleOrderLine(models.Model):
     @api.depends('price_subtotal', 'product_uom_qty', 'bill_uom_qty')
     def _get_price_reduce_notax(self):
         for line in self:
-            line.price_reduce_taxexcl = \
-                line.price_subtotal / line.bill_uom_qty \
-                    if line.bill_uom_qty else 0.0
+            if line.bill_uom_qty:
+                line.price_reduce_taxexcl =\
+                    (line.price_subtotal / line.bill_uom_qty)
+            else:
+                line.price_reduce_taxexcl = 0.0
 
     @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty',
                   'tax_id', 'bill_uom_qty')
@@ -380,8 +383,8 @@ class SaleOrderLine(models.Model):
         self.discount = 0.0
         if not (self.product_id and self.product_uom and
                 self.order_id.partner_id and self.order_id.pricelist_id and
-                self.order_id.pricelist_id.discount_policy == 'without_discount' and
-                self.env.user.has_group('sale.group_discount_per_so_line')):
+                self.order_id.pricelist_id.discount_policy == 'without_discount'
+                and self.env.user.has_group('sale.group_discount_per_so_line')):
             return
 
         context_partner = dict(self.env.context,
