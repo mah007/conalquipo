@@ -40,7 +40,10 @@ class SaleOrder(models.Model):
         ('merged', _('Merged')),
     ])
 
-    merged_in = fields.Char('Merged In')
+    sale_order_id = fields.Many2one('sale.order', 'Merged In')
+
+    sale_order_ids = fields.One2many('sale.order', 'sale_order_id',
+                                     string='Sale Orders related')
 
     @api.onchange('state')
     def onchange_state(self):
@@ -61,7 +64,7 @@ class SaleOrder(models.Model):
                     line_copy = line.copy({'order_id': order_id.id})
                     order_id.write({'order_line': [(4, line_copy.id)]})
                 self.update({'state': 'merged',
-                             'merged_in': order_id.name,
+                             'sale_order_id': order_id.id,
                              'confirmation_date': fields.Datetime.now()
                              })
                 if self.env.context.get('send_email'):
