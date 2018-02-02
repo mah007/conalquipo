@@ -29,7 +29,9 @@ tests:
   # - $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --log-level=warn --stop-after-init
   - virtualenv -p python3 odoo-11
   - source odoo-11/bin/activate
+  - cd $ODOO_REPO
   - pip3 install -r requirements.txt
+  - cd ..
   - coverage run $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ADDONS_PATH -i $PROJECT --test-enable --log-level=warn --stop-after-init
   - coverage html
   - coverage report -i
