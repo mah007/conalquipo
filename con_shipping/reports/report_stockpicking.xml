@@ -63,7 +63,7 @@
                             <td style="border: 1px solid; padding:5px;"><span>Conductor:</span>
 
                                 <t t-foreach="o.driver_ids" t-as="d">
-                                    <t t-if="d.type_hr == 'driver'">
+                                    <t t-if="d.job_title == 'driver'">
                                         <span t-field="d.driver_ids.name"/>
                                     </t>
                                 </t>

@@ -145,7 +145,7 @@ class ShippingDriver(models.Model):
     database:
         driver_ids: int
             A link over `hr.employee` model with track visibility.
-        type_hr: str (Selection Field)
+        job_title: str (Selection Field)
             Contain the selection job title of the shipping for each
             assigned employee.
         stock_picking_id: int
