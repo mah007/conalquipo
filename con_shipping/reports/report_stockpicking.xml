@@ -240,18 +240,19 @@
                                 <col width='30%' />
 
                             </colgroup>
-                            <tr style="font-weight:bold;">
-                                <td style="border: 1px solid; padding:5px;"><span>Verificación Interna</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>B</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>NC</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Firma Revisado</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Observaciones:</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Revisa y Recibe el Equipo en Buenas Condiciones</span></td>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>Verificación Interna</span></td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>B</span></td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>NC</span></td>
+                                <td style="border: 1px solid; padding:5px;" rowspan="5"><span>Firma Revisado</span></td>
+                                <td style="border: 1px solid; padding:5px;" rowspan="5">
+                                    <span style="font-weight:bold;">Observaciones:</span><br/>
+                                    <span t-field="o.note" />
+                                </td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>Revisa y Recibe el Equipo en Buenas Condiciones</span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Funcionamiento:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;">
@@ -265,14 +266,12 @@
                                     <div  style="border: 1px solid; width:20px;
                                         height:20px; float: right; padding-left:5px; margin-ring:5px;" />
 
-                                    <div style="float: right; width:60px; font-size:10px;" ><span>En Bodega</span></div>
+                                    <div style="float: right; width:120px; font-size:10px;" ><span>En Bodega Conalquipo</span></div>
 
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Condiciones Externas:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Firma</span></td>
@@ -281,15 +280,11 @@
                                 <td style="border: 1px solid; padding:5px;"><span>Limpieza:</span></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Nombre</span></td>
                             </tr>
 
                              <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Despacha:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;">

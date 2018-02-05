@@ -177,7 +177,16 @@
                               </group>
                           </page>
                     </xpath>
+                    <xpath expr="//page[@name='extra']" position="inside">
+                        <field name="note" placeholder="Log a note..."/>
+                    </xpath>
                 </data>
             </field>
         </record>
+
+        <template id="report_delivery_document_shipping" inherit_id="stock.report_delivery_document">
+            <xpath expr="//div[@class='page']" position="inside">
+                <p t-if="o.note"><span t-field="o.note" /></p>
+            </xpath>
+        </template>
     </odoo>
