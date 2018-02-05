@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20171030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-23 19:38+0000\n"
-"PO-Revision-Date: 2018-01-23 14:53-0500\n"
+"POT-Creation-Date: 2018-02-05 22:04+0000\n"
+"PO-Revision-Date: 2018-02-05 17:07-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "Accept Emails From"
-msgstr "Aceptar correos desde"
+msgstr "Aceptar Correos Desde"
 
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
@@ -31,6 +31,12 @@ msgstr "Dirección"
 #: model:ir.model.fields,field_description:con_project_works.field_sale_order_invoice_address
 msgid "Billing"
 msgstr "Facturación"
+
+#. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_business_name
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Business name"
+msgstr "Business name"
 
 #. module: con_project_works
 #: model:ir.model,name:con_project_works.model_delivery_carrier
@@ -46,7 +52,7 @@ msgstr "Escoja un correo electrónico de proyecto"
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_city
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "City"
-msgstr "Ciudad"
+msgstr "Barrio"
 
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_city2
@@ -88,7 +94,7 @@ msgstr "Creado por"
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_create_date
 msgid "Created on"
-msgstr "Creado el"
+msgstr "Creado"
 
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
@@ -109,7 +115,7 @@ msgstr "Descartar"
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre Público"
 
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_email
@@ -148,11 +154,6 @@ msgid "Invoice limit date"
 msgstr "Fecha limite de facturación"
 
 #. module: con_project_works
-#: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_invoicing_area_id
-msgid "Invoicing Area"
-msgstr "Área de facturación"
-
-#. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
@@ -160,7 +161,7 @@ msgstr "Última Modificación el"
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_write_date
@@ -216,8 +217,19 @@ msgid "Partner Code"
 msgstr "Código de cliente"
 
 #. module: con_project_works
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_phone1
+#: model:ir.model.fields,field_description:con_project_works.field_project_project_phone2
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: con_project_works
+#: model:ir.ui.view,arch_db:con_project_works.project_form_works
+msgid "Phone..."
+msgstr "Phone..."
+
+#. module: con_project_works
 #: model:ir.model,name:con_project_works.model_project_project
-#: model:ir.model.fields,field_description:con_project_works.field_sale_order_projects_id
+#: model:ir.model.fields,field_description:con_project_works.field_sale_order_project_id
 msgid "Project"
 msgstr "Proyecto"
 
@@ -268,7 +280,7 @@ msgstr "Dirección de envío"
 #: model:ir.model.fields,field_description:con_project_works.field_res_country_municipality_state_id
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "State"
-msgstr "Estado"
+msgstr "Departamento"
 
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
