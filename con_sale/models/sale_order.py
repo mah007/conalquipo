@@ -163,12 +163,12 @@ class SaleOrderLine(models.Model):
         for purchase in line.order_id.purchase_ids:
             if purchase.partner_id.id == line.owner_id.id and \
                     purchase.state == line.order_id.state:
-                    self.action_purchase_line_create(line, purchase)
+                    self.function_purchase_line_create(line, purchase)
                     existing_purchase = True
 
         if not existing_purchase:
-            po = self.action_purchase_create(line)
-            self.action_purchase_line_create(line, po)
+            po = self.function_purchase_create(line)
+            self.function_purchase_line_create(line, po)
             line.order_id.write({'purchase_ids': [(4, po.id)]})
 
     @api.multi
