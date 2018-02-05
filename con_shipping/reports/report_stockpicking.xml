@@ -327,7 +327,7 @@
                                 <td style="border: 1px solid; padding-left:5px;"><span>Obra:</span></td>
                                 <td style="border: 1px solid;"><br/></td>
                                 <td style="border: 1px solid; padding-left:5px; height:25px;"><span>H. Llegada:</span>
-                                    <t t-esc="'%02d:%02d' % (int(o.out_hour), o.out_hour % 1 * 60)" />
+                                    <t t-esc="'%02d:%02d' % (int(o.in_hour), o.in_hour % 1 * 60)" />
                                 </td>
                             </tr>
                             <tr>
