@@ -20,7 +20,8 @@ class projectWorks(models.Model):
 
     work_code = fields.Char(string='Work Code')
     work_date_creation = fields.Date(
-        string="Work date creation")
+        string="Work date creation",
+        default=fields.Date.today())
     invoice_limit_date = fields.Date(
         string="Invoice limit date")
     email = fields.Char()
