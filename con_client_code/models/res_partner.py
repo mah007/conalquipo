@@ -20,10 +20,17 @@
 ##############################################################################
 
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class ResPartnerCode(models.Model):
     _inherit = "res.partner"
 
     partner_code = fields.Char(string='Partner Code')
+
+    @api.model
+    def create(self, values):
+        values['partner_code'] = self.env[
+            'ir.sequence'].next_by_code('res.partner.code')
+        res = super(ResPartnerCode, self).create(values)
+        return res

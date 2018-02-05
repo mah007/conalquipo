@@ -69,3 +69,10 @@ class projectWorks(models.Model):
                                        string='Municipality')
     country2_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
+
+    @api.model
+    def create(self, values):
+        values['work_code'] = self.env[
+            'ir.sequence'].next_by_code('works.code')
+        res = super(projectWorks, self).create(values)
+        return res
