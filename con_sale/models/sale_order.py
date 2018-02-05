@@ -263,14 +263,14 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def write(self, values):
-
         res = super(SaleOrderLine, self).write(values)
-        if values.get('owner_id') and not self.purchase_order_line:
-            self.function_management_buy(self)
-        if self.purchase_order_line:
-            if values.get('product_uom_qty'):
-                values['product_qty'] = values.get('product_uom_qty')
-            self.purchase_order_line.write(values)
+        for rec in self:
+            if values.get('owner_id') and not rec.purchase_order_line:
+                rec.function_management_buy(rec)
+            if rec.purchase_order_line:
+                if values.get('product_uom_qty'):
+                    values['product_qty'] = values.get('product_uom_qty')
+                rec.purchase_order_line.write(values)
         return res
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',

@@ -143,16 +143,17 @@ class SaleOrder(models.Model):
 
         :return: None
         """
-        if self.vehicle:
-            # self._remove_delivery_line()
-            veh_carrier = self.env['delivery.carrier.cost'].search(
-                [('vehicle', '=', self.vehicle.id),
-                 ('delivery_carrier_id', '=', self.carrier_id.id)])
-            self._create_delivery_line(self.carrier_id, veh_carrier.cost,
-                                       receipt=True)
-            self.delivery_price = veh_carrier.cost
-        else:
-            super(SaleOrder, self).set_delivery_line()
+        for rec in self:
+            if rec.vehicle:
+                # self._remove_delivery_line()
+                veh_carrier = self.env['delivery.carrier.cost'].search(
+                    [('vehicle', '=', rec.vehicle.id),
+                     ('delivery_carrier_id', '=', rec.carrier_id.id)])
+                rec._create_delivery_line(rec.carrier_id, veh_carrier.cost,
+                                           receipt=True)
+                rec.delivery_price = veh_carrier.cost
+            else:
+                super(SaleOrder, self).set_delivery_line()
 
     def _create_delivery_line(self, carrier, price_unit, receipt=False):
         """
