@@ -15,6 +15,7 @@
         Assign code for partners
     """,
     'data': [
+        'sequences/client_sequence.xml',
         'views/res_partner.xml',
     ],
     'qweb': [
