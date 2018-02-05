@@ -267,9 +267,8 @@ class SaleOrderLine(models.Model):
         for rec in self:
             if values.get('owner_id') and not rec.purchase_order_line:
                 rec.function_management_buy(rec)
-            if rec.purchase_order_line:
-                if values.get('product_uom_qty'):
-                    values['product_qty'] = values.get('product_uom_qty')
+            if rec.purchase_order_line and values.get('product_uom_qty'):
+                values['product_qty'] = values.get('product_uom_qty')
                 rec.purchase_order_line.write(values)
         return res
 
