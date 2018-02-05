@@ -240,18 +240,19 @@
                                 <col width='30%' />
 
                             </colgroup>
-                            <tr style="font-weight:bold;">
-                                <td style="border: 1px solid; padding:5px;"><span>Verificación Interna</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>B</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>NC</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Firma Revisado</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Observaciones:</span></td>
-                                <td style="border: 1px solid; padding:5px;"><span>Revisa y Recibe el Equipo en Buenas Condiciones</span></td>
+                            <tr>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>Verificación Interna</span></td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>B</span></td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>NC</span></td>
+                                <td style="border: 1px solid; padding:5px;" rowspan="5"><span>Firma Revisado</span></td>
+                                <td style="border: 1px solid; padding:5px;" rowspan="5">
+                                    <span style="font-weight:bold;">Observaciones:</span><br/>
+                                    <span t-field="o.note" />
+                                </td>
+                                <td style="border: 1px solid; padding:5px; font-weight:bold;"><span>Revisa y Recibe el Equipo en Buenas Condiciones</span></td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Funcionamiento:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;">
@@ -265,14 +266,12 @@
                                     <div  style="border: 1px solid; width:20px;
                                         height:20px; float: right; padding-left:5px; margin-ring:5px;" />
 
-                                    <div style="float: right; width:60px; font-size:10px;" ><span>En Bodega</span></div>
+                                    <div style="float: right; width:120px; font-size:10px;" ><span>En Bodega Conalquipo</span></div>
 
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Condiciones Externas:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Firma</span></td>
@@ -281,15 +280,11 @@
                                 <td style="border: 1px solid; padding:5px;"><span>Limpieza:</span></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"><span>Nombre</span></td>
                             </tr>
 
                              <tr>
                                 <td style="border: 1px solid; padding:5px;"><span>Despacha:</span></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
-                                <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;"></td>
                                 <td style="border: 1px solid; padding:5px;">
@@ -332,7 +327,7 @@
                                 <td style="border: 1px solid; padding-left:5px;"><span>Obra:</span></td>
                                 <td style="border: 1px solid;"><br/></td>
                                 <td style="border: 1px solid; padding-left:5px; height:25px;"><span>H. Llegada:</span>
-                                    <t t-esc="'%02d:%02d' % (int(o.out_hour), o.out_hour % 1 * 60)" />
+                                    <t t-esc="'%02d:%02d' % (int(o.in_hour), o.in_hour % 1 * 60)" />
                                 </td>
                             </tr>
                             <tr>
@@ -357,8 +352,11 @@
                                 <td style="border: 1px solid; padding-left:5px;"><span>Verificación Recibo</span></td>
                                 <td style="border: 1px solid; padding-left:5px;"><span>B</span></td>
                                 <td style="border: 1px solid; padding-left:2px;"><span>NC</span></td>
-                                <td style="padding-left:5px;"><span>Firma Revisado</span></td>
-                                <td style="padding-left:5px; border-left: 1px solid;"><span>Observaciones:</span></td>
+                                <td style="padding-left:5px;" rowspan="4"><span>Firma Revisado</span></td>
+                                <td style="padding-left:5px; border-left: 1px solid;">
+                                    <span>Observaciones:</span><br/>
+                                    <span t-field="o.note" />
+                                </td>
                                 <td style="border-left: 1px solid; padding-left:5px;">
                                     <span>Entregó Equipo<br/>
                                         Recoger más Equipo
@@ -375,7 +373,6 @@
                                 <td style="border: 1px solid;"></td>
                                 <td style="border: 1px solid;"></td>
                                 <td></td>
-                                <td style="border-left: 1px solid;"></td>
                                 <td style="border-left: 1px solid; padding-left:5px;">
                                     <span style=" float: left;">Inmediatamente </span>
                                     <div style="width:10px; float: left;" ><br/></div>
@@ -391,7 +388,6 @@
                                 <td style="border: 1px solid;"></td>
                                 <td style="border: 1px solid;"></td>
                                 <td></td>
-                                <td style="border-left: 1px solid;"></td>
                                 <td style="border-left: 1px solid; padding-left:5px;"><span>Firma:</span>
                                 </td>
                             </tr>
@@ -400,7 +396,6 @@
                                 <td style="border: 1px solid;"></td>
                                 <td style="border: 1px solid;"></td>
                                 <td></td>
-                                <td style="border-left: 1px solid;"></td>
                                 <td style="border-left: 1px solid; padding-left:5px;"><span>Nombre:</span></td>
                             </tr>
                             <tr>
