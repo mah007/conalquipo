@@ -36,7 +36,7 @@
                             <col width='30%' />
                         </colgroup>
                         <tr>
-                            <td style="border: 1px solid; padding:5px;"><span>Empresa:</span> <span t-field="o.partner_id.parent_id"/></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Empresa:</span> <span t-field="o.partner_id"/></td>
                             <td style="border: 1px solid; padding:5px;"><span>Fecha: </span> <span t-field="o.scheduled_date"/> <span> Tel: </span></td>
                             <td style="border: 1px solid; padding:5px;"><span>Acarreo:</span>
                                 <span t-field="o.carrier_type"/>
@@ -55,13 +55,12 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid; padding:5px;"><span>Obra:</span>
-                                    <span t-field="o.partner_id.name"/>
+                                    <span t-field="o.project_id.name"/>
                             </td>
                             <td style="border: 1px solid; padding:5px;"><span>Barrio:</span>
                                     <span t-field="o.project_id.city"/>
                             </td>
                             <td style="border: 1px solid; padding:5px;"><span>Conductor:</span>
-
                                 <t t-foreach="o.job_title" t-as="d">
                                     <t t-if="d.type_hr == 'driver'">
                                         <span t-field="d.job_title.name"/>
@@ -74,7 +73,8 @@
                             <td style="border: 1px solid; padding:5px;"><span>Código:</span>
                                 <span t-field="o.project_id.work_code"/>
                             </td>
-                            <td style="border: 1px solid; padding:5px;"><span>E-mail:</span> <span t-field="o.partner_id.email"/></td>
+                            <td
+                                    style="border: 1px solid; padding:5px;"><span>E-mail:</span> <span t-field="o.project_id.email"/></td>
                             <td style="border: 1px solid; padding:5px;"><span>Código Acarreo:</span>  <span t-field="o.carrier_tracking_ref"/></td>
                         </tr>
                     </table>

@@ -39,6 +39,11 @@
                    </group>
              </xpath>
 
+             <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
+                 <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                 <field name="bill_uom_qty"
+                        attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+             </xpath>
              <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
                     <field name="owner_id"/>
              </xpath>
