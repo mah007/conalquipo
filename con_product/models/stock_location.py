@@ -33,7 +33,7 @@ class StockLocation(Model):
     def _get_color(self):
         for a in self:
             if a.product_state:
-                self.color = a.product_state.color
+                a.color = a.product_state.color
 
     set_product_state = fields.Boolean(
         string="Change the state to all products when arrive to this location")
