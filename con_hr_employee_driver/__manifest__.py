@@ -2,20 +2,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Shipping',
+    'name': 'Conalquipo HR Employee Driver',
     'version': '1.1',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'category': 'Sale',
+    'category': 'HR',
     'sequence': 10,
-    'summary': 'Delivery',
-    'depends': ['delivery', 'fleet', 'mail', 'stock', 'con_project_works',
-                'hr_employee_contract'],
+    'summary': 'HR',
+    'depends': ['hr', 'hr_contract', 'fleet'],
     'description':
     """
         Work information for shipping.
     """,
-    'data': ['views/shipping.xml',
-             'reports/report_stockpicking.xml'
+    'data': ['views/hr_employee_driver.xml',
              ],
     'qweb': [
     ],

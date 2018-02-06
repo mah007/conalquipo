@@ -400,11 +400,6 @@ msgid "Affiliation"
 msgstr "Afiliación"
 
 #. module: con_shipping
-#: selection:shipping.driver,type_hr:0
-msgid "Assistant"
-msgstr "Ayudante"
-
-#. module: con_shipping
 #: model:ir.model.fields,field_description:con_shipping.field_fleet_vehicle_bearing
 msgid "Bearing"
 msgstr "IMP Rodamiento"
@@ -494,7 +489,6 @@ msgstr "Nombre mostrado"
 
 #. module: con_shipping
 #: model:ir.model.fields,field_description:con_shipping.field_stock_picking_driver_client
-#: selection:shipping.driver,type_hr:0
 msgid "Driver"
 msgstr "Conductor"
 
@@ -673,6 +667,7 @@ msgstr "Configurar precio"
 #. module: con_shipping
 #: model:ir.model.fields,field_description:con_shipping.field_stock_picking_driver_ids
 #: model:ir.model.fields,field_description:con_shipping.field_stock_picking_receipts_driver_ids
+#: model:ir.ui.view,arch_db:con_shipping.view_picking_withcarrier_out_form_inherit
 msgid "Shipping Driver"
 msgstr "Encargados del Transporte"
 
@@ -746,3 +741,45 @@ msgstr "Cargo De La Persona"
 msgid "shipping.driver"
 msgstr "shipping.driver"
 
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_shipping_driver_identification_id
+msgid "Identification No"
+msgstr "Nº de Cédula"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_id_driver_client
+msgid "Identification No Driver"
+msgstr "Nº de Cédula del Conductor"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_job_title
+msgid "Job title"
+msgstr "Título profesional"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_license_plate
+msgid "License Plate"
+msgstr "Placa"
+
+#. module: con_shipping
+#: selection:shipping.driver,job_title:0
+msgid "Assistant"
+msgstr "Ayudante"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_stock_picking_driver_client
+#: selection:shipping.driver,job_title:0
+msgid "Driver"
+msgstr "Conductor
+
+#. module: con_shipping
+#: code:addons/con_shipping/models/stock_picking.py:190
+#, python-format
+msgid "The category of the driver's license of this employee does not coincide with the category required by the vehicle assiging this order"
+msgstr "La categoria de la licencia de conducir de este empleado no concide con la categoria que requiere el vehiculo asigando a este orden"
+
+#. module: con_shipping
+#: code:addons/con_shipping/models/stock_picking.py:195
+#, python-format
+msgid "This employee does not possess driving skills"
+msgstr "Este empleado no posee habilidades de conducción"
