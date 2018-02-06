@@ -472,6 +472,6 @@ class AccountInvoiceLine(models.Model):
 
     owner_id = fields.Many2one('res.partner', 'Owner')
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
-    qty_shipped = fields.Float('Quantity to be shipped',
-                               digits=dp.get_precision(
-                                   'Product Unit of Measure'))
+    qty_shipped = fields.Float(
+        'Quantity to be shipped',
+        digits=dp.get_precision('Product Unit of Measure'))

@@ -20,7 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -184,13 +184,13 @@ class ShippingDriver(models.Model):
     def onchange_job_title(self):
         if self.job_title == 'driver' and self.driver_ids:
             if self.driver_ids.contract_id.is_driver:
-               lc_driver = self.driver_ids.contract_id.license_category
-               lc_vehicle = self.stock_picking_id.vehicle_id.license_category
-               if lc_driver.id != lc_vehicle.id:
-                   raise UserError(_(
+                lc_driver = self.driver_ids.contract_id.license_category
+                lc_vehicle = self.stock_picking_id.vehicle_id.license_category
+                if lc_driver.id != lc_vehicle.id:
+                    raise UserError(_(
                        "The category of the driver's license of this employee"
                        " does not coincide with the category required "
                        "by the vehicle assiging this order"))
             else:
-               raise UserError(_("This employee does not possess"
-                                 " driving skills"))
+                raise UserError(_("This employee does not possess"
+                             " driving skills"))
