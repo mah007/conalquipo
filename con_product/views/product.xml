@@ -47,9 +47,9 @@
               <data>
 
                   <field name="name" position="after">
+                      <field name="location_id" />
                       <field name="state_id" />
                       <field name="color" widget="color"/>
-                      <field name="location_id" />
                   </field>
 
               </data>
@@ -64,9 +64,9 @@
                 <data>
 
                     <field name="categ_id" position="after">
+                      <field name="location_id" string="Location"/>
                       <field name="state_id" string="State"/>
                       <field name="color" widget="color" string="Color"/>
-                      <field name="location_id" string="Location"/>
                       <!--<field name="components" />-->
                     </field>
 
@@ -107,9 +107,9 @@
                 <data>
 
                     <field name="default_code" position="after">
+                        <field name="location_id" />
                         <field name="state_id" />
                         <field name="color" widget="color"/>
-                        <field name="location_id" />
                     </field>
 
                 </data>
@@ -124,16 +124,16 @@
                 <data>
 
                     <field name="categ_id" position="after">
+                        <field name="location_id" />
                         <field name="state_id" />
                         <field name="color" widget="color"/>
-                        <field name="location_id" />
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">
-                            <div>
-                                <field name="rental"/>
-                                <label for="rental"/>
-                            </div>
+                        <div>
+                            <field name="rental"/>
+                            <label for="rental"/>
+                        </div>
                     </xpath>
 
                 </data>
@@ -148,9 +148,9 @@
                 <data>
 
                     <field name="default_code" position="after">
+                        <field name="location_id" />
                         <field name="state_id" />
                         <field name="color" widget="color"/>
-                        <field name="location_id" />
                     </field>
 
                     <field name="active" position="after">

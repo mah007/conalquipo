@@ -105,7 +105,7 @@ class ProductTemplate(Model):
             ('default_value', '=', True)], limit=1) or False
 
     @api.multi
-    @api.onchange('state_id')
+    @api.onchange('location_id')
     def get_default_values(self):
         """
         This function brings the default location of the product from the
@@ -113,11 +113,11 @@ class ProductTemplate(Model):
 
         :return: None
         """
-        if self.state_id:
-            self.color = self.state_id.color
+        if self.location_id:
             location_obj = self.env['stock.location']
-            location = location_obj.search([('color', '=', self.color)])
-            self.location_id = location.id
+            location = location_obj.search([('id', '=', self.location_id.id)])
+            self.state_id = location.product_state.id
+            self.color = location.color
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
@@ -148,7 +148,7 @@ class ProductProduct(Model):
             ('default_value', '=', True)], limit=1) or False
 
     @api.multi
-    @api.onchange('state_id')
+    @api.onchange('location_id')
     def get_default_values(self):
         """
         This function brings the default location of the product from the
@@ -156,11 +156,11 @@ class ProductProduct(Model):
 
         :return: None
         """
-        if self.state_id:
-            self.color = self.state_id.color
+        if self.location_id:
             location_obj = self.env['stock.location']
-            location = location_obj.search([('color', '=', self.color)])
-            self.location_id = location.id
+            location = location_obj.search([('id', '=', self.location_id.id)])
+            self.state_id = location.product_state.id
+            self.color = location.color
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
