@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="hr_contract_form_inherit_cont" model="ir.ui.view">
+        <field name="name">hr.contract.form.inherit.cont</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='duration_group']" position="after">
+                <group name="other_info" string="other information">
+                    <field name="is_driver"/>
+                    <field name="license_category" attrs="{'invisible': [('is_driver','=', False)]}"/>
+                    <field name="license_number" attrs="{'invisible': [('is_driver','=', False)]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+      <record model="ir.ui.view" id="fleet_vehicle_view_form_inherit_con">
+              <field name="name">fleet.vehicle.form</field>
+              <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+              <field name="model">fleet.vehicle</field>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='residual_value']" position="after">
+                       <field name="license_category"
+                              string="category of license that requires"/>
+                   </xpath>
+              </field>
+      </record>
+  </data>
+</openerp>

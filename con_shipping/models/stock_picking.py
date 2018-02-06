@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -34,10 +35,18 @@ class StockPicking(models.Model):
                                  related='sale_id.vehicle',
                                  onchange='onchange_vehicle_id',
                                  track_visibility='onchange', store=True)
+
+    license_plate = fields.Char(related='vehicle_id.license_plate',
+                                string='License Plate',
+                                store=True)
+
     driver_client = fields.Char(string='Driver', track_visibility='onchange')
+    id_driver_client = fields.Char(string='Identification No Driver',
+                                   store=True)
     driver_ids = fields.One2many(
         'shipping.driver', 'stock_picking_id', string='Shipping Driver',
         copy=True)
+
     vehicle_client = fields.Char(string='Vehicle', track_visibility='onchange')
     in_hour = fields.Float(string='Hour Entry', track_visibility='onchange')
     out_hour = fields.Float(string='Hour Output', track_visibility='onchange')
@@ -161,7 +170,27 @@ class ShippingDriver(models.Model):
         copy=False, track_visibility='onchange')
     job_title = fields.Selection([('driver', 'Driver'),
                                   ('assistant', 'Assistant')],
-                                 string='HR Type', default='driver')
+                                 string='HR Type', default='driver'
+                                 )
     stock_picking_id = fields.Many2one(
         'stock.picking', string='Stock Picking', ondelete='cascade',
         index=True, copy=False, track_visibility='onchange')
+
+    identification_id = fields.Char(string='Identification No',
+                                    related="driver_ids.identification_id",
+                                    store=True)
+
+    @api.onchange('job_title')
+    def onchange_job_title(self):
+        if self.job_title == 'driver' and self.driver_ids:
+            if self.driver_ids.contract_id.is_driver:
+               lc_driver = self.driver_ids.contract_id.license_category
+               lc_vehicle = self.stock_picking_id.vehicle_id.license_category
+               if lc_driver.id != lc_vehicle.id:
+                   raise UserError(_(
+                       "The category of the driver's license of this employee"
+                       " does not coincide with the category required "
+                       "by the vehicle assiging this order"))
+            else:
+               raise UserError(_("This employee does not possess"
+                                 " driving skills"))
