@@ -52,7 +52,7 @@ msgstr "\n"
 "    ${object.partner_id.name}\n"
 "% endif\n"
 ",</p><p>\n"
-"Aquí se encuentra adjunto una, a ${object.state in ('draft', 'sent') and 'solicitud de cotización' or 'orden de compra confirmada'} <strong>${object.name}</strong>\n"
+"Aquí se encuentra adjunto una, a ${object.state in ('draft', 'sent') and 'Solicitu de Compra' or 'orden de compra confirmada'} <strong>${object.name}</strong>\n"
 "% if object.partner_ref:\n"
 "    con referencia: ${object.partner_ref}\n"
 "% endif\n"
@@ -593,7 +593,7 @@ msgstr "Clic para crear una cotización que será convertida en una orden de com
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.purchase_rfq
 msgid "Click to create a request for quotation."
-msgstr "Clic para crear una solicitud de cotización."
+msgstr "Clic para crear una Solicitu de Compra."
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.action_invoice_pending
@@ -1603,12 +1603,12 @@ msgstr "Informes"
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 #: model:ir.ui.view,arch_db:purchase.report_purchasequotation_document
 msgid "Request for Quotation"
-msgstr "Solicitud de Cotización"
+msgstr "Solicitud de Compra"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "Request for Quotation #"
-msgstr "Solicitud de Cotización #"
+msgstr "Solicitud de Compra #"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.res_config_settings_view_form_purchase
@@ -1807,7 +1807,7 @@ msgstr "Las cantidades en su orden de compra indican menos de lo facturado. Debe
 msgid "The quotation contains the history of the discussion/negotiation\n"
 "                you had with your vendor. Once confirmed, a request for\n"
 "                quotation is converted into a purchase order."
-msgstr "La citación contiene el historial de mensajes/negociaciones que ha tenido con el proveedor. Una vez confirmada, una solicitud de cotización es convertida en una orden de compra."
+msgstr "La citación contiene el historial de mensajes/negociaciones que ha tenido con el proveedor. Una vez confirmada, una Solicitu de Compra es convertida en una orden de compra."
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.act_res_partner_2_purchase_order
