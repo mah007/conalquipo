@@ -36,7 +36,7 @@ msgstr "Facturación"
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_business_name
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "Business name"
-msgstr "Business name"
+msgstr "Razón social a facturar"
 
 #. module: con_project_works
 #: model:ir.model,name:con_project_works.model_delivery_carrier
