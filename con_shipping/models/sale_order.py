@@ -144,7 +144,6 @@ class SaleOrder(models.Model):
         :return: None
         """
         for rec in self:
-            # order_type = rec.order_type
             if rec.vehicle:
                 veh_carrier = self.env['delivery.carrier.cost'].search(
                     [('vehicle', '=', rec.vehicle.id),
