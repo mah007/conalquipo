@@ -1,0 +1,33 @@
+id,code,name,country_id/id
+account_base_co_state_05,5,Antioquia,base.co
+account_base_co_state_08,8,Atlantico,base.co
+account_base_co_state_13,13,Bolivar,base.co
+account_base_co_state_15,15,Boyaca,base.co
+account_base_co_state_17,17,Caldas,base.co
+account_base_co_state_18,18,Caqueta,base.co
+account_base_co_state_19,19,Cauca,base.co
+account_base_co_state_20,20,Cesar,base.co
+account_base_co_state_23,23,Cordoba,base.co
+account_base_co_state_25,25,Cundinamarca,base.co
+account_base_co_state_27,27,Choco,base.co
+account_base_co_state_41,41,Huila,base.co
+account_base_co_state_44,44,La Guajira,base.co
+account_base_co_state_47,47,Magdalena,base.co
+account_base_co_state_50,50,Meta,base.co
+account_base_co_state_52,52,Nariño,base.co
+account_base_co_state_54,54,N. de Santander,base.co
+account_base_co_state_63,63,Quindio,base.co
+account_base_co_state_66,66,Risaralda,base.co
+account_base_co_state_68,68,Santander,base.co
+account_base_co_state_70,70,Sucre,base.co
+account_base_co_state_73,73,Tolima,base.co
+account_base_co_state_76,76,Valle del Cauca,base.co
+account_base_co_state_81,81,Arauca,base.co
+account_base_co_state_85,85,Casanare,base.co
+account_base_co_state_86,86,Putumayo,base.co
+account_base_co_state_88,88,San Andres,base.co
+account_base_co_state_91,91,Amazonas,base.co
+account_base_co_state_94,94,Guainia,base.co
+account_base_co_state_95,95,Guaviare,base.co
+account_base_co_state_97,97,Vaupes,base.co
+account_base_co_state_99,99,Vichada,base.co
