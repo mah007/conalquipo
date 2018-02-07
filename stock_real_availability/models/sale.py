@@ -18,4 +18,4 @@ class SaleOrderLine(models.Model):
         self.real_available = available
 
     real_available = fields.Float(
-        compute="_fnct_line_stock", string='Stock Real')
+        compute="_fnct_line_stock", string='Real Stock')
