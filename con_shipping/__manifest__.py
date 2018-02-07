@@ -9,7 +9,7 @@
     'sequence': 10,
     'summary': 'Delivery',
     'depends': ['delivery', 'fleet', 'mail', 'stock', 'con_project_works',
-                'hr_employee_contract'],
+                'hr_contract'],
     'description':
     """
         Work information for shipping.
