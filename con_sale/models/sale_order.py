@@ -127,7 +127,7 @@ class SaleOrderLine(models.Model):
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
     order_type = fields.Selection(related='order_id.order_type',
-                                  string="Type Order", default='sale')
+                                  string="Type Order")
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
 
     owner_id = fields.Many2one('res.partner', string='Supplier',

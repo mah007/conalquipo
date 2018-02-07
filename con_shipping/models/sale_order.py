@@ -145,7 +145,6 @@ class SaleOrder(models.Model):
         """
         for rec in self:
             if rec.vehicle:
-                # self._remove_delivery_line()
                 veh_carrier = self.env['delivery.carrier.cost'].search(
                     [('vehicle', '=', rec.vehicle.id),
                      ('delivery_carrier_id', '=', rec.carrier_id.id)])
