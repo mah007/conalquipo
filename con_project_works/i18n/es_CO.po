@@ -46,7 +46,7 @@ msgstr "Transportista"
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
 msgid "Choose a Project Email"
-msgstr "Escoja un correo electrónico de proyecto"
+msgstr "Escoja un correo electrónico para la obra"
 
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_city
@@ -231,17 +231,17 @@ msgstr "Phone..."
 #: model:ir.model,name:con_project_works.model_project_project
 #: model:ir.model.fields,field_description:con_project_works.field_sale_order_project_id
 msgid "Project"
-msgstr "Proyecto"
+msgstr "Obra"
 
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "Project Manager"
-msgstr "Responsable de proyecto"
+msgstr "Responsable de obra"
 
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works_simpl
 msgid "Project Name"
-msgstr "Nombre del proyecto"
+msgstr "Nombre de la obra"
 
 #. module: con_project_works
 #: model:ir.model,name:con_project_works.model_sale_order
@@ -272,7 +272,7 @@ msgstr "Envío"
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 #: model:ir.ui.view,arch_db:con_project_works.sale_orderform_com
 msgid "Shipping Address"
-msgstr "Dirección de envío"
+msgstr "Dirección de obra"
 
 #. module: con_project_works
 #: model:ir.model.fields,field_description:con_project_works.field_project_project_state2_id

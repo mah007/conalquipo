@@ -18,7 +18,7 @@ msgstr ""
 #. module: con_project_stock
 #: model:ir.model.fields,field_description:con_project_stock.field_stock_picking_project_id
 msgid "Project"
-msgstr "Proyecto"
+msgstr "Obra"
 
 #. module: con_project_stock
 #: model:ir.model,name:con_project_stock.model_stock_picking
