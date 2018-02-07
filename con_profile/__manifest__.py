@@ -39,6 +39,8 @@
                 'con_project_translates', 'con_project_stock', 'con_sale',
                 'con_shipping'],
     'data': [
+        'data/res.country.state.csv',
+        'data/res.country.municipality.csv'
     ],
     'qweb': [],
     'images': [],
