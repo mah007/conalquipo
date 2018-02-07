@@ -7,7 +7,8 @@
     'category': 'Purchase',
     'sequence': 10,
     'summary': 'Purchase, Stock',
-    'depends': ['base', 'stock', 'con_client_code', 'sale', 'con_sale',
+    'depends': ['base', 'purchase', 'stock', 'con_client_code', 'sale',
+                'con_sale',
                 'delivery'],
     'description':
     """
