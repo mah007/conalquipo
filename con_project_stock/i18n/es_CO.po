@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e\n"
+"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 23:08+0000\n"
-"PO-Revision-Date: 2017-04-19 23:08+0000\n"
+"POT-Creation-Date: 2018-02-07 21:28+0000\n"
+"PO-Revision-Date: 2018-02-07 21:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,34 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: con_project_stock
+#: model:ir.model.fields,field_description:con_project_stock.field_stock_picking_invoice_address
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: con_project_stock
+#: model:ir.ui.view,arch_db:con_project_stock.view_stock_picking_form_inherit
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_project_stock
 #: model:ir.model.fields,field_description:con_project_stock.field_stock_picking_project_id
 msgid "Project"
-msgstr "Obra"
+msgstr "Proyecto"
+
+#. module: con_project_stock
+#: model:ir.model,name:con_project_stock.model_sale_order
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: con_project_stock
+#: model:ir.model.fields,field_description:con_project_stock.field_stock_picking_shipping_address
+msgid "Shipping"
+msgstr "Envío"
+
+#. module: con_project_stock
+#: model:ir.ui.view,arch_db:con_project_stock.view_stock_picking_form_inherit
+msgid "Shipping Address"
+msgstr "Dirección Obra"
 
 #. module: con_project_stock
 #: model:ir.model,name:con_project_stock.model_stock_picking
