@@ -225,7 +225,7 @@ msgstr "Teléfono"
 #. module: con_project_works
 #: model:ir.ui.view,arch_db:con_project_works.project_form_works
 msgid "Phone..."
-msgstr "Phone..."
+msgstr "Teléfono..."
 
 #. module: con_project_works
 #: model:ir.model,name:con_project_works.model_project_project
