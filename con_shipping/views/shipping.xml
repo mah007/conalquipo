@@ -141,11 +141,18 @@
                                                attrs="{'readonly': [('state', '=', 'done')],
                                                'invisible': ['|',('carrier_type','!=', 'company')]}"/>
 
+                                      <field name="license_plate" class="oe_inline" readonly="1"
+                                               attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"/>
+
                                       <field name="vehicle_client" class="oe_inline"
                                                attrs="{'readonly': [('state', '=', 'done')],
                                                'invisible': ['|',('carrier_type','!=', 'client')]}"/>
 
                                       <field name="driver_client"  class="oe_inline"
+                                               attrs="{'readonly': [('state', '=', 'done')],
+                                               'invisible': ['|',('carrier_type','!=', 'client')]}"/>
+
+                                      <field name="id_driver_client"  class="oe_inline"
                                                attrs="{'readonly': [('state', '=', 'done')],
                                                'invisible': ['|',('carrier_type','!=', 'client')]}"/>
                                   </group>
@@ -165,11 +172,12 @@
                                         <field name="id_number"/>
                                         <field name="job_title"/>
                                   </group>
-                                  <group>
+                                  <group name="shipping_driver" string="Shipping Driver" attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}">
                                        <field name="driver_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')],
-                                            'invisible': ['|',('carrier_type','!=', 'company')]}">
+                                            'invisible': ['|',('carrier_type','!=', 'company')]}" nolabel="1">
                                              <tree editable="bottom">
                                                  <field name="driver_ids"/>
+                                                 <field name="identification_id" readonly="1"/>
                                                  <field name="job_title"/>
                                              </tree>
                                       </field>

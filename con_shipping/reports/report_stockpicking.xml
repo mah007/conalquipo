@@ -37,7 +37,8 @@
                         </colgroup>
                         <tr>
                             <td style="border: 1px solid; padding:5px;"><span>Empresa:</span> <span t-field="o.partner_id"/></td>
-                            <td style="border: 1px solid; padding:5px;"><span>Fecha: </span> <span t-field="o.scheduled_date"/> <span> Tel: </span></td>
+                            <td style="border: 1px solid; padding:5px;"><span>Fecha: </span> <span t-field="o.scheduled_date"/>
+                                <span>  Teléfono: </span> <span t-field="o.project_id.phone1"/></td>
                             <td style="border: 1px solid; padding:5px;"><span>Acarreo:</span>
                                 <span t-field="o.carrier_type"/>
                             </td>
@@ -45,7 +46,7 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid; padding:5px;"><span>Nit:</span> <span t-field="o.partner_id.vat"/></td>
-                            <td style="border: 1px solid; padding:5px;"><span>Dirección:</span>
+                            <td style="border: 1px solid; padding:5px;"><span>Dirección Obra:</span>
                                 <span t-field="o.project_id.street1"/>
                             </td>
                             <td style="border: 1px solid; padding:5px;"><span>placa:</span>
@@ -57,14 +58,16 @@
                             <td style="border: 1px solid; padding:5px;"><span>Obra:</span>
                                     <span t-field="o.project_id.name"/>
                             </td>
-                            <td style="border: 1px solid; padding:5px;"><span>Barrio:</span>
+                            <td style="border: 1px solid; padding:5px;">
+                                <span>Barrio: </span>
+                                    <span t-field="o.project_id.street1_2"/>
+                                <span>  Ciudad:</span>
                                     <span t-field="o.project_id.city"/>
                             </td>
                             <td style="border: 1px solid; padding:5px;"><span>Conductor:</span>
-
-                                <t t-foreach="o.driver_ids" t-as="d">
-                                    <t t-if="d.job_title == 'driver'">
-                                        <span t-field="d.driver_ids.name"/>
+                                <t t-foreach="o.job_title" t-as="d">
+                                    <t t-if="d.type_hr == 'driver'">
+                                        <span t-field="d.job_title.name"/>
                                     </t>
                                 </t>
                                 <span t-field="o.driver_client"/>
