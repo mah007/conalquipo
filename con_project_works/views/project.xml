@@ -114,11 +114,11 @@
                   <field name="work_phone" required="0"/>
                 </group>
                 <group string="Responsibles">
-                  <field name="work_responsible" required="0" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
-                  <field name="work_resident" required="0" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
-                  <field name="work_storer" required="0" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
-                  <field name="work_contact" required="0" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
-                  <field name="work_interventor" required="0" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
+                  <field name="work_responsible" required="0" context="{'default_parent_id': partner_id}"/>
+                  <field name="work_resident" required="0" context="{'default_parent_id': partner_id}"/>
+                  <field name="work_storer" required="0" context="{'default_parent_id': partner_id}"/>
+                  <field name="work_contact" required="0" context="{'default_parent_id': partner_id}"/>
+                  <field name="work_interventor" required="0" context="{'default_parent_id': partner_id}"/>
                   <field name="interventor_phone" required="0"/>
                 </group>
               </group>
