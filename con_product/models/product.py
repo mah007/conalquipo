@@ -119,6 +119,22 @@ class ProductTemplate(Model):
             self.state_id = location.product_state.id
             self.color = location.color
 
+    @api.multi
+    @api.onchange('state_id')
+    def get_default_location(self):
+        """
+        This function brings the default location of the product from the
+        state assigned to it.
+
+        :return: None
+        """
+        if self.location_id:
+            location_obj = self.env['stock.location']
+            location = location_obj.search(
+                [('location_id', '=', self.location_id.location_id.id),
+                 ('product_state', '=', self.state_id.id)])
+            self.location_id = location.id
+
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
     color = fields.Char(string="Color", default="#FFFFFF",
@@ -162,8 +178,36 @@ class ProductProduct(Model):
             self.state_id = location.product_state.id
             self.color = location.color
 
+    @api.multi
+    @api.onchange('state_id')
+    def get_default_location(self):
+        """
+        This function brings the default location of the product from the
+        state assigned to it.
+
+        :return: None
+        """
+        if self.location_id:
+            location_obj = self.env['stock.location']
+            location = location_obj.search(
+                [('location_id', '=', self.location_id.location_id.id),
+                 ('product_state', '=', self.state_id.id)])
+            self.location_id = location.id
+
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
     color = fields.Char(string="Color", default="#FFFFFF",
                         help="Select the color of the state")
     location_id = fields.Many2one('stock.location', string="Actual location")
+
+    @api.model
+    def create(self, values):
+        record = super(ProductProduct, self).create(values)
+        pro_tmpl_obj = self.env['product.template']
+        pro_tmpl = pro_tmpl_obj.search(
+            [('id', '=', values['product_tmpl_id'])])
+        for a in pro_tmpl:
+            record.location_id = a.location_id.id
+            record.state_id = a.state_id.id
+            record.color = a.color
+        return record
