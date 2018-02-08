@@ -30,9 +30,11 @@
               <data>
 
                 <ul position="inside">
-                  <li t-if="record.state_id">State: <field name="state_id"></field></li>
-                  <li t-if="record.color">Color: <field name="color" widget="color" ></field></li>
-                  <li t-if="record.location_id">Location: <field name="location_id"></field></li>
+                  <div t-if="record.product_variant_count.value &lt; 2" groups="product.group_product_variant">
+                    <li t-if="record.state_id">State: <field name="state_id"></field></li>
+                    <li t-if="record.color">Color: <field name="color" widget="color" ></field></li>
+                    <li t-if="record.location_id">Location: <field name="location_id"></field></li>
+                  </div>
                 </ul>
 
               </data>
