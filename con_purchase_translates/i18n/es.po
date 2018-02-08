@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20171030\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-07 15:03+0000\n"
-"PO-Revision-Date: 2018-02-07 15:03+0000\n"
+"POT-Creation-Date: 2018-02-08 17:57+0000\n"
+"PO-Revision-Date: 2018-02-08 17:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,26 +45,26 @@ msgid "\n"
 "</p>\n"
 ""
 msgstr "\n"
-"<p>Estimado\n"
+"<p>Estimado(a)\n"
 "% if object.partner_id.is_company and object.child_ids:\n"
 "    ${object.partner_id.child_ids[0].name}\n"
 "% else :\n"
 "    ${object.partner_id.name}\n"
 "% endif\n"
 ",</p><p>\n"
-"Aquí se encuentra adjunto una, a ${object.state in ('draft', 'sent') and 'Solicitu de Compra' or 'orden de compra confirmada'} <strong>${object.name}</strong>\n"
+"Aqui se encuenta, en adjunto, una ${object.state in ('draft', 'sent') and 'solicitud de presupuesto' or 'confirmación de orden de compra'} <strong>${object.name}</strong>\n"
 "% if object.partner_ref:\n"
 "    con referencia: ${object.partner_ref}\n"
 "% endif\n"
 "% if object.origin:\n"
-"    (Solicitud de origen: ${object.origin})\n"
+"    (RFQ origen: ${object.origin})\n"
 "% endif\n"
 "con un monto de <strong>${object.amount_total} ${object.currency_id.name}</strong>\n"
-"para ${object.company_id.name}.\n"
+"de ${object.company_id.name}.\n"
 "</p>\n"
 "\n"
-"<p>No dude en contactarnos si tiene alguna pregunta.</p>\n"
-"<p>Saludos,</p>\n"
+"<p>No dude en contactarnos, si tiene alguna inquietud.</p>\n"
+"<p>Saludos coordiales,</p>\n"
 "<p style=\"color:#888888;\">\n"
 "% if object.user_id and object.user_id.signature:\n"
 "    ${object.user_id.signature | safe}\n"
@@ -118,7 +118,7 @@ msgstr "\n"
 ""
 
 #. module: purchase
-#: code:addons/purchase/models/stock.py:92
+#: code:addons/purchase/models/stock.py:109
 #, python-format
 msgid " Buy"
 msgstr " Comprar"
@@ -416,6 +416,12 @@ msgid "<strong>Your Order Reference:</strong>"
 msgstr "<strong>Su Referencia de Pedido</strong>"
 
 #. module: purchase
+#: code:addons/purchase/models/stock.py:83
+#, python-format
+msgid "A sale order that generated this purchase order has been deleted. Check if an action is needed."
+msgstr "A sale order that generated this purchase order has been deleted. Check if an action is needed."
+
+#. module: purchase
 #: model:res.groups,name:purchase.group_warning_purchase
 msgid "A warning can be set on a product or a customer (Purchase)"
 msgstr "Se puede establecer una advertencia por producto o cliente. (Compras)"
@@ -485,7 +491,7 @@ msgstr "Tiempo de Entrega Promedio"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_price_average
 msgid "Average Price"
-msgstr "Precio Promedio"
+msgstr "Precio medio"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_config_settings_default_purchase_method
@@ -529,7 +535,7 @@ msgid "Blocking Message"
 msgstr "Mensaje de bloqueo"
 
 #. module: purchase
-#: code:addons/purchase/models/stock.py:86
+#: code:addons/purchase/models/stock.py:103
 #: model:stock.location.route,name:purchase.route_warehouse0_buy
 #, python-format
 msgid "Buy"
@@ -556,7 +562,7 @@ msgid "Calls for tenders are used when you want to generate requests for quotati
 msgstr "Las convocatorias de ofertas se utilizan cuando desea generar solicitudes de cotizaciones a varios proveedores para un conjunto determinado de productos. Puede configurar por producto si realiza directamente una Solicitud de oferta a un proveedor o si desea que una Convocatoria de ofertas compare las ofertas de varios proveedores."
 
 #. module: purchase
-#: code:addons/purchase/models/stock.py:89
+#: code:addons/purchase/models/stock.py:106
 #, python-format
 msgid "Can't find any generic Buy route."
 msgstr "No se puede encontrar ninguna ruta 'Comprar' genérica."
@@ -575,7 +581,7 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: purchase
-#: code:addons/purchase/models/purchase.py:737
+#: code:addons/purchase/models/purchase.py:746
 #, python-format
 msgid "Cannot delete a purchase order line which is in state '%s'."
 msgstr "No se puede eliminar una línea de pedido de venta que esté en estado '%s'."
@@ -604,7 +610,7 @@ msgstr "Pulse para crear una factura de proveedor"
 #: model:ir.actions.act_window,help:purchase.product_normal_action_puchased
 #: model:ir.actions.act_window,help:purchase.product_product_action
 msgid "Click to define a new product."
-msgstr "Haga clic para definir un nuevo producto."
+msgstr "Clic para definir un nuevo producto."
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.purchase_open_invoice
@@ -685,7 +691,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_create_date
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_currency_id
@@ -761,7 +767,7 @@ msgstr "Tipo de ubicación de destino"
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_display_name
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_display_name
 msgid "Display Name"
-msgstr "Nombre mostrado"
+msgstr "Nombre Público"
 
 #. module: purchase
 #: selection:purchase.report,state:0
@@ -814,7 +820,7 @@ msgid "Extended Filters"
 msgstr "Filtros Avanzados"
 
 #. module: purchase
-#: code:addons/purchase/models/purchase.py:577
+#: code:addons/purchase/models/purchase.py:586
 #, python-format
 msgid "Extra line with %s "
 msgstr "Linea extra con %s"
@@ -868,7 +874,7 @@ msgstr "Cómo importar"
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_id
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_id
 msgid "ID"
-msgstr "ID (identificación)"
+msgstr "ID"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.res_config_settings_view_form_purchase
@@ -941,19 +947,19 @@ msgstr "Esta el Módulo de Venta Instalado"
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line___last_update
 #: model:ir.model.fields,field_description:purchase.field_purchase_report___last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última Modificación el"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_write_uid
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_write_date
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_write_date
 msgid "Last Updated on"
-msgstr "Actualizado el"
+msgstr "Actualizado"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
@@ -1229,7 +1235,7 @@ msgstr "País del Asociado"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_payment_term_id
 msgid "Payment Terms"
-msgstr "Terminos de pago"
+msgstr "Plazos de pago"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_product_category_property_account_creditor_price_difference_categ
@@ -1333,6 +1339,7 @@ msgstr "Proveer una doble validación como mecanismo para las compras"
 
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_procurement_management
+#: model:ir.ui.view,arch_db:purchase.res_config_settings_view_form_purchase
 #: model:ir.ui.view,arch_db:purchase.view_product_supplier_inherit
 msgid "Purchase"
 msgstr "Compra"
@@ -1619,7 +1626,7 @@ msgstr "Solicite a sus proveedores que entreguen a sus clientes"
 #: model:ir.actions.act_window,name:purchase.purchase_rfq
 #: model:ir.ui.menu,name:purchase.menu_purchase_rfq
 msgid "Requests for Quotation"
-msgstr "Solicitudes de Cotización"
+msgstr "Solicitudes de compra"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_move_ids
@@ -1797,7 +1804,7 @@ msgid "The product form contains detailed information to improve the\n"
 msgstr "El formulario del producto contiene información detallada para mejorar el proceso de compra: precios, logística de abastecimiento, datos contables, proveedores disponibles, etc."
 
 #. module: purchase
-#: code:addons/purchase/models/purchase.py:649
+#: code:addons/purchase/models/purchase.py:658
 #, python-format
 msgid "The quantities on your purchase order indicate less than billed. You should ask for a refund. "
 msgstr "Las cantidades en su orden de compra indican menos de lo facturado. Debe solicitar un reembolso. "
@@ -1819,7 +1826,7 @@ msgstr "La solicitud de presupuesto es el primer paso en el flujo del proceso de
 "la recepción de los productos y la factura del proveedor"
 
 #. module: purchase
-#: code:addons/purchase/models/purchase.py:878
+#: code:addons/purchase/models/purchase.py:887
 #, python-format
 msgid "There is no vendor associated to the product %s. Please define a vendor for this product."
 msgstr "No hay un proveedor asociado al producto %s. Por favor, defina un proveedor para este producto."
@@ -1863,13 +1870,13 @@ msgid "This note will show up on purchase orders."
 msgstr "Esta nota aparecerá en las órdenes de compra."
 
 #. module: purchase
-#: code:addons/purchase/models/account_invoice.py:203
+#: code:addons/purchase/models/account_invoice.py:212
 #, python-format
 msgid "This vendor bill has been created from: %s"
 msgstr "Esta factura de proveedor ha sido creada desde: %s"
 
 #. module: purchase
-#: code:addons/purchase/models/account_invoice.py:217
+#: code:addons/purchase/models/account_invoice.py:226
 #, python-format
 msgid "This vendor bill has been modified from: %s"
 msgstr "Esta factura de proveedor ha sido modificada desde: %s"
@@ -2079,7 +2086,7 @@ msgstr "Aviso"
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:268
-#: code:addons/purchase/models/purchase.py:808
+#: code:addons/purchase/models/purchase.py:817
 #, python-format
 msgid "Warning for %s"
 msgstr "Aviso para %s"
@@ -2133,7 +2140,7 @@ msgstr "Debe definir un producto para todo lo que compre, ya sea un producto\n"
 "físico, un consumible o servicios que usted subcontrate."
 
 #. module: purchase
-#: code:addons/purchase/models/purchase.py:395
+#: code:addons/purchase/models/purchase.py:404
 #, python-format
 msgid "You must set a Vendor Location for this partner %s"
 msgstr "Debe asignar una localización para este socio %s"

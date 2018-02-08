@@ -18,4 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+{
+    'name': 'Conalquipo purchase translates',
+    'version': '1.1',
+    'category': 'Purchase',
+    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
+    'sequence': 10,
+    'summary': 'Purchase',
+    'depends': [
+        'project'
+    ],
+    'description':
+    """
+        Conalquipo Purchase translates
+    """,
+    'data': [
+    ],
+    'qweb': [
+    ],
+    'demo': [
+    ],
+    'test': [
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}
