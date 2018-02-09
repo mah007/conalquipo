@@ -1,0 +1,30 @@
+
+Release notes - Conalquipo - Version V2018.01.31
+
+** Historia
+    * [CON-10] - -Permitir identificar visualmente el estado de un equipo especifico
+    * [CON-18] - DESCARTADA - Permitir controlar la entrega y recibo de equipos.
+    * [CON-19] - DESCARTADA - Relacionar datos del cliente en el control de entrega y recibo de equipos
+    * [CON-23] - -Permitir crear un registro de Obra de un cliente cuando se está haciendo una remision
+    * [CON-24] - -Permitir cargar en una Remisión los datos de un cliente y obra determinado
+    * [CON-25] - Permitir adicionar equipos subarrendados en la Remisión
+    * [CON-27] - Impedir la creación de una remisión cuando el cliente tenga algún bloqueo activo
+    * [CON-28] - Permitir asignar un responsable de acarreo en la remisión o devolución de un equipo
+    * [CON-29] - Cargar en una remisión o devolución los datos de zona
+    * [CON-30] - Cargar automáticamente el código y la descripción del acarreo en la remisión o devolución
+    * [CON-31] - Cargar en una remisión o devolución el nombre del usuario y el lugar de despacho
+    * [CON-34] - Permitir ingresar la fecha de entrega en la Remisión
+    * [CON-195] - -Permitir consultar el estado de los equipos y las distintas ubicaciones dentro de los almacenes
+    * [CON-196] - -Permitir consultar la existencia de equipos por estados de disponibilidad
+    * [CON-197] - -Permitir ver la disponibilidad de un equipo desde la líneas de la cotización o venta.
+    * [CON-198] - -Permitir el cambio de estados de los productos a partir de un flujo personalizado
+    * [CON-200] - -Permitir administrar la disponiblidad de un equipo arrendado por medio de estados
+    * [CON-201] - Permitir el manejo de unidad de almacenamiento y unidad de facturación para los productos arrendados.
+    * [CON-203] - Permitir la administración de diferentes ubicaciones y bodegas
+    * [CON-373] - -Permitir cambiar el estado de un producto según su ubicación
+
+
+
+
+
+
