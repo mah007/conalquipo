@@ -14,7 +14,6 @@
         Project Management for works
     """,
     'data': [
-        'sequences/works_sequences.xml',
         'views/project.xml',
         'views/sale_order.xml',
         'views/municipality.xml',
