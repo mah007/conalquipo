@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class projectWorks(models.Model):
@@ -73,7 +76,26 @@ class projectWorks(models.Model):
 
     @api.model
     def create(self, values):
-        values['work_code'] = self.env[
-            'ir.sequence'].next_by_code('works.code')
+        if values['partner_id']:
+            numbers = []
+            max_number = 1
+            # Get partner
+            partner_obj = self.env['res.partner']
+            partner = partner_obj.search([('id', '=', values['partner_id'])])
+            p_code = partner.partner_code
+            # Project code
+            project_obj = self.env['project.project']
+            project_codes = project_obj.search(
+                [('partner_id', '=', values['partner_id'])])
+            for a in project_codes:
+                if a.work_code:
+                    text = str(a.work_code)
+                    code = int(text[text.find("-") + 1:])
+                    numbers.append(code)
+            if numbers:
+                max_number = max(numbers) + 1
+            values['work_code'] = str(p_code) + '-' + str(max_number)
+        else:
+            raise UserError(_("You need to select a client!"))
         res = super(projectWorks, self).create(values)
         return res

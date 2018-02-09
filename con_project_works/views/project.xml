@@ -2,6 +2,25 @@
 <openerp>
   <data>
 
+    <!-- PROJECT SEARCH -->
+    <record id="view_project_code_search" model="ir.ui.view">
+      <field name="name">project.code.search</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.view_project_project_filter"/>
+      <field name="arch" type="xml">
+        <data>
+
+          <xpath expr="//search" position="inside">
+            <separator/>
+            <field name="work_code" widget="selection" context="{'work_code': self}"/>
+            <separator/>
+            <filter string="Work code" name="work_code" domain="[('work_code', '!=', False)]"/>
+          </xpath>
+
+        </data>
+      </field>
+    </record>
+
     <!-- SIMPLIFIED PROJECT VIEW -->
     <record id="project_form_works_simpl" model="ir.ui.view">
       <field name="name">project.form.work.simpl</field>
@@ -163,6 +182,19 @@
           </notebook>
         </xpath>
 
+      </field>
+    </record>
+
+
+    <!-- PROJECT TREE VIEW -->
+    <record id="project_tree_works" model="ir.ui.view">
+      <field name="name">project.tree.work</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.view_project"/>
+      <field name="arch" type="xml">
+        <field name="name" position="after">
+          <field name="work_code"/>
+        </field>
       </field>
     </record>
 
