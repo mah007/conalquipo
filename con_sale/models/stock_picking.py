@@ -19,43 +19,25 @@
 #
 ##############################################################################
 
-from odoo import models
+from odoo import models, api, _
+from odoo.exceptions import UserError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    # @api.onchange('partner_id')
-    # def onchange_partner_id_trust(self):
-    #     warning = {}
-    #     title = False
-    #     message = False
-    #     partner = self.partner_id
-    #
-    #     if partner.trust_code:
-    #         if partner.trust_code.message_type == 'no-message' and \
-    #                 partner.parent_id:
-    #             partner = partner.parent_id
-    #
-    #         if partner.trust_code.message_type != 'no-message':
-    #             if partner.trust_code.message_type != 'block' and \
-    #                     partner.parent_id and \
-    #                             partner.trust_code.message_type == 'block':
-    #                 partner = partner.parent_id
-    #
-    #             title = ("Warning for %s") % partner.name
-    #             message = partner.trust_code.message_body
-    #             warning = {
-    #                 'title': title,
-    #                 'message': message,
-    #             }
-    #
-    #             if partner.trust_code.message_type == 'block':
-    #                 self.update({'partner_id': False,
-    #                              'partner_invoice_id': False,
-    #                              'partner_shipping_id': False
-    #                              })
-    #                 return {'warning': warning}
-    #
-    #         if warning:
-    #             return {'warning': warning}
+    @api.model
+    def create(self, vals):
+
+        if vals.get('partner_id'):
+            partner = self.env['res.partner'].search(
+                [('id', '=', vals.get('partner_id'))])
+            if partner.picking_warn == 'block':
+                raise UserError(_(partner.picking_warn_msg))
+
+        res = super(StockPicking, self).create(vals)
+
+        return res
