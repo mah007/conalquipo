@@ -73,7 +73,10 @@ class projectWorks(models.Model):
 
     @api.model
     def create(self, values):
-        values['work_code'] = self.env[
-            'ir.sequence'].next_by_code('works.code')
+        partner_obj = self.env['res.partner']
+        partner = partner_obj.search([('id', '=', values['partner_id'])])
+        p_code = partner.partner_code
+        w_code = self.env['ir.sequence'].next_by_code('works.code')
+        values['work_code'] = p_code + '-' + w_code
         res = super(projectWorks, self).create(values)
         return res
