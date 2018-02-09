@@ -26,5 +26,38 @@ Release notes - Conalquipo - Version V2018.01.31
 
 
 
+Release notes - Conalquipo - Version HOTFIX-2018.01.31
+
+
+
+** Error
+    * [CON-387] - El módulo de Vehículos no deja crear la marca
+    * [CON-390] - El reporte de remisiónes no funciona correctamente
+
+
+
+
+** Historia
+    * [CON-380] - Traducir "BackOrder" a "Remision Adicional" en el módulo de Stock
+    * [CON-381] - Cambiar palabra "Proyecto" por "Obra" en el módulo de Proyectos
+    * [CON-382] - Cambiar "Orden de Entrega" a "Remisión" en el módulo de Stock
+    * [CON-383] - Mostrar solo obras relacionadas al cliente seleccionado en Ventas y Stock
+    * [CON-384] - Colocar por defecto el tipo Alquiler al crear una cotización.
+    * [CON-385] - Cuando se edita una venta no deja editar el tipo (alquiler o venta)
+    * [CON-386] - Revisar flujo al cancelar una remisión de una órden de venta confirmada.
+    * [CON-388] - -Cambiar nombre del módulo de proyectos a Obras
+    * [CON-389] - -Documento origen cambiar por Cotización Nro. XX en Stock
+    * [CON-391] - En el listado de ordenes (tablero), el cliente que aparezca antes de obra
+    * [CON-392] - Falta dirección de obra y teléfono de obra en la remisión
+    * [CON-393] - Orden de salida (cambiar el nombre por Remisión en todas partes)
+    * [CON-394] - Crear un wizard para la asignación de estados y colores a las ubicaciones.
+
+
+
+
+
+
+
+
 
 
