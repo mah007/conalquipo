@@ -83,25 +83,25 @@
               <group>
                 <group string="Shipping Address">
                   <div class="o_address_format">
-                    <field name="phone1" placeholder="Phone..." required="1"/>
+                    <field name="phone1" placeholder="Phone..." required="0"/>
                     <field name="street1" placeholder="Street..."
-                      class="o_address_street" required="1"/>
+                      class="o_address_street" required="0"/>
                     <field name="street1_2" placeholder="Street 2..."
-                      class="o_address_street" required="1"/>
+                      class="o_address_street" required="0"/>
                     <field name="country_id" placeholder="Country"
                       class="o_address_country"
                       options='{"no_open": True, "no_create": True}'
-                           required="1"/>
+                           required="0"/>
                     <field name="state_id" class="o_address_state"
                       placeholder="State" options='{"no_open": True}'
-                           required="1" domain="[('country_id', '=', country_id)]"/>
+                           required="0" domain="[('country_id', '=', country_id)]"/>
                     <field name="municipality_id" class="o_address_state"
                       placeholder="Municipality" options='{"no_open": True}'
-                           required="1" domain="[('state_id', '=', state_id)]"/>
+                           required="0" domain="[('state_id', '=', state_id)]"/>
                     <field name="city" placeholder="City"
-                      class="o_address_city" required="1"/>
+                      class="o_address_city" required="0"/>
                     <field name="zip" placeholder="ZIP" class="o_address_zip"
-                           required="1"/>
+                           required="0"/>
                   </div>
                 </group>
                 <group string="Invoice Address">

@@ -14,6 +14,8 @@ class projectWorks(models.Model):
     def _get_partner_code(self):
         if self.partner_id:
             self.partner_code = self.partner_id.partner_code
+            self.country_id = self.partner_id.country_id.id
+            self.country2_id = self.partner_id.country_id.id
 
     @api.model
     def default_get(self, flds):
@@ -48,8 +50,7 @@ class projectWorks(models.Model):
     owner_phone = fields.Char(string='Owner Phone')
     work_interventor = fields.Many2one(
         'res.partner', string='Work Interventor')
-    business_name = fields.Many2one(
-        'res.partner', string='Business name')
+    business_name = fields.Char(string='Business name')
     interventor_phone = fields.Char(string='Interventor Phone')
     street1 = fields.Char()
     street1_2 = fields.Char()
