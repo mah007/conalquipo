@@ -1,0 +1,243 @@
+.o_app_switcher_background {
+    background-color: #ff9339 !important;
+    background: -webkit-gradient(linear, left top, right bottom, from(#c65a00), to(#2a2b2a)) !important;
+ }
+
+web.assets_common.0.css:48
+.o_main_navbar {
+    border-bottom: 1px solid #ff9339 !important;
+    background-color: #ff9339 !important;
+
+}
+.o_main_navbar {
+    position: relative;
+    height: 46px;
+    border-bottom: 1px solid #6e6e6e !important;
+    background-color: #6e6e6e !important;
+    color: white;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #ff9339;
+    border-color: #6e6e6e;
+}
+
+.btn-default:hover {
+    color: #2a2b2a;
+    background-color: #e6e6e6;
+    border-color: #e0e0e0;
+}
+
+a:hover, a:focus {
+    color: #c65a00;
+    text-decoration: none;
+}
+
+.btn-default {
+    color: #ff9339;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+    background-color: #a0a0a0;
+    border-color: #a0a0a0;
+}
+
+.o_main_navbar > ul > li > a:hover {
+    background-color: #c65a00;
+}
+
+.o_main_navbar .open .dropdown-toggle {
+    background-color: #c65a00;
+}
+
+.o_main_navbar > a:hover, .o_main_navbar > button:hover, .o_main_navbar > a:focus, .o_main_navbar > button:focus {
+    background-color: #c65a00;
+    color: inherit;
+}
+
+.btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+    color: #2a2b2a;
+    background-color: #e6e6e6;
+    border-color: #e0e0e0;
+}
+.o_calendar_container .o_calendar_sidebar_container .ui-datepicker table .ui-state-default {
+    color: #2a2b2a;
+}
+
+.o_calendar_container .o_calendar_sidebar_container .ui-datepicker table .ui-state-default:hover {
+    background: none;
+    background-color: rgba(110, 110, 110, 0.5);
+    border-color: #ff9339;
+    color: #000;
+}
+
+.o_calendar_container .o_calendar_sidebar_container .ui-datepicker table .o_selected_range.o_color {
+    background: none;
+    background-color: #E6E6E5;
+    animation: backgroundfade 3s forwards;
+}
+
+.btn-default:active:hover, .btn-default.active:hover, .open > .dropdown-toggle.btn-default:hover, .btn-default:active:focus, .btn-default.active:focus, .open > .dropdown-toggle.btn-default:focus, .btn-default:active.focus, .btn-default.active.focus, .open > .dropdown-toggle.btn-default.focus {
+    color: #000;
+    background-color: #d4d4d4;
+    border-color: #bfbfbf;
+}
+
+.o_form_view .o_notebook > ul.nav.nav-tabs > li > a:hover, .o_form_view .o_notebook > ul.nav.nav-tabs > li > a:focus, .o_form_view .o_notebook > ul.nav.nav-tabs > li > a:active {
+    outline: none;
+    color: #ff9339;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #ff9339;
+    background-color: #f9f9f9;
+    border: 1px solid transparent;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+
+.o_form_view .o_form_uri:first-line {
+    color: #FF9338;
+}
+
+.o_tooltip {
+    box-sizing: content-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #a0a0a0;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 1051;
+    background-color: #a0a0a0;
+    box-shadow: 0 2px 2px 1px rgba(150, 150, 150, 0.3);
+    transition: width 133ms ease 0ms, height 133ms ease 0ms, margin 133ms ease 0ms, border-radius 133ms ease 66ms;
+}
+
+
+element.style {
+    top: 39px;
+    left: 987.45px;
+    opacity: 1;
+}
+web.assets_common.0.css:72
+.o_tooltip.o_animated {
+    -webkit-animation: move-bottom-top 500ms ease-in 0ms infinite alternate none running;
+    -moz-animation: move-bottom-top 500ms ease-in 0ms infinite alternate none running;
+    -o-animation: move-bottom-top 500ms ease-in 0ms infinite alternate none running;
+    animation: move-bottom-top 500ms ease-in 0ms infinite alternate none running;
+}
+web.assets_common.0.css:72
+.o_tooltip {
+    box-sizing: content-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #a0a0a0;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 1051;
+    background-color: #a0a0a0;
+    box-shadow: 0 2px 2px 1px rgba(150, 150, 150, 0.3);
+    transition: width 133ms ease 0ms, height 133ms ease 0ms, margin 133ms ease 0ms, border-radius 133ms ease 66ms;
+}
+web.assets_backend.0.css:30
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+Inherited from body.o_web_client.o_touch_device
+web.assets_backend.0.css:30
+body {
+    font-family: Roboto;
+    font-size: 13px;
+    line-height: 1.42857143;
+    /* color: #ff9339; */
+    background-color: #8f8f8f;
+}
+Inherited from html
+web.assets_backend.0.css:30
+html {
+    font-size: 10px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+web.assets_backend.0.css:30
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+Pseudo ::before element
+web.assets_common.0.css:72
+.o_tooltip.bottom::before {
+    position: absolute;
+    top: -8px;
+    left: 2px;
+    bottom: auto;
+    right: auto;
+    border-width: 0 10px 10px 10px;
+    border-bottom-color: #a0a0a0;
+}
+
+
+.o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background-color: #ff9339;
+}
+
+a:hover, a:focus {
+    color: #c65a00;
+    text-decoration: none;
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled {
+    color: #ff9339;
+    font-size: 11px;
+    background-color: #f9f9f9;
+    cursor: default;
+}
+
+a {
+    color: #ff9339;
+    text-decoration: none;
+}
+.o_tooltip::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    bottom: -2px;
+    right: -2px;
+    border-color: #8f8f8f;
+    border-radius: 50%;
+    transition: margin 133ms ease 0ms, border-radius 200ms linear 0s;
+    background: radial-gradient(#8f8f8f, #8f8f8f);
+}
+
+.o_tooltip.bottom::before {
+    position: absolute;
+    top: -8px;
+    left: 2px;
+    bottom: auto;
+    right: auto;
+    border-width: 0 10px 10px 10px;
+    border-bottom-color: #8f8f8f;
+}

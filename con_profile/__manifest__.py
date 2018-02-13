@@ -40,7 +40,8 @@
                 'con_shipping', 'con_purchase_translates'],
     'data': [
         'data/res.country.state.csv',
-        'data/res.country.municipality.csv'
+        'data/res.country.municipality.csv',
+        'views/webclient_templates.xml',
     ],
     'qweb': [],
     'images': [],
