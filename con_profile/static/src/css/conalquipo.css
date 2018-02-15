@@ -1,14 +1,9 @@
 .o_app_switcher_background {
     background-color: #ff9339 !important;
-    background: -webkit-gradient(linear, left top, right bottom, from(#c65a00), to(#2a2b2a)) !important;
- }
-
-web.assets_common.0.css:48
-.o_main_navbar {
-    border-bottom: 1px solid #ff9339 !important;
-    background-color: #ff9339 !important;
-
+     background: transparent url(/con_profile/static/src/img/fondo.png) no-repeat scroll center center;
+    background-size: cover;
 }
+
 .o_main_navbar {
     position: relative;
     height: 46px;
@@ -240,4 +235,57 @@ a {
     right: auto;
     border-width: 0 10px 10px 10px;
     border-bottom-color: #8f8f8f;
+}
+
+.btn-primary[disabled].focus, fieldset[disabled] .btn-primary.focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
+    background-color: #ff9339;
+    border-color: #ff9339;
+    color: #fff;
+}
+
+.btn-default:focus, .btn-default.focus {
+    color: #ff9339;
+    background-color: #e6e6e6;
+    border-color: #bfbfbf;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+    color: #ffffff;
+    background-color: #ff9339;
+    border-color: #002120;
+}
+
+.badge {
+    border: 1px solid #ff9339;
+    margin: 1px 2px 1px 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.o_mail_navbar_item .o_notification_counter {
+    position: absolute;
+    top: 20%;
+    left: auto;
+    bottom: auto;
+    right: 1px;
+    background: #ff9339;
+    color: white;
+    padding: 0em 0.3em;
+    font-size: 0.7em;
+}
+
+.btn-link:hover, .btn-link:focus {
+    color: #ff9339;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.btn-link {
+    color: #ff9339;
+    font-weight: normal;
+    border-radius: 0;
+}
+
+.o_followers .o_followers_actions .o_followers_follow_button .fa.fa-check {
+    color: #ff9339;
 }
