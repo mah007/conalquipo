@@ -60,6 +60,8 @@ class StockPicking(models.Model):
     job_title = fields.Char(string='Job title', track_visibility='onchange')
     carrier_tracking_ref = fields.Char(string='Tracking Reference',
                                        compute='_carrier_tracking_ref')
+    cancel_reason = fields.Text(strin="Cancel Reason",
+                                track_visibility='onchange')
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
@@ -146,7 +148,25 @@ class StockPicking(models.Model):
         self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
             replace(" ", "").replace(":", "")
 
+    @api.multi
     def action_cancel(self):
+        wizard_id = self.env['stock.picking.cancel.wizard'].create(
+            vals={'picking_ids': [(4, self._ids)]})
+
+        return {
+            'name': 'Cancellation Wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.picking.cancel.wizard',
+            'res_id': wizard_id.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+    @api.multi
+    def action_do_cancel(self):
+        self.mapped('move_lines')._action_cancel()
+        self.write({'is_locked': True})
         return True
 
 

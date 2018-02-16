@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="purchase_order_form" model="ir.ui.view">
-        <field name="name">purchase.order.form</field>
-        <field name="model">purchase.order</field>
-        <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form"/>
-        <field name="arch" type="xml">
-            <field name="date_order" position="after">
-                <field name="order_type" widget="radio"
-                       attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+    <data>
+        <!--Cancellation Wizard-->
+        <record id="validate_account_move_view" model="ir.ui.view">
+            <field name="name">Cancellation Wizard</field>
+            <field name="model">stock.picking.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Post Journal Entries">
+                    <label string="Please explain the reason for cancellation."/>
+                    <field name="name"/>
+                    <field name="picking_ids"/>
+                    <footer>
+                        <button string="Do Cancellation" name="action_cancel"
+                                type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Discard" class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </form>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="after">
-                <field name="bill_uom_qty" attrs="{'column_invisible': [('parent.order_type', '=', 'purchase')]}"/>
-                <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '=', 'purchase')]}"/>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="invoice_supplier_form" model="ir.ui.view">
-         <field name="name">account.invoice.supplier.form</field>
-         <field name="model">account.invoice</field>
-         <field name="inherit_id" ref="account.invoice_supplier_form"/>
-         <field name="arch" type="xml">
-             <field name="date_due" position="after">
-                <field name="invoice_type" widget="radio" invisible="1"/>
-            </field>
-            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
-                <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
-                <field name="qty_shipped" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
-            </xpath>
-        </field>
-    </record>
+        </record>
+    </data>
 </odoo>
