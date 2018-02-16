@@ -23,19 +23,30 @@
             </field>
         </record>
 
-        <record id="view_stock_picking_tree_inherit" model="ir.ui.view">
-            <field name="name">inherit.stock.picking.tree</field>
+        <record id="stock.vpicktree" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.vpicktree"/>
             <field name="arch" type="xml">
-                <field name="partner_id" position="replace">
-                </field>
-                <field name="name" position="after">
+                <tree decoration-info="state == 'draft'"
+                      decoration-muted="state == 'cancel'"
+                      decoration-danger="state not in ('cancel', 'done') and scheduled_date &lt; current_date"
+                      decoration-warning="state=='waiting'"
+                      decoration-primary="state=='confirmed'"
+                      decoration-success="state=='done'"
+                      string="Picking list">
+                    <field name="name"/>
                     <field name="partner_id"/>
-                </field>
-                <field name="partner_id" position="after">
                     <field name="project_id"/>
-                </field>
+                    <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
+                    <field name="date" invisible="1"/>
+                    <field name="scheduled_date"/>
+                    <field name="origin"/>
+                    <field name="group_id" invisible="1"/>
+                    <field name="backorder_id"/>
+                    <field name="state"/>
+                    <field name="priority" invisible="1"/>
+                    <field name="picking_type_id" invisible="1"/>
+                </tree>
             </field>
         </record>
 
