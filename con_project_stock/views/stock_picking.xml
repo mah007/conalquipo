@@ -46,6 +46,7 @@
                     <field name="state"/>
                     <field name="priority" invisible="1"/>
                     <field name="picking_type_id" invisible="1"/>
+                    <field name="note" />
                 </tree>
             </field>
         </record>
