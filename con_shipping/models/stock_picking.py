@@ -146,6 +146,9 @@ class StockPicking(models.Model):
         self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
             replace(" ", "").replace(":", "")
 
+    def action_cancel(self):
+        return True
+
 
 class ShippingDriver(models.Model):
     """
