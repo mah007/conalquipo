@@ -22,5 +22,22 @@
                  </xpath>
             </field>
         </record>
+
+        <record id="view_stock_picking_tree_inherit" model="ir.ui.view">
+            <field name="name">inherit.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                </field>
+                <field name="name" position="after">
+                    <field name="partner_id"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="project_id"/>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>
