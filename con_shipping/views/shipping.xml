@@ -96,6 +96,20 @@
             </field>
         </record>
 
+    <record id="view_picking_withcarrier_out_tree_inherit" model="ir.ui.view">
+            <field name="name">delivery.stock.picking_withcarrier.tree.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='note']" position="after">
+                        <field name="cancel_reason"/>
+                    </xpath>
+                </data>
+            </field>
+    </record>
+
+
        <record id="view_picking_withcarrier_out_form_inherit" model="ir.ui.view">
             <field name="name">delivery.stock.picking_withcarrier.form.view.inherit</field>
             <field name="model">stock.picking</field>
