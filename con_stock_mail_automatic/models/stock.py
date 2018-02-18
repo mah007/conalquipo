@@ -21,6 +21,7 @@
 
 
 from odoo import models, api
+import time
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -30,9 +31,12 @@ class StockEmailNotification(models.Model):
 
     @api.multi
     def send_mail_notification(self):
-        # write your logic to find the time intervals(day 1, day 2, week)
-        # based on the time interval trigger the mails.
-        # use a loop to get the mail template id from the one2many
+        # Stock picking objects
+        move = self.env[
+            'stock.move'].search(
+                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
+        # Mail objects
         template = self.env.ref(
             'con_stock_mail_automatic.notification_email_template')
         mail_template = self.env['mail.template'].browse(template.id)
@@ -40,7 +44,7 @@ class StockEmailNotification(models.Model):
                              'email_from': 'guadarramaangel@gmail.com',
                              'subject': 'Stock moves notification e-mail',
                              'body_html': 'Hola'})
-
+        # Send mail
         if mail_template:
             mail_template.send_mail(
                 self.id, force_send=True, raise_exception=True)
