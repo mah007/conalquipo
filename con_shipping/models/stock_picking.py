@@ -169,6 +169,68 @@ class StockPicking(models.Model):
         self.write({'is_locked': True})
         return True
 
+    @api.onchange('project_id')
+    def onchange_project_id(self):
+
+        if self.project_id and self.picking_type_code != 'outgoing':
+            location = self.env['stock.location'].search(
+                [('project_id', '=', self.project_id.id)], limit=1)
+
+            self.location_id = location.id
+
+    @api.onchange('location_id')
+    def onchange_location_id(self):
+
+        if self.partner_id and self.location_id \
+                and self.picking_type_code == 'incoming':
+
+            stock_move = self.env['stock.move'].search(
+                [('location_dest_id', '=', self.location_id.id),
+                 ('state', '=', 'done'),
+                 ('origin_returned_move_id', '=', False)])
+
+            for move in stock_move:
+                new_move = self.env['stock.move'].create({
+                    'name': _('New Move:') + move.product_id.display_name,
+                    'product_id': move.product_id.id,
+                    'product_uom_qty': move.quantity_done,
+                    'product_uom': move.product_uom.id,
+                    'location_id': self.location_id.id,
+                    'location_dest_id': self.location_dest_id.id,
+                    'picking_id': self._origin.id,
+                    'returned': move.id
+                })
+                self.update({'move_lines': [(4, new_move.id)]})
+
+    @api.model
+    def create(self, vals):
+        move_lines = []
+        if vals.get('move_lines'):
+            for move in vals['move_lines']:
+                if move[2]:
+                    move_lines.append(move)
+            vals['move_lines'] = move_lines
+
+        res = super(StockPicking, self).create(vals)
+        self.add_stock_move(vals, res)
+
+        return res
+
+    @api.model
+    def add_stock_move(self, vals, picking):
+        if vals.get('move_lines'):
+            for move_line in vals['move_lines']:
+                stock_move = self.env['stock.move'].search(
+                    [('id', '=', move_line[1])])
+                stock_move.write({'picking_id': picking.id})
+            move = self.env['stock.move'].search(
+                [('location_dest_id', '=', picking.location_id.id),
+                 ('state', '=', 'done'),
+                 ('origin_returned_move_id', '=', False)], limit=1)
+            picking.write({'sale_id': move.picking_id.sale_id.id,
+                           'group_id': move.picking_id.group_id.id})
+            picking.sale_id.write({'picking_ids': [(4, picking.id)]})
+
 
 class ShippingDriver(models.Model):
     """
@@ -217,3 +279,18 @@ class ShippingDriver(models.Model):
             else:
                 raise UserError(_("This employee does not possess "
                                   "driving skills"))
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    returned = fields.Integer('returned')
+
+    def _action_done(self, merge=True):
+        res = super(StockMove, self)._action_done()
+        if self.state == 'done' and self.returned:
+            move = self.env['stock.move'].search(
+                [('id', '=', self.returned)], limit=1)
+            move.write({'origin_returned_move_id': self.id})
+
+        return res
