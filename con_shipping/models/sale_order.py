@@ -193,3 +193,16 @@ class SaleOrder(models.Model):
             if not receipt:
                 break
         return True
+
+    @api.multi
+    def action_confirm(self):
+
+        res = super(SaleOrder, self).action_confirm()
+
+        stock_location_partner = self.env['stock.location'].search([(
+            'project_id', '=', self.project_id.id)])
+
+        for pk in self.picking_ids:
+            pk.write({'location_dest_id': stock_location_partner.id})
+
+        return res
