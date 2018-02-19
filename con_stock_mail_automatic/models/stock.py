@@ -22,6 +22,7 @@
 
 from odoo import models, api
 import time
+from prettytable import PrettyTable, from_html_one
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -32,18 +33,40 @@ class StockEmailNotification(models.Model):
     @api.multi
     def send_mail_notification(self):
         # Stock picking objects
-        move = self.env[
+        move_ids = self.env[
             'stock.move'].search(
-                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
+                [['date', '>=', time.strftime('%Y-01-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-12-%d 23:59:59')]])
         # Mail objects
         template = self.env.ref(
             'con_stock_mail_automatic.notification_email_template')
         mail_template = self.env['mail.template'].browse(template.id)
-        mail_template.write({'email_to': 'guadarramaangel@gmail.com',
-                             'email_from': 'guadarramaangel@gmail.com',
-                             'subject': 'Stock moves notification e-mail',
-                             'body_html': 'Hola'})
+        subject = "Notificación de movimientos de stock: %s" % (
+            time.strftime('%d-%m-%Y'))
+
+        html = None
+        t = PrettyTable(
+            ['Producto',
+             'Cantidad',
+             'Ubicación origen',
+             'Ubicación destino',
+             'Fecha estimada',
+             'Estado'])
+        for a in move_ids:
+            t.add_row(
+                [a.product_id.name,
+                 a.product_uom_qty,
+                 a.location_id.name,
+                 a.location_dest_id.name,
+                 a.date_expected,
+                 a.state])
+        html = t.get_html_string(
+            attributes={"border": "1"})
+
+        mail_template.write({'email_to': 'dmpineda@conalquipo.com',
+                             'email_from': 'dmpineda@conalquipo.com',
+                             'subject': subject,
+                             'body_html': html})
         # Send mail
         if mail_template:
             mail_template.send_mail(

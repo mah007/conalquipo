@@ -10,6 +10,9 @@
     'depends': [
         'stock', 'mail', 'contacts', 'delivery'
     ],
+    'external_dependencies': {
+        'python': ['prettytable']
+    },
     'description':
     """
         Stock moves email notifications
