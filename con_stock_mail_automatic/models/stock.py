@@ -35,8 +35,8 @@ class StockEmailNotification(models.Model):
         # Stock picking objects
         move_ids = self.env[
             'stock.move'].search(
-                [['date', '>=', time.strftime('%Y-01-%d 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-12-%d 23:59:59')]])
+                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
         # Mail objects
         template = self.env.ref(
             'con_stock_mail_automatic.notification_email_template')
