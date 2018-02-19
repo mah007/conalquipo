@@ -74,6 +74,39 @@ class projectWorks(models.Model):
                                        string='Municipality')
     country2_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict')
+    product_count = fields.Integer(
+        compute='_compute_product_count',
+        string="Number of products on work")
+
+    def _compute_product_count(self):
+        product_qty = 0.0
+        picking = self.env[
+            'stock.picking'].search(
+                [['partner_id', '=', self.partner_id.id]])
+        for data in picking:
+            moves = self.env[
+                'stock.move'].search(
+                    [['picking_id', '=', data.id]])
+            if moves:
+                for p in moves:
+                    _logger.warning(p)
+                    product_qty += p.product_uom_qty
+        return int(product_qty)
+
+    @api.multi
+    def product_tree_view(self):
+        self.ensure_one()
+        return {
+            'name': _('Products'),
+            'res_model': 'stock.move',
+            'type': 'ir.actions.act_window',
+            'view_id': False,
+            'view_mode': 'tree,form',
+            'view_type': 'form',
+            'limit': 80,
+            'context': "{'default_res_model': '%s','default_res_id': %d}" % (
+                self._name, self.id)
+        }
 
     @api.model
     def create(self, values):
