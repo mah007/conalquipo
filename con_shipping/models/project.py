@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -27,12 +27,12 @@ class ProjectProject(models.Model):
 
         if stock_location_partner:
             location_id = stock_location.create({
-                    'usage': 'customer',
-                    'partner_id': self.partner_id.id,
-                    'name': name_stock_location,
-                    'location_id': stock_location_partner,
-                    'project_id': res,
-                    })
+                'usage': 'customer',
+                'partner_id': self.partner_id.id,
+                'name': name_stock_location,
+                'location_id': stock_location_partner,
+                'project_id': res,
+                })
         else:
 
             location_partner = stock_location.create({
@@ -43,12 +43,12 @@ class ProjectProject(models.Model):
                     'stock.stock_location_customers').id})
 
             location_id = stock_location.create({
-                    'usage': 'customer',
-                    'partner_id': self.partner_id.id,
-                    'name': name_stock_location,
-                    'location_id': location_partner.id,
-                    'project_id': res,
-                    })
+                'usage': 'customer',
+                'partner_id': self.partner_id.id,
+                'name': name_stock_location,
+                'location_id': location_partner.id,
+                'project_id': res,
+                })
 
         res.update({'stock_location_id': location_id.id})
 

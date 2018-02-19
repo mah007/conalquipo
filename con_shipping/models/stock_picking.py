@@ -207,7 +207,7 @@ class StockPicking(models.Model):
         move_lines = []
         if vals.get('move_lines'):
             for move in vals['move_lines']:
-                if move[2] != False:
+                if move[2]:
                     move_lines.append(move)
             vals['move_lines'] = move_lines
 
