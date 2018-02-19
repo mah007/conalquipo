@@ -22,7 +22,7 @@
 
 from odoo import models, api
 import time
-from prettytable import PrettyTable, from_html_one
+from prettytable import PrettyTable
 import logging
 _logger = logging.getLogger(__name__)
 
