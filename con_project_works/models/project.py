@@ -91,7 +91,7 @@ class projectWorks(models.Model):
                 for p in moves:
                     _logger.warning(p)
                     product_qty += p.product_uom_qty
-        return int(product_qty)
+        self.product_count = product_qty
 
     @api.multi
     def product_tree_view(self):
