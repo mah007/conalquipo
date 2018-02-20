@@ -59,6 +59,12 @@
       <field name="inherit_id" ref="project.edit_project"/>
       <field name="arch" type="xml">
 
+        <xpath expr="//div[@class='oe_button_box']" position="inside">
+          <button  class="oe_stat_button" name="product_tree_view" type="object" icon="fa-gears">
+            <field string="Products" name="product_count" widget="statinfo"/>
+          </button>
+        </xpath>
+
         <xpath expr="//div[@class='oe_title']" position="after">
           <group>
             <group>
