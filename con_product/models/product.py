@@ -203,11 +203,12 @@ class ProductProduct(Model):
     @api.model
     def create(self, values):
         record = super(ProductProduct, self).create(values)
-        pro_tmpl_obj = self.env['product.template']
-        pro_tmpl = pro_tmpl_obj.search(
-            [('id', '=', values['product_tmpl_id'])])
-        for a in pro_tmpl:
-            record.location_id = a.location_id.id
-            record.state_id = a.state_id.id
-            record.color = a.color
-        return record
+        if not record.type == 'service':
+            pro_tmpl_obj = self.env['product.template']
+            pro_tmpl = pro_tmpl_obj.search(
+                [('id', '=', values['product_tmpl_id'])])
+            for a in pro_tmpl:
+                record.location_id = a.location_id.id
+                record.state_id = a.state_id.id
+                record.color = a.color
+            return record

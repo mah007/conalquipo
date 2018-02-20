@@ -292,5 +292,4 @@ class StockMove(models.Model):
             move = self.env['stock.move'].search(
                 [('id', '=', self.returned)], limit=1)
             move.write({'origin_returned_move_id': self.id})
-
         return res
