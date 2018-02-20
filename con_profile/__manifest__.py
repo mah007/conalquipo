@@ -33,7 +33,7 @@
     'website': "http://www.ias.com.co",
     'category': 'Base Profile',
     'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'delivery',
+    'depends': ['base', 'crm', 'project', 'delivery', 'hr_timesheet',
                 'sale', 'purchase', 'stock', 'stock_real_availability',
                 'con_client_code', 'con_project_works',
                 'con_project_translates', 'con_project_stock', 'con_sale',
