@@ -184,12 +184,16 @@ class StockPicking(models.Model):
         if self.partner_id and self.location_id \
                 and self.picking_type_code == 'incoming':
 
+            stock_picking = self.env['stock.picking'].search(
+                [('location_dest_id', '=', self.location_id.id),
+                 ('project_id', '=', self.project_id.id),
+                 ('partner_id', '=', self.partner_id.id)])
             stock_move = self.env['stock.move'].search(
                 [('location_dest_id', '=', self.location_id.id),
                  ('state', '=', 'done'),
+                 ('picking_id', 'in', stock_picking._ids),
                  ('partner_id', '=', self.partner_id.id),
                  ('origin_returned_move_id', '=', False)])
-            _logger.warning(stock_move)
             for move in stock_move:
                 new_move = self.env['stock.move'].create({
                     'name': _('New Move:') + move.product_id.display_name,
