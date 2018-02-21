@@ -59,8 +59,9 @@ class SaleOrder(models.Model):
 
         if self.partner_id:
             order_id = self.search([('partner_id', '=', self.partner_id.id),
-                                    ('project_id', '=', self.project_id.id),
-                                    ('state', '=', 'sale')], limit=1)
+                                    ('state', '=', 'sale'),
+                                    ('project_id', '=', self.project_id.id)
+                                    ], limit=1)
             if order_id:
                 for line in self.order_line:
                     line_copy = line.copy({'order_id': order_id.id})
@@ -114,6 +115,25 @@ class SaleOrder(models.Model):
                     inv_ids.write({'owner_id': owner.id})
                 inv_ids.invoice_type = self.order_type
         return res
+
+    @api.multi
+    def action_advertisement(self):
+
+        wizard_id = self.env['sale.order.advertisement.wizard'].create(
+            vals={'partner_id': self.partner_id.id,
+                  'project_id': self.project_id.id,
+                  'sale_order_id': self.id,
+                  'location_id': self.project_id.stock_location_id.id,
+                  })
+        return {
+            'name': 'Advertisement Wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sale.order.advertisement.wizard',
+            'res_id': wizard_id.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
 
 
 class SaleOrderLine(models.Model):

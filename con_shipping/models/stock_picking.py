@@ -288,8 +288,11 @@ class StockMove(models.Model):
 
     def _action_done(self, merge=True):
         res = super(StockMove, self)._action_done()
-        if self.state == 'done' and self.returned:
-            move = self.env['stock.move'].search(
-                [('id', '=', self.returned)], limit=1)
-            move.write({'origin_returned_move_id': self.id})
+        for order in self:
+            if order.state == 'done' and order.returned:
+                move = order.env['stock.move'].search(
+                    [('id', '=', self.returned)], limit=1)
+                if move:
+                    move.write({'origin_returned_move_id': self.id})
+
         return res

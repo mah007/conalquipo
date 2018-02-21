@@ -204,5 +204,6 @@ class SaleOrder(models.Model):
 
         for pk in self.picking_ids:
             pk.write({'location_dest_id': stock_location_partner.id})
-
+            for move_line in pk.move_lines:
+                move_line.write({'location_dest_id': stock_location_partner.id})
         return res

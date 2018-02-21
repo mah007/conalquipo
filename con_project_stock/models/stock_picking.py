@@ -47,18 +47,19 @@ class StockPicking(Model):
 
         :return: None
         """
-        if self.project_id:
-            p = self.project_id
-            self.shipping_address = self.merge_address(
-                p.street1 or '', p.street1_2 or '', p.city or '',
-                p.municipality_id.name or '', p.state_id.name or '',
-                p.zip or '', p.country_id.name or '', p.phone1 or '',
-                p.email or '')
-            self.invoice_address = self.merge_address(
-                p.street2_1 or '', p.street2_2 or '', p.city2 or '',
-                p.municipality2_id.name or '', p.state2_id.name or '',
-                p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
-                p.email or '')
+        for spk in self:
+            if spk.project_id:
+                p = spk.project_id
+                spk.shipping_address = spk.merge_address(
+                    p.street1 or '', p.street1_2 or '', p.city or '',
+                    p.municipality_id.name or '', p.state_id.name or '',
+                    p.zip or '', p.country_id.name or '', p.phone1 or '',
+                    p.email or '')
+                spk.invoice_address = spk.merge_address(
+                    p.street2_1 or '', p.street2_2 or '', p.city2 or '',
+                    p.municipality2_id.name or '', p.state2_id.name or '',
+                    p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
+                    p.email or '')
 
     @staticmethod
     def merge_address(street, street2, city, municipality, state, zip_code,
