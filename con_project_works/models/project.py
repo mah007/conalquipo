@@ -87,7 +87,7 @@ class projectWorks(models.Model):
             if data.location_dest_id.usage == 'customer':
                 moves = self.env[
                     'stock.move'].search(
-                        [['picking_id', '=', data.id]])
+                        [['picking_id', '=', data.id], ['state', '=', 'done']])
                 if moves:
                     for p in moves:
                         _logger.warning(p)
@@ -106,7 +106,8 @@ class projectWorks(models.Model):
             move = self.env[
                 'stock.move'].search(
                     [['location_dest_id', '=', data.id],
-                     ['partner_id', '=', self.partner_id.id]])
+                     ['partner_id', '=', self.partner_id.id],
+                     ['state', '=', 'done']])
             for m in move:
                 moves_data.append(m.id)
         domain = [('id', 'in', moves_data)]
