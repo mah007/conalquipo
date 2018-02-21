@@ -59,6 +59,7 @@ class SaleOrder(models.Model):
 
         if self.partner_id:
             order_id = self.search([('partner_id', '=', self.partner_id.id),
+                                    ('project_id', '=', self.project_id.id),
                                     ('state', '=', 'sale')], limit=1)
             if order_id:
                 for line in self.order_line:
