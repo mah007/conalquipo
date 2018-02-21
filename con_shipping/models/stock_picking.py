@@ -180,15 +180,16 @@ class StockPicking(models.Model):
 
     @api.onchange('location_id')
     def onchange_location_id(self):
-
+        line_ids = []
         if self.partner_id and self.location_id \
                 and self.picking_type_code == 'incoming':
 
             stock_move = self.env['stock.move'].search(
                 [('location_dest_id', '=', self.location_id.id),
                  ('state', '=', 'done'),
+                 ('partner_id', '=', self.partner_id.id),
                  ('origin_returned_move_id', '=', False)])
-
+            _logger.warning(stock_move)
             for move in stock_move:
                 new_move = self.env['stock.move'].create({
                     'name': _('New Move:') + move.product_id.display_name,
@@ -200,7 +201,9 @@ class StockPicking(models.Model):
                     'picking_id': self._origin.id,
                     'returned': move.id
                 })
-                self.update({'move_lines': [(4, new_move.id)]})
+                data = (4, new_move.id)
+                line_ids.append(data)
+            self.update({'move_lines': line_ids})
 
     @api.model
     def create(self, vals):
@@ -291,8 +294,8 @@ class StockMove(models.Model):
         for order in self:
             if order.state == 'done' and order.returned:
                 move = order.env['stock.move'].search(
-                    [('id', '=', self.returned)], limit=1)
+                    [('id', '=', order.returned)], limit=1)
                 if move:
-                    move.write({'origin_returned_move_id': self.id})
+                    move.write({'origin_returned_move_id': order.id})
 
         return res
