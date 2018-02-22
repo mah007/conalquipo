@@ -33,10 +33,11 @@
     'website': "http://www.ias.com.co",
     'category': 'Security',
     'version': '0.1',
-    'depends': ['base'],
+    'depends': ['base', 'stock'],
     'data': [
         'data/module_category.xml',
-        'data/groups.xml'
+        'data/groups.xml',
+        'views/stock.xml'
     ],
     'qweb': [],
     'images': [],
