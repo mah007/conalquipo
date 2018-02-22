@@ -225,4 +225,16 @@
               </field>
         </record>
 
+        <record id="stock_picking_form_con_shipping" model="ir.ui.view">
+              <field name="name">stock.picking.form</field>
+              <field name="model">stock.picking</field>
+              <field name="inherit_id" ref="stock.view_picking_form"/>
+              <field name="arch" type="xml">
+                  <xpath expr='//header' position="inside">
+                      <button name="action_equipment_change" string="Equipment Change" type="object"
+                              attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" groups="con_shipping.group_equipment_change"/>
+                  </xpath>
+              </field>
+          </record>
+
     </odoo>

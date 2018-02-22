@@ -238,6 +238,28 @@ class StockPicking(models.Model):
                            'group_id': move.picking_id.group_id.id})
             picking.sale_id.write({'picking_ids': [(4, picking.id)]})
 
+    @api.multi
+    def action_equipment_change(self):
+        line = []
+        for ml in self.move_lines:
+            line.append((0, 0, {
+                'ant_product_id': ml.product_id.id,
+                'move_line': ml.id}))
+
+        wizard_id = self.env['stock.picking.equipment.change.wizard'].create(
+            vals={'picking_id': self.id,
+                  'product_ids': line,
+                  })
+        return {
+            'name': 'Equipment Change Wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.picking.equipment.change.wizard',
+            'res_id': wizard_id.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
 
 class ShippingDriver(models.Model):
     """
