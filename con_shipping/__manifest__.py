@@ -19,7 +19,8 @@
         'data/groups.xml',
         'views/shipping.xml',
         'reports/report_stockpicking.xml',
-        'wizard/views/stock_picking_cancel_wizard.xml'
+        'wizard/views/stock_picking_cancel_wizard.xml',
+        'wizard/views/stock_picking_equipment_change_wizard.xml'
     ],
     'qweb': [
     ],

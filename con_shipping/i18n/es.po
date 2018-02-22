@@ -746,3 +746,25 @@ msgstr "shipping.driver"
 #: model:ir.model,name:con_shipping.model_stock_picking_cancel_wizard
 msgid "stock.picking.cancel.wizard"
 msgstr "stock.picking.cancel.wizard"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.stock_picking_form_con_shipping
+#: model:res.groups,name:con_shipping.group_equipment_change
+msgid "Equipment Change"
+msgstr "Cambio de equipo"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_product_change_wizard_ant_product_id
+msgid "product Ant"
+msgstr "producto Anterior"
+
+#. module: con_shipping
+#: model:ir.model.fields,field_description:con_shipping.field_product_change_wizard_new_product_id
+msgid "Product New"
+msgstr "Producto Nuevo"
+
+#. module: con_shipping
+#: code:addons/con_shipping/wizard/models/stock_picking_equipment_change_wizard.py:38
+#, python-format
+msgid "selected product does not have quantity available in the inventory"
+msgstr "Producto seleccionado no tiene cantidad disponible en el inventario"
