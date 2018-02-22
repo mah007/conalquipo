@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_shipping_order">
+            <field name="name">Can cancel shipping order</field>
+            <field name="category_id" ref="con_permissions_roles.module_extra_shipping_access"/>
+        </record>
+
+    </data>
+</odoo>
