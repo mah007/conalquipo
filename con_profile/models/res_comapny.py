@@ -18,35 +18,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': "Odoo CON Profile",
+from odoo import models, fields, api
 
-    'summary': """
-        Conalequipos's Odoo Installation profile.
-    """,
 
-    'description': """
-        Conalequipo's Odoo Installation profile.
-    """,
+class ResCompany(models.Model):
+    _inherit = 'res.company'
 
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'website': "http://www.ias.com.co",
-    'category': 'Base Profile',
-    'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'delivery',
-                'sale', 'purchase', 'stock', 'stock_real_availability',
-                'con_client_code', 'con_project_works',
-                'con_project_translates', 'con_project_stock', 'con_sale',
-                'con_shipping', 'con_purchase_translates'],
-    'data': [
-        'data/res.country.state.csv',
-        'data/res.country.municipality.csv',
-        'views/webclient_templates.xml',
-        'views/res_company.xml',
-    ],
-    'qweb': [],
-    'images': [],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+    iso_logo = fields.Binary(string='Iso Logo')
+    footer_logo = fields.Binary(string="Footer Logo")
