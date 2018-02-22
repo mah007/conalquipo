@@ -211,4 +211,18 @@
                 <p t-if="o.note"><span t-field="o.note" /></p>
             </xpath>
         </template>
+
+        <record model="ir.ui.view" id="stock_picking_inherit_roles_form">
+              <field name="name">stock.picking.inherit.roles.form</field>
+              <field name="inherit_id" ref="stock.view_picking_form"/>
+              <field name="model">stock.picking</field>
+              <field name="arch" type="xml">
+
+                <button name="action_cancel" position="replace">
+                    <button name="action_cancel" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting')), ('is_locked', '=', False)]}" string="Cancel" groups="con_shipping.group_shipping_order" type="object"/>
+                </button>
+
+              </field>
+        </record>
+
     </odoo>
