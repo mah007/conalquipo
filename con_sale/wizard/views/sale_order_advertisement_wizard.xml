@@ -9,7 +9,7 @@
                 <form string="Advertisement">
                     <group>
                         <field name="location_dest_id"/>
-                        <field name="reason" />
+                        <field name="reason" required="1"/>
                     </group>
                     <footer>
                         <button string="Create Advertisement" name="action_create_advertisement"
