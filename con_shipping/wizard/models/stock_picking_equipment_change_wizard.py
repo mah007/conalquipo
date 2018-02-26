@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 class StockPickingEquipmentChangeWizard(models.TransientModel):
     _name = "stock.picking.equipment.change.wizard"
-
+    track_visibility = 'onchange',
     reason = fields.Text("Reason")
     picking_id = fields.Many2one('stock.picking', string="Picking")
     product_ids = fields.One2many('product.change.wizard', 'equipment_cw_id',
@@ -34,6 +34,6 @@ class ProductChangeWizard(models.TransientModel):
 
     @api.onchange('new_product_id')
     def _onchange_new_product(self):
-        if self.move_line.product_uom_qty > self.new_product_id.available_qty:
+        if self.move_line.product_uom_qty > self.new_product_id.qty_available:
             raise UserError(_("selected product does not have quantity "
                               "available in the inventory"))

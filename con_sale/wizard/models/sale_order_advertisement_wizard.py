@@ -19,7 +19,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                                        "Destination Location",
                                        domain=[('usage', '=', 'internal')])
 
-    reason = fields.Text(string="Reason", required=True,)
+    reason = fields.Text(string="Reason",)
 
     @api.multi
     def action_create_advertisement(self):
