@@ -7,8 +7,8 @@ _logger = logging.getLogger(__name__)
 
 class StockPickingEquipmentChangeWizard(models.TransientModel):
     _name = "stock.picking.equipment.change.wizard"
-    track_visibility = 'onchange',
-    reason = fields.Text("Reason")
+
+    reason = fields.Text("Reasons for cancellation")
     picking_id = fields.Many2one('stock.picking', string="Picking")
     product_ids = fields.One2many('product.change.wizard', 'equipment_cw_id',
                                   string="Product Change")
@@ -20,6 +20,14 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
                 new_p.move_line.update({'product_id': new_p.new_product_id.id})
                 new_p.move_line.sale_line_id.update(
                     {'product_id': new_p.new_product_id.id})
+
+                self.env['stock.move.line']._log_message(
+                    new_p.move_line.picking_id, new_p.move_line.id,
+                    'con_shipping.equipment_change_template',
+                    {'reason': self.reason,
+                      'ant_product_id': new_p.ant_product_id.name,
+                      'new_product_id': new_p.new_product_id.name})
+
         return {'type': 'ir.actions.act_window_close'}
 
 
