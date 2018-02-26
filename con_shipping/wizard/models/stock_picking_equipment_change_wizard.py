@@ -19,7 +19,8 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
             if new_p.new_product_id:
                 new_p.move_line.update({'product_id': new_p.new_product_id.id})
                 new_p.move_line.sale_line_id.update(
-                    {'product_id': new_p.new_product_id.id})
+                    {'product_id': new_p.new_product_id.id,
+                     'name': new_p.new_product_id.name})
 
                 self.env['stock.move.line']._log_message(
                     new_p.move_line.picking_id, new_p.move_line.id,
