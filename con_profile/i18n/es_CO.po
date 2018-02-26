@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* con_profile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-20 22:38+0000\n"
+"PO-Revision-Date: 2018-02-20 22:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: con_profile
+#: model:ir.model,name:con_profile.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: con_profile
+#: model:ir.ui.view,arch_db:con_profile.view_company_form
+msgid "Configuration Report"
+msgstr "Configuración de Reportes"
+
+#. module: con_profile
+#: model:ir.model.fields,field_description:con_profile.field_res_company_footer_logo
+msgid "Footer Logo"
+msgstr "Logo para Footer"
+
+#. module: con_profile
+#: model:ir.model.fields,field_description:con_profile.field_res_company_iso_logo
+msgid "Iso Logo"
+msgstr "Logo Iso"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+           <data>
+                <xpath expr="//page[1]" position="after">
+                    <page name="config_reports" string="Configuration Report">
+                        <group>
+                            <field name="iso_logo" widget="image"/>
+                            <field name="footer_logo" widget="image"/>
+                        </group>
+                    </page>
+                </xpath>
+           </data>
+        </field>
+    </record>
+
+</odoo>
