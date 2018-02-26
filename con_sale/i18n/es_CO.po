@@ -186,3 +186,22 @@ msgstr "Und. de medida de Compra"
 msgid "Unit of Measure to Sale"
 msgstr "Und. de medida de venta"
 
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Advertisement"
+msgstr "Anuncio"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Create Advertisement"
+msgstr "Crear Anuncio"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "advertisement"
+msgstr "Anuncio"

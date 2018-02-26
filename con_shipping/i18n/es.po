@@ -768,3 +768,23 @@ msgstr "Producto Nuevo"
 #, python-format
 msgid "selected product does not have quantity available in the inventory"
 msgstr "Producto seleccionado no tiene cantidad disponible en el inventario"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.message_body
+msgid "<strong>Reason: </strong>"
+msgstr "<strong>Razón: </strong>"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.validate_account_move_view
+msgid "Reason"
+msgstr "Razón"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.message_head
+msgid "<strong>Equipment Change.</strong>"
+msgstr "<strong>Cambio de equipo.</strong>"
+
+#. module: con_shipping
+#: model:ir.ui.view,arch_db:con_shipping.message_body
+msgid "<strong>Change: </strong>"
+msgstr "<strong>Cambio: </strong>"
