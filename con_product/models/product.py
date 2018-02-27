@@ -148,7 +148,7 @@ class ProductTemplate(Model):
                                      "product in the picking",
                                 default=False)
     components_ids = fields.One2many(
-        'product.components', 'product_id', string="Product Components")
+        'product.components', 'product_id', string='Components')
 
 
 class ProductProduct(Model):
@@ -220,6 +220,8 @@ class ProductProduct(Model):
 class ProductComponents(Model):
     _name = "product.components"
     _description = "A model for store and manage the products components"
+    _rec_name = "product_child_id"
 
-    product_id = fields.Many2one('product.template', string="Product component")    
-    quantity = fields.Integer('Quantity')    
+    product_id = fields.Many2one('product.template', string="Product parent")
+    product_child_id = fields.Many2one('product.product', string="Product component")       
+    quantity = fields.Integer('Quantity', default=1)    

@@ -76,17 +76,17 @@
                             <field name="rental"/>
                             <label for="rental"/>
                         </div>
-                        <div>
+                        <div attrs="{'invisible':[('type', '=', 'service')]}">
                             <field name="components" />
                             <label for="components"/>
                         </div>
                     </xpath>
 
                     <xpath expr="//page[@name='general_information']" position="after">
-                        <page string="Components" attrs="{'invisible':[('components', '=', False)]}">
+                        <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}">
                             <field name="components_ids">
                                 <tree string="Products components" editable="bottom">
-                                    <field name="product_id"/>
+                                    <field name="product_child_id" options="{'no_create_edit':True}"/>
                                     <field name="quantity"/>
                                 </tree>
                             </field>
