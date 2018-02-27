@@ -18,21 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Conalequipo Sale Customization',
-    'version': '1.0',
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'category': '',
-    'description': """ Add field for Municipality and delivery cost in the
-    sale order.""",
-    'depends': ['base', 'sales_team', 'sale', 'website_quote', 'stock'],
-    'data': ['views/sale_order_view.xml',
-             'views/purchase_view.xml',
-             'views/stock_picking.xml',
-             'wizard/views/sale_order_advertisement_wizard.xml'
-             ],
 
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from odoo import models, api, _
+import logging
+_logger = logging.getLogger(__name__)
+
+
+class StockMoveComponents(models.Model):
+    _inherit = "stock.move"
+
+    def get_components(self):
+        if self.product_id.components_ids:
+            for data in self.product_id.components_ids:
+                self.env['stock.move'].create({
+                    'name': _('New Move:') + 'Hola',
+                    'product_id': data.product_child_id.id,
+                    'product_uom_qty': data.quantity,
+                    'product_uom': data.product_child_id.product_tmpl_id.uom_id.id,
+                    'location_id': self.location_id.id,
+                    'location_dest_id': self.location_dest_id.id,
+                    'picking_id': self.picking_id.id
+                })
