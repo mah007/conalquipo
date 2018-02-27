@@ -222,4 +222,4 @@ class ProductComponents(Model):
     _description = "A model for store and manage the products components"
 
     product_id = fields.Many2one('product.template', string="Product component")    
-    quantity = fields.Boolean('Quantity')    
+    quantity = fields.Integer('Quantity')    

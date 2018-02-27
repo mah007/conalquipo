@@ -69,14 +69,28 @@
                       <field name="location_id" string="Location"/>
                       <field name="state_id" string="State"/>
                       <field name="color" widget="color" string="Color"/>
-                      <!--<field name="components" />-->
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">
-                      <div>
-                        <field name="rental"/>
-                        <label for="rental"/>
-                      </div>
+                        <div>
+                            <field name="rental"/>
+                            <label for="rental"/>
+                        </div>
+                        <div>
+                            <field name="components" />
+                            <label for="components"/>
+                        </div>
+                    </xpath>
+
+                    <xpath expr="//page[@name='general_information']" position="after">
+                        <page string="Components" attrs="{'invisible':[('components', '=', False)]}">
+                            <field name="components_ids">
+                                <tree string="Products components" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </tree>
+                            </field>
+                        </page>
                     </xpath>
 
                 </data>
