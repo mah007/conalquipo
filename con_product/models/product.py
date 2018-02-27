@@ -147,6 +147,8 @@ class ProductTemplate(Model):
                                      "as a set of components adding this "
                                      "product in the picking",
                                 default=False)
+    components_ids = fields.One2many(
+        'product.components', 'product_id', string="Product Components")
 
 
 class ProductProduct(Model):
@@ -213,3 +215,11 @@ class ProductProduct(Model):
                     record.state_id = a.state_id.id
                     record.color = a.color
         return record
+
+
+class ProductComponents(Model):
+    _name = "product.components"
+    _description = "A model for store and manage the products components"
+
+    product_id = fields.Many2one('product.template', string="Product component")    
+    quantity = fields.Boolean('Quantity')    
