@@ -19,23 +19,35 @@
 #
 ##############################################################################
 
-from odoo import models, api, _
-import logging
-_logger = logging.getLogger(__name__)
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockMoveComponents(models.Model):
     _inherit = "stock.move"
 
+    button_pushed = fields.Boolean(string="Button pushed")
+
     def get_components(self):
-        if self.product_id.components_ids:
+        if not self.product_id.components_ids:
+            raise UserError(_("The following product '%s' dont"
+                              " have components") % self.product_id.name)
+        if self.product_id.components_ids and not self.button_pushed:
             for data in self.product_id.components_ids:
+                name = data.product_child_id.product_tmpl_id.name
+                uom = data.product_child_id.product_tmpl_id.uom_id.id
                 self.env['stock.move'].create({
-                    'name': _('New Move:') + 'Hola',
+                    'name': _(
+                        'Components:') + name,
                     'product_id': data.product_child_id.id,
                     'product_uom_qty': data.quantity,
-                    'product_uom': data.product_child_id.product_tmpl_id.uom_id.id,
+                    'product_uom': uom,
                     'location_id': self.location_id.id,
                     'location_dest_id': self.location_dest_id.id,
                     'picking_id': self.picking_id.id
                 })
+            self.button_pushed = True
+        else:
+            raise UserError(_("The following product '%s' already"
+                              " has its components"
+                              ) % self.product_id.name)
