@@ -38,5 +38,4 @@ class StockPicking(models.Model):
                 raise UserError(_(partner.picking_warn_msg))
 
         res = super(StockPicking, self).create(vals)
-
         return res

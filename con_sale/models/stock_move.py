@@ -21,14 +21,15 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class StockMoveComponents(models.Model):
     _inherit = "stock.move"
 
-    button_pushed = fields.Boolean(string="Button pushed")
+    button_pushed = fields.Boolean(string="Button pushed")   
 
-    def get_components(self):
+    def get_components_button(self):
         if not self.product_id.components_ids:
             raise UserError(_("The following product '%s' dont"
                               " have components") % self.product_id.name)
@@ -42,12 +43,47 @@ class StockMoveComponents(models.Model):
                     'product_id': data.product_child_id.id,
                     'product_uom_qty': data.quantity,
                     'product_uom': uom,
+                    'origin': self.origin,
+                    'partner_id': self.partner_id.id,
                     'location_id': self.location_id.id,
                     'location_dest_id': self.location_dest_id.id,
-                    'picking_id': self.picking_id.id
+                    'picking_id': self.picking_id.id,
+                    'state': self.state,
+                    'group_id': self.group_id.id,
+                    'rule_id': self.rule_id.id,
+                    'picking_type_id': self.picking_type_id.id
                 })
             self.button_pushed = True
         else:
             raise UserError(_("The following product '%s' already"
                               " has its components"
                               ) % self.product_id.name)
+
+    @api.model
+    def get_components_action(self):
+        active_ids = self._context.get('active_ids')[0]
+        move_obj = self.env['stock.move']
+        move = move_obj.browse(active_ids)
+        _logger.warning(move)
+        for moveid in move:
+            if moveid.product_id.components_ids and not moveid.button_pushed:
+                for data in moveid.product_id.components_ids:
+                    name = data.product_child_id.product_tmpl_id.name
+                    uom = data.product_child_id.product_tmpl_id.uom_id.id
+                    self.create({
+                        'name': _(
+                            'Components:') + name,
+                        'product_id': data.product_child_id.id,
+                        'product_uom_qty': data.quantity,
+                        'product_uom': uom,
+                        'origin': moveid.origin,
+                        'partner_id': moveid.partner_id.id,
+                        'location_id': moveid.location_id.id,
+                        'location_dest_id': moveid.location_dest_id.id,
+                        'picking_id': moveid.picking_id.id,
+                        'state': moveid.state,
+                        'group_id': move.group_id.id,
+                        'rule_id': moveid.rule_id.id,
+                        'picking_type_id': moveid.picking_type_id.id
+                    })
+                moveid.button_pushed = True
