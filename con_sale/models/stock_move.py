@@ -27,7 +27,8 @@ _logger = logging.getLogger(__name__)
 class StockMoveComponents(models.Model):
     _inherit = "stock.move"
 
-    button_pushed = fields.Boolean(string="Button pushed")   
+    button_pushed = fields.Boolean(
+        string="Button pushed", default=False)   
 
     def get_components_button(self):
         if not self.product_id.components_ids:
@@ -64,13 +65,13 @@ class StockMoveComponents(models.Model):
         active_ids = self._context.get('active_ids')[0]
         move_obj = self.env['stock.move']
         move = move_obj.browse(active_ids)
-        _logger.warning(move)
         for moveid in move:
-            if moveid.product_id.components_ids and not moveid.button_pushed:
+            _logger.warning(moveid)
+            if moveid.product_id.components_ids and not move.button_pushed:
                 for data in moveid.product_id.components_ids:
                     name = data.product_child_id.product_tmpl_id.name
                     uom = data.product_child_id.product_tmpl_id.uom_id.id
-                    self.create({
+                    move_obj.create({
                         'name': _(
                             'Components:') + name,
                         'product_id': data.product_child_id.id,
@@ -86,4 +87,4 @@ class StockMoveComponents(models.Model):
                         'rule_id': moveid.rule_id.id,
                         'picking_type_id': moveid.picking_type_id.id
                     })
-                moveid.button_pushed = True
+                move.button_pushed = True
