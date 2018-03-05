@@ -224,4 +224,5 @@ class ProductComponents(Model):
 
     product_id = fields.Many2one('product.template', string="Product parent")
     product_child_id = fields.Many2one('product.product', string="Product component")       
-    quantity = fields.Integer('Quantity', default=1)    
+    quantity = fields.Integer('Quantity', default=1)
+    child = fields.Boolean('Child', default=True)

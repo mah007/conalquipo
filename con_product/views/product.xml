@@ -88,6 +88,7 @@
                                 <tree string="Products components" editable="bottom">
                                     <field name="product_child_id" options="{'no_create_edit':True}"/>
                                     <field name="quantity"/>
+                                    <field name="child" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
