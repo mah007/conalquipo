@@ -8,13 +8,9 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     _name = "sale.order.advertisement.wizard"
 
     project_id = fields.Many2one('project.project', string="Project")
-
     sale_order_id = fields.Many2one('sale.order', 'Sale Order')
-
     partner_id = fields.Many2one('res.partner', 'Partner')
-
     location_id = fields.Many2one('stock.location', "Source Location")
-
     location_dest_id = fields.Many2one('stock.location',
                                        "Destination Location",
                                        domain=[('usage', '=', 'internal')])
@@ -52,6 +48,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 'picking_id': picking.id,
                 'group_id': move.group_id.id,
                 'state': 'draft',
+                'button_pushed': True
             })
 
         return {'type': 'ir.actions.act_window_close'}

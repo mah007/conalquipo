@@ -22,7 +22,6 @@
 from odoo import models, api, _
 from odoo.exceptions import UserError
 import logging
-
 _logger = logging.getLogger(__name__)
 
 
@@ -39,5 +38,4 @@ class StockPicking(models.Model):
                 raise UserError(_(partner.picking_warn_msg))
 
         res = super(StockPicking, self).create(vals)
-
         return res
