@@ -10,14 +10,13 @@
     'depends': [
         'stock', 'mail', 'contacts', 'delivery'
     ],
-    'external_dependencies': {
-        'python': ['prettytable']
-    },
     'description':
     """
         Stock moves email notifications
     """,
     'data': [
+        'data/module_category.xml',
+        'data/groups.xml',
         'views/email_template.xml',
         'views/cron_template.xml'
     ],

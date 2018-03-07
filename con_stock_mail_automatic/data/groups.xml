@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_shipping_order">
+            <field name="name">Can receive stock notifications email</field>
+            <field name="category_id" ref="con_stock_mail_automatic.module_stock_notifications"/>
+        </record>
+
+    </data>
+</odoo>
