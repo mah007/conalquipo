@@ -40,10 +40,21 @@ class StockEmailNotification(models.Model):
         recipients = []
         groups = self.env[
             'res.groups'].search(
-                [['name', '=', 'Can receive stock notifications email']])
+                [['name',
+                  '=',
+                  'Puede recibir notificaciones de movimientos diarios']])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c,c) for c in recipients)
 
         # Stock picking objects
         move_ids = self.env[
@@ -65,7 +76,7 @@ class StockEmailNotification(models.Model):
         ctx.update({
             'move_ids': move_ids,
             'senders': user_id,
-            'recipients': recipients,
+            'recipients': formated,
             'subject': subject
         })
 
