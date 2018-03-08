@@ -201,10 +201,29 @@
       <field name="arch" type="xml">
         <field name="name" position="after">
           <field name="work_code"/>
+          <field name="product_count" string="Products on work"/>
         </field>
       </field>
     </record>
 
+    <!-- KANBAN PROJECT VIEW -->
+    <record id="view_project_availability_product_template_kanban" model="ir.ui.view">
+      <field name="name">project.availability.product.template.kanban</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.project_view_kanban"/>
+      <field name="arch" type="xml">
+        <data>
+
+          <field name="partner_id" position="after">
+            <div>
+              <span class="o_label">Product Qty:</span>
+              <field name="product_count"/>
+            </div>
+          </field>
+
+        </data>
+      </field>
+    </record>
 
     </data>
 </openerp>

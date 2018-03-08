@@ -79,33 +79,37 @@ class projectWorks(models.Model):
         string="Number of products on work")
 
     def _compute_product_count(self):
+        """
+        Method to count the products on works
+        """
         product_qty_in = 0.0
         product_qty_out = 0.0
-        picking = self.env[
-            'stock.picking'].search(
-                [['partner_id', '=', self.partner_id.id]])
-        for data in picking:
-            if data.location_dest_id.usage == 'customer':
-                moves = self.env[
-                    'stock.move'].search(
-                        [['picking_id', '=', data.id],
-                         ['location_dest_id', '=', data.location_dest_id.id],
-                         ['partner_id', '=', self.partner_id.id],
-                         ['state', '=', 'done']])
-                if moves:
-                    for p in moves:
-                        product_qty_in += p.product_uom_qty
-            if data.location_dest_id.usage == 'internal':
-                moves = self.env[
-                    'stock.move'].search(
-                        [['location_dest_id', '=', data.location_dest_id.id],
-                         ['partner_id', '=', self.partner_id.id],
-                         ['picking_id', '=', data.id],
-                         ['state', '=', 'done']])
-                if moves:
-                    for p in moves:
-                        product_qty_out += p.product_uom_qty                                       
-        self.product_count = product_qty_in - product_qty_out
+        for record in self:
+            picking = self.env[
+                'stock.picking'].search(
+                    [['partner_id', '=', record.partner_id.id]])
+            for data in picking:
+                if data.location_dest_id.usage == 'customer':
+                    moves = self.env[
+                        'stock.move'].search(
+                            [['picking_id', '=', data.id],
+                            ['location_dest_id', '=', data.location_dest_id.id],
+                            ['partner_id', '=', record.partner_id.id],
+                            ['state', '=', 'done']])
+                    if moves:
+                        for p in moves:
+                            product_qty_in += p.product_uom_qty
+                if data.location_dest_id.usage == 'internal':
+                    moves = self.env[
+                        'stock.move'].search(
+                            [['location_dest_id', '=', data.location_dest_id.id],
+                            ['partner_id', '=', record.partner_id.id],
+                            ['picking_id', '=', data.id],
+                            ['state', '=', 'done']])
+                    if moves:
+                        for p in moves:
+                            product_qty_out += p.product_uom_qty                                       
+            record.product_count = product_qty_in - product_qty_out
 
     @api.multi
     def product_tree_view(self):
