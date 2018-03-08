@@ -20,9 +20,8 @@
 ##############################################################################
 
 
-from odoo import models, api
+from odoo import models, api, SUPERUSER_ID
 import time
-from prettytable import PrettyTable
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -32,42 +31,56 @@ class StockEmailNotification(models.Model):
 
     @api.multi
     def send_mail_notification(self):
+        # senders
+        uid = SUPERUSER_ID
+        user_id = self.env[
+            'res.users'].browse(uid)
+
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Puede recibir notificaciones de movimientos diarios']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c,c) for c in recipients)
+
         # Stock picking objects
         move_ids = self.env[
             'stock.move'].search(
                 [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
                  ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
-        # Mail objects
+
+        # Mail template
         template = self.env.ref(
             'con_stock_mail_automatic.notification_email_template')
         mail_template = self.env['mail.template'].browse(template.id)
-        subject = "Notificación de movimientos de stock: %s" % (
+
+        # Mail subject
+        subject = "Stock movements diary notification: %s" % (
             time.strftime('%d-%m-%Y'))
 
-        html = None
-        t = PrettyTable(
-            ['Producto',
-             'Cantidad',
-             'Ubicación origen',
-             'Ubicación destino',
-             'Fecha estimada',
-             'Estado'])
-        for a in move_ids:
-            t.add_row(
-                [a.product_id.name,
-                 a.product_uom_qty,
-                 a.location_id.name,
-                 a.location_dest_id.name,
-                 a.date_expected,
-                 a.state])
-        html = t.get_html_string(
-            attributes={"border": "1"})
+        # Update the context
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'move_ids': move_ids,
+            'senders': user_id,
+            'recipients': formated,
+            'subject': subject
+        })
 
-        mail_template.write({'email_to': 'dmpineda@conalquipo.com',
-                             'email_from': 'dmpineda@conalquipo.com',
-                             'subject': subject,
-                             'body_html': html})
         # Send mail
         if mail_template:
-            mail_template.send_mail(
+            mail_template.with_context(ctx).send_mail(
                 self.id, force_send=True, raise_exception=True)
