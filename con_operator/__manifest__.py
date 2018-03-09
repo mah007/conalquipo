@@ -33,10 +33,10 @@
     """
     """,
     'data': [
-        'views/task.xml',
+        'views/project_task.xml',
         'views/hr_employee.xml',
-        'views/product.xml',
-        'views/sale.xml',
+        'views/product_template.xml',
+        'views/sale_order.xml',
         'views/stock_picking.xml',
     ],
     'qweb': [
