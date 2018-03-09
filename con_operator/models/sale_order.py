@@ -45,7 +45,6 @@ class SaleOrderLine(models.Model):
                     'mess_operated': False,
                     'add_operator': False,
                     'owner_id': False,
-                    'owner_id': False,
                     'order_id': line.order_id,
                     'product_operate': line.product_id.id,
                     'invoice_status': 'no',

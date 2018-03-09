@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from . import task
+from . import project_task
 from . import hr_employee
-from . import product
+from . import product_template
 from . import stock_picking
-from . import sale
+from . import sale_order

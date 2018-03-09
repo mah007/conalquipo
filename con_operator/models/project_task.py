@@ -53,7 +53,8 @@ class ProjectTask(models.Model):
         action = self.env.ref('calendar.action_calendar_event').read()[0]
         action['context'] = {
             'search_default_partner_ids': self.user_id.name,
-            'default_activity_type_id': self.env.ref('mail.mail_activity_data_meeting').id,
+            'default_activity_type_id':
+                self.env.ref('mail.mail_activity_data_meeting').id,
             'default_res_id': self.user_id.id,
             'default_res_model': self.env.context.get('default_res_model'),
             'default_name': self.name,
@@ -68,7 +69,7 @@ class ProjectTask(models.Model):
         """
         This function filters the users that are authorized to operate the
         equipment associated with this task
-        :return: domain
+        :return: Dict(domain=Dict(field=List(Tuple)))
         """
         domain = {}
         users = []
