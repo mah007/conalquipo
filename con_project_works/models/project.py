@@ -79,7 +79,8 @@ class projectWorks(models.Model):
         string="Number of products on work")
 
     def _compute_product_count(self):
-        product_qty = 0.0
+        product_qty_in = 0.0
+        product_qty_out = 0.0
         picking = self.env[
             'stock.picking'].search(
                 [['partner_id', '=', self.partner_id.id]])
@@ -87,29 +88,43 @@ class projectWorks(models.Model):
             if data.location_dest_id.usage == 'customer':
                 moves = self.env[
                     'stock.move'].search(
-                        [['picking_id', '=', data.id], ['state', '=', 'done']])
+                        [['picking_id', '=', data.id],
+                         ['location_dest_id', '=', data.location_dest_id.id],
+                         ['partner_id', '=', self.partner_id.id],
+                         ['state', '=', 'done']])
                 if moves:
                     for p in moves:
-                        _logger.warning(p)
-                        product_qty += p.product_uom_qty
-        self.product_count = product_qty
+                        product_qty_in += p.product_uom_qty
+            if data.location_dest_id.usage == 'internal':
+                moves = self.env[
+                    'stock.move'].search(
+                        [['location_dest_id', '=', data.location_dest_id.id],
+                         ['partner_id', '=', self.partner_id.id],
+                         ['picking_id', '=', data.id],
+                         ['state', '=', 'done']])
+                if moves:
+                    for p in moves:
+                        product_qty_out += p.product_uom_qty                                       
+        self.product_count = product_qty_in - product_qty_out
 
     @api.multi
     def product_tree_view(self):
         self.ensure_one()
         domain = []
         moves_data = []
-        location = self.env[
-            'stock.location'].search(
-                [['usage', '=', 'customer']])
-        for data in location:
-            move = self.env[
-                'stock.move'].search(
-                    [['location_dest_id', '=', data.id],
-                     ['partner_id', '=', self.partner_id.id],
-                     ['state', '=', 'done']])
-            for m in move:
-                moves_data.append(m.id)
+        picking = self.env[
+            'stock.picking'].search(
+                [['partner_id', '=', self.partner_id.id]])
+        for data in picking:
+            if data.location_dest_id.usage == 'customer':
+                move = self.env[
+                    'stock.move'].search(
+                        [['picking_id', '=', data.id],
+                        ['location_dest_id', '=', data.location_dest_id.id],
+                        ['partner_id', '=', self.partner_id.id],
+                        ['state', '=', 'done']])
+                for m in move:
+                    moves_data.append(m.id)
         domain = [('id', 'in', moves_data)]
         return {
             'name': _('Products'),

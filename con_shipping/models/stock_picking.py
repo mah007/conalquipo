@@ -203,7 +203,8 @@ class StockPicking(models.Model):
                     'location_id': self.location_id.id,
                     'location_dest_id': self.location_dest_id.id,
                     'picking_id': self._origin.id,
-                    'returned': move.id
+                    'returned': move.id,
+                    'button_pushed': True
                 })
                 data = (4, new_move.id)
                 line_ids.append(data)
@@ -322,6 +323,8 @@ class StockMove(models.Model):
                 move = order.env['stock.move'].search(
                     [('id', '=', order.returned)], limit=1)
                 if move:
-                    move.write({'origin_returned_move_id': order.id})
+                    move.write(
+                        {'origin_returned_move_id': order.id,
+                         'button_pushed': True})
 
         return res

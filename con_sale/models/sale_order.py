@@ -56,7 +56,6 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-
         if self.partner_id:
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
@@ -79,7 +78,16 @@ class SaleOrder(models.Model):
         self.function_add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
+        self._get_components()
         return res
+
+    @api.multi
+    def _get_components(self):       
+        for pk in self.picking_ids:
+            for ml in pk.move_lines:
+                if ml.product_id.components_ids:
+                        ml.get_components_button()
+        return True
 
     @api.multi
     def function_add_picking_owner(self):
