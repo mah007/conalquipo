@@ -62,3 +62,32 @@ class ProjectTask(models.Model):
             'default_activity_ids': [(4, activity_id.id)],
         }
         return action
+
+    @api.onchange('sale_line_id')
+    def onchange_sale_line_id(self):
+        """
+        This function filters the users that are authorized to operate the
+        equipment associated with this task
+        :return: domain
+        """
+        domain = {}
+        users = []
+
+        if self.sale_line_id and self.sale_line_id.product_operate:
+            product_tmpl_id = self.sale_line_id.product_operate.product_tmpl_id
+            for employee in product_tmpl_id.employee_ids:
+                users.append(employee.user_id.id)
+                domain = {'user_id': [('id', 'in', users)]}
+
+        return {'domain': domain}
+
+    @api.model
+    def create(self, values):
+
+        res = super(ProjectTask, self).create(values)
+
+        if res.sale_line_id:
+            res.sale_line_id.write({
+                'assigned_operator': res.user_id.id})
+
+        return res
