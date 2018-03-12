@@ -6,11 +6,26 @@
          <field name="inherit_id" ref="sale.view_order_form"/>
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
+
+             <xpath expr="//sheet" position="before">
+                <field name="operators_services" invisible="1"/>
+                  <div class="alert alert-info" role="alert"
+                       style="margin-bottom:0px;"
+                         attrs="{'invisible': [('operators_services','=', 0)]}">
+                      Some products have an operator, these will be
+                      added to the quote when it is saved.
+                    </div>
+             </xpath>
+
+
             <xpath expr="//field[@name='order_line']/form//group" position="before">
                 <field name="mess_operated" invisible="1"/>
-                  <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
+                  <div class="alert alert-danger" role="alert"
+                       style="margin-bottom:0px;"
                          attrs="{'invisible': [('mess_operated','=',False)]}">
-                       This product supports an operator please remember to add it if necessary
+                      This product supports an operator please remember to
+                      add it if necessary, the operator will be appear when
+                      the sale order has been saved.
                     </div>
              </xpath>
 

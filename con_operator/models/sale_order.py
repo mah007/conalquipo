@@ -21,52 +21,22 @@
 from odoo import fields, models, api
 import logging
 
-
 _logger = logging.getLogger(__name__)
 
 
-class SaleOrderLine(models.Model):
+class SaleOrder(models.Model):
     _inherit = "sale.order"
+
+    operators_services = fields.Integer(string="Operator Services")
 
     @api.multi
     @api.onchange('order_line')
     def order_line_change(self):
         if self.order_line:
-            i = len(self.order_line)
-            line = self.order_line[i-1]
-            if line.service_operator:
-                _logger.info("!!!!!!!!!!!!!!!! %s ", line)
-                values = {
-                    'product_id': line.service_operator.id,
-                    'name': line.service_operator.name,
-                    'product_uom': line.service_operator.uom_id.id,
-                    'product_uom_qty': 1,
-                    'service_operator': False,
-                    'mess_operated': False,
-                    'add_operator': False,
-                    'owner_id': False,
-                    'order_id': line.order_id,
-                    'product_operate': line.product_id.id,
-                    'invoice_status': 'no',
-                    'bill_uom': False, 'discount': 0,
-                    'product_subleased': False, 'product_updatable': True,
-                    'qty_invoiced': 0, 'route_id': False,
-                    'analytic_tag_ids': [[6, False, []]], 'bill_uom_qty': 0,
-                    'qty_delivered': 0, 'end_date': False,
-                    'order_type': 'rent',
-                    'invoice_lines': [[6, False, []]],
-                    'product_packaging': False,
-                    'price_subtotal': 40000,
-                    'state': 'draft',
-                    'product_qty': 1,
-                    'qty_delivered_updateable': False,
-                    'customer_lead': 0,
-                    'start_date': False,
-                    'qty_to_invoice': 0, 'tax_id': [[6, False, [9]]],
-                    'price_unit': 40000,
+            operators = self.order_line.filtered(lambda line: line.add_operator)
+            _logger.info("Operators %s" % operators)
+            self.operators_services = len(operators)
 
-                }
-                new_line = self.order_line.new(values)
 
 
 class SaleOrderLine(models.Model):
@@ -106,10 +76,19 @@ class SaleOrderLine(models.Model):
                 line.write({'assigned_operator': self.assigned_operator})
 
     @api.model
-    def new(self, values={}, ref=None):
-        record = super(SaleOrderLine, self).new(values)
-
+    def create(self, values={}):
+        record = super(SaleOrderLine, self).create(values)
         if values.get('service_operator'):
+            new_line = values.copy()
             _logger.info("+++++++++++ %s ", values)
-
+            new_line.update({
+                'product_id': values['service_operator'],
+                'name': 'Attach Operator over %s'%(values['name']),
+                'product_operate': values['product_id'],
+            })
+            new_line.pop('service_operator')
+            _logger.info("New Register with Operator %s"%new_line)
+            # ~ Create new record for operator
+            super(SaleOrderLine, self).sudo().create(new_line)
+        _logger.info("Record Values on %s"%record)
         return record
