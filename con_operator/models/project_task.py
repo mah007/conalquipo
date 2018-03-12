@@ -27,6 +27,9 @@ _logger = logging.getLogger(__name__)
 class ProjectTask(models.Model):
     _inherit = 'project.task'
 
+
+
+
     # Function to create  event in the calendar for execution of the task
     # and that the programmer of the task can observe the availability
     # of the person assigned to the task.first create a meeting-type

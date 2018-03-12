@@ -32,6 +32,19 @@ class SaleOrder(models.Model):
     @api.multi
     @api.onchange('order_line')
     def order_line_change(self):
+        """On Changed function on line orders.
+
+          This function count the line that have a operator and update the
+          field operators_service with a integer value:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              None: Not return any value, only update the operator_service
+              fields on sale order.
+
+        """
         if self.order_line:
             operators = self.order_line.filtered(lambda line: line.add_operator)
             _logger.info("Operators %s" % operators)
@@ -59,7 +72,18 @@ class SaleOrderLine(models.Model):
     @api.multi
     @api.onchange('product_id')
     def product_id_change(self):
+        """Overloaded on changed function for product_id.
 
+          This overload check if the line have a operator and update the
+          field mess_operated with a boolean value:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: A dict with the product information.
+
+        """
         result = super(SaleOrderLine, self).product_id_change()
         if self.product_id.is_operated:
             self.mess_operated = True
@@ -68,7 +92,17 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('assigned_operator')
     def assigned_operator_change(self):
+        """On Changed function on assigned_operator that update the field
+        when is change from the move_line linked to the picking order.
 
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              None: Not return any value, only update the operator_service
+              fields on sale order.
+
+        """
         if self.assigned_operator:
             self.mess_operated = False
             move = self.env['stock.move'].search([('sale_line_id', '=', self.id)])
@@ -77,17 +111,28 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def create(self, values={}):
+        """Overload create function.
+
+          This change create a extra line for all the products that have a
+          assigned operator:
+
+          Args:
+              self (record): Encapsulate instance object.
+              values (dict): Dictionary with the field's values.
+
+          Returns:
+              Int: Return the record id created.
+
+        """
         record = super(SaleOrderLine, self).create(values)
         if values.get('service_operator'):
             new_line = values.copy()
-            _logger.info("+++++++++++ %s ", values)
             new_line.update({
                 'product_id': values['service_operator'],
                 'name': 'Attach Operator over %s'%(values['name']),
                 'product_operate': values['product_id'],
             })
             new_line.pop('service_operator')
-            _logger.info("New Register with Operator %s"%new_line)
             # ~ Create new record for operator
             super(SaleOrderLine, self).sudo().create(new_line)
         _logger.info("Record Values on %s"%record)

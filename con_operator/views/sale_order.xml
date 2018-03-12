@@ -9,12 +9,14 @@
 
              <xpath expr="//sheet" position="before">
                 <field name="operators_services" invisible="1"/>
-                  <div class="alert alert-info" role="alert"
-                       style="margin-bottom:0px;"
+                 <div role="alert"
+                      class="o_notification_box alert alert-dismissible alert-info" style="margin-bottom:0px;"
                          attrs="{'invisible': [('operators_services','=', 0)]}">
-                      Some products have an operator, these will be
-                      added to the quote when it is saved.
+                    <div>
+                      <strong>Some products have an operator, these will be
+                          added to the quote when it is saved.</strong>
                     </div>
+                </div>
              </xpath>
 
 
