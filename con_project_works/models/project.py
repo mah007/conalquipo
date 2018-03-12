@@ -6,7 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class projectWorks(models.Model):
+class ProjectWorks(models.Model):
     _inherit = "project.project"
 
     @api.one
@@ -20,7 +20,7 @@ class projectWorks(models.Model):
     @api.model
     def default_get(self, flds):
         # ~Todo: What that hell is flds?, change to a descriptive variable name
-        result = super(projectWorks, self).default_get(flds)
+        result = super(ProjectWorks, self).default_get(flds)
         return result
 
     work_code = fields.Char(string='Work Code')
@@ -82,34 +82,24 @@ class projectWorks(models.Model):
         """
         Method to count the products on works
         """
-        product_qty_in = 0.0
-        product_qty_out = 0.0
         for record in self:
+            product_qty_in = 0.0
             picking = self.env[
                 'stock.picking'].search(
-                    [['partner_id', '=', record.partner_id.id]])
+                    [['partner_id', '=', record.partner_id.id],
+                     ['location_dest_id.usage', '=', 'customer']])
             for data in picking:
-                if data.location_dest_id.usage == 'customer':
-                    moves = self.env[
-                        'stock.move'].search(
-                            [['picking_id', '=', data.id],
-                            ['location_dest_id', '=', data.location_dest_id.id],
-                            ['partner_id', '=', record.partner_id.id],
-                            ['state', '=', 'done']])
-                    if moves:
-                        for p in moves:
-                            product_qty_in += p.product_uom_qty
-                if data.location_dest_id.usage == 'internal':
-                    moves = self.env[
-                        'stock.move'].search(
-                            [['location_dest_id', '=', data.location_dest_id.id],
-                            ['partner_id', '=', record.partner_id.id],
-                            ['picking_id', '=', data.id],
-                            ['state', '=', 'done']])
-                    if moves:
-                        for p in moves:
-                            product_qty_out += p.product_uom_qty                                       
-            record.product_count = product_qty_in - product_qty_out
+                moves = self.env[
+                    'stock.move.line'].search(
+                        [['picking_id', '=', data.id],
+                         ['location_dest_id',
+                          '=',
+                          data.location_dest_id.id],
+                         ['state', '=', 'done']])
+                if moves:
+                    for p in moves:
+                        product_qty_in += p.qty_done
+            record.product_count = product_qty_in
 
     @api.multi
     def product_tree_view(self):
@@ -122,10 +112,9 @@ class projectWorks(models.Model):
         for data in picking:
             if data.location_dest_id.usage == 'customer':
                 move = self.env[
-                    'stock.move'].search(
+                    'stock.move.line'].search(
                         [['picking_id', '=', data.id],
                         ['location_dest_id', '=', data.location_dest_id.id],
-                        ['partner_id', '=', self.partner_id.id],
                         ['state', '=', 'done']])
                 for m in move:
                     moves_data.append(m.id)
@@ -133,7 +122,7 @@ class projectWorks(models.Model):
         return {
             'name': _('Products'),
             'domain': domain,
-            'res_model': 'stock.move',
+            'res_model': 'stock.move.line',
             'type': 'ir.actions.act_window',
             'view_id': False,
             'view_mode': 'tree,form',
@@ -166,5 +155,5 @@ class projectWorks(models.Model):
             values['work_code'] = str(p_code) + '-' + str(max_number)
         else:
             raise UserError(_("You need to select a client!"))
-        res = super(projectWorks, self).create(values)
+        res = super(ProjectWorks, self).create(values)
         return res

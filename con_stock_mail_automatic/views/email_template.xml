@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="0">
 
-        <record id="con_stock_mail_automatic.notification_email_template" model="mail.template">
+        <record id="stock_automatic_email_template" model="mail.template">
             <field name="model_id" ref="con_stock_mail_automatic.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
             <field name="name">Send stock moves mail</field>
@@ -18,44 +18,38 @@
     <table border="1">
         <thead>
             <tr>
-                <th>Reference</th>
+                <th colspan="8">Moves details</th>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <th>Work</th>
                 <th>Product</th>
-                <th>Origin</th>
-                <th>Destination</th>
-                <th>Quantity</th>
-                <th>State</th>
-                <th>Date expected</th>
+                <th>Client</th>
+                <th>Picking type</th>
             </tr>
         </thead>
         <tbody>
-        % for line in moves:                                   
+        % for line in moves:                           
             <tr>
                 <td>                                            
-                    ${line['reference']}                                   
+                    ${line['date']}                                   
                 </td>
-                <td>                                            
-                    ${line['name']}                                   
+                <td>
+                    ${line['picking_id'].project_id.name}
+                </td>                 
+                <td>
+                    ${line['product_id'].name}            
+                </td>           
+                <td>
+                     ${line['picking_id'].partner_id.name}
                 </td>
-                <td>                                            
-                    ${line['location_id'].complete_name}    
-                </td>            
-                <td>                                            
-                    ${line['location_dest_id'].complete_name}       
-                </td>
-                <td>                                            
-                    ${line['product_uom_qty']}                               
-                </td>
-                <td>                                         
-                    ${line['state']}                               
-                </td>                   
-                <td>   
-                    ${line['date_expected']}      
-                </td>            
+                <td>
+                    ${line['picking_id'].picking_type_id.name}  
+                </td>                          
             </tr>
         % endfor                                        
         </tbody>
     </table>
-
 % endif
 
 ]]></field>

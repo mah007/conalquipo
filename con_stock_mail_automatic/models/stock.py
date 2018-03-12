@@ -30,19 +30,21 @@ class StockEmailNotification(models.Model):
     _inherit = "stock.picking"
 
     @api.multi
-    def send_mail_notification(self):
+    def send_mail_notification_diary(self):
+        """
+        Stock mail diary notifications
+        """
         # senders
         uid = SUPERUSER_ID
         user_id = self.env[
             'res.users'].browse(uid)
-
         # Recipients
         recipients = []
         groups = self.env[
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Puede recibir notificaciones de movimientos diarios']])
+                  'Can receive stock notifications email diary']])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
@@ -55,22 +57,18 @@ class StockEmailNotification(models.Model):
         }
         formated = "".join(
             html_escape_table.get(c,c) for c in recipients)
-
-        # Stock picking objects
+        # Stock move objects
         move_ids = self.env[
             'stock.move'].search(
                 [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
                  ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
-
         # Mail template
         template = self.env.ref(
-            'con_stock_mail_automatic.notification_email_template')
+            'con_stock_mail_automatic.stock_automatic_email_template')
         mail_template = self.env['mail.template'].browse(template.id)
-
         # Mail subject
         subject = "Stock movements diary notification: %s" % (
             time.strftime('%d-%m-%Y'))
-
         # Update the context
         ctx = dict(self.env.context or {})
         ctx.update({
@@ -79,8 +77,7 @@ class StockEmailNotification(models.Model):
             'recipients': formated,
             'subject': subject
         })
-
         # Send mail
-        if mail_template:
+        if mail_template and move_ids:
             mail_template.with_context(ctx).send_mail(
                 self.id, force_send=True, raise_exception=True)
