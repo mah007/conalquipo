@@ -69,6 +69,22 @@ class SaleOrderLine(models.Model):
                                       change_default=True, ondelete='restrict')
     assigned_operator = fields.Many2one('res.users', string="Assigned Operator")
 
+    def _timesheet_create_task_prepare_values(self):
+        """Overloaded function for preparate fields values to create the new
+        task.
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: A dict with the task information.
+
+        """
+        result = super(SaleOrderLine,
+                       self)._timesheet_create_task_prepare_values()
+        result.update({'product_id': self.product_operate.id})
+        return result
+
     @api.multi
     @api.onchange('product_id')
     def product_id_change(self):
@@ -105,7 +121,8 @@ class SaleOrderLine(models.Model):
         """
         if self.assigned_operator:
             self.mess_operated = False
-            move = self.env['stock.move'].search([('sale_line_id', '=', self.id)])
+            move = self.env['stock.move'].search(
+                [('sale_line_id', '=', self.id)])
             for line in move.move_line_ids:
                 line.write({'assigned_operator': self.assigned_operator})
 

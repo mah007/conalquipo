@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import models, api
+from odoo import models, api, fields
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -27,8 +27,9 @@ _logger = logging.getLogger(__name__)
 class ProjectTask(models.Model):
     _inherit = 'project.task'
 
-
-
+    product_id = fields.Many2one('product.product', string="Product",
+                                 help="The associated product to the service "
+                                      "task")
 
     # Function to create  event in the calendar for execution of the task
     # and that the programmer of the task can observe the availability
