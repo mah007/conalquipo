@@ -11,45 +11,53 @@
             <field name="email_to">${ctx['recipients']}</field>
             <field name="body_html"><![CDATA[
 
-% set moves = ctx.get('move_ids', [])
+% set partners = ctx.get('partner_lst', [])
 
-% if moves:
+% set workers = ctx.get('works_lst', [])
 
-    <table border="1">
-        <thead>
+% set moves = ctx.get('move_line_ids', [])
+
+% if partners:
+    % for linep in partners:
+        <table border="1" width="800">
             <tr>
-                <th colspan="8">Moves details</th>
+                <th colspan="8" align="left" bgcolor="#FF9238">${linep['name']}</th>
             </tr>
-            <tr>
-                <th>Date</th>
-                <th>Work</th>
-                <th>Product</th>
-                <th>Client</th>
-                <th>Picking type</th>
-            </tr>
-        </thead>
-        <tbody>
-        % for line in moves:                           
-            <tr>
-                <td>                                            
-                    ${line['date']}                                   
-                </td>
-                <td>
-                    ${line['picking_id'].project_id.name}
-                </td>                 
-                <td>
-                    ${line['product_id'].name}            
-                </td>           
-                <td>
-                     ${line['picking_id'].partner_id.name}
-                </td>
-                <td>
-                    ${line['picking_id'].picking_type_id.name}  
-                </td>                          
-            </tr>
-        % endfor                                        
-        </tbody>
-    </table>
+            % if workers:
+                % for linew in workers:
+                    % if linew['partner_id'].name == linep['name']:
+                        <tr>
+                            <th colspan="8" bgcolor="#F1F1F1">${linew['name']}</th>
+                        </tr>
+                        % if moves:
+                            <tr>
+                                <th align="left" bgcolor="#A9A9A9">Product</th>
+                                <th align="left" bgcolor="#A9A9A9">Quantity</th>
+                                <th align="left" bgcolor="#A9A9A9">Picking type</th>
+                            </tr>
+                            % for linem in moves:
+                                % for linew in workers:
+                                    % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:
+                                        <tr>         
+                                            <td>
+                                                ${linem['product_id'].name}
+                                            </td>
+                                            <td>
+                                                ${linem['qty_done']}            
+                                            </td>          
+                                            <td>
+                                                ${linem['picking_id'].picking_type_id.name}
+                                            </td>                          
+                                        </tr>
+                                    % endif
+                                % endfor
+                            % endfor
+                        % endif
+                    % endif
+                % endfor                        
+            % endif
+        </table>
+    % endfor
 % endif
 
 ]]></field>
