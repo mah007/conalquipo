@@ -18,34 +18,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from odoo import fields, models
+import logging
 
-{
-    'name': 'Conalquipo Operator',
-    'version': '1.1',
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'category': 'Operator',
-    'sequence': 10,
-    'summary': '',
-    'depends': [
-        'base', 'project', 'sale', 'stock', 'hr', 'sale_timesheet'
-    ],
-    'description':
-    """
-    """,
-    'data': [
-        'views/project_task.xml',
-        'views/hr_employee.xml',
-        'views/product_template.xml',
-        'views/sale_order.xml',
-        'views/stock_picking.xml',
-    ],
-    'qweb': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+
+_logger = logging.getLogger(__name__)
+
+
+class HrContract(models.Model):
+    _inherit = "hr.employee"
+
+    is_operator = fields.Boolean('Is Operator')
+    product_ids = fields.Many2many(comodel_name='product.template',
+                                   string='Product', search='hr_products',
+                                   track_visibility='onchange')

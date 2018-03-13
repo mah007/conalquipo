@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_sale_order_form_inherit_con_operator">
+         <field name="name">sale.order.form.inherit.operator</field>
+         <field name="inherit_id" ref="sale.view_order_form"/>
+         <field name="model">sale.order</field>
+         <field name="arch" type="xml">
+
+             <xpath expr="//sheet" position="before">
+                <field name="operators_services" invisible="1"/>
+                 <div role="alert"
+                      class="o_notification_box alert alert-dismissible alert-info" style="margin-bottom:0px;"
+                         attrs="{'invisible': [('operators_services','=', 0)]}">
+                    <div>
+                      <strong>Some products have an operator, these will be
+                          added to the quote when it is saved.</strong>
+                    </div>
+                </div>
+             </xpath>
+
+
+            <xpath expr="//field[@name='order_line']/form//group" position="before">
+                <field name="mess_operated" invisible="1"/>
+                  <div class="alert alert-danger" role="alert"
+                       style="margin-bottom:0px;"
+                         attrs="{'invisible': [('mess_operated','=',False)]}">
+                      This product supports an operator please remember to
+                      add it if necessary, the operator will be appear when
+                      the sale order has been saved.
+                    </div>
+             </xpath>
+
+             <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
+                 <field name="add_operator" />
+                 <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}"/>
+             </xpath>
+
+         </field>
+    </record>
+</odoo>
