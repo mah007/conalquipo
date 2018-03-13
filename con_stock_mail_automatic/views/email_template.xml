@@ -32,18 +32,18 @@
                         % if moves:
                             <tr>
                                 <th align="left" bgcolor="#A9A9A9">Product</th>
-                                <th align="left" bgcolor="#A9A9A9">Quantity</th>
-                                <th align="left" bgcolor="#A9A9A9">Picking type</th>
+                                <th align="left" bgcolor="#A9A9A9">Remissions</th>
+                                <th align="left" bgcolor="#A9A9A9">Receipts</th>
                             </tr>
                             % for linem in moves:
                                 % for linew in workers:
                                     % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:
                                         <tr>         
                                             <td>
-                                                ${linem['product_id'].name}
+                                                ${linem['product_id'].name}           
                                             </td>
                                             <td>
-                                                ${linem['qty_done']}            
+                                                ${linem['qty_done']}
                                             </td>          
                                             <td>
                                                 ${linem['picking_id'].picking_type_id.name}
