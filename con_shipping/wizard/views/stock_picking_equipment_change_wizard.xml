@@ -2,7 +2,8 @@
 <odoo>
     <data>
         <!--Cancellation Wizard-->
-        <record id="validate_account_move_view" model="ir.ui.view">
+        <record id="stock_picking_equipment_change_wizard_view"
+                model="ir.ui.view">
             <field name="name">Equipment Change Wizard</field>
             <field name="model">stock.picking.equipment.change.wizard</field>
             <field name="arch" type="xml">
