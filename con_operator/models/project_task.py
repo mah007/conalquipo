@@ -31,15 +31,24 @@ class ProjectTask(models.Model):
                                  help="The associated product to the service "
                                       "task")
 
-    # Function to create  event in the calendar for execution of the task
-    # and that the programmer of the task can observe the availability
-    # of the person assigned to the task.first create a meeting-type
-    # activity which will be observed in the historical part of the task
-    #  and will load the calendar, where the event can be scheduled
-    # on the desired day.
-
     @api.multi
     def action_create_calendar_event(self):
+        """Action function for create event from task over calendar.
+
+        Function to create  event in the calendar for execution of the task
+        and that the programmer of the task can observe the availability
+        of the person assigned to the task.first create a meeting-type
+        activity which will be observed in the historical part of the task
+        and will load the calendar, where the event can be scheduled
+        on the desired day.:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: return a dictionary with the view action.
+
+        """
         self.ensure_one()
         meeting_act_type = self.env['mail.activity.type'].search(
             [('category', '=', 'meeting')], limit=1)
@@ -70,10 +79,17 @@ class ProjectTask(models.Model):
 
     @api.onchange('sale_line_id')
     def onchange_sale_line_id(self):
-        """
-        This function filters the users that are authorized to operate the
-        equipment associated with this task
-        :return: Dict(domain=Dict(field=List(Tuple)))
+        """On Changed function on sale_line_id.
+
+            This function filters the users that are authorized to operate the
+            equipment associated with this task:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: return a dictionary with a dynamic domain.
+
         """
         domain = {}
         users = []
@@ -88,11 +104,22 @@ class ProjectTask(models.Model):
 
     @api.model
     def create(self, values):
+        """Overloaded create function on ProjectTask.
 
+            This function write the operator selected in the task over the
+            sale order line on field assigned_operator:
+
+          Args:
+              self (record): Encapsulate instance object.
+              values (Dict): Dictionary with the fields values.
+
+          Returns:
+              Int: return the id's record created.
+
+        """
         res = super(ProjectTask, self).create(values)
 
         if res.sale_line_id:
             res.sale_line_id.write({
                 'assigned_operator': res.user_id.id})
-
         return res
