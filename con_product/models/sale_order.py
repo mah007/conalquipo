@@ -28,21 +28,14 @@ class SaleOrder(Model):
     @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
-        self._add_product_with_components()
+        self._get_components()
         return res
 
+
     @api.multi
-    def _add_product_with_components(self):
-        for so in self:
-            for ln in so.order_line:
-                if ln.product_id.components:
-                    for pk in so.picking_ids:
-                        for mv in pk.move_lines:
-                            mv.copy({
-                                'product_id': ln.product_id.id,
-                                'product_uom_qty': ln.product_uom_qty,
-                                'picking_id': pk.id,
-                                'not_explode': True,
-                            })
-                            break
+    def _get_components(self):
+        for pk in self.picking_ids:
+            for ml in pk.move_lines:
+                if ml.product_id.components_ids:
+                        ml.get_components_button()
         return True

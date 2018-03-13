@@ -24,3 +24,55 @@ msgstr "Programar Tarea"
 #: model:ir.model,name:con_operator.model_project_task
 msgid "Task"
 msgstr "Tarea"
+
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_sale_order_line_add_operator
+msgid "Add Operator"
+msgstr "Agregar Operador"
+
+#. module: con_operator
+#: model:ir.model,name:con_operator.model_hr_employee
+#: model:ir.model.fields,field_description:con_operator.field_product_product_employee_ids
+#: model:ir.model.fields,field_description:con_operator.field_product_template_employee_ids
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_product_product_is_operated
+#: model:ir.model.fields,field_description:con_operator.field_product_template_is_operated
+#: model:ir.ui.view,arch_db:con_operator.con_product_template_form_view_inherit
+msgid "Is Operated"
+msgstr "Es Operado"
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_hr_employee_is_operator
+msgid "Is Operator"
+msgstr "Es Operador"
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_sale_order_line_mess_operated
+#: model:ir.model.fields,field_description:con_operator.field_stock_picking_mess_operated
+msgid "Message Operated"
+msgstr "Mensaje para operador"
+
+#. module: con_operator
+#: model:ir.ui.view,arch_db:con_operator.con_product_template_form_view_inherit
+msgid "Operated"
+msgstr "Operado"
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_hr_employee_product_ids
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_operator
+#: model:ir.model.fields,field_description:con_operator.field_sale_order_line_service_operator
+msgid "Service Operator"
+msgstr "Servicio de Operador"
+
+#. module: con_operator
+#: model:ir.ui.view,arch_db:con_operator.view_sale_order_form_inherit_con_operator
+msgid "This product supports an operator please remember to add it if necessary"
+msgstr "Este producto soporta operador, por favor recuerde agregarlo si es necesario"
+

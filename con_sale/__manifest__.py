@@ -28,7 +28,6 @@
     'depends': ['base', 'sales_team', 'sale', 'website_quote', 'stock'],
     'data': ['views/sale_order_view.xml',
              'views/purchase_view.xml',
-             'views/stock_picking.xml',
              'wizard/views/sale_order_advertisement_wizard.xml'
             ],
 
