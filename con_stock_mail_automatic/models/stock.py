@@ -30,19 +30,21 @@ class StockEmailNotification(models.Model):
     _inherit = "stock.picking"
 
     @api.multi
-    def send_mail_notification(self):
+    def send_mail_notification_diary(self):
+        """
+        Stock mail diary notifications
+        """
         # senders
         uid = SUPERUSER_ID
         user_id = self.env[
             'res.users'].browse(uid)
-
         # Recipients
         recipients = []
         groups = self.env[
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Puede recibir notificaciones de movimientos diarios']])
+                  'Can receive stock notifications email diary']])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
@@ -55,31 +57,35 @@ class StockEmailNotification(models.Model):
         }
         formated = "".join(
             html_escape_table.get(c,c) for c in recipients)
-
-        # Stock picking objects
-        move_ids = self.env[
-            'stock.move'].search(
-                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
-
+        # Stock move objects
+        move_line_ids = self.env[
+            'stock.move.line'].search(
+                [['date', '>=', time.strftime('%Y-01-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-12-%d 23:59:59')]])
+        # Generate data for template
+        partner_lst = []
+        works_lst = []
+        for data in move_line_ids:
+            partner_lst.append(data.picking_id.partner_id)
+            works_lst.append(data.picking_id.project_id)
         # Mail template
         template = self.env.ref(
-            'con_stock_mail_automatic.notification_email_template')
+            'con_stock_mail_automatic.stock_automatic_email_template')
         mail_template = self.env['mail.template'].browse(template.id)
-
         # Mail subject
-        subject = "Stock movements diary notification: %s" % (
-            time.strftime('%d-%m-%Y'))
-
+        date = time.strftime('%d-%m-%Y') 
+        subject = "Stock movements diary notification: " + str(date) 
         # Update the context
         ctx = dict(self.env.context or {})
         ctx.update({
-            'move_ids': move_ids,
             'senders': user_id,
             'recipients': formated,
-            'subject': subject
+            'subject': subject,
+            'date': date,
+            'partner_lst': list(set(partner_lst)),
+            'works_lst': list(set(works_lst)),
+            'move_line_ids': list(set(move_line_ids))
         })
-
         # Send mail
         if mail_template:
             mail_template.with_context(ctx).send_mail(

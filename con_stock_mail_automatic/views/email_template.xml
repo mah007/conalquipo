@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="0">
 
-        <record id="con_stock_mail_automatic.notification_email_template" model="mail.template">
+        <record id="stock_automatic_email_template" model="mail.template">
             <field name="model_id" ref="con_stock_mail_automatic.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
             <field name="name">Send stock moves mail</field>
@@ -11,51 +11,53 @@
             <field name="email_to">${ctx['recipients']}</field>
             <field name="body_html"><![CDATA[
 
-% set moves = ctx.get('move_ids', [])
+% set partners = ctx.get('partner_lst', [])
 
-% if moves:
+% set workers = ctx.get('works_lst', [])
 
-    <table border="1">
-        <thead>
+% set moves = ctx.get('move_line_ids', [])
+
+% if partners:
+    % for linep in partners:
+        <table border="1" width="800">
             <tr>
-                <th>Reference</th>
-                <th>Product</th>
-                <th>Origin</th>
-                <th>Destination</th>
-                <th>Quantity</th>
-                <th>State</th>
-                <th>Date expected</th>
+                <th colspan="8" align="left" bgcolor="#FF9238">${linep['name']}</th>
             </tr>
-        </thead>
-        <tbody>
-        % for line in moves:                                   
-            <tr>
-                <td>                                            
-                    ${line['reference']}                                   
-                </td>
-                <td>                                            
-                    ${line['name']}                                   
-                </td>
-                <td>                                            
-                    ${line['location_id'].complete_name}    
-                </td>            
-                <td>                                            
-                    ${line['location_dest_id'].complete_name}       
-                </td>
-                <td>                                            
-                    ${line['product_uom_qty']}                               
-                </td>
-                <td>                                         
-                    ${line['state']}                               
-                </td>                   
-                <td>   
-                    ${line['date_expected']}      
-                </td>            
-            </tr>
-        % endfor                                        
-        </tbody>
-    </table>
-
+            % if workers:
+                % for linew in workers:
+                    % if linew['partner_id'].name == linep['name']:
+                        <tr>
+                            <th colspan="8" bgcolor="#F1F1F1">${linew['name']}</th>
+                        </tr>
+                        % if moves:
+                            <tr>
+                                <th align="left" bgcolor="#A9A9A9">Product</th>
+                                <th align="left" bgcolor="#A9A9A9">Remissions</th>
+                                <th align="left" bgcolor="#A9A9A9">Receipts</th>
+                            </tr>
+                            % for linem in moves:
+                                % for linew in workers:
+                                    % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:
+                                        <tr>         
+                                            <td>
+                                                ${linem['product_id'].name}           
+                                            </td>
+                                            <td>
+                                                ${linem['qty_done']}
+                                            </td>          
+                                            <td>
+                                                ${linem['picking_id'].picking_type_id.name}
+                                            </td>                          
+                                        </tr>
+                                    % endif
+                                % endfor
+                            % endfor
+                        % endif
+                    % endif
+                % endfor                        
+            % endif
+        </table>
+    % endfor
 % endif
 
 ]]></field>
