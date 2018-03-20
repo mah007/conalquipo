@@ -19,9 +19,14 @@
 #
 ##############################################################################
 
-from . import purchase_order
-from . import sale_order
-from . import stock_picking
-from . import account_invoice
-# from . import stock_move
-from . import product_oum
+from odoo import fields, models
+import logging
+_logger = logging.getLogger(__name__)
+
+
+
+class AccountInvoice(models.Model):
+    _inherit = 'account.invoice'
+
+
+    project_id = fields.Many2one('project.project', string="Work")
