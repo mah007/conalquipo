@@ -144,12 +144,11 @@ class SaleOrder(models.Model):
             
     @api.multi
     def write(self, values):
-        res = super(SaleOrder, self).write(values)
-        if values.get('project_id'):
-            return res
-        else:
-            raise UserError(_(
-                'You need specify a work in this sale order'))
+        if 'project_id' in values:
+            if values['project_id'] is False:
+                raise UserError(_(
+                    'You need specify a work in this sale order'))
+        return super(SaleOrder, self).write(values)
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
