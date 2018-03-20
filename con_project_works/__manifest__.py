@@ -17,6 +17,7 @@
         'views/project.xml',
         'views/sale_order.xml',
         'views/municipality.xml',
+        'wizard/views/project_product_available.xml',
     ],
     'qweb': [
     ],
