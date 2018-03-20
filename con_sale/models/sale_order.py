@@ -20,12 +20,12 @@
 ##############################################################################
 
 from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
 import logging
-
 _logger = logging.getLogger(__name__)
 
 
@@ -134,6 +134,22 @@ class SaleOrder(models.Model):
             'target': 'new',
         }
 
+    @api.model
+    def create(self, values):
+        res = super(SaleOrder, self).create(values)
+        if res.project_id:
+            return res
+        else:
+            raise UserError(_('You need specify a work in this sale order'))
+            
+    @api.multi
+    def write(self, values):
+        res = super(SaleOrder, self).write(values)
+        if values.get('project_id'):
+            return res
+        else:
+            raise UserError(_(
+                'You need specify a work in this sale order'))
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"

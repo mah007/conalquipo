@@ -249,6 +249,11 @@
                     </div>
                     <div class="footer">
                         <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.footer_logo)" style="border:auto; max-height: 100px; max-width: 288px;" />
+                        <div class="text-center">
+                            <div>
+                                Page: <span class="page"/> / <span class="topage"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
         </t>
