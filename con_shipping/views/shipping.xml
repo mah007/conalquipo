@@ -67,7 +67,8 @@
              <field name="model">sale.order</field>
              <field name="arch" type="xml">
                <field name="payment_term_id" position="after">
-                 <field name="carrier_type" widget="radio"  attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
+                 <field name="carrier_type" widget="radio"
+                        attrs="{'readonly':[('state','in',('done'))]}"/>
                </field>
              </field>
         </record>
@@ -82,15 +83,15 @@
                     <xpath expr="//div[@name='carrier_selection']" position="replace" />
                     <xpath expr="//field[@name='payment_term_id']" position="after">
                         <field name="carrier_id" context="{'order_id': id}"
-                           attrs="{'readonly':[('state','not in',('draft','sent'))],
+                           attrs="{'readonly':[('state','in',('done'))],
                                    'invisible': [('carrier_type','!=', 'company')]}"/>
-                        <field name="vehicle" attrs="{'readonly':[('state','not in',('draft','sent'))],
+                        <field name="vehicle" attrs="{'readonly':[('state','in',('done'))],
                          'invisible': [('carrier_type','!=', 'company')]}" string="Vehicle"/>
 
                         <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
                                attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
                         <button name="set_delivery_line" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
-                                    attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','not in',('draft','sent')), ('carrier_type', '!=', 'company')]}"/>
+                                    attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','in',('done')), ('carrier_type', '!=', 'company')]}"/>
                     </xpath>
                 </data>
             </field>

@@ -46,6 +46,19 @@ class SaleOrder(models.Model):
     sale_order_ids = fields.One2many('sale.order', 'sale_order_id',
                                      string='Sale Orders related')
 
+    @api.multi
+    def _prepare_invoice(self):
+        """
+        Prepare the dict of values to create the new invoice for a sales order. This method may be
+        overridden to implement custom invoice generation (making sure to call super() to establish
+        a clean extension chain).
+        """
+        invoice_vals = super(SaleOrder, self)._prepare_invoice()
+        invoice_vals.update({
+            'project_id': self.project_id.id
+        })
+        return invoice_vals
+
     @api.onchange('state')
     def onchange_state(self):
         for purchase_id in self.purchase_ids:
@@ -144,12 +157,11 @@ class SaleOrder(models.Model):
             
     @api.multi
     def write(self, values):
-        res = super(SaleOrder, self).write(values)
-        if values.get('project_id'):
-            return res
-        else:
-            raise UserError(_(
-                'You need specify a work in this sale order'))
+        if 'project_id' in values:
+            if values['project_id'] is False:
+                raise UserError(_(
+                    'You need specify a work in this sale order'))
+        return super(SaleOrder, self).write(values)
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
