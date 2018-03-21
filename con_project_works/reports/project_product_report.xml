@@ -9,15 +9,27 @@
         name="con_project_works.report_product_project"
         file="con_project_works.report_product_project" 
     />
-
+    
     <template id="report_product_project">
         <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <h2>Report title</h2>
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <center><h1>Saldo en obra</h1></center>
+                    <div class="row mt32">
+                        <div class="col-xs-3">
+                        <strong>Dates:</strong>
+                        <t t-foreach="project_ids" t-as="o">
+                            <span t-esc="o.name"/>
+                        </t>
+                        <p>
+                            <p>
+                            Date from: <span t-esc="date_from"/><br />
+                            Date to: <span t-esc="date_to"/>
+                            </p>
+                        </p>
+                        </div>
                     </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>

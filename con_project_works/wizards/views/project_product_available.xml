@@ -4,13 +4,14 @@
         <!--Project product available Wizard-->
         <record id="project_product_available_wizard_view" model="ir.ui.view">
             <field name="name">Project products available Wizard</field>
-            <field name="model">project.product.available.wizard</field>
+            <field name="model">project.product.available</field>
             <field name="arch" type="xml">
                 <form string="Project products available">
                     <group>
                         <group>
                             <field name="date_from" required="1"/>
                             <field name="date_to" required="1"/>
+                            <field name="company_id" invisible="1"/>
                         </group>
                         <group>
                             <field name="selectionby" required="1"/>
@@ -35,7 +36,7 @@
                         </page>
                     </notebook>
                     <footer>
-                        <button name="check_report" type="object" class="oe_highlight" string="Proceed"/>
+                        <button name="print_report" type="object" class="oe_highlight" string="Proceed"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
@@ -46,7 +47,7 @@
         <act_window id="action_wizard_project"
             name="Products available on works"
             src_model="project.project"
-            res_model="project.product.available.wizard"
+            res_model="project.product.available"
             view_mode="form"
             target="new"
             key2="client_action_multi"/>

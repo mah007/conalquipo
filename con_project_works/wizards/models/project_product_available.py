@@ -6,8 +6,18 @@ _logger = logging.getLogger(__name__)
 
 
 class ProjectProductAvailable(models.TransientModel):
-    _name = "project.product.available.wizard"
+    _name = "project.product.available"
 
+    @api.model
+    def _default_company(self):
+        # Get the company
+        company = self.env['res.users'].browse([self._uid]).company_id
+        return company
+
+
+    company_id = fields.Many2one(
+        'res.company', string="Company", required=True,
+        default=lambda self: self._default_company())
     date_from = fields.Date(
         string="From")
     date_to = fields.Date(
@@ -20,27 +30,18 @@ class ProjectProductAvailable(models.TransientModel):
     partner_ids = fields.Many2many('res.partner',
                                   string="Partners")
 
-    def _build_contexts(self, data):
-        result = {}
-        result['date_from'] = 'date_from' in data['form'] and data['form']['date_from'] or False
-        result['date_to'] = 'date_to' in data['form'] and data['form']['date_to'] or ''
-        result['selectionby'] = data['form']['selectionby'] or False
-        result['project_ids'] = data['form']['project_ids'] or False
-        result['partner_ids'] = data['form']['partner_ids'] or False
-        return result
-
     @api.multi
-    def check_report(self):
-        self.ensure_one()
-        data = {}
-        data['ids'] = self.env.context.get('active_ids', [])
-        data['model'] = self.env.context.get('active_model', 'ir.ui.menu')
-        data['form'] = self.read(['date_from', 'date_to', 'selectionby', 'project_ids', 'partner_ids'])[0]
-        used_context = self._build_contexts(data)
-        data['form']['used_context'] = dict(used_context, lang=self.env.context.get('lang') or 'en_US')
-        return self._print_report(data)
-
-    def _print_report(self, data):
+    def print_report(self):
+        """
+        To get the date and print the report
+        @return : return report
+        """
+        datas = {'ids': self.env.context.get('active_ids', [])}
+        res = self.read(
+            ['company_id', 'date_from', 'date_to',
+             'selectionby', 'project_ids', 'partner_ids'])
+        res = res and res[0] or {}
+        datas['form'] = res
         return self.env.ref(
             'con_project_works.action_report_product_project'
-        ).report_action(self, data=data)
+        ).report_action([], data=datas)
