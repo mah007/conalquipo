@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_report_product_project"
+        model="project.project"
+        string="Project product report"
+        report_type="qweb-pdf"
+        name="con_project_works.report_product_project"
+        file="con_project_works.report_product_project" 
+    />
+
+    <template id="report_product_project">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Report title</h2>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

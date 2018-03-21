@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Project product available Wizard-->
+        <record id="project_product_available_wizard_view" model="ir.ui.view">
+            <field name="name">Project products available Wizard</field>
+            <field name="model">project.product.available.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Project products available">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group>
+                            <field name="selectionby" required="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Work selection" attrs="{'invisible': [('selectionby', 'in', ['partner', ''])]}">
+                            <field name="project_ids">
+                                <tree>
+                                    <field name="name" string="Work"/>
+                                    <!-- <field name="work_code"/> -->
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Partners selection" attrs="{'invisible': [('selectionby', 'in', ['project', ''])]}">
+                            <field name="partner_ids">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="check_report" type="object" class="oe_highlight" string="Proceed"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_wizard_project"
+            name="Products available on works"
+            src_model="project.project"
+            res_model="project.product.available.wizard"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <menuitem id="menu_product_available_works"
+            name="Products available on works"
+            sequence="0"
+            parent="project.menu_project_config"
+            action="con_project_works.action_wizard_project"/>
+
+    </data>
+</odoo>
