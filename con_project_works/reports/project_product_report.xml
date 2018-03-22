@@ -14,21 +14,58 @@
         <t t-call="web.html_container">
             <t t-call="web.internal_layout">
                 <div class="page">
-                    <center><h1>Saldo en obra</h1></center>
+                    <center><h1>Products on works</h1></center>
                     <div class="row mt32">
                         <div class="col-xs-3">
-                        <strong>Dates:</strong>
-                        <t t-foreach="project_ids" t-as="o">
-                            <span t-esc="o.name"/>
-                        </t>
-                        <p>
+                        
+                            <strong>Dates:</strong>
                             <p>
-                            Date from: <span t-esc="date_from"/><br />
-                            Date to: <span t-esc="date_to"/>
+                                <p>
+                                Date from: <span t-esc="data['date_from']"/><br />
+                                Date to: <span t-esc="data['date_to']"/>
+                                </p>
                             </p>
-                        </p>
                         </div>
                     </div>
+            
+                    <t t-foreach="data['project_ids']" t-as="project">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <strong>
+                                            <span t-esc="project.name"/>
+                                        </strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th align="left" bgcolor="#A9A9A9">Date</th>
+                                    <th align="left" bgcolor="#A9A9A9">Reference</th>
+                                    <th align="left" bgcolor="#A9A9A9">Product</th>
+                                    <th align="left" bgcolor="#A9A9A9">Qty done</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data['move_line_ids']" t-as="moves">
+                                    <tr> 
+                                        <td>
+                                            <span t-esc="moves.date"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="moves.reference"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="moves.product_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="moves.qty_done"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
                 </div>
             </t>
         </t>

@@ -18,21 +18,14 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Work selection" attrs="{'invisible': [('selectionby', 'in', ['partner', ''])]}">
-                            <field name="project_ids">
-                                <tree>
-                                    <field name="name" string="Work"/>
-                                    <!-- <field name="work_code"/> -->
-                                    <field name="user_id"/>
-                                </tree>
-                            </field>
+                        <page string="Work selection" invisible="0">
+                            <field name="project_ids"/>
                         </page>
-                        <page string="Partners selection" attrs="{'invisible': [('selectionby', 'in', ['project', ''])]}">
-                            <field name="partner_ids">
-                                <tree>
-                                    <field name="name"/>
-                                </tree>
-                            </field>
+                        <page string="Partners selection" invisible="0">
+                            <field name="partner_ids"/>
+                        </page>
+                        <page string="Moves" invisible="0">
+                            <field name="move_line_ids"/>
                         </page>
                     </notebook>
                     <footer>
