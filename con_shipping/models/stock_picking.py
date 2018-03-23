@@ -62,6 +62,9 @@ class StockPicking(models.Model):
                                        compute='_carrier_tracking_ref')
     cancel_reason = fields.Text(strin="Cancel Reason",
                                 track_visibility='onchange')
+    delivery_cost = fields.Many2many('sale.order.line', 'order_line_picking_rel',
+                                  'sale_order_line_id', 'picking_id',
+                                    string="Delivery Cost")
 
     @api.onchange('carrier_type')
     def onchange_carrier_type(self):
@@ -150,18 +153,21 @@ class StockPicking(models.Model):
 
     @api.multi
     def action_cancel(self):
-        wizard_id = self.env['stock.picking.cancel.wizard'].create(
-            vals={'picking_ids': [(4, self._ids)]})
+        if self._context.get('wizard_cancel'):
+            wizard_id = self.env['stock.picking.cancel.wizard'].create(
+                vals={'picking_ids': [(4, self._ids)]})
 
-        return {
-            'name': 'Cancellation Wizard',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'stock.picking.cancel.wizard',
-            'res_id': wizard_id.id,
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
+            return {
+                'name': 'Cancellation Wizard',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'stock.picking.cancel.wizard',
+                'res_id': wizard_id.id,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+            }
+        else:
+            return self.action_do_cancel()
 
     @api.multi
     def action_do_cancel(self):
@@ -169,75 +175,75 @@ class StockPicking(models.Model):
         self.write({'is_locked': True})
         return True
 
-    @api.onchange('project_id')
-    def onchange_project_id(self):
+    # @api.onchange('project_id')
+    # def onchange_project_id(self):
+    #
+    #     if self.project_id and self.picking_type_code != 'outgoing':
+    #         location = self.env['stock.location'].search(
+    #             [('project_id', '=', self.project_id.id)], limit=1)
+    #
+    #         self.location_id = location.id
 
-        if self.project_id and self.picking_type_code != 'outgoing':
-            location = self.env['stock.location'].search(
-                [('project_id', '=', self.project_id.id)], limit=1)
+    # @api.onchange('location_id')
+    # def onchange_location_id(self):
+    #     line_ids = []
+    #     if self.partner_id and self.location_id \
+    #             and self.picking_type_code == 'incoming':
+    #
+    #         stock_picking = self.env['stock.picking'].search(
+    #             [('location_dest_id', '=', self.location_id.id),
+    #              ('project_id', '=', self.project_id.id),
+    #              ('partner_id', '=', self.partner_id.id)])
+    #         stock_move = self.env['stock.move'].search(
+    #             [('location_dest_id', '=', self.location_id.id),
+    #              ('state', '=', 'done'),
+    #              ('picking_id', 'in', stock_picking._ids),
+    #              ('partner_id', '=', self.partner_id.id),
+    #              ('origin_returned_move_id', '=', False)])
+    #         for move in stock_move:
+    #             new_move = self.env['stock.move'].create({
+    #                 'name': _('New Move:') + move.product_id.display_name,
+    #                 'product_id': move.product_id.id,
+    #                 'product_uom_qty': move.quantity_done,
+    #                 'product_uom': move.product_uom.id,
+    #                 'location_id': self.location_id.id,
+    #                 'location_dest_id': self.location_dest_id.id,
+    #                 'picking_id': self._origin.id,
+    #                 'returned': move.id,
+    #                 'button_pushed': True
+    #             })
+    #             data = (4, new_move.id)
+    #             line_ids.append(data)
+    #         self.update({'move_lines': line_ids})
 
-            self.location_id = location.id
-
-    @api.onchange('location_id')
-    def onchange_location_id(self):
-        line_ids = []
-        if self.partner_id and self.location_id \
-                and self.picking_type_code == 'incoming':
-
-            stock_picking = self.env['stock.picking'].search(
-                [('location_dest_id', '=', self.location_id.id),
-                 ('project_id', '=', self.project_id.id),
-                 ('partner_id', '=', self.partner_id.id)])
-            stock_move = self.env['stock.move'].search(
-                [('location_dest_id', '=', self.location_id.id),
-                 ('state', '=', 'done'),
-                 ('picking_id', 'in', stock_picking._ids),
-                 ('partner_id', '=', self.partner_id.id),
-                 ('origin_returned_move_id', '=', False)])
-            for move in stock_move:
-                new_move = self.env['stock.move'].create({
-                    'name': _('New Move:') + move.product_id.display_name,
-                    'product_id': move.product_id.id,
-                    'product_uom_qty': move.quantity_done,
-                    'product_uom': move.product_uom.id,
-                    'location_id': self.location_id.id,
-                    'location_dest_id': self.location_dest_id.id,
-                    'picking_id': self._origin.id,
-                    'returned': move.id,
-                    'button_pushed': True
-                })
-                data = (4, new_move.id)
-                line_ids.append(data)
-            self.update({'move_lines': line_ids})
-
-    @api.model
-    def create(self, vals):
-        move_lines = []
-        if vals.get('move_lines'):
-            for move in vals['move_lines']:
-                if move[2]:
-                    move_lines.append(move)
-            vals['move_lines'] = move_lines
-
-        res = super(StockPicking, self).create(vals)
-        self.add_stock_move(vals, res)
-
-        return res
-
-    @api.model
-    def add_stock_move(self, vals, picking):
-        if vals.get('move_lines'):
-            for move_line in vals['move_lines']:
-                stock_move = self.env['stock.move'].search(
-                    [('id', '=', move_line[1])])
-                stock_move.write({'picking_id': picking.id})
-            move = self.env['stock.move'].search(
-                [('location_dest_id', '=', picking.location_id.id),
-                 ('state', '=', 'done'),
-                 ('origin_returned_move_id', '=', False)], limit=1)
-            picking.write({'sale_id': move.picking_id.sale_id.id,
-                           'group_id': move.picking_id.group_id.id})
-            picking.sale_id.write({'picking_ids': [(4, picking.id)]})
+    # @api.model
+    # def create(self, vals):
+    #     move_lines = []
+    #     if vals.get('move_lines'):
+    #         for move in vals['move_lines']:
+    #             if move[2]:
+    #                 move_lines.append(move)
+    #         vals['move_lines'] = move_lines
+    #
+    #     res = super(StockPicking, self).create(vals)
+    #     self.add_stock_move(vals, res)
+    #
+    #     return res
+    #
+    # @api.model
+    # def add_stock_move(self, vals, picking):
+    #     if vals.get('move_lines'):
+    #         for move_line in vals['move_lines']:
+    #             stock_move = self.env['stock.move'].search(
+    #                 [('id', '=', move_line[1])])
+    #             stock_move.write({'picking_id': picking.id})
+    #         move = self.env['stock.move'].search(
+    #             [('location_dest_id', '=', picking.location_id.id),
+    #              ('state', '=', 'done'),
+    #              ('origin_returned_move_id', '=', False)], limit=1)
+    #         picking.write({'sale_id': move.picking_id.sale_id.id,
+    #                        'group_id': move.picking_id.group_id.id})
+    #         picking.sale_id.write({'picking_ids': [(4, picking.id)]})
 
     @api.multi
     def action_equipment_change(self):

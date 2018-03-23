@@ -22,4 +22,4 @@ from . import sale_order
 from . import vehicle_shipping
 from . import delivery_carrier
 from . import stock_picking
-from . import project
+# ~ from . import project

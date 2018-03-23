@@ -8,8 +8,10 @@
             <field name="arch" type="xml">
                 <form string="Advertisement">
                     <group>
+                        <field name="location_id"/>
                         <field name="location_dest_id"/>
                         <field name="reason" required="1"/>
+                        <field name="notes" required="1"/>
                     </group>
                     <footer>
                         <button string="Create Advertisement" name="action_create_advertisement"

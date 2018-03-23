@@ -14,8 +14,16 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     location_dest_id = fields.Many2one('stock.location',
                                        "Destination Location",
                                        domain=[('usage', '=', 'internal')])
+    reason = fields.Selection([
+        ('0', 'End project-work'),
+        ('2', 'Change Because of Malfunction'),
+        ('1', 'It seems very expensive'),
+        ('3', 'Bad attention'),
+        ('2', 'The equipment did not serve you'),
+        ('0', 'No longer need it'),
+    ], string="Reason")
 
-    reason = fields.Text(string="Reason",)
+    notes = fields.Text(string="Notes",)
 
     @api.multi
     def action_create_advertisement(self):
@@ -29,12 +37,13 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             'origin': self.sale_order_id.name,
             'sale_id': self.sale_order_id.id,
             'group_id': self.sale_order_id.procurement_group_id.id,
-            'note': self.reason,
+            'return_reason': self.reason,
+            'user_notes': self.notes
         })
-        self.sale_order_id.write({'picking_ids': [(4, picking.id)]})
         stock_move = self.env['stock.move'].search(
             [('location_dest_id', '=', self.location_id.id),
-             ('state', '=', 'done')])
+             ('state', '=', 'done'),
+             ('picking_id.project_id', '=', self.project_id.id)])
 
         for move in stock_move:
             new_move = self.env['stock.move'].create({
@@ -48,8 +57,11 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 'picking_id': picking.id,
                 'group_id': move.group_id.id,
                 'state': 'draft',
-                'button_pushed': True
+                'button_pushed': True,
+                'sale_line_id': move.sale_line_id.id,
             })
+
+        self.sale_order_id.update({'picking_ids': [(4, picking.id)]})
 
         return {'type': 'ir.actions.act_window_close'}
 

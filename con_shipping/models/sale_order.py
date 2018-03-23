@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -186,6 +186,8 @@ class SaleOrder(models.Model):
                 'price_unit': price_unit,
                 'tax_id': [(6, 0, taxes_ids)],
                 'is_delivery': True,
+                'delivery_type': 'out' if x == 0 else 'in',
+                'picking_ids': False,
             }
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
@@ -199,11 +201,31 @@ class SaleOrder(models.Model):
 
         res = super(SaleOrder, self).action_confirm()
 
-        stock_location_partner = self.env['stock.location'].search([(
-            'project_id', '=', self.project_id.id)])
+        # stock_location_partner = self.env['stock.location'].search([(
+        #     'project_id', '=', self.project_id.id)])
 
-        for pk in self.picking_ids:
-            pk.write({'location_dest_id': stock_location_partner.id})
-            for move_line in pk.move_lines:
-                move_line.write({'location_dest_id': stock_location_partner.id})
+        # ~ dl_ids: Deliveries Lines Ids
+        dl_ids = self.env['sale.order.line'].search(
+            [('delivery_type', 'in', ['in']),
+             ('picking_ids', '=', False),
+             ('order_id', '=', self.id)])
+
+        customer_location = self.env.ref('stock.stock_location_customers')
+
+        for picking in self.picking_ids:
+            if picking.state not in ['done', 'cancel'] and \
+                    picking.location_dest_id.id == customer_location.id:
+                dl_ids.update({'picking_ids': [(4, picking.id)]})
         return res
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    delivery_type = fields.Selection([('in', 'collection'),
+                                           ('out', 'delivery')],
+                                          string="Delivery Type")
+    picking_ids = fields.Many2many('stock.picking', 'order_line_picking_rel',
+                                  'picking_id', 'sale_order_line_id',
+                                   string="Pickings",
+                                   help="Linked picking to the delivery cost")

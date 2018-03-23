@@ -135,7 +135,8 @@ class SaleOrder(models.Model):
             vals={'partner_id': self.partner_id.id,
                   'project_id': self.project_id.id,
                   'sale_order_id': self.id,
-                  'location_id': self.project_id.stock_location_id.id,
+                  'location_id': self.env.ref(
+                      'stock.stock_location_customers').id,
                   })
         return {
             'name': 'Advertisement Wizard',
