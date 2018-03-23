@@ -57,10 +57,10 @@ class Importer(object):
             reader.next()
             for row in reader:
                 counter += 1
-                product = self.search('product.product', [
+                product = self.search('product.template', [
                     ('default_code', '=', row[0])])
                 if product:
-                    print "Producto ya existe, omitiendo creacion."
+                    print("Producto ya existe, omitiendo creacion.")
                     continue
 
                 categ_id = self.search('product.category', [
@@ -74,11 +74,11 @@ class Importer(object):
                     'uom_id': uom_id[0] if uom_id else False,
                     'type': 'product',
                 }
-                product_id = self.create('product.product', vals)
-                print counter
-                print "Producto creado, ID# %d" % product_id
+                product_id = self.create('product.template', vals)
+                print(counter)
+                print("Producto creado, ID# %d" % product_id)
 
-        print "\n\nCarga de productos terminada de forma satisfactoria!!!\n\n"
+        print("\n\nCarga de productos terminada de forma satisfactoria!!!\n\n")
 
 if __name__ == '__main__':
     obj = Importer()
