@@ -3,16 +3,18 @@ odoo.define('web_export_view', function (require) {
 
     var core = require('web.core');
     var Sidebar = require('web.Sidebar');
+    var session = require('web.session');
+
     var QWeb = core.qweb;
 
     var _t = core._t;
 
     Sidebar.include({
 
-        redraw: function () {
+        _redraw: function () {
             var self = this;
             this._super.apply(this, arguments);
-            if (self.getParent().ViewManager.active_view.type == 'list') {
+            if (self.getParent().renderer.viewType == 'list') {
                 self.$el.find('.o_dropdown').last().append(QWeb.render('WebExportTreeViewXls', {widget: self}));
                 self.$el.find('.export_treeview_xls').on('click', self.on_sidebar_export_treeview_xls);
             }
@@ -22,7 +24,7 @@ odoo.define('web_export_view', function (require) {
             // Select the first list of the current (form) view
             // or assume the main view is a list view and use that
             var self = this,
-                view = this.getParent(),
+                view = self.getParent(),
                 children = view.getChildren();
             if (children) {
                 children.every(function (child) {
@@ -39,23 +41,26 @@ odoo.define('web_export_view', function (require) {
             }
             var export_columns_keys = [];
             var export_columns_names = [];
-            $.each(view.visible_columns, function () {
-                if (this.tag == 'field' && (this.widget === undefined || this.widget != 'handle')) {
+            var column_index = 0;
+            $.each(view.renderer.columns, function () {
+                if (this.tag == 'field' && (this.attrs.widget === undefined || this.attrs.widget != 'handle')) {
                     // non-fields like `_group` or buttons
-                    export_columns_keys.push(this.id);
-                    export_columns_names.push(this.string);
+                    // Fix change th[title] with .o_column_sortable
+                    export_columns_keys.push(column_index);
+                    export_columns_names.push(view.$el.find('.o_list_view > thead > tr > .o_column_sortable:eq('+column_index+')')[0].textContent);
                 }
+                column_index ++;
             });
             var export_rows = [];
             $.blockUI();
             if (children) {
                 // find only rows with data
-                view.$el.find('.o_list_view > tbody > tr[data-id]:has(.o_list_record_selector input:checkbox:checked)')
+                view.$el.find('.o_list_view > tbody > tr.o_data_row:has(.o_list_record_selector input:checkbox:checked)')
                 .each(function () {
                     var $row = $(this);
                     var export_row = [];
                     $.each(export_columns_keys, function () {
-                        var $cell = $row.find('td[data-field="' + this + '"]')
+                        var $cell = $row.find('td.o_data_cell:eq('+this+')')
                         var $cellcheckbox = $cell.find('.o_checkbox input:checkbox');
                         if ($cellcheckbox.length) {
                             export_row.push(
@@ -85,10 +90,10 @@ odoo.define('web_export_view', function (require) {
                     export_rows.push(export_row);
                 });
             }
-            view.session.get_file({
+            session.get_file({
                 url: '/web/export/xls_view',
                 data: {data: JSON.stringify({
-                    model: view.model,
+                    model: view.modelName,
                     headers: export_columns_names,
                     rows: export_rows
                 })},

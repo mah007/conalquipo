@@ -60,8 +60,8 @@ class StockEmailNotification(models.Model):
         # Stock move objects
         move_line_ids = self.env[
             'stock.move.line'].search(
-                [['date', '>=', time.strftime('%Y-01-%d 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-12-%d 23:59:59')]])
+                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
         # Generate data for template
         partner_lst = []
         works_lst = []
