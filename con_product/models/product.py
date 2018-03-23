@@ -149,7 +149,7 @@ class ProductTemplate(Model):
                                 default=False)
     components_ids = fields.One2many(
         'product.components', 'product_id', string='Components')
-    origin_location_id = 
+
 
 
 class ProductProduct(Model):
