@@ -21,6 +21,8 @@
 
 from odoo.models import Model, api
 from odoo import fields
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(Model):
