@@ -21,17 +21,36 @@
 
 from odoo.models import Model, api
 from odoo import fields
+from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(Model):
     _inherit = "stock.picking"
 
     project_id = fields.Many2one('project.project', string="Project")
+    attachment_ids = fields.Many2many('ir.attachment', compute='_compute_attachment_ids', string="Main Attachments")
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping",
                                    compute="_get_merge_address")
     invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
+
+    def _compute_attachment_ids(self):
+        """
+        Get the products attachments
+        """
+        for data in self:
+            for products in data.move_lines:
+                attachment_ids = self.env[
+                    'ir.attachment'].search([
+                        ('res_id', '=', products.product_tmpl_id.id), ('res_model', '=', 'product.template')]).ids
+                message_attachment_ids = self.mapped(
+                    'message_ids.attachment_ids').ids
+                data.attachment_ids = list(
+                    set(attachment_ids) - set(
+                        message_attachment_ids))
 
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
