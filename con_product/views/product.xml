@@ -66,11 +66,12 @@
                 <data>
 
                     <field name="property_stock_inventory" position="after">
-                        <field name="product_origin" required="1"/>
+                        <field name="product_origin"
+                               attrs="{'required':[('type', '=', 'product')]}"/>
                     </field>
 
                     <field name="invoice_policy" position="after">
-                        <field name=""
+                        <field name="replenishment_charge"/>
                     </field>
 
                     <field name="categ_id" position="after">
