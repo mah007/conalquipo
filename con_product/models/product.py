@@ -149,7 +149,10 @@ class ProductTemplate(Model):
                                 default=False)
     components_ids = fields.One2many(
         'product.components', 'product_id', string='Components')
-
+    product_origin = fields.Many2one('stock.location',
+                                     string="Product's Origin")
+    replenishment_charge = fields.Many2one('product.template',
+                                           string='Replenishment charge')
 
 
 class ProductProduct(Model):

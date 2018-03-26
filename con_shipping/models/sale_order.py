@@ -206,7 +206,7 @@ class SaleOrder(models.Model):
 
         # ~ dl_ids: Deliveries Lines Ids
         dl_ids = self.env['sale.order.line'].search(
-            [('delivery_type', 'in', ['in']),
+            [('delivery_type', 'in', ['out']),
              ('picking_ids', '=', False),
              ('order_id', '=', self.id)])
 

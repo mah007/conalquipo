@@ -23,13 +23,6 @@ from odoo import tools, models, fields, api, _
 from odoo.exceptions import UserError
 
 
-class ProductTemplate(models.Model):
-    _inherit = 'product.template'
-
-    replenishment_charge = fields.Many2one('product.template',
-                                           string='Replenishment charge')
-
-
 class ProductUoM(models.Model):
     _inherit = 'product.uom'
 

@@ -65,6 +65,14 @@
             <field name="arch" type="xml">
                 <data>
 
+                    <field name="property_stock_inventory" position="after">
+                        <field name="product_origin" required="1"/>
+                    </field>
+
+                    <field name="invoice_policy" position="after">
+                        <field name=""
+                    </field>
+
                     <field name="categ_id" position="after">
                       <field name="location_id" string="Location"/>
                       <field name="state_id" string="State"/>
