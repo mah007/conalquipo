@@ -39,9 +39,8 @@
             <field name="model">stock.picking</field>
             <field name="arch" type="xml">
                 <tree decoration-info="state == 'draft'"
-                      decoration-muted="state == 'cancel'"
                       decoration-danger="state not in ('cancel', 'done') and scheduled_date &lt; current_date"
-                      decoration-warning="state=='waiting'"
+                      decoration-warning="state in ('waiting', 'cancel')"
                       decoration-primary="state=='confirmed'"
                       decoration-success="state=='done'"
                       string="Picking list">
