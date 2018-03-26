@@ -29,6 +29,8 @@ class StockPicking(Model):
     _inherit = "stock.picking"
 
     project_id = fields.Many2one('project.project', string="Project")
+    attachments_ids = fields.Many2many(
+        'ir.attachment', string="Attachments")
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(string="Shipping",
                                    compute="_get_merge_address")
