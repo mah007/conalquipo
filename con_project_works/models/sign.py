@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Ingeniería, Aplicaciones y Software S.A.S
-#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
+#    Copyright (C) 2003-2018 IAS (<http://www.ias.com.co>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,9 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from odoo import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
 
-from . import res_muni
-from . import project
-from . import sale_order
-from . import sign
 
+class SignInherit(models.Model):
+    _inherit = "signature.request"
+
+    sale_id = fields.Many2one('sale.order', string='Sale order')

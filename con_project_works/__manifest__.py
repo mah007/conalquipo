@@ -8,12 +8,13 @@
     'sequence': 10,
     'summary': 'Projects, Works',
     'depends': ['base', 'project', 'con_client_code', 'sale', 'con_sale',
-                'delivery'],
+                'delivery', 'website_sign'],
     'description':
     """
         Project Management for works
     """,
     'data': [
+        'views/sign.xml',
         'views/project.xml',
         'views/sale_order.xml',
         'views/municipality.xml',

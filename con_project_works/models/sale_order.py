@@ -32,6 +32,21 @@ class SaleOrder(Model):
                                    compute="_get_merge_address")
     invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
+    signs_ids = fields.Many2many(
+        'signature.request',
+        compute='_compute_sign_ids',
+        string="Main signs")
+
+    def _compute_sign_ids(self):
+        """
+        Get the products attachments
+        """
+        for data in self:
+            signs_ids = self.env[
+                'signature.request'].search([
+                    ('sale_id', '=', data.id)]).ids
+            data.signs_ids = list(
+                set(signs_ids))
 
     @api.multi
     @api.onchange('partner_id')
