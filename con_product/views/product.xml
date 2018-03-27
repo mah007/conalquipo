@@ -66,7 +66,8 @@
                 <data>
 
                     <field name="list_price" position="before">
-                        <field name="comp_amount_mod" />
+                        <field name="min_qty_rental"/>
+                        <field name="comp_amount_mod" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}"/>
                     </field>
 
                     <field name="property_stock_inventory" position="after">

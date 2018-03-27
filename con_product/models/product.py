@@ -159,7 +159,7 @@ class ProductTemplate(Model):
         string="Amount modifications by components",
         required=True,
         track_visibility='onchange')
-
+    min_qty_rental = fields.Integer(string='Min Qty rental')
 
 class ProductProduct(Model):
     _inherit = "product.product"
