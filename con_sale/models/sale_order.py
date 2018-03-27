@@ -192,6 +192,21 @@ class SaleOrderLine(models.Model):
                                           'sale_order_line_id',
                                           string="Purchase Order Line",
                                           readonly=True, copy=False)
+    stock_move_status = fields.Text(
+        string="Stock move status", compute="_compute_move_status",
+        store=True)
+
+    def _compute_move_status(self):
+        """
+        Get the products stock move status
+        """
+        for data in self:
+            move = self.env[
+                'stock.move'].search([
+                    ('product_id', '=', data.product_id.id),
+                    ('sale_line_id', '=', data.id)])
+            for m in move:
+                data.stock_move_status = m.state
 
     @api.onchange('owner_id')
     def onchange_owner_id(self):

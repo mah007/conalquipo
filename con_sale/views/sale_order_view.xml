@@ -28,6 +28,8 @@
              <xpath expr="//field[@name='order_line']/tree" position="attributes">
                     <attribute name="create">true</attribute>
                     <attribute name="editable"/>
+                    <attribute name="decoration-danger">stock_move_status == 'cancel'</attribute>
+                    <attribute name="default_order">create_date</attribute>
              </xpath>
 
              <xpath expr="//group[@name='technical']" position="after">
@@ -40,9 +42,11 @@
              </xpath>
 
              <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
-                 <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
-                 <field name="bill_uom_qty"
+                    <field name="create_date" invisible="1"/>
+                    <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                    <field name="bill_uom_qty"
                         attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                    <field name="stock_move_status" invisible="1"/>
              </xpath>
              <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
                     <field name="owner_id"/>
