@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import tools, models, api, _
+from odoo import tools, models, fields, api, _
 from odoo.exceptions import UserError
 
 

@@ -24,4 +24,4 @@ from . import sale_order
 from . import stock_picking
 from . import account_invoice
 # from . import stock_move
-from . import product_oum
+from . import product_uom

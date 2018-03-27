@@ -28,6 +28,8 @@ _logger = logging.getLogger(__name__)
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+
+
     @api.model
     def create(self, vals):
 

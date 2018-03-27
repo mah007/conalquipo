@@ -109,6 +109,12 @@ class StockPicking(Model):
         return out_str
 
 
+class StockMoveLine(Model):
+    _inherit = 'stock.move.line'
+
+    project_id = fields.Many2one('project.project', string='Work')
+
+
 class SaleOrder(Model):
     _inherit = 'sale.order'
 

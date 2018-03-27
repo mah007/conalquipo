@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -154,7 +154,8 @@ class SaleOrder(models.Model):
             else:
                 super(SaleOrder, self).set_delivery_line()
 
-    def _create_delivery_line(self, carrier, price_unit, receipt=False):
+    def _create_delivery_line(self, carrier, price_unit, delivery_type='out',
+                              picking_ids=False):
         """
         Overwrote function that create the line of the delivery on the sale
         order lines, this function have been modified for add the delivery
@@ -175,23 +176,24 @@ class SaleOrder(models.Model):
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
         # Create the sales order line
-        for x in range(2):
-            values = {
-                'order_id': self.id or self._origin.id,
-                'name': '{} - {}'.format(
-                    carrier.name, 'Entrega' if x == 0 else 'Recogida'),
-                'product_uom_qty': 1,
-                'product_uom': carrier.product_id.uom_id.id,
-                'product_id': carrier.product_id.id,
-                'price_unit': price_unit,
-                'tax_id': [(6, 0, taxes_ids)],
-                'is_delivery': True,
-            }
-            if self.order_line:
-                values['sequence'] = self.order_line[-1].sequence + 1
-            self.update({'order_line': [(0, 0, values)]})
-            if not receipt:
-                break
+        values = {
+            'order_id': self.id or self._origin.id,
+            'name': '{} - {}'.format(
+                carrier.name, _('Delivery') if delivery_type == 'out' else
+                _('Receive')),
+            'product_uom_qty': 1,
+            'product_uom': carrier.product_id.uom_id.id,
+            'product_id': carrier.product_id.id,
+            'price_unit': price_unit,
+            'tax_id': [(6, 0, taxes_ids)],
+            'is_delivery': True,
+            'delivery_type': delivery_type,
+            'picking_ids': picking_ids,
+        }
+        if self.order_line:
+            values['sequence'] = self.order_line[-1].sequence + 1
+        self.update({'order_line': [(0, 0, values)]})
+
         return True
 
     @api.multi
@@ -199,11 +201,31 @@ class SaleOrder(models.Model):
 
         res = super(SaleOrder, self).action_confirm()
 
-        stock_location_partner = self.env['stock.location'].search([(
-            'project_id', '=', self.project_id.id)])
+        # stock_location_partner = self.env['stock.location'].search([(
+        #     'project_id', '=', self.project_id.id)])
 
-        for pk in self.picking_ids:
-            pk.write({'location_dest_id': stock_location_partner.id})
-            for move_line in pk.move_lines:
-                move_line.write({'location_dest_id': stock_location_partner.id})
+        # ~ dl_ids: Deliveries Lines Ids
+        dl_ids = self.env['sale.order.line'].search(
+            [('delivery_type', 'in', ['out']),
+             ('picking_ids', '=', False),
+             ('order_id', '=', self.id)])
+
+        customer_location = self.env.ref('stock.stock_location_customers')
+
+        for picking in self.picking_ids:
+            if picking.state not in ['done', 'cancel'] and \
+                    picking.location_dest_id.id == customer_location.id:
+                dl_ids.update({'picking_ids': [(4, picking.id)]})
         return res
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    delivery_type = fields.Selection([('in', 'collection'),
+                                           ('out', 'delivery')],
+                                          string="Delivery Type")
+    picking_ids = fields.Many2many('stock.picking', 'order_line_picking_rel',
+                                  'picking_id', 'sale_order_line_id',
+                                   string="Pickings",
+                                   help="Linked picking to the delivery cost")
