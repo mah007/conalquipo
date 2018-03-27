@@ -36,7 +36,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                               src_location, des_location, origin, sale_id,
                               group_id, return_reason, user_notes,
                               carrier_type, carrier_id, vehicle_id,
-                              license_plate):
+                              license_plate, child_move=False):
         """
         This function create a picking and the stock moves necessaries
         for do a movement between the locations for the return of the
@@ -75,10 +75,13 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             'vehicle_id': vehicle_id or False,
             'license_plate': license_plate or False,
         })
-        stock_move = self.env['stock.move'].search(
-            [('location_dest_id', '=', src_location),
-             ('state', '=', 'done'),
-             ('picking_id.project_id', '=', project_id)])
+        if not child_move:
+            stock_move = self.env['stock.move'].search(
+                [('location_dest_id', '=', src_location),
+                 ('state', '=', 'done'),
+                 ('picking_id.project_id', '=', project_id)])
+        else:
+            stock_move = [child_move]
 
         for move in stock_move:
             product_origin = move.product_id.product_origin.id
@@ -87,7 +90,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     partner_id, project_id, picking_type, des_location,
                     product_origin, origin, sale_id, group_id, return_reason,
                     user_notes, carrier_type, carrier_id, vehicle_id,
-                    license_plate))
+                    license_plate, move))
             self.env['stock.move'].create({
                 'name': _('New Move:') + move.product_id.display_name,
                 'product_id': move.product_id.id,
