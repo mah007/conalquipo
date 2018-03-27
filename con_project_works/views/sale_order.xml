@@ -23,6 +23,12 @@
             </div>
         </xpath>
 
+        <notebook position="inside">
+            <page string="Signs">
+                <field name="signs_ids"/>
+            </page>
+        </notebook>
+
       </field>
     </record>
 
