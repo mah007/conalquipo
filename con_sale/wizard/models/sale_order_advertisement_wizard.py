@@ -126,7 +126,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         self.sale_order_id.update({'picking_ids': [(6, 0, so_pickings)]})
 
         # Set the delivery cost on sale order
-        if self.vehicle_id:
+        if self.carrier_type == 'company' and self.vehicle_id:
             veh_carrier = self.env['delivery.carrier.cost'].search(
                 [('vehicle', '=', self.vehicle_id.id),
                  ('delivery_carrier_id', '=', self.carrier_id.id)])

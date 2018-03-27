@@ -8,15 +8,17 @@
             <field name="arch" type="xml">
                 <form string="Advertisement">
                     <group>
-                        <field name="location_id"/>
+                        <field name="location_id" invisible="1"/>
                         <field name="location_dest_id"/>
                         <field name="reason" required="1"/>
                         <field name="notes" required="1"/>
                     </group>
                     <group>
                         <field name="carrier_type" />
-                        <field name="carrier_id"/>
-                        <field name="vehicle_id"/>
+                        <field name="carrier_id"
+                               attrs="{'invisible': [('carrier_type', '=', 'client')]}"/>
+                        <field name="vehicle_id"
+                               attrs="{'invisible': [('carrier_type', '=', 'client')]}"/>
                     </group>
                     <footer>
                         <button string="Create Advertisement" name="action_create_advertisement"
