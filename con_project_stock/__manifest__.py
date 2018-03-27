@@ -38,6 +38,7 @@
                 'con_client_code', 'delivery'],
     'data': [
         'views/stock_picking.xml',
+        'views/stock_move.xml',
     ],
     'qweb': [],
     'images': [],
