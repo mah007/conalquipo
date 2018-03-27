@@ -17,7 +17,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     carrier_type = fields.Selection(
         [('client', 'Client'),
          ('company', 'Company')], default="company", string="Responsable")
-    carrier_id = fields.Many2one("delivery.carrier", string="Carrier")
+    carrier_id = fields.Many2one('delivery.carrier', string="Carrier")
     vehicle_id = fields.Many2one('fleet.vehicle', string="Delivery Vehicle")
 
     reason = fields.Selection([
@@ -120,8 +120,19 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             self.vehicle_id.id, self.vehicle_id.license_plate
         ))
 
-        for picking in picking_ids:
-            self.sale_order_id.update({'picking_ids': [(4, picking)]})
+        so_pickings = [x.id for x in self.sale_order_id.picking_ids]
+        new_pickings = [x.id for x in picking_ids]
+        so_pickings.extend(new_pickings)
+        self.sale_order_id.update({'picking_ids': [(6, 0, so_pickings)]})
+
+        # Set the delivery cost on sale order
+        if self.vehicle_id:
+            veh_carrier = self.env['delivery.carrier.cost'].search(
+                [('vehicle', '=', self.vehicle_id.id),
+                 ('delivery_carrier_id', '=', self.carrier_id.id)])
+            self.sale_order_id._create_delivery_line(
+                self.carrier_id, veh_carrier.cost, delivery_type='in',
+                picking_ids=[(6, 0, new_pickings)])
 
         return {'type': 'ir.actions.act_window_close'}
 

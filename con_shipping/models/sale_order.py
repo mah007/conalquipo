@@ -154,7 +154,8 @@ class SaleOrder(models.Model):
             else:
                 super(SaleOrder, self).set_delivery_line()
 
-    def _create_delivery_line(self, carrier, price_unit, receipt=False):
+    def _create_delivery_line(self, carrier, price_unit, delivery_type='out',
+                              picking_ids=False):
         """
         Overwrote function that create the line of the delivery on the sale
         order lines, this function have been modified for add the delivery
@@ -175,25 +176,24 @@ class SaleOrder(models.Model):
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
         # Create the sales order line
-        for x in range(2):
-            values = {
-                'order_id': self.id or self._origin.id,
-                'name': '{} - {}'.format(
-                    carrier.name, 'Entrega' if x == 0 else 'Recogida'),
-                'product_uom_qty': 1,
-                'product_uom': carrier.product_id.uom_id.id,
-                'product_id': carrier.product_id.id,
-                'price_unit': price_unit,
-                'tax_id': [(6, 0, taxes_ids)],
-                'is_delivery': True,
-                'delivery_type': 'out' if x == 0 else 'in',
-                'picking_ids': False,
-            }
-            if self.order_line:
-                values['sequence'] = self.order_line[-1].sequence + 1
-            self.update({'order_line': [(0, 0, values)]})
-            if not receipt:
-                break
+        values = {
+            'order_id': self.id or self._origin.id,
+            'name': '{} - {}'.format(
+                carrier.name, _('Delivery') if delivery_type == 'out' else
+                _('Receive')),
+            'product_uom_qty': 1,
+            'product_uom': carrier.product_id.uom_id.id,
+            'product_id': carrier.product_id.id,
+            'price_unit': price_unit,
+            'tax_id': [(6, 0, taxes_ids)],
+            'is_delivery': True,
+            'delivery_type': delivery_type,
+            'picking_ids': picking_ids,
+        }
+        if self.order_line:
+            values['sequence'] = self.order_line[-1].sequence + 1
+        self.update({'order_line': [(0, 0, values)]})
+
         return True
 
     @api.multi
