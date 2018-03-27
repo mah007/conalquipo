@@ -30,9 +30,11 @@ class StockMove(Model):
     _inherit = "stock.move"
 
     project_id = fields.Many2one(
-        'project.project', string="Project", compute='_get_project')
+        'project.project', string="Project", compute='_get_project',
+        store=True)
     partner_id = fields.Many2one(
-        'res.partner', string="Partner", compute='_get_partner')
+        'res.partner', string="Partner", compute='_get_partner',
+        store=True)
 
     def _get_project(self):
         for data in self:
@@ -46,9 +48,11 @@ class StockMoveLine(Model):
     _inherit = "stock.move.line"
 
     project_id = fields.Many2one(
-        'project.project', string="Project", compute='_get_project')
+        'project.project', string="Project", compute='_get_project',
+        store=True)
     partner_id = fields.Many2one(
-        'res.partner', string="Partner", compute='_get_partner')
+        'res.partner', string="Partner", compute='_get_partner',
+        store=True)
 
     def _get_project(self):
         for data in self:
