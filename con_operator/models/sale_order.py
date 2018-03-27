@@ -148,6 +148,8 @@ class SaleOrderLine(models.Model):
                 'product_id': values['service_operator'],
                 'name': 'Attach Operator over %s'%(values['name']),
                 'product_operate': values['product_id'],
+                'product_uom': self.env['product.product'].browse(
+                    [values['service_operator']]).uom_id.id
             })
             new_line.pop('service_operator')
             # ~ Create new record for operator
