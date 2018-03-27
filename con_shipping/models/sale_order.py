@@ -149,7 +149,7 @@ class SaleOrder(models.Model):
                     [('vehicle', '=', rec.vehicle.id),
                      ('delivery_carrier_id', '=', rec.carrier_id.id)])
                 rec._create_delivery_line(
-                    rec.carrier_id, veh_carrier.cost, receipt=True)
+                    rec.carrier_id, veh_carrier.cost)
                 rec.delivery_price = veh_carrier.cost
             else:
                 super(SaleOrder, self).set_delivery_line()
