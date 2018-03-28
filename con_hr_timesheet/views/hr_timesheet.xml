@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_analytic_line_form_inherit_cont" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.inherit.cont</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="timesheet_grid.timesheet_view_form"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <field name="project_id" position="before">
+                    <field name="partner_id" readonly="0" required="1"/>
+                </field>
+
+                <field name="project_id" position="replace">
+                    <field name="project_id" required="1" class="o_timesheet_tour_project_name"
+                    domain="[['partner_id', '=', partner_id]]"
+                    context="{'default_partner_id': partner_id}"/>
+                </field>
+
+            </data>
+        </field>
+    </record>
+
+</odoo>

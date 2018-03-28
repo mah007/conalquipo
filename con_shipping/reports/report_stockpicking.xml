@@ -13,15 +13,21 @@
                                     <tr>
                                         <td>
                                            <div style="border: 1px solid #FF8E39; color:#A0A0A0; text-align:center; width:40px; height:40px;
-                                            border-radius:6px!important; padding-top:10px;">D</div>
+                                            border-radius:6px!important; padding-top:10px;">
+                                                <span t-field="o.scheduled_date" t-options ='{"format": "dd"}'></span>
+                                            </div>
                                         </td>
                                         <td>
                                              <div style="border: 1px solid #FF8E39; color:#A0A0A0; text-align:center; width:40px; height:40px;
-                                              border-radius:6px!important; padding-top:10px;">M</div>
+                                              border-radius:6px!important; padding-top:10px;">
+                                                <span t-field="o.scheduled_date" t-options ='{"format": "MM"}'></span>
+                                              </div>
                                         </td>
                                         <td>
                                             <div style="border: 1px solid #FF8E39; color:#A0A0A0; text-align:center; width:40px; height:40px;
-                                             border-radius:6px!important; padding-top:10px;">A</div>
+                                             border-radius:6px!important; padding-top:10px;">
+                                                <span t-field="o.scheduled_date" t-options ='{"format": "YYYY"}'></span>
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>

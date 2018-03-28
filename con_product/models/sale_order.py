@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
-from odoo.models import Model, api
+from odoo.models import Model, api, _
+from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(Model):
@@ -39,3 +42,15 @@ class SaleOrder(Model):
                 if ml.product_id.components_ids:
                         ml.get_components_button()
         return True
+
+
+class SaleOrderLine(Model):
+    _inherit = "sale.order.line"
+
+    @api.onchange('bill_uom_qty')
+    def min_bill_qty(self):
+        product_qty_temp = self.product_id.product_tmpl_id.min_qty_rental
+        product_bill_qty = self.bill_uom_qty
+        if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
+            raise UserError(_("The min qty for rental this product is:"
+                              " %s") % product_qty_temp)            

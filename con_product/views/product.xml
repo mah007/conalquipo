@@ -65,6 +65,11 @@
             <field name="arch" type="xml">
                 <data>
 
+                    <field name="list_price" position="before">
+                        <field name="min_qty_rental"/>
+                        <field name="comp_amount_mod" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}"/>
+                    </field>
+
                     <field name="property_stock_inventory" position="after">
                         <field name="product_origin"
                                attrs="{'required':[('type', '=', 'product')]}"/>
