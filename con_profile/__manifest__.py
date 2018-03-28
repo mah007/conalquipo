@@ -37,7 +37,8 @@
                 'sale', 'purchase', 'stock', 'stock_real_availability',
                 'con_client_code', 'con_project_works',
                 'con_project_translates', 'con_project_stock', 'con_sale',
-                'con_shipping', 'con_purchase_translates'],
+                'con_shipping', 'con_purchase_translates',
+                'con_hr_timesheet'],
     'data': [
         'data/res.country.state.csv',
         'data/res.country.municipality.csv',
