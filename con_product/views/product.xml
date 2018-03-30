@@ -66,7 +66,7 @@
                 <data>
 
                     <field name="list_price" position="before">
-                        <field name="min_qty_rental"/>
+                        <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
                         <field name="comp_amount_mod" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}"/>
                     </field>
 
@@ -94,6 +94,10 @@
                             <field name="components" />
                             <label for="components"/>
                         </div>
+                        <div>
+                            <field name="multiples_uom"/>
+                            <label for="multiples_uom"/>
+                        </div>
                     </xpath>
 
                     <xpath expr="//page[@name='general_information']" position="after">
@@ -106,6 +110,16 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Multiples UOM" attrs="{'invisible':[('multiples_uom', '=', False)]}">
+                            <field name="uoms_ids">
+                                <tree string="UOMs for product" editable="bottom">
+                                    <field name="uom_id" options="{'no_create_edit':True}"/>
+                                    <field name="quantity"/>
+                                    <field name="cost_byUom"/>
+                                </tree>
+                            </field>
+                        </page>
+
                     </xpath>
 
                 </data>

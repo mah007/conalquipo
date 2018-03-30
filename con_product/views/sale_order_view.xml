@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_sale_order_form_inherit_con_comp">
+        <field name="name">sale.order.form.inherit.component</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
+                <field name="product_components" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
+                <field name="components_ids" attrs="{'invisible': [('product_components','=',False)]}" mode="tree">
+                    <tree string="Sales Order Lines" editable="bottom">
+                        <field name="product_child_id"/>
+                        <field name="quantity"/>
+                        <field name="extra"/>
+                    </tree>
+                </field>
+            </xpath>
+
+         </field>
+    </record>
+</odoo>
