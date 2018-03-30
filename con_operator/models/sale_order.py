@@ -143,15 +143,14 @@ class SaleOrderLine(models.Model):
         """
         record = super(SaleOrderLine, self).create(values)
         if values.get('service_operator'):
-            new_line = values.copy()
-            new_line.update({
+            new_line = {
                 'product_id': values['service_operator'],
                 'name': 'Attach Operator over %s'%(values['name']),
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
-                    [values['service_operator']]).uom_id.id
-            })
-            new_line.pop('service_operator')
+                    [values['service_operator']]).uom_id.id,
+                'order_id': record.order_id.id
+            }
             # ~ Create new record for operator
             super(SaleOrderLine, self).sudo().create(new_line)
         _logger.info("Record Values on %s"%record)

@@ -67,6 +67,7 @@ class SaleOrderLine(Model):
               Dict: A dict with the product information.
 
         """
+        sale_line_obj = self.env['sale.order.line']
         result = super(SaleOrderLine, self).product_id_change()
         components_ids = self.product_id.product_tmpl_id.components_ids
         if components_ids:
@@ -117,5 +118,16 @@ class SaleOrderLine(Model):
                    record.bill_uom_qty < uom_list.quantity:
                     raise UserError(_(
                         "The min qty for rental this product is:"
-                        " %s") % uom_list.quantity)      
+                        " %s") % uom_list.quantity)
+        # Create in lines extra products for componentes
+        if record.components_ids:
+            for data in record.components_ids:
+                if data.extra:
+                    new_line = {
+                        'product_id': data.product_child_id.id,
+                        'name': 'Extra component for %s'%(
+                            record.product_id.name),
+                        'order_id': record.order_id.id
+                    } 
+                    super(SaleOrderLine, self).sudo().create(new_line)
         return record
