@@ -123,11 +123,15 @@ class SaleOrderLine(Model):
         if record.components_ids:
             for data in record.components_ids:
                 if data.extra:
+                    qty = data.quantity * record.product_uom_qty
                     new_line = {
                         'product_id': data.product_child_id.id,
                         'name': 'Extra component for %s'%(
                             record.product_id.name),
-                        'order_id': record.order_id.id
+                        'order_id': record.order_id.id,
+                        'product_uom_qty': qty,
+                        'bill_uom_qty': qty,
+                        '': data.product_child_id.product_tmpl_id.uom_id.id
                     } 
                     super(SaleOrderLine, self).sudo().create(new_line)
         return record
