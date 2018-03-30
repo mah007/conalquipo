@@ -41,12 +41,12 @@ class StockMoveComponents(models.Model):
         move_obj = self.env['stock.move']
         if not self.product_id.components_ids:
             raise UserError(_("The following product '%s' dont"
-                              " have components") % self.product_id.name)
+                              " 1have components") % self.product_id.name)
         if self.product_id.components_ids and not self.button_pushed:
             trigger = True
         if trigger:
             self.button_pushed = True
-            for data in self.product_id.components_ids:
+            for data in self.sale_line_id.components_ids:
                 if data.child:
                     name = data.product_child_id.product_tmpl_id.name
                     uom = data.product_child_id.product_tmpl_id.uom_id.id
