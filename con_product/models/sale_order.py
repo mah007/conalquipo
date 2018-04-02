@@ -20,6 +20,7 @@
 ##############################################################################
 
 from odoo.models import Model, api, _
+from odoo import fields
 from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
@@ -47,10 +48,90 @@ class SaleOrder(Model):
 class SaleOrderLine(Model):
     _inherit = "sale.order.line"
 
-    @api.onchange('bill_uom_qty')
+    product_components = fields.Boolean('Have components?')
+    components_ids = fields.Many2many(
+        'product.components', string='Components')
+
+    @api.multi
+    @api.onchange('product_id')
+    def product_id_change(self):
+        """Overloaded on changed function for product_id.
+
+          This overload check if the line have a componentes and update the
+          field product_components with a boolean value:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: A dict with the product information.
+
+        """
+        sale_line_obj = self.env['sale.order.line']
+        result = super(SaleOrderLine, self).product_id_change()
+        components_ids = self.product_id.product_tmpl_id.components_ids
+        if components_ids:
+            self.product_components = True
+            self.components_ids = components_ids
+        return result
+
+    @api.onchange('bill_uom', 'bill_uom_qty')
     def min_bill_qty(self):
+        """
+        Get min qty and uom of product
+        """
         product_qty_temp = self.product_id.product_tmpl_id.min_qty_rental
         product_bill_qty = self.bill_uom_qty
-        if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
-            raise UserError(_("The min qty for rental this product is:"
-                              " %s") % product_qty_temp)            
+        product_muoms = self.product_id.product_tmpl_id.multiples_uom
+        if product_muoms != True:
+            self.price_unit = self.product_id.product_tmpl_id.list_price
+            if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
+                raise UserError(_("The min qty for rental this product is:"
+                                  " %s") % product_qty_temp)
+        else:
+            for uom_list in self.product_id.product_tmpl_id.uoms_ids:
+                self.price_unit = uom_list.cost_byUom
+                if self.bill_uom.id == uom_list.uom_id.id and \
+                   self.bill_uom_qty < uom_list.quantity:
+                    raise UserError(_(
+                        "The min qty for rental this product is:"
+                        " %s") % uom_list.quantity)                    
+
+    @api.model
+    def create(self, values):
+        """
+        Get min qty and uom of product
+        """
+        record = super(SaleOrderLine, self).create(values)
+        product_qty_temp = record.product_id.product_tmpl_id.min_qty_rental
+        product_bill_qty = record.bill_uom_qty
+        product_muoms = record.product_id.product_tmpl_id.multiples_uom
+        if product_muoms != True:
+            record.price_unit = record.product_id.product_tmpl_id.list_price
+            if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
+                raise UserError(_("The min qty for rental this product is:"
+                                  " %s") % product_qty_temp)
+        else:
+            for uom_list in record.product_id.product_tmpl_id.uoms_ids:
+                record.price_unit = uom_list.cost_byUom
+                if record.bill_uom.id == uom_list.uom_id.id and \
+                   record.bill_uom_qty < uom_list.quantity:
+                    raise UserError(_(
+                        "The min qty for rental this product is:"
+                        " %s") % uom_list.quantity)
+        # Create in lines extra products for componentes
+        if record.components_ids:
+            for data in record.components_ids:
+                if data.extra:
+                    qty = data.quantity * record.product_uom_qty
+                    new_line = {
+                        'product_id': data.product_child_id.id,
+                        'name': 'Extra component for %s'%(
+                            record.product_id.name),
+                        'order_id': record.order_id.id,
+                        'product_uom_qty': qty,
+                        'bill_uom_qty': qty,
+                        '': data.product_child_id.product_tmpl_id.uom_id.id
+                    } 
+                    super(SaleOrderLine, self).sudo().create(new_line)
+        return record
