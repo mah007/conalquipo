@@ -160,6 +160,11 @@ class ProductTemplate(Model):
         required=True,
         track_visibility='onchange')
     min_qty_rental = fields.Integer(string='Min Qty rental')
+    multiples_uom = fields.Boolean(string="Has multiples uom?",
+                                default=False)
+    uoms_ids = fields.One2many(
+        'product.multiples.uom', 'product_id', string='Multiples UOMs')
+
 
 class ProductProduct(Model):
     _inherit = "product.product"
@@ -234,5 +239,17 @@ class ProductComponents(Model):
 
     product_id = fields.Many2one('product.template', string="Product parent")
     product_child_id = fields.Many2one('product.product', string="Product component")       
-    quantity = fields.Integer('Quantity', default=1)
+    quantity = fields.Integer('Default quantity', default=1)
     child = fields.Boolean('Child', default=True)
+    extra = fields.Boolean('Extra product')
+
+
+class ProductMultiplesUom(Model):
+    _name = "product.multiples.uom"
+    _description = "A model for store multiples uoms"
+    _rec_name = "uom_id"
+
+    product_id = fields.Many2one('product.template', string="Product parent")
+    uom_id = fields.Many2one('product.uom', string="Sale UOM")       
+    quantity = fields.Integer('Min quantity', default=1)
+    cost_byUom = fields.Float('Cost by UOM')
