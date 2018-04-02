@@ -149,13 +149,13 @@ class SaleOrder(models.Model):
                     [('vehicle', '=', rec.vehicle.id),
                      ('delivery_carrier_id', '=', rec.carrier_id.id)])
                 rec._create_delivery_line(
-                    rec.carrier_id, veh_carrier.cost)
+                    rec.carrier_id, veh_carrier.cost, False, True)
                 rec.delivery_price = veh_carrier.cost
             else:
                 super(SaleOrder, self).set_delivery_line()
 
-    def _create_delivery_line(self, carrier, price_unit, delivery_type='out',
-                              picking_ids=False):
+    def _create_delivery_line(self, carrier, price_unit, picking_ids=False,
+                              receipt=False):
         """
         Overwrote function that create the line of the delivery on the sale
         order lines, this function have been modified for add the delivery
@@ -176,24 +176,26 @@ class SaleOrder(models.Model):
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
         # Create the sales order line
-        values = {
-            'order_id': self.id or self._origin.id,
-            'name': '{} - {}'.format(
-                carrier.name, _('Delivery') if delivery_type == 'out' else
-                _('Receive')),
-            'product_uom_qty': 1,
-            'product_uom': carrier.product_id.uom_id.id,
-            'product_id': carrier.product_id.id,
-            'price_unit': price_unit,
-            'tax_id': [(6, 0, taxes_ids)],
-            'is_delivery': True,
-            'delivery_type': delivery_type,
-            'picking_ids': picking_ids,
-        }
-        if self.order_line:
-            values['sequence'] = self.order_line[-1].sequence + 1
-        self.update({'order_line': [(0, 0, values)]})
-
+        for x in range(2):
+            values = {
+                'order_id': self.id or self._origin.id,
+                'name': '{} - {}'.format(
+                    carrier.name, _('Delivery') if x == 0 else
+                    _('Receive')),
+                'product_uom_qty': 1,
+                'product_uom': carrier.product_id.uom_id.id,
+                'product_id': carrier.product_id.id,
+                'price_unit': price_unit,
+                'tax_id': [(6, 0, taxes_ids)],
+                'is_delivery': True,
+                'delivery_direction': 'out' if x == 0 else 'in',
+                'picking_ids': picking_ids,
+            }
+            if self.order_line:
+                values['sequence'] = self.order_line[-1].sequence + 1
+            self.update({'order_line': [(0, 0, values)]})
+            if not receipt:
+                break
         return True
 
     @api.multi
@@ -206,7 +208,7 @@ class SaleOrder(models.Model):
 
         # ~ dl_ids: Deliveries Lines Ids
         dl_ids = self.env['sale.order.line'].search(
-            [('delivery_type', 'in', ['out']),
+            [('delivery_direction', 'in', ['out']),
              ('picking_ids', '=', False),
              ('order_id', '=', self.id)])
 
@@ -222,7 +224,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    delivery_type = fields.Selection([('in', 'collection'),
+    delivery_direction = fields.Selection([('in', 'collection'),
                                            ('out', 'delivery')],
                                           string="Delivery Type")
     picking_ids = fields.Many2many('stock.picking', 'order_line_picking_rel',
