@@ -17,8 +17,11 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     carrier_type = fields.Selection(
         [('client', 'Client'),
          ('company', 'Company')], default="company", string="Responsable")
-    carrier_id = fields.Many2one('delivery.carrier', string="Carrier")
-    vehicle_id = fields.Many2one('fleet.vehicle', string="Delivery Vehicle")
+    sale_order_line_id = fields.Many2one(
+        'sale.order.line', string='Fleet Line',
+        domain="[('order_id', '=', sale_order_id), "
+               "('delivery_direction', 'in', ['in']),"
+               "('picking_ids', '=', False)]")
 
     reason = fields.Selection([
         ('0', 'End project-work'),
@@ -31,12 +34,17 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
 
     notes = fields.Text(string="Notes",)
 
+    @api.onchange('carrier_type')
+    def _onchange_carrier_type(self):
+        for rec in self:
+            if rec.carrier_type == 'client':
+                self.sale_order_line_id = False
+
     @api.multi
     def _create_stock_picking(self, partner_id, project_id, picking_type,
                               src_location, des_location, origin, sale_id,
                               group_id, return_reason, user_notes,
-                              carrier_type, carrier_id, vehicle_id,
-                              license_plate, child_move=False):
+                              carrier_type, child_move=False):
         """
         This function create a picking and the stock moves necessaries
         for do a movement between the locations for the return of the
@@ -53,11 +61,20 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         :param return_reason: The reason for the product's return (Char).
         :param user_notes: Notes about the picking return (Char).
         :param carrier_type: Carrier type of the Picking (Char).
-        :param carrier_id: Linked picking Carrier's ID
-        :param vehicle_id: Linked vehicle's ID to the picking
-        :param license_plate: Linked Vehicle's license plate
+        :param child_move: Movement to copy (Recordset).
         :return: A record with the picking ID's
         """
+
+        if not child_move:
+            stock_move = self.env['stock.move'].search(
+                [('location_dest_id', '=', src_location),
+                 ('state', '=', 'done'),
+                 ('picking_id.project_id', '=', project_id)])
+        else:
+            stock_move = [child_move]
+            location_id = self.env['stock.location'].browse([des_location])
+
+
         picking_ids = []
         picking = self.env['stock.picking'].create({
             'partner_id': partner_id,
@@ -71,17 +88,8 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             'return_reason': return_reason,
             'user_notes': user_notes,
             'carrier_type': carrier_type,
-            'carrier_id': carrier_id or False,
-            'vehicle_id': vehicle_id or False,
-            'license_plate': license_plate or False,
         })
-        if not child_move:
-            stock_move = self.env['stock.move'].search(
-                [('location_dest_id', '=', src_location),
-                 ('state', '=', 'done'),
-                 ('picking_id.project_id', '=', project_id)])
-        else:
-            stock_move = [child_move]
+
 
         for move in stock_move:
             product_origin = move.product_id.product_origin.id
@@ -89,10 +97,11 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 picking_ids.extend(self._create_stock_picking(
                     partner_id, project_id, picking_type, des_location,
                     product_origin, origin, sale_id, group_id, return_reason,
-                    user_notes, carrier_type, carrier_id, vehicle_id,
-                    license_plate, move))
+                    user_notes, carrier_type, move))
             self.env['stock.move'].create({
                 'name': _('New Move:') + move.product_id.display_name,
+                'partner_id': partner_id,
+                'project_id': project_id,
                 'product_id': move.product_id.id,
                 'product_uom_qty': move.quantity_done,
                 'product_uom': move.product_uom.id,
@@ -119,8 +128,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             self.location_dest_id.id, self.sale_order_id.name,
             self.sale_order_id.id,
             self.sale_order_id.procurement_group_id.id, self.reason,
-            self.notes, self.carrier_type, self.carrier_id.id,
-            self.vehicle_id.id, self.vehicle_id.license_plate
+            self.notes, self.carrier_type
         ))
 
         so_pickings = [x.id for x in self.sale_order_id.picking_ids]
@@ -129,13 +137,12 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         self.sale_order_id.update({'picking_ids': [(6, 0, so_pickings)]})
 
         # Set the delivery cost on sale order
-        if self.carrier_type == 'company' and self.vehicle_id:
-            veh_carrier = self.env['delivery.carrier.cost'].search(
-                [('vehicle', '=', self.vehicle_id.id),
-                 ('delivery_carrier_id', '=', self.carrier_id.id)])
-            self.sale_order_id._create_delivery_line(
-                self.carrier_id, veh_carrier.cost, delivery_type='in',
-                picking_ids=[(6, 0, new_pickings)])
+        if self.carrier_type == 'company':
+            self.sale_order_line_id.update(
+                {'picking_ids': [(6, 0, [x.id for x in picking_ids if
+                                         x.location_id.id ==
+                                         self.location_id.id])
+                                 ]})
 
         return {'type': 'ir.actions.act_window_close'}
 

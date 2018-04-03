@@ -28,6 +28,14 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     mess_operated = fields.Boolean('Message Operated', default=False)
+    reason = fields.Selection([
+        ('0', 'End project-work'),
+        ('2', 'Change Because of Malfunction'),
+        ('1', 'It seems very expensive'),
+        ('3', 'Bad attention'),
+        ('2', 'The equipment did not serve you'),
+        ('0', 'No longer need it'),
+    ], string="Reason")
 
 
 class StockMoveLine(models.Model):
