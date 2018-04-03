@@ -135,11 +135,14 @@ class ProductTemplate(Model):
                  ('product_state', '=', self.state_id.id)])
             self.location_id = location.id
 
-    state_id = fields.Many2one('product.states', string="State",
-                               default=_get_default_state)
-    color = fields.Char(string="Color", default="#FFFFFF",
-                        help="Select the color of the state")
-    location_id = fields.Many2one('stock.location', string="Actual location")
+    state_id = fields.Many2one(
+        'product.states', string="State",  required=True,
+        default=_get_default_state)
+    color = fields.Char(
+        string="Color", default="#FFFFFF", required=True,
+        help="Select the color of the state")
+    location_id = fields.Many2one(
+        'stock.location', string="Actual location", required=True)
     rental = fields.Boolean('Can be Rent')
     components = fields.Boolean(string="Has components?",
                                 help="if this field is true the bills "
