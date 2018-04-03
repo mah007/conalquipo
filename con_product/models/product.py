@@ -153,12 +153,6 @@ class ProductTemplate(Model):
                                      string="Product's Origin")
     replenishment_charge = fields.Many2one('product.template',
                                            string='Replenishment charge')
-    comp_amount_mod = fields.Selection([
-        ("can_mod", "Can modify total amount"),
-        ("can_not_mod", "Can't modify total amount"),],
-        string="Amount modifications by components",
-        required=True,
-        track_visibility='onchange')
     min_qty_rental = fields.Integer(string='Min Qty rental')
     multiples_uom = fields.Boolean(string="Has multiples uom?",
                                 default=False)

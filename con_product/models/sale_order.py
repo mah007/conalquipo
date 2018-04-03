@@ -67,7 +67,6 @@ class SaleOrderLine(Model):
               Dict: A dict with the product information.
 
         """
-        sale_line_obj = self.env['sale.order.line']
         result = super(SaleOrderLine, self).product_id_change()
         components_ids = self.product_id.product_tmpl_id.components_ids
         if components_ids:
@@ -84,18 +83,20 @@ class SaleOrderLine(Model):
         product_bill_qty = self.bill_uom_qty
         product_muoms = self.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
-            self.price_unit = self.product_id.product_tmpl_id.list_price
-            if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
-                raise UserError(_("The min qty for rental this product is:"
-                                  " %s") % product_qty_temp)
+            if self.bill_uom and self.bill_uom_qty > 0.0:
+                self.price_unit = self.product_id.product_tmpl_id.list_price
+                if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
+                    raise UserError(_("The min qty for rental this product is:"
+                                    " %s") % product_qty_temp)
         else:
-            for uom_list in self.product_id.product_tmpl_id.uoms_ids:
-                self.price_unit = uom_list.cost_byUom
-                if self.bill_uom.id == uom_list.uom_id.id and \
-                   self.bill_uom_qty < uom_list.quantity:
-                    raise UserError(_(
-                        "The min qty for rental this product is:"
-                        " %s") % uom_list.quantity)                    
+            if self.bill_uom and self.bill_uom_qty > 0.0:
+                for uom_list in self.product_id.product_tmpl_id.uoms_ids:
+                    if self.bill_uom.id == uom_list.uom_id.id:
+                        self.price_unit = uom_list.cost_byUom
+                    if self.bill_uom_qty < uom_list.quantity:
+                        raise UserError(_(
+                            "The min qty for rental this product is:"
+                            " %s") % uom_list.quantity)                  
 
     @api.model
     def create(self, values):
@@ -108,17 +109,18 @@ class SaleOrderLine(Model):
         product_muoms = record.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
             record.price_unit = record.product_id.product_tmpl_id.list_price
+            price = record.product_id.product_tmpl_id.list_price
             if product_qty_temp > 0 and product_bill_qty < product_qty_temp:
                 raise UserError(_("The min qty for rental this product is:"
                                   " %s") % product_qty_temp)
         else:
             for uom_list in record.product_id.product_tmpl_id.uoms_ids:
-                record.price_unit = uom_list.cost_byUom
-                if record.bill_uom.id == uom_list.uom_id.id and \
-                   record.bill_uom_qty < uom_list.quantity:
+                if record.bill_uom.id == uom_list.uom_id.id:
+                    record.price_unit = uom_list.cost_byUom
+                if record.bill_uom_qty < uom_list.quantity:
                     raise UserError(_(
                         "The min qty for rental this product is:"
-                        " %s") % uom_list.quantity)
+                        " %s") % uom_list.quantity)                  
         # Create in lines extra products for componentes
         if record.components_ids:
             for data in record.components_ids:
@@ -135,3 +137,11 @@ class SaleOrderLine(Model):
                     } 
                     super(SaleOrderLine, self).sudo().create(new_line)
         return record
+
+    @api.multi
+    def write(self,vals):
+        _logger.warning(vals)
+        #Write your logic here
+        res = super(SaleOrderLine, self).write(vals)
+        #Write your logic here
+        return res

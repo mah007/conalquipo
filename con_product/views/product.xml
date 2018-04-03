@@ -67,7 +67,6 @@
 
                     <field name="list_price" position="before">
                         <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
-                        <field name="comp_amount_mod" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}"/>
                     </field>
 
                     <field name="property_stock_inventory" position="after">
