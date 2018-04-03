@@ -6,6 +6,11 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
+                <field name="min_sale_qty"/>
+            </xpath>
+
             <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
                 <field name="product_components" invisible="1"/>
             </xpath>

@@ -49,7 +49,7 @@ class SaleOrderLine(Model):
     _inherit = "sale.order.line"
 
     product_components = fields.Boolean('Have components?')
-    min_sale_qty = fields.Boolean('Min Sale QTY')
+    min_sale_qty = fields.Float('Min Sale QTY')
     components_ids = fields.Many2many(
         'product.components', string='Components')
 
@@ -84,11 +84,14 @@ class SaleOrderLine(Model):
         if product_muoms != True:
             if self.bill_uom and self.bill_uom_qty > 0.0:
                 self.price_unit = self.product_id.product_tmpl_id.list_price
+                self.min_sale_qty = \
+                    self.product_id.product_tmpl_id.min_qty_rental 
         else:
             if self.bill_uom and self.bill_uom_qty > 0.0:
                 for uom_list in self.product_id.product_tmpl_id.uoms_ids:
                     if self.bill_uom.id == uom_list.uom_id.id:
-                        self.price_unit = uom_list.cost_byUom                 
+                        self.price_unit = uom_list.cost_byUom   
+                        self.min_sale_qty = uom_list.quantity               
 
     @api.model
     def create(self, values):
@@ -99,10 +102,13 @@ class SaleOrderLine(Model):
         product_muoms = record.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
             record.price_unit = record.product_id.product_tmpl_id.list_price
+            record.min_sale_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental             
         else:
             for uom_list in record.product_id.product_tmpl_id.uoms_ids:
                 if record.bill_uom.id == uom_list.uom_id.id:
-                    record.price_unit = uom_list.cost_byUom                
+                    record.price_unit = uom_list.cost_byUom
+                    record.min_sale_qty = uom_list.quantity      
         # Create in lines extra products for componentes
         if record.components_ids:
             for data in record.components_ids:
