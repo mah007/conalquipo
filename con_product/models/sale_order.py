@@ -73,25 +73,25 @@ class SaleOrderLine(Model):
         if components_ids:
             self.product_components = True
             self.components_ids = components_ids
-        return result
+        return result 
 
     @api.onchange('bill_uom', 'bill_uom_qty')
-    def min_bill_qty(self):
+    def price_bill_qty(self):
         """
-        Get min qty and uom of product
-        """
+        Get price for specific uom of product
+        """         
         product_muoms = self.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
-            if self.bill_uom and self.bill_uom_qty > 0.0:
-                self.price_unit = self.product_id.product_tmpl_id.list_price
-                self.min_sale_qty = \
-                    self.product_id.product_tmpl_id.min_qty_rental 
+            self.price_unit = self.product_id.product_tmpl_id.list_price
+            self.min_sale_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental 
         else:
-            if self.bill_uom and self.bill_uom_qty > 0.0:
-                for uom_list in self.product_id.product_tmpl_id.uoms_ids:
-                    if self.bill_uom.id == uom_list.uom_id.id:
-                        self.price_unit = uom_list.cost_byUom   
-                        self.min_sale_qty = uom_list.quantity               
+            for uom_list in self.product_id.product_tmpl_id.uoms_ids:
+                if self.bill_uom.id == uom_list.uom_id.id:
+                    self.price_unit = uom_list.cost_byUom   
+                    self.min_sale_qty = uom_list.quantity
+        if not self.bill_uom and self.bill_uom_qty > 0.0:
+            raise UserError(_("Do you need to specify a sale UOM"))          
 
     @api.model
     def create(self, values):

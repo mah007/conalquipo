@@ -7,17 +7,15 @@
     'category': 'Project Management',
     'sequence': 10,
     'summary': 'Projects, Works',
-    'depends': ['base', 'project', 'con_client_code', 'sale', 'con_sale',
-                'delivery', 'website_sign'],
+    'depends': ['con_base', 'con_delivery', 'project', 'sale', 'con_sale',
+                'delivery'],
     'description':
     """
         Project Management for works
     """,
     'data': [
-        'views/sign.xml',
         'views/project.xml',
         'views/sale_order.xml',
-        'views/municipality.xml',
         'wizards/views/project_product_available.xml',
         'reports/project_product_report.xml',
     ],

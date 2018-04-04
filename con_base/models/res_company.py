@@ -19,5 +19,11 @@
 #
 ##############################################################################
 
-from . import project
-from . import sale_order
+from odoo import models, fields, api
+
+
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    iso_logo = fields.Binary(string='Iso Logo')
+    footer_logo = fields.Binary(string="Footer Logo")

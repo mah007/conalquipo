@@ -19,5 +19,22 @@
 #
 ##############################################################################
 
-from . import project
-from . import sale_order
+
+from odoo import models, fields, api
+
+
+class ResPartnerCode(models.Model):
+    _inherit = "res.partner"
+
+    partner_code = fields.Char(string='Partner Code')
+    l10n_co_document_type = fields.Selection(
+        selection_add=[('nit', 'NIT')])
+    municipality_id = fields.Many2one('res.country.municipality',
+                                      string='Municipality')
+
+    @api.model
+    def create(self, values):
+        values['partner_code'] = self.env[
+            'ir.sequence'].next_by_code('res.partner.code')
+        res = super(ResPartnerCode, self).create(values)
+        return res
