@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* con_web
+#	* con_base
 #
 msgid ""
 msgstr ""
@@ -15,22 +15,22 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: con_web
-#: model:ir.model,name:con_web.model_res_company
+#. module: con_base
+#: model:ir.model,name:con_base.model_res_company
 msgid "Companies"
 msgstr "Compañías"
 
-#. module: con_web
-#: model:ir.ui.view,arch_db:con_web.view_company_form
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.view_company_form
 msgid "Configuration Report"
 msgstr "Configuración de Reportes"
 
-#. module: con_web
-#: model:ir.model.fields,field_description:con_web.field_res_company_footer_logo
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_footer_logo
 msgid "Footer Logo"
 msgstr "Logo para Footer"
 
-#. module: con_web
-#: model:ir.model.fields,field_description:con_web.field_res_company_iso_logo
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_iso_logo
 msgid "Iso Logo"
 msgstr "Logo Iso"
