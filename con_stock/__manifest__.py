@@ -35,7 +35,7 @@
     'category': 'stock',
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'con_project_works',
-                'con_client_code', 'delivery'],
+                'con_base', 'delivery'],
     'data': [
         'views/stock_picking.xml',
         'views/stock_move.xml',
