@@ -32,6 +32,20 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.multi
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        self._get_components()
+        return res
+
+    @api.multi
+    def _get_components(self):
+        for pk in self.picking_ids:
+            for ml in pk.move_lines:
+                if ml.product_id.components_ids:
+                        ml.get_components_button()
+        return True
+
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="rent")
 
@@ -195,6 +209,32 @@ class SaleOrderLine(models.Model):
     stock_move_status = fields.Text(
         string="Stock move status", compute="_compute_move_status",
         store=True)
+    product_components = fields.Boolean('Have components?')
+    min_sale_qty = fields.Float('Min Sale QTY')
+    components_ids = fields.Many2many(
+        'product.components', string='Components')
+
+    @api.multi
+    @api.onchange('product_id')
+    def product_id_change(self):
+        """Overloaded on changed function for product_id.
+
+          This overload check if the line have a componentes and update the
+          field product_components with a boolean value:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: A dict with the product information.
+
+        """
+        result = super(SaleOrderLine, self).product_id_change()
+        components_ids = self.product_id.product_tmpl_id.components_ids
+        if components_ids:
+            self.product_components = True
+            self.components_ids = components_ids
+        return result 
 
     def _compute_move_status(self):
         """
@@ -319,10 +359,35 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def create(self, values):
-
         line = super(SaleOrderLine, self).create(values)
         if line.owner_id:
             self.function_management_buy(line)
+        #Get min qty and uom of product
+        product_muoms = line.product_id.product_tmpl_id.multiples_uom
+        if product_muoms != True:
+            line.price_unit = line.product_id.product_tmpl_id.list_price
+            line.min_sale_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental             
+        else:
+            for uom_list in line.product_id.product_tmpl_id.uoms_ids:
+                if line.bill_uom.id == uom_list.uom_id.id:
+                    line.price_unit = uom_list.cost_byUom
+                    line.min_sale_qty = uom_list.quantity      
+        # Create in lines extra products for componentes
+        if line.components_ids:
+            for data in line.components_ids:
+                if data.extra:
+                    qty = data.quantity * line.product_uom_qty
+                    new_line = {
+                        'product_id': data.product_child_id.id,
+                        'name': 'Extra component for %s'%(
+                            line.product_id.name),
+                        'order_id': line.order_id.id,
+                        'product_uom_qty': qty,
+                        'bill_uom_qty': qty,
+                        '': data.product_child_id.product_tmpl_id.uom_id.id
+                    } 
+                    super(SaleOrderLine, self).sudo().create(new_line)
         return line
 
     @api.multi
@@ -530,6 +595,23 @@ class SaleOrderLine(models.Model):
                 self._get_display_price(product), product.taxes_id,
                 self.tax_id, self.company_id)
 
+    @api.onchange('bill_uom', 'bill_uom_qty')
+    def price_bill_qty(self):
+        """
+        Get price for specific uom of product
+        """         
+        product_muoms = self.product_id.product_tmpl_id.multiples_uom
+        if product_muoms != True:
+            self.price_unit = self.product_id.product_tmpl_id.list_price
+            self.min_sale_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental 
+        else:
+            for uom_list in self.product_id.product_tmpl_id.uoms_ids:
+                if self.bill_uom.id == uom_list.uom_id.id:
+                    self.price_unit = uom_list.cost_byUom   
+                    self.min_sale_qty = uom_list.quantity
+        if not self.bill_uom and self.bill_uom_qty > 0.0:
+            raise UserError(_("Do you need to specify a sale UOM")) 
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'

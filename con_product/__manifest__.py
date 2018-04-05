@@ -29,7 +29,7 @@
                ' can be changed at specific times of the workflow.',
     'depends': [
         'base', 'stock', 'product', 'mrp', 'sale', 'purchase',
-        'web_widget_color', 'con_sale'
+        'web_widget_color'
     ],
     'description':
     """
@@ -41,7 +41,7 @@
         'views/product_states.xml',
         'views/stock_location.xml',
         'views/stock_picking.xml',
-        'views/sale_order_view.xml',
+        'data/product.states.csv',
     ],
     'qweb': [
     ],

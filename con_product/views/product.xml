@@ -79,9 +79,9 @@
                     </field>
 
                     <field name="categ_id" position="after">
-                      <field name="location_id" string="Location"/>
-                      <field name="state_id" string="State"/>
-                      <field name="color" widget="color" string="Color"/>
+                      <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')]}"/>
+                      <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')]}"/>
+                      <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')]}"/>
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">
