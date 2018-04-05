@@ -25,7 +25,16 @@ from odoo import models, fields, api
 class ResPartnerCode(models.Model):
     _inherit = "res.partner"
 
+    @api.model
+    def _get_default_country(self):
+        country = self.env[
+            'res.country'].search([('code', '=', 'CO')], limit=1)
+        return country
+
     partner_code = fields.Char(string='Partner Code')
+    country_id = fields.Many2one(
+        'res.country', string='Country', ondelete='restrict',
+        default=_get_default_country)
     l10n_co_document_type = fields.Selection(
         selection_add=[('nit', 'NIT')])
     municipality_id = fields.Many2one('res.country.municipality',
