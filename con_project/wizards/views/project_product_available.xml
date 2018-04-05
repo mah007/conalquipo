@@ -49,7 +49,7 @@
             name="Products available on works"
             sequence="0"
             parent="project.menu_project_config"
-            action="con_project_works.action_wizard_project"/>
+            action="con_project.action_wizard_project"/>
 
     </data>
 </odoo>

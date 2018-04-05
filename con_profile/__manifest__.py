@@ -33,17 +33,19 @@
     'website': "http://www.ias.com.co",
     'category': 'Base Profile',
     'version': '0.1',
-    'depends': ['base', 'crm', 'project', 'document', 'sale', 'purchase',
-                'stock', 'account',
+    'depends': [# Odoo's addons
+                'base', 'crm', 'project', 'document', 'sale', 'purchase',
+                'stock', 'account', 'web_grid', 'hr_timesheet',
+                'l10n_co',
+                # Community addons
                 'stock_real_availability', 'web_export_view',
                 'web_widget_color',
-                'con_base', 'con_web', 'con_delivery', 'con_website_sign',
-                'con_project_translates', 'con_purchase_translates',
-                'con_set_location_color_wizard', 'con_stock_mail_automatic',
-                'con_hr_timesheet',
-                'con_project',
-                'con_stock', 'con_sale',
-                'con_shipping', 
+                # Conalquipo's addons
+                'con_base', 'con_delivery', 'con_hr_employee_driver',
+                'con_hr_timesheet', 'con_mrp_repair_picking', 'con_operator',
+                'con_product', 'con_project', 'con_project_translates',
+                'con_purchase_translates', 'con_sale', 'con_set_location_color_wizard', 'con_shipping', 'con_stock',
+                'con_stock_mail_automatic', 'con_web', 'con_website_sign'
     ],
     'data': [],
     'qweb': [],

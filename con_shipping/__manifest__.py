@@ -8,8 +8,8 @@
     'category': 'Sale',
     'sequence': 10,
     'summary': 'Delivery',
-    'depends': ['base', 'delivery', 'fleet', 'mail', 'stock',
-                'con_project', 'hr_contract', 'project', 'web'],
+    'depends': ['base', 'con_delivery', 'fleet', 'mail', 'stock',
+                'con_project', 'con_stock', 'hr_contract', 'project', 'web'],
     'description':
     """
         Work information for shipping.
