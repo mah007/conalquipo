@@ -123,30 +123,15 @@ class StockPicking(Model):
                          'color': move.location_dest_id.color,
                          'location_id': move.location_dest_id.id})
         return result
-        
-class StockMoveLine(Model):
-    _inherit = 'stock.move.line'
 
-    project_id = fields.Many2one('project.project', string='Work')
+    @api.model
+    def create(self, vals):
 
+        if vals.get('partner_id'):
+            partner = self.env['res.partner'].search(
+                [('id', '=', vals.get('partner_id'))])
+            if partner.picking_warn == 'block':
+                raise UserError(_(partner.picking_warn_msg))
 
-class SaleOrder(Model):
-    _inherit = 'sale.order'
-
-    @api.multi
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        self._propagate_picking_project()
+        res = super(StockPicking, self).create(vals)
         return res
-
-    @api.multi
-    def _propagate_picking_project(self):
-        """
-        This function write the `project_id` of the `sale_order` on the Stock
-        Picking Order.
-
-        :return: True
-        """
-        for picking in self.picking_ids:
-            picking.write({'project_id': self.project_id.id})
-        return True

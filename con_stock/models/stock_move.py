@@ -95,7 +95,8 @@ class StockMoveLine(Model):
     partner_id = fields.Many2one(
         'res.partner', string="Partner", compute='_get_partner',
         store=True)
-
+    project_id = fields.Many2one('project.project', string='Work')
+    
     def _get_project(self):
         for data in self:
             data.project_id = data.picking_id.project_id.id

@@ -100,7 +100,20 @@ class SaleOrder(models.Model):
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
         self._get_components()
+        self._propagate_picking_project()
         return res
+
+    @api.multi
+    def _propagate_picking_project(self):
+        """
+        This function write the `project_id` of the `sale_order` on the Stock
+        Picking Order.
+
+        :return: True
+        """
+        for picking in self.picking_ids:
+            picking.write({'project_id': self.project_id.id})
+        return True
 
     @api.multi
     def function_add_picking_owner(self):
