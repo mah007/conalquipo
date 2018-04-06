@@ -8,13 +8,14 @@
     'sequence': 10,
     'summary': 'Account',
     'depends': [
-        'account',
+        'account', 'project', 'con_base', 'con_product'
     ],
     'description':
     """
         Account module modification
 
-        - Adds sale_id field to signature.request model
+        - Adds owner_id, bill_uom, qty_shipped field to account.invoice model.
+        - Adds project_id, invoice_type field to account.invoice.line model.
     """,
     'data': [
         'views/account_invoice.xml'
