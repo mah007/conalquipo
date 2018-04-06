@@ -18,21 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Conalequipo Sale Customization',
-    'version': '1.0',
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'category': '',
-    'description': """ Add field for Municipality and delivery cost in the
-    sale order.""",
-    'depends': ['base', 'sales_team', 'sale', 'website_quote', 'stock',
-                'delivery', 'con_product', 'con_account'],
-    'data': ['views/sale_order_view.xml',
-             'views/purchase_view.xml',
-             'wizard/views/sale_order_advertisement_wizard.xml'
-            ],
 
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from . import models

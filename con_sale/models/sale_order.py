@@ -627,13 +627,3 @@ class SaleProductComponents(models.Model):
         'product.product', string="Product component")
     quantity = fields.Integer('Default quantity', default=1)
     extra = fields.Boolean('Extra product')
-
-
-class AccountInvoiceLine(models.Model):
-    _inherit = 'account.invoice.line'
-
-    owner_id = fields.Many2one('res.partner', 'Owner')
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
-    qty_shipped = fields.Float(
-        'Quantity to be shipped',
-        digits=dp.get_precision('Product Unit of Measure'))
