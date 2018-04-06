@@ -47,12 +47,12 @@ class StockMoveComponents(models.Model):
         if trigger:
             self.button_pushed = True
             for data in self.sale_line_id.components_ids:
-                name = data.product_child_id.product_tmpl_id.name
-                uom = data.product_child_id.product_tmpl_id.uom_id.id
+                name = data.product_id.product_tmpl_id.name
+                uom = data.product_id.product_tmpl_id.uom_id.id
                 move_obj.create({
                     'name': _(
                         'Components:') + name,
-                    'product_id': data.product_child_id.id,
+                    'product_id': data.product_id.id,
                     'product_uom_qty': data.quantity,
                     'product_uom': uom,
                     'origin': self.origin,

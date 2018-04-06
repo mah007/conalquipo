@@ -192,11 +192,9 @@ class SaleOrderLine(models.Model):
                                states=READONLY_STATES_OWNER,
                                change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
-
     bill_uom_qty = fields.Float('Quantity to Sale',
                                 digits=dp.get_precision('Product Unit'
                                                         ' of Measure'))
-
     purchase_order_line = fields.One2many('purchase.order.line',
                                           'sale_order_line_id',
                                           string="Purchase Order Line",
@@ -205,9 +203,9 @@ class SaleOrderLine(models.Model):
         string="Stock move status", compute="_compute_move_status",
         store=True)
     product_components = fields.Boolean('Have components?')
-    min_sale_qty = fields.Float('Min Sale QTY')
-    components_ids = fields.Many2many(
-        'sale.product.components', string='Components')
+    min_sale_qty = fields.Float('Min QTY')
+    components_ids = fields.One2many(
+        'sale.product.components', 'sale_line_id', string='Components')
 
     @api.multi
     @api.onchange('product_id')
@@ -226,11 +224,18 @@ class SaleOrderLine(models.Model):
         """
         result = super(SaleOrderLine, self).product_id_change()
         self.product_components = False
+        self.components_ids = [(5,)]
+        products_ids = []
         components_ids = self.product_id.product_tmpl_id.components_ids
         if components_ids:
             self.product_components = True
             for p in components_ids:
-                self.components_ids.write({'product_id': p.id})
+                values = {}
+                values['quantity'] = p.quantity
+                values['product_id'] = p.product_child_id.id
+                values['extra'] = False
+                products_ids.append((0, 0, values))
+        self.components_ids = products_ids
         return result
 
     def _compute_move_status(self):
@@ -376,15 +381,15 @@ class SaleOrderLine(models.Model):
                 if data.extra:
                     qty = data.quantity * line.product_uom_qty
                     new_line = {
-                        'product_id': data.product_child_id.id,
+                        'product_id': data.product_id.id,
                         'name': 'Extra component for %s'%(
                             line.product_id.name),
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
-                        '': data.product_child_id.product_tmpl_id.uom_id.id
+                        'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     } 
-                    super(SaleOrderLine, self).sudo().create(new_line)
+                    self.create(new_line)
         return line
 
     @api.multi
@@ -592,7 +597,7 @@ class SaleOrderLine(models.Model):
                 self._get_display_price(product), product.taxes_id,
                 self.tax_id, self.company_id)
 
-    @api.onchange('bill_uom', 'bill_uom_qty')
+    @api.onchange('bill_uom')
     def price_bill_qty(self):
         """
         Get price for specific uom of product
@@ -614,7 +619,7 @@ class SaleOrderLine(models.Model):
 class SaleProductComponents(models.Model):
     _name = "sale.product.components"
     _description = "A model for store and manage the products components"
-    _rec_name = "product_id"
+    rec_name = "product_id"
 
     sale_line_id = fields.Many2one(
         'sale.order.line', string="Sale line")

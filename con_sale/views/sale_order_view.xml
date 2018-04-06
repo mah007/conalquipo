@@ -7,10 +7,6 @@
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="after">
-                <field name="min_sale_qty"/>
-            </xpath>
-
             <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
                 <field name="product_components" invisible="1"/>
             </xpath>
@@ -19,70 +15,78 @@
                 <field name="components_ids" attrs="{'invisible': [('product_components','=',False)]}" mode="tree">
                     <tree string="Sales Order Lines" editable="bottom">
                         <field name="product_id"/>
-                        <field name="quantity"/>
                         <field name="extra"/>
+                        <field name="quantity"/>
                     </tree>
                 </field>
             </xpath>
 
-             <field name="payment_term_id" position="after">
-                 <field name="order_type" widget="radio"  attrs="{'readonly':[('state','in',('merged','sent'))]}"/>
-               </field>
+            <field name="payment_term_id" position="after">
+                <field name="order_type" widget="radio"  attrs="{'readonly':[('state','in',('merged','sent'))]}"/>
+            </field>
 
-             <xpath expr="//field[@name='order_line']" position="attributes">
-                    <attribute name="context">{'default_order_type': order_type}</attribute>
-             </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context">{'default_order_type': order_type}</attribute>
+            </xpath>
 
-             <xpath expr="//field[@name='order_line']/form/group/group[2]//label[@for='analytic_tag_ids']" position="before">
-                 <field name="order_type" invisible="1"/>
-                 <field name="bill_uom" />
-                 <field name="bill_uom_qty"/>
-                 <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
-                 <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
-                 <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
-                 <field name="product_subleased" invisible="1"/>
-             </xpath>
+            <xpath expr="//field[@name='order_line']/form/group/group[2]//label[@for='analytic_tag_ids']" position="before">
+                <field name="order_type" invisible="1"/>
+                <field name="min_sale_qty"/>
+                <field name="bill_uom_qty"/>
+                <field name="bill_uom" />
+                <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
+                <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
+                <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+                <field name="product_subleased" invisible="1"/>
+            </xpath>
 
-             <xpath expr="//field[@name='order_line']/tree" position="attributes">
-                    <attribute name="create">true</attribute>
-                    <attribute name="editable"/>
-                    <attribute name="decoration-danger">stock_move_status == 'cancel'</attribute>
-                    <attribute name="default_order">create_date</attribute>
-             </xpath>
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <attribute name="create">true</attribute>
+                <attribute name="editable"/>
+                <attribute name="decoration-danger">stock_move_status == 'cancel'</attribute>
+                <attribute name="default_order">create_date</attribute>
+            </xpath>
 
-             <xpath expr="//group[@name='technical']" position="after">
-                   <group string="Subleased Product Orders" name="purchases">
-                       <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
-                   </group>
-                   <group string="Sale Orders related" name="sale_orders">
-                       <field name="sale_order_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
-                   </group>
-             </xpath>
+            <xpath expr="//group[@name='technical']" position="after">
+                <group string="Subleased Product Orders" name="purchases">
+                    <field name="purchase_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
+                </group>
+                <group string="Sale Orders related" name="sale_orders">
+                    <field name="sale_order_ids" widget="many2many_tags" nolabel="1" readonly="1"/>
+                </group>
+            </xpath>
 
-             <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
-                    <field name="create_date" invisible="1"/>
-                    <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
-                    <field name="bill_uom_qty"
-                        attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
-                    <field name="stock_move_status" invisible="1"/>
-             </xpath>
-             <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
-                    <field name="owner_id" invisible="1"/>
-             </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
+                <field name="create_date" invisible="1"/>
+                <field name="min_sale_qty"/>
+                <field name="bill_uom_qty"
+                    attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                <field name="stock_move_status" invisible="1"/>
+            </xpath>
 
-             <xpath expr="//field[@name='order_line']/tree//field[@name='layout_category_id']" position="replace">
-                    <field name="layout_category_id" invisible="1"/>
-             </xpath>
+            <!-- Hide name field -->
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="replace">
+                <field name="name" invisible="1"/>
+            </xpath>
 
-             <xpath expr="//field[@name='validity_date']" position="after">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">
+                <field name="owner_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='layout_category_id']" position="replace">
+                <field name="layout_category_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="after">
                 <field name="sale_order_id" readonly="1" attrs="{'invisible': [('sale_order_id','=', False)]}"/>
-             </xpath>
+            </xpath>
 
             <xpath expr='//header' position="inside">
                 <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': [('state', 'not in', ['sale'])]}"/>
             </xpath>
 
-         </field>
+        </field>
     </record>
 
      <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
@@ -111,20 +115,25 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
+
             <field name="date_due" position="after">
                 <field name="invoice_type" widget="radio" invisible="1"/>
             </field>
+
             <field name="partner_id" position="after">
                 <field name="project_id"/>
             </field>
-             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
-                    <field name="owner_id" />
-              </xpath>
-             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
-                    <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
-                    <field name="qty_shipped" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
-                    <field name="uom_id" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
-              </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
+                <field name="owner_id" />
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
+                <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="qty_shipped" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="uom_id" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+            </xpath>
+
         </field>
     </record>
 
