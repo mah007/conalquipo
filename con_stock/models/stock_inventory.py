@@ -25,42 +25,6 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class StockLocation(Model):
-    _inherit = "stock.location"
-
-    @api.multi
-    @api.depends('product_state')
-    def _get_color(self):
-        for a in self:
-            if a.product_state:
-                a.color = a.product_state.color
-
-    set_product_state = fields.Boolean(
-        string="Change the state to all products when arrive to this location")
-    product_state = fields.Many2one('product.states', string="Set state")
-    color = fields.Char(string="Color", compute=_get_color, store=True)
-
-
-class StockPicking(Model):
-    _inherit = "stock.picking"
-
-    def button_validate(self):
-        result = super(StockPicking, self).button_validate()
-        # ~ Change the product state when is moved to other location.
-        for picking in self:
-            for move in picking.move_lines:
-                if move.product_id.rental:
-                    move.product_id.write(
-                        {'state_id': move.location_dest_id.product_state.id,
-                         'color': move.location_dest_id.color,
-                         'location_id': move.location_dest_id.id})
-                    move.product_id.product_tmpl_id.write(
-                        {'state_id': move.location_dest_id.product_state.id,
-                         'color': move.location_dest_id.color,
-                         'location_id': move.location_dest_id.id})
-        return result
-
-
 class StockInventory(Model):
     _inherit = "stock.inventory"
 

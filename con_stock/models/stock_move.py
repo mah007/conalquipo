@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo.models import Model, api
+from odoo.models import Model, api, _
 from odoo import fields
 from odoo.exceptions import UserError
 import logging
@@ -35,6 +35,48 @@ class StockMove(Model):
     partner_id = fields.Many2one(
         'res.partner', string="Partner", compute='_get_partner',
         store=True)
+    button_pushed = fields.Boolean(
+        string="Button pushed", default=False)
+    child_product = fields.Boolean(
+        string="Child product", default=False)
+
+    def get_components_button(self):
+        """
+        Button to get the components of a product
+        """
+        trigger = False
+        move_obj = self.env['stock.move']
+        if not self.product_id.components_ids:
+            raise UserError(_("The following product '%s' dont"
+                              " have components") % self.product_id.name)
+        if self.product_id.components_ids and not self.button_pushed:
+            trigger = True
+        if trigger:
+            self.button_pushed = True
+            for data in self.sale_line_id.components_ids:
+                name = data.product_id.product_tmpl_id.name
+                uom = data.product_id.product_tmpl_id.uom_id.id
+                move_obj.create({
+                    'name': _(
+                        'Components:') + name,
+                    'product_id': data.product_id.id,
+                    'product_uom_qty': data.quantity,
+                    'product_uom': uom,
+                    'origin': self.origin,
+                    'partner_id': self.partner_id.id,
+                    'location_id': self.location_id.id,
+                    'location_dest_id': self.location_dest_id.id,
+                    'picking_id': self.picking_id.id,
+                    'state': self.state,
+                    'group_id': self.group_id.id,
+                    'rule_id': self.rule_id.id,
+                    'picking_type_id': self.picking_type_id.id,
+                    'child_product': True,
+                })
+        else:
+            raise UserError(_("The following product '%s' already"
+                              " has its components"
+                              ) % self.product_id.name)
 
     def _get_project(self):
         for data in self:

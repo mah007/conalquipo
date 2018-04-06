@@ -108,7 +108,22 @@ class StockPicking(Model):
             out_str += values[num]
         return out_str
 
-
+    def button_validate(self):
+        result = super(StockPicking, self).button_validate()
+        # ~ Change the product state when is moved to other location.
+        for picking in self:
+            for move in picking.move_lines:
+                if move.product_id.rental:
+                    move.product_id.write(
+                        {'state_id': move.location_dest_id.product_state.id,
+                         'color': move.location_dest_id.color,
+                         'location_id': move.location_dest_id.id})
+                    move.product_id.product_tmpl_id.write(
+                        {'state_id': move.location_dest_id.product_state.id,
+                         'color': move.location_dest_id.color,
+                         'location_id': move.location_dest_id.id})
+        return result
+        
 class StockMoveLine(Model):
     _inherit = 'stock.move.line'
 

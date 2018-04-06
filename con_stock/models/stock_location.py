@@ -19,31 +19,23 @@
 #
 ##############################################################################
 
-{
-    'name': "CON Project in Stock",
+from odoo.models import Model
+from odoo import fields, api
+import logging
+_logger = logging.getLogger(__name__)
 
-    'summary': """
-        Conalequipos's Project information for each customer on Stock form.
-    """,
 
-    'description': """
-        Conalequipos's Project information for each customer on Stock form.
-    """,
+class StockLocation(Model):
+    _inherit = "stock.location"
 
-    'author': "Ingeniería Aplicaciones y Software",
-    'website': "http://www.ias.com.co",
-    'category': 'stock',
-    'version': '0.1',
-    'depends': ['base', 'project', 'stock', 'con_project',
-                'con_base', 'delivery', 'con_product'],
-    'data': [
-        'views/stock_picking.xml',
-        'views/stock_move.xml',
-        'views/stock_location.xml',
-    ],
-    'qweb': [],
-    'images': [],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+    @api.multi
+    @api.depends('product_state')
+    def _get_color(self):
+        for a in self:
+            if a.product_state:
+                a.color = a.product_state.color
+
+    set_product_state = fields.Boolean(
+        string="Change the state to all products when arrive to this location")
+    product_state = fields.Many2one('product.states', string="Set state")
+    color = fields.Char(string="Color", compute=_get_color, store=True)
