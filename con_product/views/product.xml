@@ -69,19 +69,16 @@
                         <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
                     </field>
 
-                    <field name="property_stock_inventory" position="after">
-                        <field name="product_origin"
-                               attrs="{'required':[('type', '=', 'product')]}"/>
-                    </field>
-
                     <field name="invoice_policy" position="after">
                         <field name="replenishment_charge"/>
                     </field>
 
                     <field name="categ_id" position="after">
-                      <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')]}"/>
-                      <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')]}"/>
-                      <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')]}"/>
+                        <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')]}"/>
+                        <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')]}"/>
+                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')]}"/>
+                        <field name="product_origin"
+                        attrs="{'required':[('type', '=', 'product')]}"/>
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">

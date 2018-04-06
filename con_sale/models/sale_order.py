@@ -33,12 +33,6 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        self._get_components()
-        return res
-
-    @api.multi
     def _get_components(self):
         for pk in self.picking_ids:
             for ml in pk.move_lines:
@@ -105,6 +99,7 @@ class SaleOrder(models.Model):
         self.function_add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
+        self._get_components()
         return res
 
     @api.multi
@@ -212,7 +207,7 @@ class SaleOrderLine(models.Model):
     product_components = fields.Boolean('Have components?')
     min_sale_qty = fields.Float('Min Sale QTY')
     components_ids = fields.Many2many(
-        'product.components', string='Components')
+        'sale.product.components', string='Components')
 
     @api.multi
     @api.onchange('product_id')
@@ -230,11 +225,13 @@ class SaleOrderLine(models.Model):
 
         """
         result = super(SaleOrderLine, self).product_id_change()
+        self.product_components = False
         components_ids = self.product_id.product_tmpl_id.components_ids
         if components_ids:
             self.product_components = True
-            self.components_ids = components_ids
-        return result 
+            for p in components_ids:
+                self.components_ids.write({'product_id': p.id})
+        return result
 
     def _compute_move_status(self):
         """
@@ -612,6 +609,20 @@ class SaleOrderLine(models.Model):
                     self.min_sale_qty = uom_list.quantity
         if not self.bill_uom and self.bill_uom_qty > 0.0:
             raise UserError(_("Do you need to specify a sale UOM")) 
+
+
+class SaleProductComponents(models.Model):
+    _name = "sale.product.components"
+    _description = "A model for store and manage the products components"
+    _rec_name = "product_id"
+
+    sale_line_id = fields.Many2one(
+        'sale.order.line', string="Sale line")
+    product_id = fields.Many2one(
+        'product.product', string="Product component")
+    quantity = fields.Integer('Default quantity', default=1)
+    extra = fields.Boolean('Extra product')
+
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
