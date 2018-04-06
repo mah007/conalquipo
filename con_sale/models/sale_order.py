@@ -53,6 +53,83 @@ class SaleOrder(models.Model):
 
     sale_order_ids = fields.One2many('sale.order', 'sale_order_id',
                                      string='Sale Orders related')
+    project_id = fields.Many2one('project.project', string="Project")
+    # ~Fields for shipping and invoice address
+    shipping_address = fields.Text(string="Shipping",
+                                   compute="_get_merge_address")
+    invoice_address = fields.Text(string="Billing",
+                                  compute="_get_merge_address")
+    signs_ids = fields.Many2many(
+        'signature.request',
+        compute='_compute_sign_ids',
+        string="Main signs")
+
+    def _compute_sign_ids(self):
+        """
+        Get the products attachments
+        """
+        for data in self:
+            signs_ids = self.env[
+                'signature.request'].search([
+                    ('sale_id', '=', data.id)]).ids
+            data.signs_ids = list(
+                set(signs_ids))
+
+    @api.multi
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        super(SaleOrder, self).onchange_partner_id()
+        if self.partner_id:
+            self.project_id = False
+
+    @api.depends('project_id')
+    def _get_merge_address(self):
+        """
+        This function verify if a project has been selected and return a
+        merge address for shipping and invoice to the user.
+
+        :return: None
+        """
+        for sale in self:
+            if sale.project_id:
+                p = sale.project_id
+                sale.shipping_address = sale.merge_address(
+                    p.street1 or '', p.street1_2 or '', p.city or '',
+                    p.municipality_id.name or '', p.state_id.name or '',
+                    p.zip or '', p.country_id.name or '', p.phone1 or '',
+                    p.email or '')
+                sale.invoice_address = sale.merge_address(
+                    p.street2_1 or '', p.street2_2 or '', p.city2 or '',
+                    p.municipality2_id.name or '', p.state2_id.name or '',
+                    p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
+                    p.email or '')
+
+    @staticmethod
+    def merge_address(street, street2, city, municipality, state, zip_code,
+                      country, phone, email):
+        """
+        This function receive text fields for merge the address fields.
+
+        :param street: The text field for the address to merge.
+        :param street2: The text field for the second line of
+         the address to merge.
+        :param city: The text field for the city of the address to merge.
+        :param municipality: the text for the municipality to merge.
+        :param state: The text for the state to merge.
+        :param zip_code: the text for the zip code of the address.
+        :param country: the text for the name of the country.
+        :param email: the text for the email.
+        :param phone: the text for the phone number.
+
+        :return: merge string with all the givens parameters
+        """
+        values = [street, ', ', street2, ', ', city, ', ', municipality, ', ',
+                  state, ',', zip_code, ', ', country, ', ', phone, ', ',
+                  email]
+        out_str = ''
+        for num in range(len(values)):
+            out_str += values[num]
+        return out_str
 
     @api.multi
     def _prepare_invoice(self):

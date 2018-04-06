@@ -15,7 +15,6 @@
     """,
     'data': [
         'views/project.xml',
-        'views/sale_order.xml',
         'wizards/views/project_product_available.xml',
         'reports/project_product_report.xml',
     ],
