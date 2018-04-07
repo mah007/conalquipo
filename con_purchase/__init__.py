@@ -19,31 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name': "CON Project in Stock",
-
-    'summary': """
-        Conalequipos's Project information for each customer on Stock form.
-    """,
-
-    'description': """
-        Conalequipos's Project information for each customer on Stock form.
-    """,
-
-    'author': "Ingeniería Aplicaciones y Software",
-    'website': "http://www.ias.com.co",
-    'category': 'stock',
-    'version': '0.1',
-    'depends': ['base', 'project', 'stock', 'con_project',
-                'con_base', 'delivery'],
-    'data': [
-        'views/stock_picking.xml',
-        'views/stock_move.xml',
-        'views/stock_location.xml',
-    ],
-    'qweb': [],
-    'images': [],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from . import models
