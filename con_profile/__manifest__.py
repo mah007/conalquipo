@@ -42,7 +42,7 @@
                 'web_widget_color',
                 # Conalquipo's addons
                 'con_base', 'con_delivery', 'con_hr_employee_driver',
-                'con_hr_timesheet', 'con_mrp_repair_picking', 'con_operator',
+                'con_hr_timesheet', 'con_operator',
                 'con_product', 'con_project', 'con_project_translates',
                 'con_purchase_translates', 'con_sale', 'con_set_location_color_wizard', 'con_shipping', 'con_stock',
                 'con_stock_mail_automatic', 'con_web', 'con_website_sign', 

@@ -39,6 +39,8 @@ class StockMove(Model):
         string="Button pushed", default=False)
     child_product = fields.Boolean(
         string="Child product", default=False)
+    mrp_repair_id = fields.Many2one(
+        'mrp.repair', string='Repair request')
 
     def get_components_button(self):
         """

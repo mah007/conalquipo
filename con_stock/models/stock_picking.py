@@ -36,6 +36,29 @@ class StockPicking(Model):
                                    compute="_get_merge_address")
     invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
+    repair_requests = fields.Boolean(string='Repair request')
+
+    @api.one
+    def generate_repair_requests(self):
+        """
+        Method to create massive repair requests from stock
+        pickings
+        return: None
+        """
+        mrp_repair_obj = self.env['mrp.repair']
+        for l in self.move_lines:
+            vals = {
+                'product_id': l.product_id.id,
+                'partner_id': self.partner_id.id,
+                'picking_id': self.id,
+                'product_uom_qty': l.product_qty,
+                'product_uom': l.product_uom.id,
+                'location_dest_id': self.location_dest_id.id,
+            }
+            _logger.warning(vals)
+            repair = mrp_repair_obj.create(vals)
+            l.mrp_repair_id = repair.id
+            self.repair_requests = True
 
     def _compute_attachment_ids(self):
         """
