@@ -28,6 +28,7 @@
 
     'description': """
         Conalequipos's Project information for each customer on Stock form.
+        - Set massive location and colors wizard
     """,
 
     'author': "Ingeniería Aplicaciones y Software",
@@ -35,8 +36,10 @@
     'category': 'stock',
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'con_project',
-                'con_base', 'delivery'],
+                'con_base', 'delivery', 'mrp_repair'],
     'data': [
+        'wizards/set_location_wizard.xml',
+        'views/stock_menu.xml',
         'views/stock_picking.xml',
         'views/stock_move.xml',
         'views/stock_location.xml',
