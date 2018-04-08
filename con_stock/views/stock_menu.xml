@@ -3,7 +3,7 @@
   <data>
 
     <menuitem id="menu_set_locations" name="Set locations colors" parent="stock.menu_stock_config_settings"
-      sequence="0" action="con_set_location_color_wizard.action_set_locations" groups="base.group_system"/>
+      sequence="0" action="con_stock.action_set_locations" groups="base.group_system"/>
 
   </data>
 </odoo>
