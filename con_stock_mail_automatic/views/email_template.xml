@@ -17,6 +17,10 @@
 
 % set moves = ctx.get('move_line_ids', [])
 
+% set qty_remissions = 0
+
+% set qty_receipts = 0
+
 % if partners:
     % for linep in partners:
         <table border="1" width="800">
@@ -43,10 +47,14 @@
                                                 ${linem['product_id'].name}           
                                             </td>
                                             <td>
-                                                ${linem['qty_done']}
+                                                % if linem['picking_id'].picking_type_id.name == 'Delivery Orders':
+                                                    % set qty_remissions = qty_remissions + 1
+                                                ${qty_remissions} 
                                             </td>          
                                             <td>
-                                                ${linem['picking_id'].picking_type_id.name}
+                                                % if linem['picking_id'].picking_type_id.name == 'Receipts':
+                                                    % set qty_receipts = qty_receipts + 1
+                                                ${qty_receipts} 
                                             </td>                          
                                         </tr>
                                     % endif
