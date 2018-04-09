@@ -87,6 +87,7 @@ class StockEmailNotification(models.Model):
             'move_line_ids': list(set(move_line_ids))
         })
         # Send mail
-        if mail_template:
+        if mail_template and partner_lst and \
+           works_lst and move_line_ids:
             mail_template.with_context(ctx).send_mail(
                 self.id, force_send=True, raise_exception=True)

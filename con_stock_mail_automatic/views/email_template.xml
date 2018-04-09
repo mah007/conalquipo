@@ -49,11 +49,13 @@
                                             <td>
                                                 % if linem['picking_id'].picking_type_id.name == 'Delivery Orders':
                                                     % set qty_remissions = qty_remissions + 1
+                                                % endif
                                                 ${qty_remissions} 
                                             </td>          
                                             <td>
                                                 % if linem['picking_id'].picking_type_id.name == 'Receipts':
                                                     % set qty_receipts = qty_receipts + 1
+                                                % endif
                                                 ${qty_receipts} 
                                             </td>                          
                                         </tr>

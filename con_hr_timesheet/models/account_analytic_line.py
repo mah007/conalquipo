@@ -19,4 +19,11 @@
 #
 ##############################################################################
 
-from . import models
+from odoo import models, fields, api
+
+
+class AccountAnalyticLine(models.Model):
+    _inherit = 'account.analytic.line'
+
+    uom_id = fields.Many2one('product.uom', string="Uom")   
+    
