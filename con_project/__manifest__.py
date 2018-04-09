@@ -8,13 +8,14 @@
     'sequence': 10,
     'summary': 'Projects, Works',
     'depends': ['con_base', 'con_delivery', 'project', 'sale',
-                'delivery'],
+                'delivery', 'hr_timesheet'],
     'description':
     """
         Project Management for works
     """,
     'data': [
         'views/project.xml',
+        'views/project_task.xml',
         'wizards/views/project_product_available.xml',
         'reports/project_product_report.xml',
     ],
