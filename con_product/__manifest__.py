@@ -28,7 +28,7 @@
     'summary': 'Adds custom states to products that'
                ' can be changed at specific times of the workflow.',
     'depends': [
-        'base', 'stock', 'product', 'mrp', 'sale', 'purchase',
+        'base', 'stock', 'product', 'sale', 'purchase',
         'web_widget_color'
     ],
     'description':
