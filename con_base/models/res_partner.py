@@ -37,6 +37,9 @@ class ResPartnerCode(models.Model):
         default=_get_default_country)
     l10n_co_document_type = fields.Selection(
         selection_add=[('nit', 'NIT')])
+    state_id = fields.Many2one(
+        "res.country.state", string='State',
+        ondelete='restrict', required=True)
     municipality_id = fields.Many2one('res.country.municipality',
                                       string='Municipality')
 
