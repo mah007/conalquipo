@@ -39,7 +39,7 @@
                 'l10n_co',
                 # Community addons
                 'stock_real_availability', 'web_export_view',
-                'web_widget_color',
+                'web_widget_color', 'partner_firstname',
                 # Conalquipo's addons
                 'con_base', 'con_delivery', 'con_hr_employee_driver',
                 'con_hr_timesheet', 'con_operator',
