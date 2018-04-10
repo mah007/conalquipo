@@ -47,7 +47,10 @@
                 'con_purchase_translates', 'con_sale', 'con_shipping', 'con_stock', 'con_stock_mail_automatic', 'con_web', 'con_website_sign', 
                 'con_account', 'con_purchase',
     ],
-    'data': [],
+    'data': [
+        'data/res_lang_data.xml',
+        'data/res_company_data.xml',
+    ],
     'qweb': [],
     'images': [],
     'installable': True,
