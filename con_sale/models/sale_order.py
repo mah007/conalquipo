@@ -491,6 +491,21 @@ class SaleOrderLine(models.Model):
             if rec.purchase_order_line and values.get('product_uom_qty'):
                 values['product_qty'] = values.get('product_uom_qty')
                 rec.purchase_order_line.write(values)
+            # Create in lines extra products for componentes
+            if rec.components_ids:
+                for data in rec.components_ids:
+                    if data.extra:
+                        qty = data.quantity * rec.product_uom_qty
+                        new_line = {
+                            'product_id': data.product_id.id,
+                            'name': 'Extra component for %s'%(
+                                rec.product_id.name),
+                            'order_id': rec.order_id.id,
+                            'product_uom_qty': qty,
+                            'bill_uom_qty': qty,
+                            'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                        } 
+                        self.create(new_line)
         return res
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',

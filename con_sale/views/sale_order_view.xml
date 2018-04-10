@@ -37,7 +37,7 @@
             <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
                 <field name="components_ids" attrs="{'invisible': [('product_components','=',False)]}" mode="tree">
                     <tree string="Sales Order Lines" editable="bottom">
-                        <field name="product_id" domain="[('product_tmpl_id.type','!=','service')]"/>
+                        <field name="product_id"/>
                         <field name="extra"/>
                         <field name="quantity"/>
                     </tree>

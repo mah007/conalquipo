@@ -114,13 +114,12 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        for data in self:
-            if data.type != 'service':
-                return self.env[
-                    'stock.location'].search(
-                        [
-                            ('set_product_state', '=', True)],
-                            limit=1) or False
+        if self.type != 'service':
+            return self.env[
+                'stock.location'].search(
+                    [
+                        ('set_product_state', '=', True)],
+                        limit=1) or False
 
     @api.multi
     @api.onchange('location_id')
@@ -202,13 +201,12 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        for data in self:
-            if data.type != 'service':
-                return self.env[
-                    'stock.location'].search(
-                        [
-                            ('set_product_state', '=', True)],
-                            limit=1) or False
+        if self.type != 'service':
+            return self.env[
+                'stock.location'].search(
+                    [
+                        ('set_product_state', '=', True)],
+                        limit=1) or False
 
     @api.multi
     def _get_default_state(self):
