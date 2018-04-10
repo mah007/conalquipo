@@ -113,12 +113,15 @@ class ProductTemplate(Model):
 
         :return: None
         """
-        if self.location_id:
+        if self.location_id.product_state: 
             location_obj = self.env['stock.location']
             location = location_obj.search([('id', '=', self.location_id.id)])
             self.state_id = location.product_state.id
             self.color = location.color
-
+        else:
+            if self.location_id:
+                raise UserError(_(
+                    "The following location don't have a state asigned"))          
     @api.multi
     @api.onchange('state_id')
     def get_default_location(self):
@@ -128,12 +131,16 @@ class ProductTemplate(Model):
 
         :return: None
         """
-        if self.location_id:
+        if self.location_id.product_state: 
             location_obj = self.env['stock.location']
             location = location_obj.search(
                 [('location_id', '=', self.location_id.location_id.id),
                  ('product_state', '=', self.state_id.id)])
             self.location_id = location.id
+        else:
+            if self.location_id:
+                raise UserError(_(
+                    "The following location don't have a state asigned"))
 
     state_id = fields.Many2one(
         'product.states', string="State",
@@ -186,11 +193,15 @@ class ProductProduct(Model):
 
         :return: None
         """
-        if self.location_id:
+        if self.location_id.product_state:
             location_obj = self.env['stock.location']
             location = location_obj.search([('id', '=', self.location_id.id)])
             self.state_id = location.product_state.id
             self.color = location.color
+        else:
+            if self.location_id:
+                raise UserError(_(
+                    "The following location don't have a state asigned"))
 
     @api.multi
     @api.onchange('state_id')
@@ -201,12 +212,16 @@ class ProductProduct(Model):
 
         :return: None
         """
-        if self.location_id:
+        if self.location_id.product_state: 
             location_obj = self.env['stock.location']
             location = location_obj.search(
                 [('location_id', '=', self.location_id.location_id.id),
                  ('product_state', '=', self.state_id.id)])
             self.location_id = location.id
+        else:
+            if self.location_id:
+                raise UserError(_(
+                    "The following location don't have a state asigned"))
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
