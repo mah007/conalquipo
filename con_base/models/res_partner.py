@@ -39,7 +39,7 @@ class ResPartnerCode(models.Model):
         selection_add=[('nit', 'NIT')])
     state_id = fields.Many2one(
         "res.country.state", string='State',
-        ondelete='restrict', required=True)
+        ondelete='restrict')
     municipality_id = fields.Many2one('res.country.municipality',
                                       string='Municipality')
 
