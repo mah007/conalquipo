@@ -105,6 +105,19 @@ class ProductTemplate(Model):
             ('default_value', '=', True)], limit=1) or False
 
     @api.multi
+    def _get_default_loc(self):
+        """
+        This function get the default location configured on the stock 
+        location
+        models and return to the `product_template` model else return 
+        False
+
+        :return: Recordset or False
+        """
+        return self.env['stock.location'].search([
+            ('set_product_state', '=', True)], limit=1) or False
+
+    @api.multi
     @api.onchange('location_id')
     def get_default_values(self):
         """
@@ -149,7 +162,8 @@ class ProductTemplate(Model):
         string="Color", default="#FFFFFF",
         help="Select the color of the state")
     location_id = fields.Many2one(
-        'stock.location', string="Actual location")
+        'stock.location', string="Actual location",
+        default=_get_default_loc)
     rental = fields.Boolean('Can be Rent')
     components = fields.Boolean(string="Has components?",
                                 help="if this field is true the bills "
@@ -172,6 +186,19 @@ class ProductTemplate(Model):
 
 class ProductProduct(Model):
     _inherit = "product.product"
+
+    @api.multi
+    def _get_default_loc(self):
+        """
+        This function get the default location configured on the stock 
+        location
+        models and return to the `product_template` model else return 
+        False
+
+        :return: Recordset or False
+        """
+        return self.env['stock.location'].search([
+            ('set_product_state', '=', True)], limit=1) or Fals
 
     @api.multi
     def _get_default_state(self):
@@ -228,7 +255,8 @@ class ProductProduct(Model):
     color = fields.Char(string="Color", default="#FFFFFF",
                         help="Select the color of the state")
     location_id = fields.Many2one(
-        'stock.location', string="Actual location")
+        'stock.location', string="Actual location",
+        default=_get_default_loc)
 
     @api.model
     def create(self, values):
