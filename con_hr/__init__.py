@@ -18,18 +18,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from odoo import fields, models
-import logging
-
-
-_logger = logging.getLogger(__name__)
-
-
-class Product(models.Model):
-    _inherit = 'product.template'
-
-    employee_ids = fields.Many2many(comodel_name='hr.employee',
-                                    string='Employee', search='hr_employee',
-                                    track_visibility='onchange')
-
-    is_operated = fields.Boolean('Is Operated')
+from . import models

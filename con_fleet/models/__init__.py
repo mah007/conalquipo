@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-from . import hr_employee_driver
+from . import fleet_vehicle

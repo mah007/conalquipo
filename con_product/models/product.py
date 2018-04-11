@@ -201,6 +201,10 @@ class ProductTemplate(Model):
                                 default=False)
     uoms_ids = fields.One2many(
         'product.multiples.uom', 'product_id', string='Multiples UOMs')
+    employee_ids = fields.Many2many(comodel_name='hr.employee',
+                                    string='Employee', search='hr_employee',
+                                    track_visibility='onchange')
+    is_operated = fields.Boolean('Is Operated')
 
 
 class ProductProduct(Model):

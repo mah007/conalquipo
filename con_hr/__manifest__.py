@@ -20,22 +20,22 @@
 ##############################################################################
 
 {
-    'name': 'Conalquipo Operator',
+    'name': 'Conalquipo HR customizations',
     'version': '1.1',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': 'Operator',
     'sequence': 10,
     'summary': '',
     'depends': [
-        'base', 'project', 'sale', 'stock', 'hr', 'sale_timesheet'
+        'hr'
     ],
     'description':
     """
+    Conalquipo HR customizations
     """,
     'data': [
-        'views/project_task.xml',
-        'views/sale_order.xml',
-        'views/stock_picking.xml',
+        'views/hr_employee.xml',
+        'views/hr_contract.xml',
     ],
     'qweb': [
     ],

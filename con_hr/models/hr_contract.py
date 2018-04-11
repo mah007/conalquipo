@@ -20,15 +20,13 @@
 ##############################################################################
 from odoo import fields, models
 import logging
-
-
 _logger = logging.getLogger(__name__)
 
 
 class HrContract(models.Model):
-    _inherit = "hr.employee"
+    _inherit = "hr.contract"
 
-    is_operator = fields.Boolean('Is Operator')
-    product_ids = fields.Many2many(comodel_name='product.template',
-                                   string='Product', search='hr_products',
-                                   track_visibility='onchange')
+    is_driver = fields.Boolean('Is Driver')
+    license_category = fields.Many2one('license.category',
+                                       string='license category')
+    license_number = fields.Char('license number')
