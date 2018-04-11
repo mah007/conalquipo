@@ -90,7 +90,7 @@
                             <field name="components" />
                             <label for="components"/>
                         </div>
-                        <div attrs="{'invisible':[('type', 'in', ['service', 'consu'])]}">
+                        <div>
                             <field name="multiples_uom"/>
                             <label for="multiples_uom"/>
                         </div>
@@ -100,7 +100,7 @@
                         <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', 'in', ['service', 'consu'])]}">
                             <field name="components_ids">
                                 <tree string="Products components" editable="bottom">
-                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="[('product_tmpl_id.type','!=','service')]"/>
+                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="['&amp;', ('id', '!=', parent.id), ('product_tmpl_id.type', '!=', 'service')]" />
                                     <field name="quantity"/>
                                     <field name="child" invisible="1"/>
                                 </tree>

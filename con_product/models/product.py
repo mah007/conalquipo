@@ -130,9 +130,11 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        return self.env[
-            'stock.location'].search(
-                [('set_product_state', '=', True)], limit=1) or False
+        for a in self:
+            if a.type not in ['service', 'consu']:
+                return self.env[
+                    'stock.location'].search(
+                        [('set_product_state', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('location_id')
@@ -214,9 +216,11 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        return self.env[
-            'stock.location'].search(
-                [('set_product_state', '=', True)], limit=1) or False
+        for a in self:
+            if a.product_tmpl_id.type not in ['service', 'consu']:
+                return self.env[
+                    'stock.location'].search(
+                        [('set_product_state', '=', True)], limit=1) or False
 
     @api.multi
     def _get_default_state(self):
@@ -300,7 +304,8 @@ class ProductComponents(Model):
     _rec_name = "product_child_id"
 
     product_id = fields.Many2one('product.template', string="Product parent")
-    product_child_id = fields.Many2one('product.product', string="Product component")       
+    product_child_id = fields.Many2one(
+        'product.product', string="Product component")
     quantity = fields.Integer('Default quantity', default=1)
     child = fields.Boolean('Child', default=True)
     extra = fields.Boolean('Extra product')
