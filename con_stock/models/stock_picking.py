@@ -37,6 +37,15 @@ class StockPicking(Model):
     invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
     repair_requests = fields.Boolean(string='Repair request')
+    mess_operated = fields.Boolean('Message Operated', default=False)
+    reason = fields.Selection([
+        ('0', 'End project-work'),
+        ('2', 'Change Because of Malfunction'),
+        ('1', 'It seems very expensive'),
+        ('3', 'Bad attention'),
+        ('2', 'The equipment did not serve you'),
+        ('0', 'No longer need it'),
+    ], string="Reason")
 
     @api.one
     def generate_repair_requests(self):

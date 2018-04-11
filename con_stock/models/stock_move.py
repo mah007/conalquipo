@@ -98,7 +98,9 @@ class StockMoveLine(Model):
         'res.partner', string="Partner", compute='_get_partner',
         store=True)
     project_id = fields.Many2one('project.project', string='Work')
-    
+    assigned_operator = fields.Many2one(
+        'res.users', string="Assigned Operator")
+
     def _get_project(self):
         for data in self:
             data.project_id = data.picking_id.project_id.id
@@ -106,3 +108,22 @@ class StockMoveLine(Model):
     def _get_partner(self):
         for data in self:
             data.partner_id = data.picking_id.partner_id.id
+
+    @api.model
+    def create(self, vals):
+        res = super(StockMoveLine, self).create(vals)
+
+        if res.product_id.is_operated \
+                and res.move_id.sale_line_id.service_operator:
+            res.picking_id.update({'mess_operated': True})
+
+        return res
+
+    @api.onchange('assigned_operator')
+    def assigned_operator_change(self):
+        if self.assigned_operator:
+            mess_operated = False
+            for line in self.move.move_line_ids:
+                if not line.assigned_operator:
+                    mess_operated = True
+            self.move.picking_id.write({'mess_operated': mess_operated})

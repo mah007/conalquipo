@@ -36,7 +36,7 @@
     'depends': [# Odoo's addons
                 'base', 'crm', 'project', 'document', 'sale', 'purchase',
                 'stock', 'account', 'web_grid', 'hr_timesheet',
-                'l10n_co',
+                'l10n_co', 'sale_timesheet',
                 # Community addons
                 'stock_real_availability', 'web_export_view',
                 'web_widget_color', 'partner_firstname',

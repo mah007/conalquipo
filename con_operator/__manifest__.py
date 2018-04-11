@@ -34,7 +34,6 @@
     """,
     'data': [
         'views/sale_order.xml',
-        'views/stock_picking.xml',
     ],
     'qweb': [
     ],
