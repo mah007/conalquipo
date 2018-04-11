@@ -90,44 +90,44 @@
               <group>
                 <group string="Shipping Address">
                   <div class="o_address_format">
+                    <field name="country_id" placeholder="Country"
+                      class="o_address_country"
+                      options='{"no_open": True, "no_create": True}'
+                           required="0"/>
+                    <field name="state_id" class="o_address_country"
+                      placeholder="State" options='{"no_open": True}'
+                           required="0" domain="[('country_id', '=', country_id)]"/>
+                    <field name="municipality_id" class="o_address_country"
+                      placeholder="Municipality" options='{"no_open": True}'
+                           required="0" domain="[('state_id', '=', state_id)]"/>
+                    <field name="city" placeholder="City"
+                      class="o_address_country" required="0"/>
                     <field name="phone1" placeholder="Phone..." required="0"/>
                     <field name="street1" placeholder="Street..."
                       class="o_address_street" required="0"/>
                     <field name="street1_2" placeholder="Street 2..."
                       class="o_address_street" required="0"/>
-                    <field name="country_id" placeholder="Country"
-                      class="o_address_country"
-                      options='{"no_open": True, "no_create": True}'
-                           required="0"/>
-                    <field name="state_id" class="o_address_state"
-                      placeholder="State" options='{"no_open": True}'
-                           required="0" domain="[('country_id', '=', country_id)]"/>
-                    <field name="municipality_id" class="o_address_state"
-                      placeholder="Municipality" options='{"no_open": True}'
-                           required="0" domain="[('state_id', '=', state_id)]"/>
-                    <field name="city" placeholder="City"
-                      class="o_address_city" required="0"/>
-                    <field name="zip" placeholder="ZIP" class="o_address_zip"
+                    <field name="zip" placeholder="ZIP"     class="o_address_country"
                            required="0"/>
                   </div>
                 </group>
                 <group string="Invoice Address">
                   <div class="o_address_format">
+                    <field name="country2_id" placeholder="Country"
+                      class="o_address_country"
+                      options='{"no_open": True, "no_create": True}' required="0"/>
+                    <field name="state2_id" class="o_address_country" domain="[('country_id', '=', country2_id)]"
+                      placeholder="State" options='{"no_open": True}' required="0"/>
+                    <field name="municipality2_id" class="o_address_country"
+                      placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state2_id)]"/>
+                    <field name="city2" placeholder="City"
+                      class="o_address_country" required="0"/>
                     <field name="phone2" placeholder="Phone..." required="0"/>
                     <field name="street2_1" placeholder="Street..."
                       class="o_address_street" required="0"/>
                     <field name="street2_2" placeholder="Street 2..."
                       class="o_address_street" required="0"/>
-                    <field name="country2_id" placeholder="Country"
-                      class="o_address_country"
-                      options='{"no_open": True, "no_create": True}' required="0"/>
-                    <field name="state2_id" class="o_address_state" domain="[('country_id', '=', country2_id)]"
-                      placeholder="State" options='{"no_open": True}' required="0"/>
-                    <field name="municipality2_id" class="o_address_state"
-                      placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state2_id)]"/>
-                    <field name="city2" placeholder="City"
-                      class="o_address_city" required="0"/>
-                    <field name="zip2" placeholder="ZIP" class="o_address_zip" required="0"/>
+                    <field name="zip2" placeholder="ZIP" class="o_address_country" required="0"/>
                   </div>
                 </group>
               </group>
