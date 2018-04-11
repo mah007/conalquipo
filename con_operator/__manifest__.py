@@ -33,7 +33,6 @@
     """
     """,
     'data': [
-        'views/project_task.xml',
         'views/sale_order.xml',
         'views/stock_picking.xml',
     ],
