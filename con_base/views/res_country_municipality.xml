@@ -39,32 +39,4 @@
 
         <menuitem id="menu_country_municipality" name="Municipalities" parent="sale.sales_team_config" groups="base.group_no_one" sequence="5"/>
 
-        <record model="ir.ui.view" id="view_partner_address_form_inherit">
-          <field name="name">res.partner.form.address</field>
-          <field name="inherit_id" ref="base.view_partner_address_form"/>
-          <field name="model">res.partner</field>
-          <field name="arch" type="xml">
-            <field name="country_id" position="after">
-              <field name="municipality_id" placeholder="Municipality" class="oe_no_button"
-                attrs="{'required': ['&amp;', ('country_id','=', %(base.co)d)]}"
-                domain="[('state_id', '=', state_id)]"
-              />
-            </field>
-          </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_partner_form_inherit">
-              <field name="name">res.partner.form</field>
-              <field name="inherit_id" ref="base.view_partner_form"/>
-              <field name="model">res.partner</field>
-              <field name="arch" type="xml">
-                <field name="country_id" position="after">
-                  <field name="municipality_id" placeholder="Municipality" class="oe_no_button"
-                    attrs="{'required': ['&amp;', ('country_id','=', %(base.co)d)]}"
-                    domain="[('state_id', '=', state_id)]"
-                  />
-                </field>
-              </field>
-        </record>
-
     </odoo>
