@@ -10,6 +10,6 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     uom_id = fields.Many2one(
-        'product.uom', string="Uom", required=True)
+        'product.uom', string="Uom")
 
     

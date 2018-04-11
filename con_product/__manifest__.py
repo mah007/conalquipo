@@ -29,7 +29,7 @@
                ' can be changed at specific times of the workflow.',
     'depends': [
         'base', 'stock', 'product', 'sale', 'purchase',
-        'web_widget_color', 'con_stock'
+        'web_widget_color'
     ],
     'description':
     """

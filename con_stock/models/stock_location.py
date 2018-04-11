@@ -37,5 +37,7 @@ class StockLocation(Model):
 
     set_product_state = fields.Boolean(
         string="Change the state to all products when arrive to this location")
-    product_state = fields.Many2one('product.states', string="Set state")
-    color = fields.Char(string="Color", compute=_get_color, store=True)
+    product_state = fields.Many2one(
+        'product.states', string="Set state")
+    color = fields.Char(
+        string="Color", compute=_get_color, store=True)

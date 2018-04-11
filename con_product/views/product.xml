@@ -74,11 +74,11 @@
                     </field>
 
                     <field name="categ_id" position="after">
-                        <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')]}"/>
-                        <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')]}"/>
-                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')]}"/>
+                        <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
+                        <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
+                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
                         <field name="product_origin"
-                        attrs="{'required':[('type', '=', 'product')]}"/>
+                        attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">
@@ -86,21 +86,21 @@
                             <field name="rental"/>
                             <label for="rental"/>
                         </div>
-                        <div attrs="{'invisible':[('type', '=', 'service')]}">
+                        <div attrs="{'invisible':[('type', 'in', ['service', 'consu'])]}">
                             <field name="components" />
                             <label for="components"/>
                         </div>
-                        <div>
+                        <div attrs="{'invisible':[('type', 'in', ['service', 'consu'])]}">
                             <field name="multiples_uom"/>
                             <label for="multiples_uom"/>
                         </div>
                     </xpath>
 
                     <xpath expr="//page[@name='general_information']" position="after">
-                        <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', '=', 'service')]}">
+                        <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', 'in', ['service', 'consu'])]}">
                             <field name="components_ids">
                                 <tree string="Products components" editable="bottom">
-                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="['|', ('product_tmpl_id.type','!=','service')]"/>
+                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="[('product_tmpl_id.type','!=','service')]"/>
                                     <field name="quantity"/>
                                     <field name="child" invisible="1"/>
                                 </tree>

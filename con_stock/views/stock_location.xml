@@ -24,9 +24,9 @@
                 <field name="barcode" position="after">
                     <field name="set_product_state" />
                     <field name="product_state"
-                           attrs="{'invisible':[('set_product_state', '=', False)]}"/>
+                        attrs="{'invisible':[('set_product_state', '=', False)]}"/>
                     <field name="color" widget="color"
-                           attrs="{'invisible':[('product_state', '=', False)]}"/>
+                        attrs="{'invisible':[('product_state', '=', False)]}"/>
                 </field>
             </data>
         </field>

@@ -28,6 +28,7 @@ _logger = logging.getLogger(__name__)
 class ProductStates(Model):
     _name = "product.states"
     _description = "A model for store and manage the products states"
+    _rec_name = "name"
 
     @api.multi
     @api.onchange('default_value')
@@ -49,7 +50,7 @@ class ProductStates(Model):
     sequence = fields.Integer(string="Sequence",
                               help="The sequence priority the state"
                                    " will be ordered following this sequence")
-    color = fields.Char(string="Color", default="#FFFFFF",
+    color = fields.Char(string="Color",
                         help="Select the color of the state")
     description = fields.Text(string="Description",
                               help="A little description about the state")
@@ -94,6 +95,18 @@ class ProductTemplate(Model):
     _inherit = "product.template"
 
     @api.multi
+    @api.onchange('type')
+    def get_type(self):
+        if self.type in ['service', 'consu']: 
+            self.location_id = False
+            self.state_id = False
+            self.color = False
+        else:
+            self.location_id = self.env[
+                'stock.location'].search(
+                    [('set_product_state', '=', True)], limit=1) or False
+
+    @api.multi
     def _get_default_state(self):
         """
         This function get the default state configured on the product states
@@ -101,8 +114,11 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        return self.env['product.states'].search([
-            ('default_value', '=', True)], limit=1) or False
+        if self.type != 'service':
+            return self.env['product.states'].search([
+                ('default_value', '=', True)], limit=1) or False
+        else:
+            self.state_id = False
 
     @api.multi
     def _get_default_loc(self):
@@ -114,12 +130,9 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service':
-            return self.env[
-                'stock.location'].search(
-                    [
-                        ('set_product_state', '=', True)],
-                        limit=1) or False
+        return self.env[
+            'stock.location'].search(
+                [('set_product_state', '=', True)], limit=1) or False
 
     @api.multi
     @api.onchange('location_id')
@@ -163,7 +176,7 @@ class ProductTemplate(Model):
         'product.states', string="State",
         default=_get_default_state)
     color = fields.Char(
-        string="Color", default="#FFFFFF",
+        string="Color",
         help="Select the color of the state")
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
@@ -201,12 +214,9 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service':
-            return self.env[
-                'stock.location'].search(
-                    [
-                        ('set_product_state', '=', True)],
-                        limit=1) or False
+        return self.env[
+            'stock.location'].search(
+                [('set_product_state', '=', True)], limit=1) or False
 
     @api.multi
     def _get_default_state(self):
@@ -216,8 +226,11 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        return self.env['product.states'].search([
-            ('default_value', '=', True)], limit=1) or False
+        if self.type != 'service':
+            return self.env['product.states'].search([
+                ('default_value', '=', True)], limit=1) or False
+        else:
+            self.state_id = False
 
     @api.multi
     @api.onchange('location_id')
@@ -260,7 +273,7 @@ class ProductProduct(Model):
 
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
-    color = fields.Char(string="Color", default="#FFFFFF",
+    color = fields.Char(string="Color",
                         help="Select the color of the state")
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
@@ -269,12 +282,12 @@ class ProductProduct(Model):
     @api.model
     def create(self, values):
         record = super(ProductProduct, self).create(values)
-        if not record.type == 'service':
-            pro_tmpl_obj = self.env['product.template']
-            if values.get('product_tmpl_id'):
-                pro_tmpl = pro_tmpl_obj.search(
-                    [('id', '=', values['product_tmpl_id'])])
-                for a in pro_tmpl:
+        pro_tmpl_obj = self.env['product.template']
+        if values.get('product_tmpl_id'):
+            pro_tmpl = pro_tmpl_obj.search(
+                [('id', '=', values['product_tmpl_id'])])
+            for a in pro_tmpl:
+                if a.type != 'service':
                     record.location_id = a.location_id.id
                     record.state_id = a.state_id.id
                     record.color = a.color

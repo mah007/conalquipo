@@ -36,7 +36,7 @@
     'category': 'stock',
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'con_project',
-                'con_base', 'delivery', 'mrp_repair'],
+                'con_base', 'delivery', 'mrp_repair', 'con_product'],
     'data': [
         'wizards/set_location_wizard.xml',
         'views/stock_menu.xml',
