@@ -21,4 +21,3 @@
 
 from . import product
 from . import product_uom
-# from . import purchase_order

@@ -35,6 +35,28 @@ class PurchaseOrder(models.Model):
     order_type = fields.Selection([('rent', 'Rent'), ('purchase', 'Purchase')],
                                   string="Type", default="purchase")
 
+    @api.multi
+    def button_confirm(self):
+        res = super(PurchaseOrder, self).button_confirm()
+        self._add_product_with_components()
+        return res
+
+    @api.multi
+    def _add_product_with_components(self):
+        for po in self:
+            for ln in po.order_line:
+                if ln.product_id.components:
+                    for pk in po.picking_ids:
+                        for mv in pk.move_lines:
+                            mv.copy({
+                                'product_id': ln.product_id.id,
+                                'product_uom_qty': ln.product_qty,
+                                'picking_id': pk.id,
+                                'not_explode': True,
+                            })
+                            break
+        return True
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
