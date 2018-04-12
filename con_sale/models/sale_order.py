@@ -343,7 +343,7 @@ class SaleOrderLine(models.Model):
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
         """
-        Star date and end date validation
+        Start date and end date validation
         """
         if self.end_date and self.start_date:
             date_format = '%Y-%m-%d'
@@ -356,7 +356,23 @@ class SaleOrderLine(models.Model):
             if d2 < d1:
                 raise UserError(
                     _("The end date can't be less than start date")) 
-                
+
+    @api.onchange('start_date', 'end_date')
+    def _check_dates(self):
+        """
+        Start date and end date validation
+        """
+        if self.end_date and self.start_date:
+            date_format = '%Y-%m-%d'
+            d1 = datetime.strptime(
+                self.start_date, date_format
+                ).date()
+            d2 = datetime.strptime(
+                self.end_date, date_format
+                ).date()
+            if d2 < d1:
+                raise UserError(
+                    _("The end date can't be less than start date")) 
 
     @api.onchange('assigned_operator')
     def assigned_operator_change(self):
