@@ -271,6 +271,7 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, values):
+        # Overwrite sale order create
         res = super(SaleOrder, self).create(values)
         if res.project_id:
             return res
@@ -315,10 +316,14 @@ class SaleOrderLine(models.Model):
         string="Stock move status", compute="_compute_move_status",
         store=True)
     product_components = fields.Boolean('Have components?')
+    is_component = fields.Boolean('Component')
+    parent_component = fields.Many2one(
+        'product.product', 'Parent component')
     min_sale_qty = fields.Float('Min QTY')
     components_ids = fields.One2many(
         'sale.product.components', 'sale_line_id', string='Components')
     add_operator = fields.Boolean('Add Operator')
+    is_operator = fields.Boolean('Operator')
     mess_operated = fields.Boolean('Message Operated', default=False)
     service_operator = fields.Many2one('product.product',
                                        string='Service Operator',
@@ -525,22 +530,24 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def create(self, values):
+        # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
         if values.get('service_operator'):
-            new_line = {
+            new_line_operator = {
                 'product_id': values['service_operator'],
                 'name': 'Attach Operator over %s'%(values['name']),
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
-                'order_id': line.order_id.id
+                'order_id': line.order_id.id,
+                'is_operator': True
             }
             # ~ Create new record for operator
-            super(SaleOrderLine, self).sudo().create(new_line)
-        _logger.info("Record Values on %s"%line)
+            self.create(new_line_operator)
+        # Check owner
         if line.owner_id:
             self.function_management_buy(line)
-        #Get min qty and uom of product
+        # Get min qty and uom of product
         product_muoms = line.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
             line.price_unit = line.product_id.product_tmpl_id.list_price
@@ -551,47 +558,66 @@ class SaleOrderLine(models.Model):
                 if line.bill_uom.id == uom_list.uom_id.id:
                     line.price_unit = uom_list.cost_byUom
                     line.min_sale_qty = uom_list.quantity      
-        # Create in lines extra products for componentes
+        # Create in lines extra products for components
         if line.components_ids:
             for data in line.components_ids:
                 if data.extra:
                     qty = data.quantity * line.product_uom_qty
-                    new_line = {
+                    new_line_components = {
                         'product_id': data.product_id.id,
                         'name': 'Extra component for %s'%(
                             line.product_id.name),
+                        'parent_component': line.product_id.id,
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
+                        'is_component': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
-                    } 
-                    self.create(new_line)
+                    }
+                    self.create(new_line_components)
         return line
+
+    @api.multi
+    @api.onchange('add_operator')
+    def add_operator_change(self):
+        if not self.add_operator:
+            self.write({'service_operator': False})
 
     @api.multi
     def write(self, values):
         res = super(SaleOrderLine, self).write(values)
         for rec in self:
+            if not rec.add_operator:
+                rec.search(
+                    [('is_operator', '=', True)]).unlink()
             if values.get('owner_id') and not rec.purchase_order_line:
                 rec.function_management_buy(rec)
             if rec.purchase_order_line and values.get('product_uom_qty'):
                 values['product_qty'] = values.get('product_uom_qty')
                 rec.purchase_order_line.write(values)
-            # Create in lines extra products for componentes
+            # Write lines extra products for componentes
             if rec.components_ids:
                 for data in rec.components_ids:
                     if data.extra:
+                        component = self.search(
+                            [('is_component', '=', True),
+                             ('parent_component', '=', rec.product_id.id),
+                             ('order_id', '=', rec.order_id.id),
+                             ('product_id', '=', data.product_id.id)
+                            ])
                         qty = data.quantity * rec.product_uom_qty
                         new_line = {
                             'product_id': data.product_id.id,
                             'name': 'Extra component for %s'%(
                                 rec.product_id.name),
+                            'parent_component': rec.product_id.id,
                             'order_id': rec.order_id.id,
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
+                            'is_component': True,
                             'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                         } 
-                        self.create(new_line)
+                        component.write(new_line)
         return res
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
