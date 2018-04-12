@@ -3,7 +3,7 @@
     <data noupdate="0">
 
         <record id="stock_automatic_email_template" model="mail.template">
-            <field name="model_id" ref="con_stock_mail_automatic.model_stock_picking"/>
+            <field name="model_id" ref="con_stock.model_stock_picking"/>
             <field name="auto_delete" eval="True"/>
             <field name="name">Send stock moves mail</field>
             <field name="subject">${ctx['subject']}</field>

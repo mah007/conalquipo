@@ -4,17 +4,17 @@
 
         <record model="res.groups" id="group_notifications_diary">
             <field name="name">Can receive stock notifications email diary</field>
-            <field name="category_id" ref="con_stock_mail_automatic.module_stock_notifications"/>
+            <field name="category_id" ref="con_stock.module_stock_notifications"/>
         </record>
 
         <record model="res.groups" id="group_notifications_biweekly">
             <field name="name">Can receive stock notifications email biweekly</field>
-            <field name="category_id" ref="con_stock_mail_automatic.module_stock_notifications"/>
+            <field name="category_id" ref="con_stock.module_stock_notifications"/>
         </record>
 
         <record model="res.groups" id="group_notifications_monthly">
             <field name="name">Can receive stock notifications email monthly</field>
-            <field name="category_id" ref="con_stock_mail_automatic.module_stock_notifications"/>
+            <field name="category_id" ref="con_stock.module_stock_notifications"/>
         </record>
 
     </data>

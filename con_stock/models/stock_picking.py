@@ -20,7 +20,8 @@
 ##############################################################################
 
 from odoo.models import Model, api
-from odoo import fields
+from odoo import fields, SUPERUSER_ID
+import time
 from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
@@ -167,3 +168,66 @@ class StockPicking(Model):
 
         res = super(StockPicking, self).create(vals)
         return res
+
+    @api.multi
+    def send_mail_notification_diary(self):
+        """
+        Stock mail diary notifications
+        """
+        # senders
+        uid = SUPERUSER_ID
+        user_id = self.env[
+            'res.users'].browse(uid)
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Can receive stock notifications email diary']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c,c) for c in recipients)
+        # Stock move objects
+        move_line_ids = self.env[
+            'stock.move.line'].search(
+                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')]])
+        # Generate data for template
+        partner_lst = []
+        works_lst = []
+        for data in move_line_ids:
+            partner_lst.append(data.picking_id.partner_id)
+            works_lst.append(data.picking_id.project_id)
+        # Mail template
+        template = self.env.ref(
+            'con_stock.stock_automatic_email_template')
+        mail_template = self.env['mail.template'].browse(template.id)
+        # Mail subject
+        date = time.strftime('%d-%m-%Y') 
+        subject = "Stock movements diary notification: " + str(date) 
+        # Update the context
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'senders': user_id,
+            'recipients': formated,
+            'subject': subject,
+            'date': date,
+            'partner_lst': list(set(partner_lst)),
+            'works_lst': list(set(works_lst)),
+            'move_line_ids': list(set(move_line_ids))
+        })
+        # Send mail
+        if mail_template and partner_lst and \
+           works_lst and move_line_ids:
+            mail_template.with_context(ctx).send_mail(
+                self.id, force_send=True, raise_exception=True)
