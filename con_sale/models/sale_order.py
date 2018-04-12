@@ -63,6 +63,28 @@ class SaleOrder(models.Model):
         'signature.request',
         compute='_compute_sign_ids',
         string="Main signs")
+    operators_services = fields.Integer(string="Operator Services")
+
+    @api.multi
+    @api.onchange('order_line')
+    def order_line_change(self):
+        """On Changed function on line orders.
+
+          This function count the line that have a operator and update the
+          field operators_service with a integer value:
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              None: Not return any value, only update the operator_service
+              fields on sale order.
+
+        """
+        if self.order_line:
+            operators = self.order_line.filtered(lambda line: line.add_operator)
+            _logger.info("Operators %s" % operators)
+            self.operators_services = len(operators)
 
     def _compute_sign_ids(self):
         """
@@ -296,6 +318,56 @@ class SaleOrderLine(models.Model):
     min_sale_qty = fields.Float('Min QTY')
     components_ids = fields.One2many(
         'sale.product.components', 'sale_line_id', string='Components')
+    add_operator = fields.Boolean('Add Operator')
+    mess_operated = fields.Boolean('Message Operated', default=False)
+    service_operator = fields.Many2one('product.product',
+                                       string='Service Operator',
+                                       domain=[('sale_ok', '=', True),
+                                               ('type', '=', 'service')],
+                                       change_default=True, ondelete='restrict')
+    product_operate = fields.Many2one('product.product',
+                                      string='Product Operate',
+                                      domain=[('sale_ok', '=', True),
+                                              ('type', '=', 'service')],
+                                      change_default=True, ondelete='restrict')
+    assigned_operator = fields.Many2one(
+        'res.users', string="Assigned Operator")
+
+    @api.onchange('assigned_operator')
+    def assigned_operator_change(self):
+        """On Changed function on assigned_operator that update the field
+        when is change from the move_line linked to the picking order.
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              None: Not return any value, only update the operator_service
+              fields on sale order.
+
+        """
+        if self.assigned_operator:
+            self.mess_operated = False
+            move = self.env['stock.move'].search(
+                [('sale_line_id', '=', self.id)])
+            for line in move.move_line_ids:
+                line.write({'assigned_operator': self.assigned_operator})
+
+    def _timesheet_create_task_prepare_values(self):
+        """Overloaded function for preparate fields values to create the new
+        task.
+
+          Args:
+              self (record): Encapsulate instance object.
+
+          Returns:
+              Dict: A dict with the task information.
+
+        """
+        result = super(SaleOrderLine,
+                       self)._timesheet_create_task_prepare_values()
+        result.update({'product_id': self.product_operate.id})
+        return result
 
     @api.multi
     @api.onchange('product_id')
@@ -325,6 +397,8 @@ class SaleOrderLine(models.Model):
                 values['product_id'] = p.product_child_id.id
                 values['extra'] = False
                 products_ids.append((0, 0, values))
+        if self.product_id.is_operated:
+            self.mess_operated = True
         self.components_ids = products_ids
         return result
 
@@ -452,6 +526,18 @@ class SaleOrderLine(models.Model):
     @api.model
     def create(self, values):
         line = super(SaleOrderLine, self).create(values)
+        if values.get('service_operator'):
+            new_line = {
+                'product_id': values['service_operator'],
+                'name': 'Attach Operator over %s'%(values['name']),
+                'product_operate': values['product_id'],
+                'product_uom': self.env['product.product'].browse(
+                    [values['service_operator']]).uom_id.id,
+                'order_id': record.order_id.id
+            }
+            # ~ Create new record for operator
+            super(SaleOrderLine, self).sudo().create(new_line)
+        _logger.info("Record Values on %s"%record)
         if line.owner_id:
             self.function_management_buy(line)
         #Get min qty and uom of product
