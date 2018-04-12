@@ -424,6 +424,10 @@ class SaleOrderLine(models.Model):
                 products_ids.append((0, 0, values))
         if self.product_id.is_operated:
             self.mess_operated = True
+        else:
+            self.mess_operated = False
+            self.add_operator = False
+            self.service_operator = None
         self.components_ids = products_ids
         return result
 
