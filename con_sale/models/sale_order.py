@@ -36,8 +36,8 @@ class SaleOrder(models.Model):
     def _get_components(self):
         for pk in self.picking_ids:
             for ml in pk.move_lines:
-                if ml.product_id.components_ids:
-                        ml.get_components_button()
+                if ml.sale_line_id.components_ids:
+                    ml.get_components_button()
         return True
 
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
@@ -323,7 +323,6 @@ class SaleOrderLine(models.Model):
     components_ids = fields.One2many(
         'sale.product.components', 'sale_line_id', string='Components')
     add_operator = fields.Boolean('Add Operator')
-    is_operator = fields.Boolean('Operator')
     mess_operated = fields.Boolean('Message Operated', default=False)
     service_operator = fields.Many2one('product.product',
                                        string='Service Operator',
@@ -539,8 +538,7 @@ class SaleOrderLine(models.Model):
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
-                'order_id': line.order_id.id,
-                'is_operator': True
+                'order_id': line.order_id.id
             }
             # ~ Create new record for operator
             self.create(new_line_operator)
@@ -578,18 +576,9 @@ class SaleOrderLine(models.Model):
         return line
 
     @api.multi
-    @api.onchange('add_operator')
-    def add_operator_change(self):
-        if not self.add_operator:
-            self.write({'service_operator': False})
-
-    @api.multi
     def write(self, values):
         res = super(SaleOrderLine, self).write(values)
         for rec in self:
-            if not rec.add_operator:
-                rec.search(
-                    [('is_operator', '=', True)]).unlink()
             if values.get('owner_id') and not rec.purchase_order_line:
                 rec.function_management_buy(rec)
             if rec.purchase_order_line and values.get('product_uom_qty'):
