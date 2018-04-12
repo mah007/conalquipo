@@ -42,15 +42,12 @@ class SaleOrder(models.Model):
 
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
                                   string="Type", default="rent")
-
     purchase_ids = fields.One2many('purchase.order', 'sale_order_id',
                                    string='Purchase Orders')
     state = fields.Selection(selection_add=[
         ('merged', _('Merged')),
     ])
-
     sale_order_id = fields.Many2one('sale.order', 'Merged In')
-
     sale_order_ids = fields.One2many('sale.order', 'sale_order_id',
                                      string='Sale Orders related')
     project_id = fields.Many2one('project.project', string="Project")
@@ -281,6 +278,7 @@ class SaleOrder(models.Model):
             
     @api.multi
     def write(self, values):
+        # Overwrite sale order write
         if 'project_id' in values and values['project_id'] is False:
             raise UserError(_(
                 'You need specify a work in this sale order'))
@@ -340,6 +338,25 @@ class SaleOrderLine(models.Model):
     parent_line = fields.Many2one(
         'sale.order.line', 'Parent line')
     min_sale_qty = fields.Float('Min QTY')
+
+    @api.one
+    @api.constrains('start_date', 'end_date')
+    def _check_dates(self):
+        """
+        Star date and end date validation
+        """
+        if self.end_date and self.start_date:
+            date_format = '%Y-%m-%d'
+            d1 = datetime.strptime(
+                self.start_date, date_format
+                ).date()
+            d2 = datetime.strptime(
+                self.end_date, date_format
+                ).date()
+            if d2 < d1:
+                raise UserError(
+                    _("The end date can't be less than start date")) 
+                
 
     @api.onchange('assigned_operator')
     def assigned_operator_change(self):
@@ -579,6 +596,18 @@ class SaleOrderLine(models.Model):
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
                     self.create(new_line_components)
+        # Dates validations
+        if line.end_date and line.start_date:
+            date_format = '%Y-%m-%d'
+            d1 = datetime.strptime(
+                line.start_date, date_format
+                ).date()
+            d2 = datetime.strptime(
+                line.end_date, date_format
+                ).date()
+            if d2 < d1:
+                raise UserError(
+                    _("The end date can't be less than start date")) 
         return line
 
     @api.multi
@@ -613,6 +642,18 @@ class SaleOrderLine(models.Model):
                             'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                         } 
                         component.write(new_line)
+            # Dates validations
+            if rec.end_date and rec.start_date:
+                date_format = '%Y-%m-%d'
+                d1 = datetime.strptime(
+                    rec.start_date, date_format
+                    ).date()
+                d2 = datetime.strptime(
+                    rec.end_date, date_format
+                    ).date()
+                if d2 < d1:
+                    raise UserError(
+                        _("The end date can't be less than start date")) 
         return res
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
