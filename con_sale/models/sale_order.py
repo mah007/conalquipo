@@ -533,11 +533,11 @@ class SaleOrderLine(models.Model):
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
-                'order_id': record.order_id.id
+                'order_id': line.order_id.id
             }
             # ~ Create new record for operator
             super(SaleOrderLine, self).sudo().create(new_line)
-        _logger.info("Record Values on %s"%record)
+        _logger.info("Record Values on %s"%line)
         if line.owner_id:
             self.function_management_buy(line)
         #Get min qty and uom of product

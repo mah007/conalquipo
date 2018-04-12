@@ -27,7 +27,7 @@
     'sequence': 10,
     'summary': '',
     'depends': [
-        'hr'
+        'hr', 'hr_contract'
     ],
     'description':
     """

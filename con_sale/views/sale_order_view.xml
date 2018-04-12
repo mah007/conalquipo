@@ -131,7 +131,7 @@
                       add it if necessary, the operator will be appear when
                       the sale order has been saved.
                     </div>
-             /xpath>
+            </xpath>
 
             <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
                 <field name="add_operator" />

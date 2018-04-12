@@ -41,7 +41,7 @@
         'data/module_category.xml',
         'data/groups.xml',
         'views/email_template.xml',
-        'views/cron_template.xml'
+        'views/cron_template.xml',
         'wizards/set_location_wizard.xml',
         'views/stock_menu.xml',
         'views/stock_picking.xml',
