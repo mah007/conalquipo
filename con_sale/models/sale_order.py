@@ -88,7 +88,7 @@ class SaleOrder(models.Model):
 
     def _compute_sign_ids(self):
         """
-        Get the products attachments
+        Get the products sign attachments
         """
         for data in self:
             signs_ids = self.env[
@@ -127,8 +127,9 @@ class SaleOrder(models.Model):
                     p.email or '')
 
     @staticmethod
-    def merge_address(street, street2, city, municipality, state, zip_code,
-                      country, phone, email):
+    def merge_address(
+        street, street2, city, municipality, state, zip_code,
+        country, phone, email):
         """
         This function receive text fields for merge the address fields.
 
@@ -280,10 +281,9 @@ class SaleOrder(models.Model):
             
     @api.multi
     def write(self, values):
-        if 'project_id' in values:
-            if values['project_id'] is False:
-                raise UserError(_(
-                    'You need specify a work in this sale order'))
+        if 'project_id' in values and values['project_id'] is False:
+            raise UserError(_(
+                'You need specify a work in this sale order'))
         return super(SaleOrder, self).write(values)
 
 class SaleOrderLine(models.Model):
@@ -315,13 +315,14 @@ class SaleOrderLine(models.Model):
     stock_move_status = fields.Text(
         string="Stock move status", compute="_compute_move_status",
         store=True)
+    # Components
     product_components = fields.Boolean('Have components?')
     is_component = fields.Boolean('Component')
     parent_component = fields.Many2one(
         'product.product', 'Parent component')
-    min_sale_qty = fields.Float('Min QTY')
     components_ids = fields.One2many(
         'sale.product.components', 'sale_line_id', string='Components')
+    # Operators
     add_operator = fields.Boolean('Add Operator')
     mess_operated = fields.Boolean('Message Operated', default=False)
     service_operator = fields.Many2one('product.product',
@@ -336,6 +337,9 @@ class SaleOrderLine(models.Model):
                                       change_default=True, ondelete='restrict')
     assigned_operator = fields.Many2one(
         'res.users', string="Assigned Operator")
+    parent_line = fields.Many2one(
+        'sale.order.line', 'Parent line')
+    min_sale_qty = fields.Float('Min QTY')
 
     @api.onchange('assigned_operator')
     def assigned_operator_change(self):
@@ -538,7 +542,8 @@ class SaleOrderLine(models.Model):
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
-                'order_id': line.order_id.id
+                'order_id': line.order_id.id,
+                'parent_line': self.id,
             }
             # ~ Create new record for operator
             self.create(new_line_operator)
@@ -566,6 +571,7 @@ class SaleOrderLine(models.Model):
                         'name': 'Extra component for %s'%(
                             line.product_id.name),
                         'parent_component': line.product_id.id,
+                        'parent_line': line.id,
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
