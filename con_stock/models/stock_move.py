@@ -64,7 +64,6 @@ class StockMove(Model):
                             'Components:') + name,
                         'product_id': data.product_id.id,
                         'product_uom_qty': data.quantity,
-                        'product_qty': data.quantity,
                         'product_uom': uom,
                         'origin': self.origin,
                         'partner_id': self.partner_id.id,
