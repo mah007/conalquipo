@@ -196,8 +196,8 @@ class SaleOrder(models.Model):
         self.function_add_picking_owner()
         for purchase_id in self.purchase_ids:
                 purchase_id.button_confirm()
-        self._get_components()
         self._propagate_picking_project()
+        self._get_components()
         return res
 
     @api.multi
@@ -575,7 +575,8 @@ class SaleOrderLine(models.Model):
         if values.get('service_operator'):
             new_line_operator = {
                 'product_id': values['service_operator'],
-                'name': 'Attach Operator over %s'%(values['name']),
+                'name': 'Operator ' + '%s'%(
+                    line.product_id.default_code),
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
@@ -605,8 +606,8 @@ class SaleOrderLine(models.Model):
                     qty = data.quantity * line.product_uom_qty
                     new_line_components = {
                         'product_id': data.product_id.id,
-                        'name': 'Extra component for %s'%(
-                            line.product_id.name),
+                        'name': 'Extra ' + '%s' % (
+                            line.product_id.default_code),
                         'parent_component': line.product_id.id,
                         'parent_line': line.id,
                         'order_id': line.order_id.id,
@@ -652,7 +653,7 @@ class SaleOrderLine(models.Model):
                         qty = data.quantity * rec.product_uom_qty
                         new_line = {
                             'product_id': data.product_id.id,
-                            'name': 'Extra component for %s'%(
+                            'name': 'Extra: ' + '%s'%(
                                 rec.product_id.name),
                             'parent_component': rec.product_id.id,
                             'order_id': rec.order_id.id,

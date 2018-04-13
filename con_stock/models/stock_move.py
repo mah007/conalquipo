@@ -48,10 +48,10 @@ class StockMove(Model):
         """
         trigger = False
         move_obj = self.env['stock.move']
-        if not self.product_id.components_ids:
+        if not self.sale_line_id.components_ids:
             raise UserError(_("The following product '%s' dont"
                               " have components") % self.product_id.name)
-        if self.product_id.components_ids and not self.button_pushed:
+        if self.sale_line_id.components_ids and not self.button_pushed:
             trigger = True
         if trigger:
             self.button_pushed = True
@@ -74,6 +74,7 @@ class StockMove(Model):
                         'group_id': self.group_id.id,
                         'rule_id': self.rule_id.id,
                         'picking_type_id': self.picking_type_id.id,
+                        'warehouse_id': self.picking_type_id.warehouse_id.id,
                         'child_product': True,
                         'sale_line_id': self.sale_line_id.id
                     })

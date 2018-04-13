@@ -56,7 +56,7 @@
                 <field name="order_type" invisible="1"/>
                 <field name="min_sale_qty"/>
                 <field name="bill_uom_qty"/>
-                <field name="bill_uom" />
+                <field name="bill_uom"/>
                 <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
                 <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
                 <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
@@ -90,7 +90,7 @@
 
             <!-- Hide name field -->
             <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="replace">
-                <field name="name" invisible="1"/>
+                <field name="name" invisible="0"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree//field[@name='currency_id']" position="after">

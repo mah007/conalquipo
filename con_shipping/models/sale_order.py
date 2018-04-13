@@ -175,6 +175,8 @@ class SaleOrder(models.Model):
         if self.partner_id and self.fiscal_position_id:
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
+        _logger.warning(price_unit)
+        _logger.warning('AQUIIIIIII')
         # Create the sales order line
         for x in range(2):
             values = {
