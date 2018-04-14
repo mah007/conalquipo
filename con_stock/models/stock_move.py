@@ -41,6 +41,7 @@ class StockMove(Model):
         string="Child product", default=False)
     mrp_repair_id = fields.Many2one(
         'mrp.repair', string='Repair request')
+    description = fields.Char(string='Description')
 
     def get_components_button(self):
         """
@@ -48,6 +49,7 @@ class StockMove(Model):
         """
         trigger = False
         move_obj = self.env['stock.move']
+        code = self.sale_line_id.product_id.product_tmpl_id.default_code
         if not self.sale_line_id.components_ids:
             raise UserError(_("The following product '%s' dont"
                               " have components") % self.product_id.name)
@@ -62,6 +64,8 @@ class StockMove(Model):
                     move_obj.create({
                         'name': _(
                             'Components:') + name,
+                        'description': _(
+                            'Comp. ') + code,
                         'product_id': data.product_id.id,
                         'product_uom_qty': data.quantity,
                         'product_uom': uom,
@@ -77,11 +81,20 @@ class StockMove(Model):
                         'warehouse_id': self.picking_type_id.warehouse_id.id,
                         'child_product': True,
                         'sale_line_id': self.sale_line_id.id
-                    })
+                    })                
         else:
             raise UserError(_("The following product '%s' already"
                               " has its components"
                               ) % self.product_id.name)
+        other = self.env['stock.move'].search([
+            ('picking_id', '=', self.picking_id.id),
+            ('origin', '=', self.origin),
+            ('button_pushed', '=', False)])
+        for pr in other:
+            if pr.sale_line_id and not pr.description:
+                code_line = pr.sale_line_id.name
+                _logger.warning(pr)
+                pr.write({'description': code_line})
 
     def _get_project(self):
         for data in self:

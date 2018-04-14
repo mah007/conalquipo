@@ -175,8 +175,6 @@ class SaleOrder(models.Model):
         if self.partner_id and self.fiscal_position_id:
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
-        _logger.warning(price_unit)
-        _logger.warning('AQUIIIIIII')
         # Create the sales order line
         for x in range(2):
             values = {
@@ -196,6 +194,7 @@ class SaleOrder(models.Model):
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
             self.update({'order_line': [(0, 0, values)]})
+            self.write({'price_unit': price_unit})
             if not receipt:
                 break
         return True
