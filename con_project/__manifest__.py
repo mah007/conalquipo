@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Projects, Works',
     'depends': ['con_base', 'con_delivery', 'project', 'sale',
-                'delivery', 'hr_timesheet'],
+                'delivery', 'hr_timesheet', 'stock'],
     'description':
     """
         Project Management for works

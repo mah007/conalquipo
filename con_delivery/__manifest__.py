@@ -17,6 +17,9 @@
         - Adds municipality_ids modifications to the delivery.carrier model
     """,
     'data': [
+        'data/module_category.xml',
+        'data/groups.xml',
+        'views/delivery.xml'
     ],
     'qweb': [
     ],

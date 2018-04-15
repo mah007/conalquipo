@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<openerp>
+<odoo>
     <data>
+
+        <template id="report_delivery_document_shipping" inherit_id="stock.report_delivery_document">
+            <xpath expr="//div[@class='page']" position="inside">
+                <p t-if="o.note"><span t-field="o.note" /></p>
+            </xpath>
+        </template>
 
         <record id="view_stock_picking_form_inherit" model="ir.ui.view">
             <field name="name">inherit.stock.picking.form</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr='//header' position="inside">
+                    <button name="action_equipment_change" string="Equipment Change" type="object"
+                              attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" groups="con_shipping.group_equipment_change"/>
+                </xpath>
+
+                <button name="action_cancel" position="replace">
+                    <button name="action_cancel"
+                            attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting')), ('is_locked', '=', False)]}"
+                            context="{'wizard_cancel': True}"
+                            string="Cancel"
+                            groups="con_shipping.group_shipping_order"
+                            type="object"/>
+                </button>
 
                 <xpath expr="//header" position="before">
                     <field name="mess_operated"  invisible="1"/>
@@ -94,9 +114,117 @@
                     <field name="priority" invisible="1"/>
                     <field name="picking_type_id" invisible="1"/>
                     <field name="note"/>
+                    <field name="cancel_reason"/>
                 </tree>
             </field>
         </record>
 
+        <record id="view_picking_withcarrier_out_form_inherit" model="ir.ui.view">
+            <field name="name">delivery.stock.picking_withcarrier.form.view.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='carrier_id']" position="replace" />
+
+                    <xpath expr="//label[@for='carrier_tracking_ref']" position="replace"/>
+
+                    <xpath expr="//field[@name='carrier_tracking_ref']" position="replace"/>
+
+                    <xpath expr="//div[@name='tracking']" position="replace"/>
+
+                    <xpath expr="//label[@for='weight']" position="replace"/>
+
+                    <xpath expr="//separator[1]" position="replace"/>
+
+                    <xpath expr="//field[@name='weight']" position="replace" />
+
+                    <xpath expr="//field[@name='weight_uom_id']" position="replace" />
+
+                    <xpath expr="//field[@name='shipping_weight']" position="replace" />
+
+                    <xpath expr="//field[@name='number_of_packages']" position="replace" />
+
+                    <xpath expr="//page[@name='extra']" position="after">
+                          <page name='info_shipping' string="Info Shipping">
+                              <group>
+                                  <group col="2">
+                                      <field name="type_sp"  invisible="1"/>
+                                      <field name="location_id" />
+                                      <field name="carrier_tracking_ref"/>
+                                      <field name="carrier_type" widget="radio"/>
+
+                                      <field name="carrier_id"  class="oe_inline"
+                                            attrs="{'readonly': [('state', '=', 'done')],
+                                           'invisible': [('carrier_type','!=', 'company')]}"/>
+
+                                      <field name="vehicle_id" class="oe_inline"
+                                               attrs="{'readonly': [('state', '=', 'done')],
+                                               'invisible': ['|',('carrier_type','!=', 'company')]}"/>
+
+                                      <field name="license_plate" class="oe_inline" readonly="1"
+                                               attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"/>
+
+                                      <field name="vehicle_client" class="oe_inline"
+                                               attrs="{'readonly': [('state', '=', 'done')],
+                                               'invisible': ['|',('carrier_type','!=', 'client')]}"/>
+
+                                      <field name="driver_client"  class="oe_inline"
+                                               attrs="{'readonly': [('state', '=', 'done')],
+                                               'invisible': ['|',('carrier_type','!=', 'client')]}"/>
+
+                                      <field name="id_driver_client"  class="oe_inline"
+                                               attrs="{'readonly': [('state', '=', 'done')],
+                                               'invisible': ['|',('carrier_type','!=', 'client')]}"/>
+                                  </group>
+                                  <group col="2">
+                                      <label for="weight" string="Weight"/>
+                                      <div>
+                                          <field name="weight" class="oe_inline"/>
+                                          <field name="weight_uom_id" nolabel="1" class="oe_inline" style="margin-left:5px"/>
+                                      </div>
+                                      <field name="shipping_weight"/>
+                                      <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                                  </group>
+                                  <group col="2" name="construction_receives" string="Info Remission On Site">
+                                        <field name="in_hour" widget='float_time'/>
+                                        <field name="out_hour" widget='float_time'/>
+                                        <field name="responsible"/>
+                                        <field name="id_number"/>
+                                        <field name="job_title"/>
+                                  </group>
+                                  <group col="2" name="shipping_driver"
+                                         string="Shipping Driver" attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}">
+                                       <field name="driver_ids" mode="tree"  attrs="{'readonly': [('state', '=', 'done')],
+                                            'invisible': ['|',('carrier_type','!=', 'company')]}" nolabel="1">
+                                             <tree editable="bottom">
+                                                 <field name="driver_ids"/>
+                                                 <field name="identification_id" readonly="1"/>
+                                                 <field name="job_title"/>
+                                             </tree>
+                                      </field>
+                                  </group>
+                                  <group col="2" name="delivery_cost"
+                                         string="Delivery Cost">
+                                       <field name="delivery_cost" mode="tree"
+                                              attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"
+                                              nolabel="1">
+                                             <tree editable="bottom">
+                                                 <field name="product_id"/>
+                                                 <field name="name"/>
+                                                 <field name="price_subtotal"/>
+                                             </tree>
+                                      </field>
+                                  </group>
+                              </group>
+                          </page>
+                    </xpath>
+                    <xpath expr="//page[@name='extra']" position="inside">
+                        <field name="note" placeholder="Log a note..."/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
     </data>
-</openerp>
+</odoo>

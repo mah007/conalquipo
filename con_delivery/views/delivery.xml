@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+        <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
+              <field name="name">delivery.carrier.form</field>
+              <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+              <field name="model">delivery.carrier</field>
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='state_ids']" position="after">
+                       <field name="municipality_ids" widget="many2many_tags"/>
+                   </xpath>
+                   <xpath expr="//page[2]" position="after">
+                        <page string="Cost for Vehicle" name="vehicle">
+                            <group>
+                                <group>
+                                    <field name="delivery_carrier_cost" mode="tree" nolabel="1">
+                                         <tree editable="bottom">
+                                             <field name="vehicle"/>
+                                             <field name="cost"/>
+                                         </tree>
+                                    </field>
+                                </group>
+                            </group>
+                        </page>
+                  </xpath>
+              </field>
+        </record>
+
+    </odoo>

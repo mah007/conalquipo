@@ -44,7 +44,8 @@
                 'con_base', 'con_delivery', 'con_fleet', 'con_hr', 
                 'con_hr_timesheet',
                 'con_product', 'con_project', 'con_project_translates',
-                'con_purchase_translates', 'con_sale', 'con_shipping', 'con_stock', 'con_web', 'con_website_sign',
+                'con_purchase_translates', 'con_sale','con_stock',
+                'con_web', 'con_website_sign',
                 'con_account', 'con_purchase', 
     ],
     'data': [

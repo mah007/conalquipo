@@ -1,6 +1,6 @@
 <odoo>
     <template id="report_delivery_document_con">
-        <link rel='stylesheet' href='/con_shipping/static/src/css/style.css'/>
+        <link rel='stylesheet' href='/con_stock/static/src/css/style.css'/>
         <t>
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
                 <div class="header">
@@ -266,7 +266,7 @@
     </template>
     <template id="report_delivery_con">
         <t t-foreach="docs" t-as="o">
-            <t t-call="con_shipping.report_delivery_document_con" t-lang="o.partner_id.lang"/>
+            <t t-call="con_stock.report_delivery_document_con" t-lang="o.partner_id.lang"/>
         </t>
     </template>
 
@@ -275,8 +275,8 @@
         id="action_report_delivery_con"
         model="stock.picking"
         report_type="qweb-pdf"
-        name="con_shipping.report_delivery_con"
-        file="con_shipping.report_delivery_con"
+        name="con_stock.report_delivery_con"
+        file="con_stock.report_delivery_con"
     />
 
 </odoo>

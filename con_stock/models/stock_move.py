@@ -42,6 +42,20 @@ class StockMove(Model):
     mrp_repair_id = fields.Many2one(
         'mrp.repair', string='Repair request')
     description = fields.Char(string='Description')
+    returned = fields.Integer('returned')
+
+    def _action_done(self, merge=True):
+        res = super(StockMove, self)._action_done()
+        for order in self:
+            if order.state == 'done' and order.returned:
+                move = order.env['stock.move'].search(
+                    [('id', '=', order.returned)], limit=1)
+                if move:
+                    move.write(
+                        {'origin_returned_move_id': order.id,
+                         'button_pushed': True})
+
+        return res
 
     def get_components_button(self):
         """

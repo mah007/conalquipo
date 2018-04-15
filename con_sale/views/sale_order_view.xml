@@ -7,6 +7,11 @@
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
 
+            <field name="payment_term_id" position="after">
+                <field name="carrier_type" widget="radio"
+                    attrs="{'readonly':[('state','in',('done'))]}"/>
+            </field>
+
             <field name="partner_id" position="after">
                 <field name="project_id" string="Works" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id, 'default_partner_id': partner_id}"/>
             </field>
@@ -177,6 +182,30 @@
             <xpath expr="//filter[@name='sent']" position="after">
                 <filter string="Merged" name="merged" domain="[('state','=','merged')]"/>
             </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_with_carrier_inherit" model="ir.ui.view">
+        <field name="name">delivery.sale.order.form.view.with_carrier</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="delivery.view_order_form_with_carrier"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//label[@for='carrier_id']" position="replace" />
+                <xpath expr="//div[@name='carrier_selection']" position="replace" />
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="carrier_id" context="{'order_id': id}"
+                        attrs="{'readonly':[('state','in',('done'))],
+                                'invisible': [('carrier_type','!=', 'company')]}"/>
+                    <field name="vehicle" attrs="{'readonly':[('state','in',('done'))],
+                        'invisible': [('carrier_type','!=', 'company')]}" string="Vehicle"/>
+
+                    <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
+                            attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
+                    <button name="set_delivery_line" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
+                                attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','in',('done')), ('carrier_type', '!=', 'company')]}"/>
+                </xpath>
+            </data>
         </field>
     </record>
 

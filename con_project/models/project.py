@@ -77,6 +77,8 @@ class ProjectWorks(models.Model):
     product_count = fields.Integer(
         compute='_compute_product_count',
         string="Number of products on work")
+    stock_location_id = fields.Many2one('stock.location',
+                                        string='Location the project')
 
     def _compute_product_count(self):
         """
@@ -134,6 +136,8 @@ class ProjectWorks(models.Model):
 
     @api.model
     def create(self, values):
+        res = super(ProjectWorks, self).create(values)
+        location_id = None
         if values['partner_id']:
             numbers = []
             max_number = 1
@@ -143,9 +147,9 @@ class ProjectWorks(models.Model):
             p_code = partner.partner_code
             # Project code
             project_obj = self.env['project.project']
-            project_codes = project_obj.search(
+            projects = project_obj.search(
                 [('partner_id', '=', values['partner_id'])])
-            for a in project_codes:
+            for a in projects:
                 if a.work_code:
                     text = str(a.work_code)
                     code = int(text[text.find("-") + 1:])
@@ -153,7 +157,37 @@ class ProjectWorks(models.Model):
             if numbers:
                 max_number = max(numbers) + 1
             values['work_code'] = str(p_code) + '-' + str(max_number)
+
+            # Stock partner location
+            stock_location = self.env['stock.location']
+            stock_location_partner = stock_location.search([(
+                'partner_id', '=', partner.id),
+                ('name', '=', partner.name)])
+            name_stock_location = partner.name + '/' + res.name
+            if stock_location_partner:
+                location_id = stock_location.create({
+                    'usage': 'customer',
+                    'partner_id': partner.id,
+                    'name': name_stock_location,
+                    'location_id': stock_location_partner,
+                    'project_id': res.id,
+                    })
+            # else:
+            #     location_partner = stock_location.create({
+            #         'usage': 'customer',
+            #         'partner_id': partner.id,
+            #         'name': res.partner_id.name,
+            #         'location_id': self.env.ref(
+            #             'stock.stock_location_customers').id
+            #     })
+            #     location_id = stock_location.create({
+            #         'usage': 'customer',
+            #         'partner_id': partner.id,
+            #         'name': name_stock_location,
+            #         'location_id': location_partner.id,
+            #         'project_id': res.id,
+            #     })
+            # res.update({'stock_location_id': location_id.id})
         else:
             raise UserError(_("You need to select a client!"))
-        res = super(ProjectWorks, self).create(values)
         return res

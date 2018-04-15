@@ -47,6 +47,172 @@ class StockPicking(Model):
         ('2', 'The equipment did not serve you'),
         ('0', 'No longer need it'),
     ], string="Reason")
+    type_sp = fields.Integer(related='picking_type_id.id', store=True)
+    carrier_type = fields.Selection(related='sale_id.carrier_type', store=True)
+    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle',
+                                 related='sale_id.vehicle',
+                                 onchange='onchange_vehicle_id',
+                                 track_visibility='onchange', store=True)
+
+    license_plate = fields.Char(related='vehicle_id.license_plate',
+                                string='License Plate',
+                                store=True)
+
+    driver_client = fields.Char(string='Driver', track_visibility='onchange')
+    id_driver_client = fields.Char(string='Identification No Driver',
+                                   store=True)
+    driver_ids = fields.One2many(
+        'shipping.driver', 'stock_picking_id', string='Shipping Driver',
+        copy=True)
+    vehicle_client = fields.Char(string='Vehicle', track_visibility='onchange')
+    in_hour = fields.Float(string='Hour Entry', track_visibility='onchange')
+    out_hour = fields.Float(string='Hour Output', track_visibility='onchange')
+    receipts_driver_ids = fields.One2many(
+        'shipping.driver', 'stock_picking_id', string='Shipping Driver',
+        copy=True)
+    responsible = fields.Char(string='Responsible',
+                              track_visibility='onchange')
+    id_number = fields.Char(string='Person identification',
+                            track_visibility='onchange')
+    job_title = fields.Char(string='Job title', track_visibility='onchange')
+    carrier_tracking_ref = fields.Char(string='Tracking Reference',
+                                       compute='_carrier_tracking_ref')
+    cancel_reason = fields.Text(strin="Cancel Reason",
+                                track_visibility='onchange')
+    delivery_cost = fields.Many2many('sale.order.line', 'order_line_picking_rel',
+                                  'sale_order_line_id', 'picking_id',
+                                    string="Delivery Cost")
+
+    @api.multi
+    def action_equipment_change(self):
+        line = []
+        for ml in self.move_lines:
+            line.append((0, 0, {
+                'ant_product_id': ml.product_id.id,
+                'move_line': ml.id}))
+
+        wizard_id = self.env['stock.picking.equipment.change.wizard'].create(
+            vals={'picking_id': self.id,
+                  'product_ids': line,
+                  })
+        return {
+            'name': 'Equipment Change Wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.picking.equipment.change.wizard',
+            'res_id': wizard_id.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+    @api.onchange('carrier_type')
+    def onchange_carrier_type(self):
+        """
+        Wipe the values in the following fields:
+        carrier_id and vehicle_id are False if carrier_type is 'client'
+        vehicle_client and driver client are '' if carrier type is different
+        to client.
+        :return: None
+        """
+        if self.carrier_type == 'client':
+            self.carrier_id = False
+            self.vehicle_id = False
+        else:
+            self.vehicle_client = ''
+            self.driver_client = ''
+
+    @api.onchange('vehicle_id')
+    def onchange_vehicle_id(self):
+        """
+        Check the vehicles available for the carrier selected and return
+        a exception if the same is not available in that zone
+        :return: a empty dictionary if process is ok and warning if have a
+        exception
+        """
+        res = {}
+        if not self.vehicle_id or not self.carrier_id:
+            return res
+        if self.carrier_id:
+            veh_carrier = self.env['delivery.carrier.cost'].search(
+                [('delivery_carrier_id', '=', self.carrier_id.id)], limit=10)
+            veh_ids = []
+            for veh in veh_carrier:
+                veh_ids.append(veh.vehicle.id)
+            if self.vehicle_id.id not in veh_ids:
+                self.vehicle_id = self.vehicle_id.id
+                res['warning'] = {'title': _('Warning'), 'message': _(
+                    'Selected vehicle is not available for the shipping '
+                    'area. please select another vehicle.')}
+                self.vehicle_id = self.vehicle_id.id
+            else:
+                return res
+        return res
+
+    @api.onchange('carrier_id')
+    def onchange_carrier_id(self):
+        """
+        Search all vehicle available for a carrier and send the dynamic
+        domain to the field vehicle_id.
+        :return: A dictionary with a domain in polish notation
+        """
+        domain = {}
+        if self.carrier_id:
+            veh_carrier = self.env['delivery.carrier.cost'].search(
+                [('delivery_carrier_id', '=', self.carrier_id.id)], limit=10)
+            veh_ids = []
+            for veh in veh_carrier:
+                veh_ids.append(veh.vehicle.id)
+            vehicle = self.env['fleet.vehicle'].search(
+                [('id', 'in', veh_ids)], limit=10)
+            domain = {'vehicle_id': [('id', 'in', vehicle.ids)]}
+        return {'domain': domain}
+
+    @api.one
+    @api.depends('scheduled_date', 'carrier_id', 'vehicle_id',
+                 'vehicle_client')
+    def _carrier_tracking_ref(self):
+        """
+        This function merge the following fields in a simple string,
+        for create a tracking code:
+            scheduled_date : date
+            carrier_id: int
+            vehicle_id.license_plate: int
+            location_id.location_id.name: str
+        :return: a joined string tracker code
+        """
+        if self.carrier_id:
+            ref = [str(self.scheduled_date), str(self.carrier_id.id),
+                   str(self.vehicle_id.license_plate or ''),
+                   str(self.location_id.location_id.name or '')]
+        else:
+            ref = [str(self.scheduled_date), str(self.vehicle_client or ''),
+                   self.location_id.location_id.name or '']
+        self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
+            replace(" ", "").replace(":", "")
+
+    @api.multi
+    def action_cancel(self):
+        if self._context.get('wizard_cancel'):
+            wizard_id = self.env['stock.picking.cancel.wizard'].create(
+                vals={'picking_ids': [(4, self._ids)]})
+
+            return {
+                'name': 'Cancellation Wizard',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'stock.picking.cancel.wizard',
+                'res_id': wizard_id.id,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+            }
+        else:
+            return self.action_do_cancel()
+
+    @api.multi
+    def action_do_cancel(self):
+        self.mapped('move_lines')._action_cancel()
+        self.write({'is_locked': True})
+        return True
 
     @api.one
     def generate_repair_requests(self):

@@ -28,6 +28,7 @@ _logger = logging.getLogger(__name__)
 class StockLocation(Model):
     _inherit = "stock.location"
 
+
     @api.multi
     @api.depends('product_state')
     def _get_color(self):
@@ -41,3 +42,5 @@ class StockLocation(Model):
         'product.states', string="Set state")
     color = fields.Char(
         string="Color", compute=_get_color, store=True)
+    project_id = fields.One2many('project.project', 'stock_location_id',
+                                 string='project')

@@ -19,8 +19,8 @@
 
     <template id="equipment_change_template">
         <div>
-            <t t-call="con_shipping.message_head"/>
-            <t t-call="con_shipping.message_body"/>
+            <t t-call="con_stock.message_head"/>
+            <t t-call="con_stock.message_body"/>
         </div>
     </template>
 
