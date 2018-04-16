@@ -465,6 +465,7 @@ class SaleOrder(models.Model):
                 break
         return True
 
+
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
@@ -527,6 +528,7 @@ class SaleOrderLine(models.Model):
                                   'picking_id', 'sale_order_line_id',
                                    string="Pickings",
                                    help="Linked picking to the delivery cost")
+    is_delivery = fields.Boolean('Is Delivery')
 
     @api.one
     @api.constrains('start_date', 'end_date')
