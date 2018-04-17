@@ -201,7 +201,7 @@
                         'invisible': [('carrier_type','!=', 'company')]}" string="Vehicle"/>
 
                     <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
-                            attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}"/>
+                            attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}" invisible="1"/>
                     <button name="set_delivery_line" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
                                 attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','in',('done')), ('carrier_type', '!=', 'company')]}"/>
                 </xpath>
