@@ -140,7 +140,7 @@
 
             <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
                 <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
-                <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}"/>
+                <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/>
             </xpath>
 
         </field>

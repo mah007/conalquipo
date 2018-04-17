@@ -69,6 +69,9 @@ class SaleOrder(models.Model):
                               string='Vehicle', ondelete='cascade',
                               index=True, copy=False,
                               track_visibility='onchange')
+    delivery_price = fields.Float(
+        string='Estimated Delivery Price',
+        readonly=False, copy=False)
 
     @api.multi
     @api.onchange('order_line')
@@ -297,10 +300,11 @@ class SaleOrder(models.Model):
     @api.multi
     def write(self, values):
         # Overwrite sale order write
+        res = super(SaleOrder, self).write(values)
         if 'project_id' in values and values['project_id'] is False:
             raise UserError(_(
                 'You need specify a work in this sale order'))
-        return super(SaleOrder, self).write(values)
+        return res
 
     # Fleet
     @api.onchange('carrier_type')
@@ -376,6 +380,15 @@ class SaleOrder(models.Model):
                 veh_ids.append(veh.vehicle.id)
             domain = {'vehicle': [('id', 'in', veh_ids)]}
         return {'domain': domain}
+
+    @api.onchange('vehicle')
+    def onchange_vehicle_id(self):
+        # Get vehicle price
+        if self.vehicle:
+            for data in self.carrier_id.delivery_carrier_cost:
+                if self.vehicle.id == data.vehicle.id:
+                    self.write({'delivery_price': data.cost})
+                    self.delivery_price = data.cost
 
     @api.depends('carrier_id', 'order_line')
     def _compute_delivery_price(self):
@@ -460,11 +473,10 @@ class SaleOrder(models.Model):
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
             self.update({'order_line': [(0, 0, values)]})
-            self.write({'price_unit': price_unit})
             if not receipt:
                 break
         return True
-
+        
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -528,7 +540,6 @@ class SaleOrderLine(models.Model):
                                   'picking_id', 'sale_order_line_id',
                                    string="Pickings",
                                    help="Linked picking to the delivery cost")
-    is_delivery = fields.Boolean('Is Delivery')
 
     @api.one
     @api.constrains('start_date', 'end_date')
@@ -767,7 +778,7 @@ class SaleOrderLine(models.Model):
             new_line_operator = {
                 'product_id': values['service_operator'],
                 'name': 'Operator ' + '%s'%(
-                    line.product_id.default_code),
+                    line.product_id.default_code or ''),
                 'product_operate': values['product_id'],
                 'product_uom': self.env['product.product'].browse(
                     [values['service_operator']]).uom_id.id,
@@ -798,7 +809,7 @@ class SaleOrderLine(models.Model):
                     new_line_components = {
                         'product_id': data.product_id.id,
                         'name': 'Extra ' + '%s' % (
-                            line.product_id.default_code),
+                            line.product_id.default_code or ''),
                         'parent_component': line.product_id.id,
                         'parent_line': line.id,
                         'order_id': line.order_id.id,
@@ -819,7 +830,11 @@ class SaleOrderLine(models.Model):
                 ).date()
             if d2 < d1:
                 raise UserError(
-                    _("The end date can't be less than start date")) 
+                    _("The end date can't be less than start date"))
+        # Fleet
+        if line.is_delivery:
+            line.update({
+                'price_unit': line.order_id.delivery_price})
         return line
 
     @api.multi
@@ -881,12 +896,15 @@ class SaleOrderLine(models.Model):
             else:
                 quantity = line.product_uom_qty
 
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            price = line.price_unit * (
+                1 - (line.discount or 0.0) / 100.0)
+
             taxes = line.tax_id.compute_all(
                 price, line.order_id.currency_id, quantity,
                 product=line.product_id,
                 partner=line.order_id.partner_shipping_id)
             line.update({
+                'price_unit': price,
                 'price_tax': sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', [])),
                 'price_total': taxes['total_included'],
