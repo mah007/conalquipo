@@ -71,7 +71,6 @@
                         </div>
                     </group>
                 </group>
-
             </xpath>
 
             <field name="payment_term_id" position="after">
