@@ -7,6 +7,73 @@
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
 
+            <xpath expr="//field[@name='order_line']/form/group[1]" position="replace">
+                <group>
+                    <group string="Logistic section">
+                        <field name="product_updatable" invisible="1"/>
+                        <field name="product_id"
+                            context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                            attrs="{'readonly': [('product_updatable', '=', False)]}"
+                            force_save="1"
+                            />
+                        <field name="layout_category_id" groups="sale.group_sale_layout"/>
+                        <field name="invoice_status" invisible="1"/>
+                        <field name="qty_to_invoice" invisible="1"/>
+                        <field name="qty_delivered_updateable" invisible="1"/>
+                        <field name="price_subtotal" invisible="1"/>
+                        <label for="product_uom_qty" string="Ordered Quantity"/>
+                        <div>
+                            <field
+                                context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                name="product_uom_qty" class="oe_inline"/>
+                            <field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button"
+                                attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"/>
+                        </div>
+                        <label for="qty_delivered" string="Delivered Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                        <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                            <field name="qty_delivered" attrs="{'readonly': [('qty_delivered_updateable', '=', False)]}"/>
+                        </div>
+                        <label for="qty_invoiced" string="Invoiced Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                        <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                            <field name="qty_invoiced" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                        </div>
+                        <field name="price_unit"/>
+                        <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+                        <field name="product_subleased" invisible="1"/>
+                       <label for="discount" groups="sale.group_discount_per_so_line"/>
+                        <div name="discount" groups="sale.group_discount_per_so_line">
+                            <field name="discount" class="oe_inline"/> %%
+                        </div>
+                    </group>                    
+                    <group string="Sale section">
+                        <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                            attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                        <label for="customer_lead"/>
+                        <div>
+                            <field name="customer_lead" class="oe_inline"/> days
+                        </div>
+                        <field name="order_type" invisible="1"/>
+                        <field name="min_sale_qty"/>
+                        <field name="bill_uom_qty"/>
+                        <field name="bill_uom"/>
+                    </group>
+                    <group string="Operator section" attrs="{'invisible': [('mess_operated', '=', False)]}">
+                        <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
+                        <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/>
+                        <field name="product_components" invisible="1"/>
+                    </group>
+                    <group string="Dates section">
+                        <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
+                        <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
+                        <label for="analytic_tag_ids" groups="analytic.group_analytic_accounting"/>
+                        <div>
+                            <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_accounting" options="{'color_field': 'color'}"/>
+                        </div>
+                    </group>
+                </group>
+
+            </xpath>
+
             <field name="payment_term_id" position="after">
                 <field name="carrier_type" widget="radio"
                     attrs="{'readonly':[('state','in',('done'))]}"/>
@@ -35,10 +102,6 @@
                 </page>
             </notebook>
 
-            <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
-                <field name="product_components" invisible="1"/>
-            </xpath>
-
             <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
                 <field name="components_ids" attrs="{'invisible': [('product_components','=',False)]}" mode="tree">
                     <tree string="Sales Order Lines" editable="bottom">
@@ -55,17 +118,6 @@
 
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="context">{'default_order_type': order_type}</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='order_line']/form/group/group[2]//label[@for='analytic_tag_ids']" position="before">
-                <field name="order_type" invisible="1"/>
-                <field name="min_sale_qty"/>
-                <field name="bill_uom_qty"/>
-                <field name="bill_uom"/>
-                <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
-                <field name="end_date" attrs="{'invisible': [('order_type','=', 'sale')]}" />
-                <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
-                <field name="product_subleased" invisible="1"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree" position="attributes">
@@ -136,11 +188,6 @@
                       add it if necessary, the operator will be appear when
                       the sale order has been saved.
                     </div>
-            </xpath>
-
-            <xpath expr="//field[@name='order_line']/form/group/group[1]//div[@name='discount']" position="after">
-                <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
-                <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/>
             </xpath>
 
         </field>
