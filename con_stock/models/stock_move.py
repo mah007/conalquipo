@@ -35,8 +35,6 @@ class StockMove(Model):
     partner_id = fields.Many2one(
         'res.partner', string="Partner", compute='_get_partner',
         store=True)
-    button_pushed = fields.Boolean(
-        string="Button pushed", default=False)
     child_product = fields.Boolean(
         string="Child product", default=False)
     mrp_repair_id = fields.Many2one(
@@ -54,56 +52,15 @@ class StockMove(Model):
                     move.write(
                         {'origin_returned_move_id': order.id,
                          'button_pushed': True})
-
         return res
 
-    def get_components_button(self):
+    def get_components_info(self):
         """
-        Button to get the components of a product
+        Button to get info components of a product
         """
-        trigger = False
-        move_obj = self.env['stock.move']
-        code = self.sale_line_id.product_id.product_tmpl_id.default_code
-        if not self.sale_line_id.components_ids:
-            raise UserError(_("The following product '%s' dont"
-                              " have components") % self.product_id.name)
-        if self.sale_line_id.components_ids and not self.button_pushed:
-            trigger = True
-        if trigger:
-            self.button_pushed = True
-            for data in self.sale_line_id.components_ids:
-                if not data.extra:
-                    name = data.product_id.product_tmpl_id.name
-                    uom = data.product_id.product_tmpl_id.uom_id.id
-                    move_obj.create({
-                        'name': _(
-                            'Components:') + name,
-                        'description': _(
-                            'Comp. ') + (code  or ''),
-                        'product_id': data.product_id.id,
-                        'product_uom_qty': data.quantity,
-                        'product_uom': uom,
-                        'origin': self.origin,
-                        'partner_id': self.partner_id.id,
-                        'location_id': self.location_id.id,
-                        'location_dest_id': self.location_dest_id.id,
-                        'picking_id': self.picking_id.id,
-                        'state': self.state,
-                        'group_id': self.group_id.id,
-                        'rule_id': self.rule_id.id,
-                        'picking_type_id': self.picking_type_id.id,
-                        'warehouse_id': self.picking_type_id.warehouse_id.id,
-                        'child_product': True,
-                        'sale_line_id': self.sale_line_id.id
-                    })                
-        else:
-            raise UserError(_("The following product '%s' already"
-                              " has its components"
-                              ) % self.product_id.name)
         other = self.env['stock.move'].search([
             ('picking_id', '=', self.picking_id.id),
-            ('origin', '=', self.origin),
-            ('button_pushed', '=', False)])
+            ('origin', '=', self.origin)])
         for pr in other:
             if pr.sale_line_id and not pr.description:
                 code_line = pr.sale_line_id.name

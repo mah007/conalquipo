@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         for pk in self.picking_ids:
             for ml in pk.move_lines:
                 if ml.sale_line_id.components_ids:
-                    ml.get_components_button()
+                    ml.get_components_info()
         return True
 
     order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
@@ -510,6 +510,7 @@ class SaleOrderLine(models.Model):
     # Components
     product_components = fields.Boolean('Have components?')
     is_component = fields.Boolean('Component')
+    is_extra = fields.Boolean('Extra')
     parent_component = fields.Many2one(
         'product.product', 'Parent component')
     components_ids = fields.One2many(
@@ -806,7 +807,7 @@ class SaleOrderLine(models.Model):
             for data in line.components_ids:
                 if data.extra:
                     qty = data.quantity * line.product_uom_qty
-                    new_line_components = {
+                    new_line_extra = {
                         'product_id': data.product_id.id,
                         'name': 'Extra ' + '%s' % (
                             line.product_id.default_code or ''),
@@ -815,6 +816,22 @@ class SaleOrderLine(models.Model):
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
+                        'is_extra': True,
+                        'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                    }
+                    self.create(new_line_extra)
+                else:
+                    qty = data.quantity * line.product_uom_qty
+                    new_line_components = {
+                        'product_id': data.product_id.id,
+                        'name': 'Comp ' + '%s' % (
+                            line.product_id.default_code or ''),
+                        'parent_component': line.product_id.id,
+                        'parent_line': line.id,
+                        'order_id': line.order_id.id,
+                        'product_uom_qty': qty,
+                        'bill_uom_qty': qty,
+                        'price_unit': 0.0,
                         'is_component': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
@@ -835,6 +852,9 @@ class SaleOrderLine(models.Model):
         if line.is_delivery:
             line.update({
                 'price_unit': line.order_id.delivery_price})
+        if line.is_component:
+            line.update({
+                'price_unit': 0.0})
         return line
 
     @api.multi
