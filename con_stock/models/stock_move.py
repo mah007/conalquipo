@@ -79,7 +79,7 @@ class StockMove(Model):
                         'name': _(
                             'Components:') + name,
                         'description': _(
-                            'Comp. ') + code,
+                            'Comp. ') + (code  or ''),
                         'product_id': data.product_id.id,
                         'product_uom_qty': data.quantity,
                         'product_uom': uom,
@@ -107,7 +107,6 @@ class StockMove(Model):
         for pr in other:
             if pr.sale_line_id and not pr.description:
                 code_line = pr.sale_line_id.name
-                _logger.warning(pr)
                 pr.write({'description': code_line})
 
     def _get_project(self):

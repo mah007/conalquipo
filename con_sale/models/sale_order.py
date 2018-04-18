@@ -185,7 +185,22 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+        self.function_add_picking_owner()
+        for purchase_id in self.purchase_ids:
+            purchase_id.button_confirm()
+        self._propagate_picking_project()
+        self._get_components()
+        # ~ dl_ids: Deliveries Lines Ids
+        dl_ids = self.env['sale.order.line'].search(
+            [('delivery_direction', 'in', ['out']),
+             ('picking_ids', '=', False),
+             ('order_id', '=', self.id)])
+        customer_location = self.env.ref('stock.stock_location_customers')
+        for picking in self.picking_ids:
+            if picking.state not in ['done', 'cancel'] and \
+                    picking.location_dest_id.id == customer_location.id:
+                dl_ids.update({'picking_ids': [(4, picking.id)]})
+
         if self.partner_id:
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
@@ -204,21 +219,6 @@ class SaleOrder(models.Model):
                 res = True
             else:
                 res = super(SaleOrder, self).action_confirm()
-        self.function_add_picking_owner()
-        for purchase_id in self.purchase_ids:
-                purchase_id.button_confirm()
-        self._propagate_picking_project()
-        self._get_components()
-        # ~ dl_ids: Deliveries Lines Ids
-        dl_ids = self.env['sale.order.line'].search(
-            [('delivery_direction', 'in', ['out']),
-             ('picking_ids', '=', False),
-             ('order_id', '=', self.id)])
-        customer_location = self.env.ref('stock.stock_location_customers')
-        for picking in self.picking_ids:
-            if picking.state not in ['done', 'cancel'] and \
-                    picking.location_dest_id.id == customer_location.id:
-                dl_ids.update({'picking_ids': [(4, picking.id)]})
         return res
 
     @api.multi
