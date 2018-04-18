@@ -193,7 +193,7 @@ class ProductTemplate(Model):
     components_ids = fields.One2many(
         'product.components', 'product_id', string='Components')
     product_origin = fields.Many2one('stock.location',
-                                     string="Product's Origin")
+                                     string="Location Origin")
     replenishment_charge = fields.Many2one('product.template',
                                            string='Replenishment charge')
     min_qty_rental = fields.Integer(string='Min Qty rental')

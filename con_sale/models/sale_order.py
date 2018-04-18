@@ -185,11 +185,8 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        self.function_add_picking_owner()
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
-        self._propagate_picking_project()
-        self._get_components()
         # ~ dl_ids: Deliveries Lines Ids
         dl_ids = self.env['sale.order.line'].search(
             [('delivery_direction', 'in', ['out']),
@@ -219,6 +216,9 @@ class SaleOrder(models.Model):
                 res = True
             else:
                 res = super(SaleOrder, self).action_confirm()
+        self._propagate_picking_project()
+        self._get_components()
+        self.function_add_picking_owner()
         return res
 
     @api.multi
