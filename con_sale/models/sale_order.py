@@ -492,7 +492,6 @@ class SaleOrderLine(models.Model):
     order_type = fields.Selection(related='order_id.order_type',
                                   string="Type Order")
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
-
     owner_id = fields.Many2one('res.partner', string='Supplier',
                                states=READONLY_STATES_OWNER,
                                change_default=True, track_visibility='always')
@@ -509,6 +508,7 @@ class SaleOrderLine(models.Model):
         store=True)
     # Components
     product_components = fields.Boolean('Have components?')
+    product_uoms  = fields.Boolean('Multiple uoms?') 
     is_component = fields.Boolean('Component')
     is_extra = fields.Boolean('Extra')
     parent_component = fields.Many2one(
@@ -630,9 +630,15 @@ class SaleOrderLine(models.Model):
         """
         result = super(SaleOrderLine, self).product_id_change()
         self.product_components = False
+        self.product_uoms = False
+        self.bill_uom_qty = 1.0
+        self.bill_uom = False
         self.components_ids = [(5,)]
+        self.uoms_ids = [(5,)]
         products_ids = []
+        uoms_list = []
         components_ids = self.product_id.product_tmpl_id.components_ids
+        uoms_ids = self.product_id.product_tmpl_id.uoms_ids
         if components_ids:
             self.product_components = True
             for p in components_ids:
@@ -641,6 +647,15 @@ class SaleOrderLine(models.Model):
                 values['product_id'] = p.product_child_id.id
                 values['extra'] = False
                 products_ids.append((0, 0, values))
+        if uoms_ids:
+            self.product_uoms = True
+            for p in uoms_ids:
+                uoms_list.append(p.uom_id.id)
+            result['domain'] = {
+                'bill_uom': [('id', 'in', uoms_list)]}
+        else:
+            self.bill_uom = self.product_uom.id
+            self.bill_uom_qty = self.product_uom_qty
         if self.product_id.is_operated:
             self.mess_operated = True
         else:
@@ -1075,7 +1090,8 @@ class SaleOrderLine(models.Model):
         # negative discounts (= surcharge) are included in the display price
         return max(base_price, final_price)
 
-    @api.onchange('product_uom', 'product_uom_qty', 'bill_uom_qty')
+    @api.onchange(
+        'product_uom', 'product_uom_qty', 'bill_uom_qty')
     def product_uom_change(self):
         if not self.product_uom or not self.product_id:
             self.price_unit = 0.0
@@ -1116,9 +1132,6 @@ class SaleOrderLine(models.Model):
                 if self.bill_uom.id == uom_list.uom_id.id:
                     self.price_unit = uom_list.cost_byUom   
                     self.min_sale_qty = uom_list.quantity
-        if not self.bill_uom and self.bill_uom_qty > 0.0:
-            raise UserError(_("Do you need to specify a sale UOM")) 
-
 
 class SaleProductComponents(models.Model):
     _name = "sale.product.components"

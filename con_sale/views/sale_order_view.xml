@@ -54,13 +54,14 @@
                         </div>
                         <field name="order_type" invisible="1"/>
                         <field name="min_sale_qty" readonly="1"/>
-                        <field name="bill_uom_qty"/>
-                        <field name="bill_uom"/>
+                        <field name="bill_uom_qty" required="1"/>
+                        <field name="bill_uom" attrs="{'invisible': [('product_uoms','=',False)], 'required': [('product_uoms','=',True)]}"/>
                     </group>
                     <group string="Operator section" attrs="{'invisible': [('mess_operated', '=', False)]}">
                         <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
                         <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/>
                         <field name="product_components" invisible="1"/>
+                        <field name="product_uoms" invisible="1"/>
                     </group>
                     <group string="Dates section">
                         <field name="start_date" attrs="{'invisible': [('order_type','=', 'sale')]}"/>
