@@ -781,10 +781,11 @@ class SaleOrderLine(models.Model):
                 'name': 'Operator ' + '%s'%(
                     line.product_id.default_code or ''),
                 'product_operate': values['product_id'],
-                'product_uom': self.env['product.product'].browse(
-                    [values['service_operator']]).uom_id.id,
+                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
                 'order_id': line.order_id.id,
                 'parent_line': self.id,
+                'bill_uom': line.product_id.product_tmpl_id.uom_id.id,
+                'bill_uom_qty': line.product_uom_qty,
             }
             # ~ Create new record for operator
             self.create(new_line_operator)
