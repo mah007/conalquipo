@@ -7,13 +7,20 @@ _logger = logging.getLogger(__name__)
 class SaleOrderAdvertisementWizard(models.TransientModel):
     _name = "sale.order.advertisement.wizard"
 
+    @api.multi
+    def _get_default_loc(self):
+        location = self.env['stock.location'].search([
+                ('set_product_state', '=', True)], limit=1) or False
+        return location
+
     project_id = fields.Many2one('project.project', string="Project")
     sale_order_id = fields.Many2one('sale.order', 'Sale Order')
     partner_id = fields.Many2one('res.partner', 'Partner')
     location_id = fields.Many2one('stock.location', "Source Location")
-    location_dest_id = fields.Many2one('stock.location',
-                                       "Destination Location",
-                                       domain=[('usage', '=', 'internal')])
+    location_dest_id = fields.Many2one(
+        'stock.location', "Destination Location",
+        domain=[('usage', '=', 'internal')],
+        default=_get_default_loc)
     carrier_type = fields.Selection(
         [('client', 'Client'),
          ('company', 'Company')], default="company", string="Responsable")
