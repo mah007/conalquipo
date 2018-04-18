@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': "CON Project in Stock",
+    'name': "Conalquipo's stock customizations",
 
     'summary': """
         Conalequipos's Project information for each customer on Stock form.

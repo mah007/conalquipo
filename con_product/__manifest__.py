@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Product availability',
+    'name': "Conalquipo's products customizations",
     'version': '1.1',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': 'Products',

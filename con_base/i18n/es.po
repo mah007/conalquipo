@@ -1,19 +1,41 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* con_base
+# 	* con_base
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 22:38+0000\n"
-"PO-Revision-Date: 2018-02-20 22:38+0000\n"
+"POT-Creation-Date: 2018-04-18 19:30+0000\n"
+"PO-Revision-Date: 2018-04-18 14:31-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "(edit)"
+msgstr "(editar)"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Address"
+msgstr "Dirección"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "City"
+msgstr "Ciudad"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_code
+msgid "Code"
+msgstr "Código"
 
 #. module: con_base
 #: model:ir.model,name:con_base.model_res_company
@@ -26,11 +48,134 @@ msgid "Configuration Report"
 msgstr "Configuración de Reportes"
 
 #. module: con_base
+#: model:ir.model,name:con_base.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Country"
+msgstr "País"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_delivery_carrier_id
+msgid "Delivery Carrier"
+msgstr "Transportista"
+
+#. module: con_base
+#: model:ir.model.fields,help:con_base.field_res_country_municipality_sequence
+msgid "Determine the display order"
+msgstr "Determine el orden de visualización"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Document number"
+msgstr "Número de documento"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_footer_logo
 msgid "Footer Logo"
 msgstr "Logo para Footer"
 
 #. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_iso_logo
 msgid "Iso Logo"
 msgstr "Logo Iso"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_base
+#: model:ir.actions.act_window,name:con_base.action_country_municipality
+#: model:ir.ui.menu,name:con_base.menu_country_municipality
+msgid "Municipalities"
+msgstr "Municipios"
+
+#. module: con_base
+#: model:ir.model,name:con_base.model_res_country_municipality
+#: model:ir.model.fields,field_description:con_base.field_res_partner_municipality_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_municipality_id
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+#: model:ir.ui.view,arch_db:con_base.view_country_municipality_form
+#: model:ir.ui.view,arch_db:con_base.view_country_municipality_tree
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_partner_code
+#: model:ir.model.fields,field_description:con_base.field_res_users_partner_code
+msgid "Partner Code"
+msgstr "Código de cliente"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_country_municipality_state_id
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "State"
+msgstr "Estado"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Tags..."
+msgstr "Etiquetas..."
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "ZIP"
+msgstr "C.P."
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "e.g. BE0477472701"
+msgstr "Por ejemplo, ESA00000000"
