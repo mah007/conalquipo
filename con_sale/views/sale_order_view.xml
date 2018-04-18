@@ -53,7 +53,7 @@
                             <field name="customer_lead" class="oe_inline"/> days
                         </div>
                         <field name="order_type" invisible="1"/>
-                        <field name="min_sale_qty"/>
+                        <field name="min_sale_qty" readonly="1"/>
                         <field name="bill_uom_qty"/>
                         <field name="bill_uom"/>
                     </group>
