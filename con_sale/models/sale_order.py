@@ -798,7 +798,8 @@ class SaleOrderLine(models.Model):
                 'product_operate': values['product_id'],
                 'product_uom': line.product_id.product_tmpl_id.uom_id.id,
                 'order_id': line.order_id.id,
-                'parent_line': self.id,
+                'parent_component': line.product_id.id,
+                'parent_line': line.id,
                 'bill_uom': line.product_id.product_tmpl_id.uom_id.id,
                 'bill_uom_qty': line.product_uom_qty,
             }
@@ -886,16 +887,16 @@ class SaleOrderLine(models.Model):
             if rec.components_ids:
                 for data in rec.components_ids:
                     if data.extra:
-                        component = self.search(
+                        component = self.env['sale.order.line'].search(
                             [('is_component', '=', True),
                              ('parent_component', '=', rec.product_id.id),
                              ('order_id', '=', rec.order_id.id),
                              ('product_id', '=', data.product_id.id)
                             ])
                         qty = data.quantity * rec.product_uom_qty
-                        new_line = {
+                        new_line_component = {
                             'product_id': data.product_id.id,
-                            'name': 'Extra: ' + '%s'%(
+                            'name': 'Component ' + '%s'%(
                                 rec.product_id.name),
                             'parent_component': rec.product_id.id,
                             'order_id': rec.order_id.id,
@@ -903,8 +904,30 @@ class SaleOrderLine(models.Model):
                             'bill_uom_qty': qty,
                             'is_component': True,
                             'bill_uom': data.product_id.product_tmpl_id.uom_id.id
-                        } 
-                        component.write(new_line)
+                        }
+                        _logger.warning(component)
+                        component.write(new_line_component)
+                    else:
+                        extra = self.env['sale.order.line'].search(
+                            [('is_extra', '=', True),
+                             ('parent_component', '=', rec.product_id.id),
+                             ('order_id', '=', rec.order_id.id),
+                             ('product_id', '=', data.product_id.id)
+                            ])
+                        qty = data.quantity * rec.product_uom_qty
+                        new_line_extra = {
+                            'product_id': data.product_id.id,
+                            'name': 'Extra ' + '%s'%(
+                                rec.product_id.name),
+                            'parent_component': rec.product_id.id,
+                            'order_id': rec.order_id.id,
+                            'product_uom_qty': qty,
+                            'bill_uom_qty': qty,
+                            'is_extra': True,
+                            'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                        }
+                        _logger.warning(extra)
+                        extra.write(new_line_extra)
             # Dates validations
             if rec.end_date and rec.start_date:
                 date_format = '%Y-%m-%d'
@@ -916,7 +939,7 @@ class SaleOrderLine(models.Model):
                     ).date()
                 if d2 < d1:
                     raise UserError(
-                        _("The end date can't be less than start date")) 
+                        _("The end date can't be less than start date"))
         return res
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
