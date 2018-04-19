@@ -29,6 +29,7 @@
                 'delivery', 'con_product', 'con_account',
                 'con_project', 'con_website_sign', 'con_fleet'],
     'data': ['views/sale_order_view.xml',
+             'views/sale_report_inherit.xml',
              'wizard/views/sale_order_advertisement_wizard.xml'
             ],
 
