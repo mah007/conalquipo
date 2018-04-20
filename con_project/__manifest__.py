@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Project Management for works',
+    'name': 'Conalquipo Project customizations',
     'version': '1.1',
     'category': 'Project Management',
     'sequence': 10,

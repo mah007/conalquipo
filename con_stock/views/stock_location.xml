@@ -22,6 +22,7 @@
         <field name="arch" type="xml">
             <data>
                 <field name="barcode" position="after">
+                    <field name="set_default_location" />
                     <field name="set_product_state" />
                     <field name="product_state"
                         attrs="{'invisible':[('set_product_state', '=', False)]}"/>

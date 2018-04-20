@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Delivery',
     'depends': [
-        'delivery', 'con_base'
+        'delivery', 'con_base', 'stock'
     ],
     'description':
     """

@@ -104,7 +104,7 @@ class ProductTemplate(Model):
         else:
             self.location_id = self.env[
                 'stock.location'].search(
-                    [('set_product_state', '=', True)], limit=1) or False
+                    [('set_default_location', '=', True)], limit=1) or False
 
     @api.multi
     def _get_default_state(self):
@@ -134,7 +134,8 @@ class ProductTemplate(Model):
             if a.type not in ['service', 'consu']:
                 return self.env[
                     'stock.location'].search(
-                        [('set_product_state', '=', True)], limit=1) or False
+                        [('set_default_location', '=', True)],
+                         limit=1) or False
 
     @api.multi
     @api.onchange('location_id')
@@ -174,12 +175,24 @@ class ProductTemplate(Model):
                 raise UserError(_(
                     "The following location don't have a state asigned"))
 
+    @api.multi
+    def _get_default_color(self):
+        """
+        This function get the default state configured on the product states
+        models and return to the `product_template` model else return False
+
+        :return: Recordset or False
+        """
+        if self.type != 'service' and self.location_id:
+            return self.location_id.color
+
     state_id = fields.Many2one(
         'product.states', string="State",
         default=_get_default_state)
     color = fields.Char(
         string="Color",
-        help="Select the color of the state")
+        help="Select the color of the state",
+        default=_get_default_color)
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
         default=_get_default_loc)
@@ -224,7 +237,7 @@ class ProductProduct(Model):
             if a.product_tmpl_id.type not in ['service', 'consu']:
                 return self.env[
                     'stock.location'].search(
-                        [('set_product_state', '=', True)], limit=1) or False
+                        [('set_default_location', '=', True)], limit=1) or False
 
     @api.multi
     def _get_default_state(self):
@@ -239,6 +252,17 @@ class ProductProduct(Model):
                 ('default_value', '=', True)], limit=1) or False
         else:
             self.state_id = False
+
+    @api.multi
+    def _get_default_color(self):
+        """
+        This function get the default state configured on the product states
+        models and return to the `product_template` model else return False
+
+        :return: Recordset or False
+        """
+        if self.type != 'service' and self.location_id:
+            return self.location_id.color
 
     @api.multi
     @api.onchange('location_id')
@@ -282,7 +306,8 @@ class ProductProduct(Model):
     state_id = fields.Many2one('product.states', string="State",
                                default=_get_default_state)
     color = fields.Char(string="Color",
-                        help="Select the color of the state")
+                        help="Select the color of the state",
+                        default=_get_default_color)
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
         default=_get_default_loc)

@@ -36,17 +36,19 @@ class set_data_locations(models.TransientModel):
             locations = self.env[
                 'stock.location'].search([('name', '=', data.name)])
             for l in locations:
-                if not l.set_product_state:
+                if not l.set_default_location:
                     values = {
                         'product_state': data.states_id.id,
                         'color': data.color,
-                        'set_product_state': False
+                        'set_default_location': False,
+                        'set_product_state': True
                     }
                     l.write(values)
                 else:
                     values = {
                         'product_state': data.states_id.id,
                         'color': data.color,
+                        'set_default_location': True,
                         'set_product_state': True
                     }
                     l.write(values)

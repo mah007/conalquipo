@@ -36,11 +36,11 @@ class StockLocation(Model):
             if a.product_state:
                 a.color = a.product_state.color
 
+    set_default_location = fields.Boolean(
+        string="Default location for products")
     set_product_state = fields.Boolean(
         string="Change the state to all products when arrive to this location")
     product_state = fields.Many2one(
         'product.states', string="Set state")
     color = fields.Char(
         string="Color", compute=_get_color, store=True)
-    project_id = fields.One2many('project.project', 'stock_location_id',
-                                 string='project')

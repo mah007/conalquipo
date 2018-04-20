@@ -30,11 +30,9 @@ class StockMove(Model):
     _inherit = "stock.move"
 
     project_id = fields.Many2one(
-        'project.project', string="Project", compute='_get_project',
-        store=True)
+        'project.project', string='Works')
     partner_id = fields.Many2one(
-        'res.partner', string="Partner", compute='_get_partner',
-        store=True)
+        'res.partner', string='Partner')
     child_product = fields.Boolean(
         string="Child product", default=False)
     mrp_repair_id = fields.Many2one(
@@ -50,8 +48,7 @@ class StockMove(Model):
                     [('id', '=', order.returned)], limit=1)
                 if move:
                     move.write(
-                        {'origin_returned_move_id': order.id,
-                         'button_pushed': True})
+                        {'origin_returned_move_id': order.id})
         return res
 
     def get_components_info(self):
@@ -66,34 +63,16 @@ class StockMove(Model):
                 code_line = pr.sale_line_id.name
                 pr.write({'description': code_line})
 
-    def _get_project(self):
-        for data in self:
-            data.project_id = data.picking_id.project_id.id
-
-    def _get_partner(self):
-        for data in self:
-            data.partner_id = data.picking_id.partner_id.id
 
 class StockMoveLine(Model):
     _inherit = "stock.move.line"
 
     project_id = fields.Many2one(
-        'project.project', string="Project", compute='_get_project',
-        store=True)
+        'project.project', string='Works')
     partner_id = fields.Many2one(
-        'res.partner', string="Partner", compute='_get_partner',
-        store=True)
-    project_id = fields.Many2one('project.project', string='Work')
+        'res.partner', string='Partner')
     assigned_operator = fields.Many2one(
         'res.users', string="Assigned Operator")
-
-    def _get_project(self):
-        for data in self:
-            data.project_id = data.picking_id.project_id.id
-
-    def _get_partner(self):
-        for data in self:
-            data.partner_id = data.picking_id.partner_id.id
 
     @api.model
     def create(self, vals):

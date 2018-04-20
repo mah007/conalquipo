@@ -77,8 +77,6 @@ class ProjectWorks(models.Model):
     product_count = fields.Integer(
         compute='_compute_product_count',
         string="Number of products on work")
-    stock_location_id = fields.Many2one('stock.location',
-                                        string='Location the project')
 
     def _compute_product_count(self):
         """
@@ -86,13 +84,17 @@ class ProjectWorks(models.Model):
         """
         for record in self:
             product_qty_in = 0.0
+            product_qty_out = 0.0
             picking = self.env[
                 'stock.picking'].search(
                     [['partner_id', '=', record.partner_id.id],
-                     ['location_dest_id.usage', '=', 'customer']])
+                     ['location_dest_id.usage', 'in',
+                      ['customer', 'internal']],
+                     ['project_id', '=', record.id]
+                    ])
             for data in picking:
                 moves = self.env[
-                    'stock.move.line'].search(
+                    'stock.move'].search(
                         [['picking_id', '=', data.id],
                          ['location_dest_id',
                           '=',
@@ -100,8 +102,16 @@ class ProjectWorks(models.Model):
                          ['state', '=', 'done']])
                 if moves:
                     for p in moves:
-                        product_qty_in += p.qty_done
-            record.product_count = product_qty_in
+                        if not p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'customer':
+                            product_qty_in += p.product_uom_qty
+                        if p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'internal':
+                            product_qty_out += p.product_uom_qty
+
+            record.product_count = product_qty_in - product_qty_out
 
     @api.multi
     def product_tree_view(self):
@@ -110,21 +120,24 @@ class ProjectWorks(models.Model):
         moves_data = []
         picking = self.env[
             'stock.picking'].search(
-                [['partner_id', '=', self.partner_id.id]])
+                [['partner_id', '=', self.partner_id.id],
+                 ['location_dest_id.usage', 'in',
+                  ['customer', 'internal']],
+                 ['project_id', '=', self.id]
+                ])
         for data in picking:
-            if data.location_dest_id.usage == 'customer':
-                move = self.env[
-                    'stock.move.line'].search(
-                        [['picking_id', '=', data.id],
-                        ['location_dest_id', '=', data.location_dest_id.id],
-                        ['state', '=', 'done']])
-                for m in move:
-                    moves_data.append(m.id)
+            move = self.env[
+                'stock.move'].search(
+                    [['picking_id', '=', data.id],
+                    ['location_dest_id', '=', data.location_dest_id.id],
+                    ['state', '=', 'done']])
+            for m in move:
+                moves_data.append(m.id)
         domain = [('id', 'in', moves_data)]
         return {
             'name': _('Products'),
             'domain': domain,
-            'res_model': 'stock.move.line',
+            'res_model': 'stock.move',
             'type': 'ir.actions.act_window',
             'view_id': False,
             'view_mode': 'tree,form',
@@ -137,7 +150,6 @@ class ProjectWorks(models.Model):
     @api.model
     def create(self, values):
         res = super(ProjectWorks, self).create(values)
-        location_id = None
         if values['partner_id']:
             numbers = []
             max_number = 1
@@ -157,37 +169,6 @@ class ProjectWorks(models.Model):
             if numbers:
                 max_number = max(numbers) + 1
             values['work_code'] = str(p_code) + '-' + str(max_number)
-
-            # Stock partner location
-            stock_location = self.env['stock.location']
-            stock_location_partner = stock_location.search([(
-                'partner_id', '=', partner.id),
-                ('name', '=', partner.name)])
-            name_stock_location = partner.name + '/' + res.name
-            if stock_location_partner:
-                location_id = stock_location.create({
-                    'usage': 'customer',
-                    'partner_id': partner.id,
-                    'name': name_stock_location,
-                    'location_id': stock_location_partner,
-                    'project_id': res.id,
-                    })
-            # else:
-            #     location_partner = stock_location.create({
-            #         'usage': 'customer',
-            #         'partner_id': partner.id,
-            #         'name': res.partner_id.name,
-            #         'location_id': self.env.ref(
-            #             'stock.stock_location_customers').id
-            #     })
-            #     location_id = stock_location.create({
-            #         'usage': 'customer',
-            #         'partner_id': partner.id,
-            #         'name': name_stock_location,
-            #         'location_id': location_partner.id,
-            #         'project_id': res.id,
-            #     })
-            # res.update({'stock_location_id': location_id.id})
         else:
             raise UserError(_("You need to select a client!"))
         return res

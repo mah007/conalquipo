@@ -10,7 +10,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     @api.multi
     def _get_default_loc(self):
         location = self.env['stock.location'].search([
-                ('set_product_state', '=', True)], limit=1) or False
+                ('set_default_location', '=', True)], limit=1) or False
         return location
 
     project_id = fields.Many2one('project.project', string="Project")
@@ -118,7 +118,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 'picking_id': picking.id,
                 'group_id': move.group_id.id,
                 'state': 'draft',
-                'button_pushed': True,
                 'sale_line_id': move.sale_line_id.id,
             })
             picking_ids.append(picking)

@@ -35,8 +35,9 @@
     'website': "http://www.ias.com.co",
     'category': 'stock',
     'version': '0.1',
-    'depends': ['base', 'project', 'stock', 'con_project',
-                'con_base', 'delivery', 'mrp_repair', 'con_product'],
+    'depends': ['base', 'project', 'stock', 'project',
+                'base', 'delivery', 'mrp_repair', 'product',
+                'con_project', 'con_delivery'],
     'data': [
         'reports/report_stockpicking.xml',
         'data/module_category.xml',
