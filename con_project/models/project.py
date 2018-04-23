@@ -104,13 +104,16 @@ class ProjectWorks(models.Model):
                     for p in moves:
                         if not p.returned \
                            and p.picking_id.location_dest_id.usage \
-                           == 'customer':
+                           == 'customer' and \
+                           p.picking_id.location_id.usage \
+                           == 'internal':
                             product_qty_in += p.product_uom_qty
                         if p.returned \
                            and p.picking_id.location_dest_id.usage \
-                           == 'internal':
+                           == 'internal' and \
+                           p.picking_id.location_id.usage \
+                           == 'customer':
                             product_qty_out += p.product_uom_qty
-
             record.product_count = product_qty_in - product_qty_out
 
     @api.multi
@@ -129,10 +132,11 @@ class ProjectWorks(models.Model):
             move = self.env[
                 'stock.move'].search(
                     [['picking_id', '=', data.id],
-                    ['location_dest_id', '=', data.location_dest_id.id],
-                    ['state', '=', 'done']])
-            for m in move:
-                moves_data.append(m.id)
+                     ['location_dest_id', '=',
+                      data.location_dest_id.id],
+                     ['state', '=', 'done']])
+            for moves in move:
+                moves_data.append(moves.id)
         domain = [('id', 'in', moves_data)]
         return {
             'name': _('Products'),
