@@ -15,8 +15,12 @@
                     <group>
                         <field name="lastname"
                             attrs="{'required': [('firstname', '=', False)]}"/>
+                        <field name="second_lastname"
+                            attrs="{'required': [('lastname', '=', False)]}"/>
                         <field name="firstname"
                             attrs="{'required': [('lastname', '=', False)]}"/>
+                        <field name="second_firstname"
+                            attrs="{'required': [('firstname', '=', False)]}"/>
                     </group>
                 </xpath>
             </data>

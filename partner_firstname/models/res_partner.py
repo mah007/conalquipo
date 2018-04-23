@@ -18,8 +18,16 @@ class ResPartner(models.Model):
         "First name",
         index=True,
     )
+    second_firstname = fields.Char(
+        "Second name",
+        index=True,
+    )
     lastname = fields.Char(
         "Last name",
+        index=True,
+    )
+    second_lastname = fields.Char(
+        "Second Last name",
         index=True,
     )
     name = fields.Char(
@@ -91,25 +99,46 @@ class ResPartner(models.Model):
             'partner_names_order', self._names_order_default())
 
     @api.model
-    def _get_computed_name(self, lastname, firstname):
+    def _get_computed_name(
+        self, lastname, second_lastname,
+        firstname, second_firstname):
         """Compute the 'name' field according to splitted data.
         You can override this method to change the order of lastname and
         firstname the computed name"""
         order = self._get_names_order()
         if order == 'last_first_comma':
-            return ", ".join((p for p in (lastname, firstname) if p))
+            return ", ".join((p for p in (
+                lastname,
+                second_lastname,
+                firstname,
+                second_firstname) if p))
         elif order == 'first_last':
-            return " ".join((p for p in (firstname, lastname) if p))
+            return " ".join((p for p in (
+                firstname,
+                second_firstname,
+                lastname,
+                second_lastname) if p))
         else:
-            return " ".join((p for p in (lastname, firstname) if p))
+            return " ".join((p for p in (
+                lastname,
+                second_lastname,
+                firstname,
+                second_firstname) if p))
 
     @api.multi
-    @api.depends("firstname", "lastname")
+    @api.depends(
+        "firstname",
+        "second_firstname",
+        "lastname",
+        "second_lastname")
     def _compute_name(self):
         """Write the 'name' field according to splitted data."""
         for record in self:
             record.name = record._get_computed_name(
-                record.lastname, record.firstname,
+                record.lastname,
+                record.second_lastname,
+                record.firstname,
+                record.second_firstname
             )
 
     @api.multi
@@ -169,7 +198,7 @@ class ResPartner(models.Model):
         """
         # Company name goes to the lastname
         if is_company or not name:
-            parts = [name or False, False]
+            parts = [name or False, False, False, False]
         # Guess name splitting
         else:
             order = self._get_names_order()
@@ -179,13 +208,20 @@ class ResPartner(models.Model):
             parts = name.split("," if order == 'last_first_comma' else " ", 1)
             if len(parts) > 1:
                 if order == 'first_last':
+                    _logger.warning(parts)
                     parts = [" ".join(parts[1:]), parts[0]]
+                    _logger.warning("222222222222")
+                    _logger.warning(parts)
                 else:
                     parts = [parts[0], " ".join(parts[1:])]
+                    _logger.warning(parts)
+                    _logger.warning("33333333")
+                    _logger.warning(parts)
             else:
-                while len(parts) < 2:
+                while len(parts) < 4:
                     parts.append(False)
-        return {"lastname": parts[0], "firstname": parts[1]}
+        return {"lastname": parts[0], "second_lastname": parts[1],
+                "firstname": parts[2], "second_firstname": parts[3]}
 
     @api.multi
     def _inverse_name(self):
@@ -193,20 +229,31 @@ class ResPartner(models.Model):
         for record in self:
             parts = record._get_inverse_name(record.name, record.is_company)
             record.lastname = parts['lastname']
+            record.second_lastname = parts['second_lastname']
             record.firstname = parts['firstname']
+            record.second_firstname = parts['second_firstname']
 
     @api.multi
-    @api.constrains("firstname", "lastname")
+    @api.constrains(
+        "firstname",
+        "second_firstname",
+        "lastname",
+        "second_lastname")
     def _check_name(self):
         """Ensure at least one name is set."""
         for record in self:
             if all((
                 record.type == 'contact' or record.is_company,
-                not (record.firstname or record.lastname)
+                not (record.firstname or record.second_firstname or \
+                record.lastname or record.second_lastname)
             )):
                 raise exceptions.EmptyNamesError(record)
 
-    @api.onchange("firstname", "lastname")
+    @api.onchange(
+        "firstname",
+        "second_firstname",
+        "lastname",
+        "second_lastname")
     def _onchange_subnames(self):
         """Avoid recursion when the user changes one of these fields.
 
@@ -237,7 +284,9 @@ class ResPartner(models.Model):
         """
         # Find records with empty firstname and lastname
         records = self.search([("firstname", "=", False),
-                               ("lastname", "=", False)])
+                               ("second_firstname", "=", False),
+                               ("lastname", "=", False),
+                               ("second_lastname", "=", False),])
 
         # Force calculations there
         records._inverse_name()

@@ -68,7 +68,10 @@ class ResConfigSettings(models.TransientModel):
     def _partners_for_recalculating(self):
         return self.env['res.partner'].search([
             ('is_company', '=', False),
-            ('firstname', '!=', False), ('lastname', '!=', False),
+            ('firstname', '!=', False),
+            ('second_firstname', '!=', False),
+            ('lastname', '!=', False),
+            ('second_lastname', '!=', False),
         ])
 
     @api.multi
