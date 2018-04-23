@@ -146,7 +146,7 @@ class ProjectWorks(models.Model):
             'view_id': False,
             'view_mode': 'tree,form',
             'view_type': 'form',
-            'limit': 80,
+            'limit': 20,
             'context': "{'default_res_model': '%s','default_res_id': %d}" % (
                 self._name, self.id)
         }

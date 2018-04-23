@@ -12,10 +12,6 @@
                     <field name="partner_id" readonly="0" required="1"/>
                 </field>
 
-                <field name="unit_amount" position="before">
-                    <field name="uom_id" required="1"/>
-                </field>
-
                 <field name="unit_amount" position="replace">
                     <field name="unit_amount" type="measure" required="1"/>
                 </field>
@@ -39,10 +35,6 @@
 
                 <field name="project_id" position="before">
                     <field name="partner_id" readonly="0" required="1"/>
-                </field>
-
-                <field name="unit_amount" position="after">
-                    <field name="uom_id" required="1"/>
                 </field>
 
                 <field name="unit_amount" position="replace">

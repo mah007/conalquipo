@@ -12,11 +12,10 @@
     'description':
     """
         HR Timesheet customizations.
-        
         - Add product uom to timesheet.
     """,
     'data': ['views/hr_timesheet.xml',
-             ],
+    ],
     'qweb': [
     ],
     'demo': [

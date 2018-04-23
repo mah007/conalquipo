@@ -9,8 +9,6 @@ _logger = logging.getLogger(__name__)
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    uom_id = fields.Many2one(
-        'product.uom', string="Uom")
     product_id = fields.Many2one('product.product', string="Product",
                                  help="The associated product to the service "
                                       "task")

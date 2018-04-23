@@ -15,6 +15,21 @@
             </field>
         </record>
 
+        <record id="view_move_tree_receipt_picking_inherit" model="ir.ui.view">
+            <field name="name">inherit.stock.receipt.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="project_id" string="Project"/>
+                    <field name="partner_id" string="Partner"/>
+                    <field name="location_id" string="Location"/>
+                    <field name="location_dest_id" string="Dest. Location"/>
+                </field>
+
+            </field>
+        </record>
+
         <record id="view_stock_move_search_inherit" model="ir.ui.view">
             <field name="name">inherit.stock.move.search</field>
             <field name="model">stock.move</field>
@@ -59,19 +74,6 @@
                 </search>
             </field>
         </record>
-
-    <!--<record id="view_con_product_stock_move_tree" model="ir.ui.view">-->
-        <!--<field name="name">con.product.stock.move.tree</field>-->
-        <!--<field name="model">stock.move</field>-->
-        <!--<field name="inherit_id" ref="stock.view_move_picking_tree"/>-->
-        <!--<field name="arch" type="xml">-->
-            <!--<data>-->
-                <!--<field name="state" position="after">-->
-                    <!--<field name="manual_create" invisible="1"/>-->
-                <!--</field>-->
-            <!--</data>-->
-        <!--</field>-->
-    <!--</record>-->
 
     </data>
 </openerp>

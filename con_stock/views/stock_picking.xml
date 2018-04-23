@@ -16,7 +16,7 @@
 
                 <xpath expr='//header' position="inside">
                     <button name="action_equipment_change" string="Equipment Change" type="object"
-                              attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" groups="con_shipping.group_equipment_change"/>
+                              attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" groups="con_delivery.group_equipment_change"/>
                 </xpath>
 
                 <button name="action_cancel" position="replace">
@@ -24,7 +24,7 @@
                             attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting')), ('is_locked', '=', False)]}"
                             context="{'wizard_cancel': True}"
                             string="Cancel"
-                            groups="con_shipping.group_shipping_order"
+                            groups="con_delivery.group_shipping_order"
                             type="object"/>
                 </button>
 
