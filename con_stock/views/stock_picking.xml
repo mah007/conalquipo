@@ -49,7 +49,8 @@
                 </xpath>
 
                 <xpath expr='//field[@name="move_lines"]/tree//field[@name="product_uom"]' position="after">
-                    <field name="employee_id"/>
+                    <field name="employee_ids" invisible="True"/>
+                    <field name="employee_id" domain="[('id', 'in', employee_ids)]" options='{"create":False}'/>
                     <field name="mrp_repair_id" context="{'default_product_id': product_id, 'default_partner_id': parent.partner_id}"/>
                 </xpath>
 

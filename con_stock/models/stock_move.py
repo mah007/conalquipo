@@ -37,6 +37,9 @@ class StockMove(Model):
         string="Child product", default=False)
     mrp_repair_id = fields.Many2one(
         'mrp.repair', string='Repair request')
+    employee_ids = fields.Many2many(
+        'hr.employee', string='Operators',
+        related="product_id.employee_ids", readonly=True)
     employee_id = fields.Many2one(
         'hr.employee', string='Operator')
     description = fields.Char(
@@ -65,6 +68,24 @@ class StockMove(Model):
             if pr.sale_line_id and not pr.description:
                 code_line = pr.sale_line_id.name
                 pr.write({'description': code_line})
+
+    @api.model
+    def getemployee(self):
+        # Domain for the operators
+        employee_list = []
+        other = self.env['stock.move'].search([
+            ('picking_id', '=', self.picking_id.id),
+            ('origin', '=', self.origin)])
+        _logger.warning(other)
+        for data in other:
+            # Get the operators employees ids
+            for data2 in data.product_id.product_tmpl_id.employee_ids:
+                employee_list.append(data2.id)
+            # Domain for employee operator for the product
+            _logger.warning('ACAAAAAAAAAA')
+            _logger.warning(employee_list)
+            _logger.warning(self)
+            return [('id', 'in', employee_list)]
 
 
 class StockMoveLine(Model):
