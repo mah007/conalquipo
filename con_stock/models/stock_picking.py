@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo.models import Model, api
+from odoo.models import Model, api, _
 from odoo import fields, SUPERUSER_ID
 import time
 from odoo.exceptions import UserError
@@ -321,6 +321,12 @@ class StockPicking(Model):
                         {'state_id': move.location_dest_id.product_state.id,
                          'color': move.location_dest_id.color,
                          'location_id': move.location_dest_id.id})
+                if move.sale_line_id.add_operator and not move.employee_id \
+                   and move.picking_id.location_dest_id.usage \
+                   == 'customer':
+                    raise UserError(
+                        _('You need specify a operator for: %s'
+                         ) % move.sale_line_id.product_id.name)
         return result
 
     @api.model
