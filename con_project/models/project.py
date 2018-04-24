@@ -172,7 +172,7 @@ class ProjectWorks(models.Model):
                     numbers.append(code)
             if numbers:
                 max_number = max(numbers) + 1
-            values['work_code'] = str(p_code) + '-' + str(max_number)
+            res.work_code = str(p_code) + '-' + str(max_number)
         else:
             raise UserError(_("You need to select a client!"))
         return res
