@@ -231,7 +231,7 @@ class SaleOrder(models.Model):
         :return: True
         """
         for picking in self.picking_ids:
-            picking.write({'project_id': self.project_id.id})
+            picking.write({'project_id': picking.project_id.id})
         return True
 
     @api.multi
