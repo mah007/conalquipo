@@ -455,6 +455,8 @@ class SaleOrder(models.Model):
         if self.partner_id and self.fiscal_position_id:
             taxes_ids = self.fiscal_position_id.map_tax(
                 taxes, carrier.product_id, self.partner_id).ids
+
+        _logger.info("Vehiculo: {}".format(self.vehicle))
         # Create the sales order line
         for x in range(2):
             values = {
@@ -470,6 +472,7 @@ class SaleOrder(models.Model):
                 'is_delivery': True,
                 'delivery_direction': 'out' if x == 0 else 'in',
                 'picking_ids': picking_ids,
+                'vehicle_id': self.vehicle.id,
             }
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
@@ -542,6 +545,22 @@ class SaleOrderLine(models.Model):
                                   'picking_id', 'sale_order_line_id',
                                    string="Pickings",
                                    help="Linked picking to the delivery cost")
+    vehicle_id = fields.Many2one('fleet.vehicle', string="Vehicle",
+                                  help="Linked vehicle to the delivery cost")
+
+
+    @api.multi
+    def name_get(self):
+        res = []
+        if self._context.get('special_display', False):
+            for rec in self:
+                vehicle = "{} {}".format(rec.vehicle_id.model_id.name,
+                                          rec.vehicle_id.license_plate)
+                name = "{} - {} - {}".format(rec.name, rec.price_unit, vehicle)
+                res.append((rec.id, name))
+        else:
+            res = super(SaleOrderLine, self).name_get()
+        return res
 
     @api.one
     @api.constrains('start_date', 'end_date')
