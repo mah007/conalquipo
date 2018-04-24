@@ -209,7 +209,7 @@ class SaleOrder(models.Model):
                     order_id.write({'order_line': [(4, line_copy.id)]})
                 self.update({'state': 'merged',
                              'sale_order_id': order_id.id,
-                             'project_id': order.project_id.id,
+                             'project_id': order_id.project_id.id,
                              'confirmation_date': fields.Datetime.now()
                              })
                 if self.env.context.get('send_email'):
