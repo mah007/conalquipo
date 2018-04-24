@@ -21,6 +21,7 @@
             <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
             <field name="arch" type="xml">
                 <field name="product_id" position="after">
+                    <field name="employee_id" string="Operator"/>
                     <field name="project_id" string="Project"/>
                     <field name="partner_id" string="Partner"/>
                     <field name="location_id" string="Location"/>
@@ -36,9 +37,11 @@
             <field name="inherit_id" ref="stock.view_move_search"/>
             <field name="arch" type="xml">
                 <search position="inside">
+                    <field name="employee_id" widget="selection" context="{'employee_id': self}"/>
                     <field name="project_id" widget="selection" context="{'project_id': self}"/>
                     <field name="partner_id" widget="selection" context="{'partner_id': self}"/>
                     <group string="Group By">
+                        <filter string="Operator" name="employee_id" domain="[]" context="{'group_by':'employee_id'}"/>
                         <filter string="Project" name="project_id" domain="[]" context="{'group_by':'project_id'}"/>
                         <filter string="Partner" name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
                     </group>
