@@ -243,9 +243,12 @@
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="carrier_id" context="{'order_id': id}"
                         attrs="{'readonly':[('state','in',('done'))],
-                                'invisible': [('carrier_type','!=', 'company')]}"/>
+                                'invisible': [('carrier_type','!=', 'company')],
+                                'required': [('carrier_type','=', 'company')]}"/>
                     <field name="vehicle" attrs="{'readonly':[('state','in',('done'))],
-                        'invisible': [('carrier_type','!=', 'company')]}" string="Vehicle"/>
+                        'invisible': [('carrier_type','!=', 'company')],
+                        'required': [('carrier_type','=', 'company')]
+                        }" string="Vehicle"/>
 
                     <field name='delivery_price' widget='monetary' class="oe_inline " style="float:right;" options="{'currency_field': 'currency_id'}" nolabel="1"
                             attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}" invisible="1"/>
