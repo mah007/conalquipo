@@ -331,7 +331,6 @@ class StockPicking(Model):
 
     @api.model
     def create(self, vals):
-
         if vals.get('partner_id'):
             partner = self.env['res.partner'].search(
                 [('id', '=', vals.get('partner_id'))])
@@ -339,6 +338,7 @@ class StockPicking(Model):
                 raise UserError(_(partner.picking_warn_msg))
 
         res = super(StockPicking, self).create(vals)
+        res.update({'project_id': res.sale_id.project_id.id})
         return res
 
     @api.multi
