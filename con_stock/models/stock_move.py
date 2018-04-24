@@ -37,7 +37,10 @@ class StockMove(Model):
         string="Child product", default=False)
     mrp_repair_id = fields.Many2one(
         'mrp.repair', string='Repair request')
-    description = fields.Char(string='Description')
+    employee_id = fields.Many2one(
+        'hr.employee', string='Operator')
+    description = fields.Char(
+        string='Description')
     returned = fields.Integer('returned')
 
     def _action_done(self, merge=True):
@@ -72,7 +75,7 @@ class StockMoveLine(Model):
     partner_id = fields.Many2one(
         'res.partner', string='Partner')
     assigned_operator = fields.Many2one(
-        'res.users', string="Assigned Operator")
+        'hr.employee', string="Assigned Operator")
 
     @api.model
     def create(self, vals):

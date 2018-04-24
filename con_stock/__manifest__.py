@@ -37,7 +37,7 @@
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'project',
                 'base', 'delivery', 'mrp_repair', 'product',
-                'con_project', 'con_delivery'],
+                'con_project', 'con_delivery', 'hr'],
     'data': [
         'reports/report_stockpicking.xml',
         'data/module_category.xml',

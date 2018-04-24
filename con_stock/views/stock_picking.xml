@@ -49,6 +49,7 @@
                 </xpath>
 
                 <xpath expr='//field[@name="move_lines"]/tree//field[@name="product_uom"]' position="after">
+                    <field name="employee_id"/>
                     <field name="mrp_repair_id" context="{'default_product_id': product_id, 'default_partner_id': parent.partner_id}"/>
                 </xpath>
 
