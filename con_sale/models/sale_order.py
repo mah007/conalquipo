@@ -297,8 +297,9 @@ class SaleOrder(models.Model):
         if res.project_id:
             return res
         else:
-            raise UserError(_('You need specify a work in this sale order'))
-            
+            raise UserError(_(
+                'You need specify a work in this sale order'))
+
     @api.multi
     def write(self, values):
         # Overwrite sale order write
@@ -465,6 +466,7 @@ class SaleOrder(models.Model):
                     _('Receive')),
                 'product_uom_qty': 1,
                 'product_uom': carrier.product_id.uom_id.id,
+                'bill_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,
                 'price_unit': price_unit,
                 'tax_id': [(6, 0, taxes_ids)],
@@ -674,8 +676,13 @@ class SaleOrderLine(models.Model):
             result['domain'] = {
                 'bill_uom': [('id', 'in', uoms_list)]}
         else:
-            self.bill_uom = self.product_uom.id
+            self.bill_uom = self.product_id.product_tmpl_id.sale_uom.id
             self.bill_uom_qty = self.product_uom_qty
+            result['domain'] = {
+                'bill_uom': [
+                    ('id',
+                     'in',
+                     [self.product_id.product_tmpl_id.sale_uom.id])]}
         if self.product_id.is_operated:
             self.mess_operated = True
         else:
@@ -820,7 +827,7 @@ class SaleOrderLine(models.Model):
                 'order_id': line.order_id.id,
                 'parent_component': line.product_id.id,
                 'parent_line': line.id,
-                'bill_uom': line.product_id.product_tmpl_id.uom_id.id,
+                'bill_uom': line.product_id.product_tmpl_id.sale_uom.id,
                 'bill_uom_qty': line.product_uom_qty,
             }
             # ~ Create new record for operator

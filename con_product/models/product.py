@@ -218,6 +218,9 @@ class ProductTemplate(Model):
                                     string='Employee', search='hr_employee',
                                     track_visibility='onchange')
     is_operated = fields.Boolean('Is Operated')
+    sale_uom = fields.Many2one(
+        'product.uom',
+        string='Sale UoM')
 
 
 class ProductProduct(Model):
