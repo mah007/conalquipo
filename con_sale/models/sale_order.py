@@ -165,8 +165,10 @@ class SaleOrder(models.Model):
     @api.multi
     def _prepare_invoice(self):
         """
-        Prepare the dict of values to create the new invoice for a sales order. This method may be
-        overridden to implement custom invoice generation (making sure to call super() to establish
+        Prepare the dict of values to create the new invoice for a sales
+        order.
+        This method may be overridden to implement custom invoice 
+        generation (making sure to call super() to establish 
         a clean extension chain).
         """
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
@@ -202,7 +204,7 @@ class SaleOrder(models.Model):
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
                                     ('project_id', '=', self.project_id.id)
-                                    ], limit=1)
+                                   ], limit=1)
             if order_id:
                 for line in self.order_line:
                     line_copy = line.copy({'order_id': order_id.id})
@@ -210,7 +212,7 @@ class SaleOrder(models.Model):
                 self.update({'state': 'merged',
                              'sale_order_id': order_id.id,
                              'confirmation_date': fields.Datetime.now()
-                             })
+                            })
                 if self.env.context.get('send_email'):
                     self.force_quotation_send()
                 res = True
@@ -469,6 +471,7 @@ class SaleOrder(models.Model):
                 'is_delivery': True,
                 'delivery_direction': 'out' if x == 0 else 'in',
                 'picking_ids': picking_ids,
+                'vehicle_id': self.vehicle.id,
             }
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
@@ -537,10 +540,27 @@ class SaleOrderLine(models.Model):
     delivery_direction = fields.Selection([('in', 'collection'),
                                            ('out', 'delivery')],
                                           string="Delivery Type")
-    picking_ids = fields.Many2many('stock.picking', 'order_line_picking_rel',
-                                  'picking_id', 'sale_order_line_id',
-                                   string="Pickings",
-                                   help="Linked picking to the delivery cost")
+    picking_ids = fields.Many2many(
+        'stock.picking', 'order_line_picking_rel',
+        'picking_id', 'sale_order_line_id',
+        string="Pickings",
+        help="Linked picking to the delivery cost")
+    vehicle_id = fields.Many2one(
+        'fleet.vehicle', string="Vehicle",
+        help="Linked vehicle to the delivery cost")
+
+    @api.multi
+    def name_get(self):
+        res = []
+        if self._context.get('special_display', False):
+            for rec in self:
+                vehicle = "{} {}".format(rec.vehicle_id.model_id.name,
+                                          rec.vehicle_id.license_plate)
+                name = "{} - {} - {}".format(rec.name, rec.price_unit, vehicle)
+                res.append((rec.id, name))
+        else:
+            res = super(SaleOrderLine, self).name_get()
+        return res
 
     @api.one
     @api.constrains('start_date', 'end_date')
