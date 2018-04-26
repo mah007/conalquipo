@@ -46,6 +46,11 @@ class StockMove(Model):
         string='Description')
     returned = fields.Integer('returned')
 
+    # @api.onchange('employee_id')
+    # def employee_id_change_task(self):
+    #     if self.employee_id:
+    #         self.env['project.task'].write({'mess_operated': mess_operated})
+
     def _action_done(self, merge=True):
         res = super(StockMove, self)._action_done()
         for order in self:
@@ -82,9 +87,6 @@ class StockMove(Model):
             for data2 in data.product_id.product_tmpl_id.employee_ids:
                 employee_list.append(data2.id)
             # Domain for employee operator for the product
-            _logger.warning('ACAAAAAAAAAA')
-            _logger.warning(employee_list)
-            _logger.warning(self)
             return [('id', 'in', employee_list)]
 
 
