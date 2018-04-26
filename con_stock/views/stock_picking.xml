@@ -206,7 +206,10 @@
                                          string="Delivery Cost">
                                        <field name="delivery_cost" mode="tree"
                                               attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"
-                                              nolabel="1">
+                                              nolabel="1"
+                                              domain="[('order_id', '=', 'sale_id'),
+                                               ('is_delivery', '=', True),
+                                               ('picking_ids', '=', False)]">
                                              <tree editable="bottom">
                                                  <field name="product_id"/>
                                                  <field name="name"/>
