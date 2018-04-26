@@ -102,8 +102,9 @@ class StockMoveLine(Model):
     def create(self, vals):
         res = super(StockMoveLine, self).create(vals)
 
-        if res.product_id.is_operated \
-                and res.move_id.sale_line_id.service_operator:
+        # if res.product_id.is_operated \
+        #         and res.move_id.sale_line_id.service_operator:
+        if res.product_id.is_operated:
             res.picking_id.update({'mess_operated': True})
 
         return res
