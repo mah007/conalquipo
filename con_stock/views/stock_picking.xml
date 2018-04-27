@@ -147,6 +147,7 @@
                           <page name='info_shipping' string="Info Shipping">
                               <group>
                                   <group col="2">
+                                      <field name="sale_id"  invisible="1"/>
                                       <field name="type_sp"  invisible="1"/>
                                       <field name="location_id" />
                                       <field name="carrier_tracking_ref"/>
@@ -206,7 +207,10 @@
                                          string="Delivery Cost">
                                        <field name="delivery_cost" mode="tree"
                                               attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"
-                                              nolabel="1">
+                                              nolabel="1"
+                                              domain="[('order_id', '=', sale_id),
+                                               ('is_delivery', '=', True),
+                                               ('picking_ids', '=', False), ('order_id.state', '=', 'sale')]">
                                              <tree editable="bottom">
                                                  <field name="product_id"/>
                                                  <field name="name"/>
