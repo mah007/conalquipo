@@ -590,7 +590,7 @@ class SaleOrderLine(models.Model):
 
     @api.one
     @api.constrains('start_date', 'end_date')
-    def _check_dates(self):
+    def validate_dates(self):
         """
         Start date and end date validation
         """
