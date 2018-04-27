@@ -213,26 +213,38 @@ class SaleOrder(models.Model):
                              'sale_order_id': order_id.id,
                              'confirmation_date': fields.Datetime.now()
                             })
+                # Create task for product
+                for data in order_id.order_line:
+                    if data.components_ids:
+                        task_values = {
+                            'name': "Service: " + str(data.product_id.name),
+                            'project_id': self.project_id.id,
+                            'sale_line_id': data.id,
+                            'product_id': data.product_id.id,
+                            'partner_id': self.partner_id.id
+                        }
+                        self.env[
+                            'project.task'].create(task_values)
                 if self.env.context.get('send_email'):
                     self.force_quotation_send()
                 res = True
             else:
+                # Create task for product
+                for data in self.order_line:
+                    if data.components_ids:
+                        task_values = {
+                            'name': "Service: " + str(data.product_id.name),
+                            'project_id': self.project_id.id,
+                            'sale_line_id': data.id,
+                            'product_id': data.product_id.id,
+                            'partner_id': self.partner_id.id
+                        }
+                        self.env[
+                            'project.task'].create(task_values)
                 res = super(SaleOrder, self).action_confirm()
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
-        # Create task for product
-        for data in self.order_line:
-            if data.components_ids:
-                task_values = {
-                    'name': "Service: " + str(data.product_id.name),
-                    'project_id': self.project_id.id,
-                    'sale_line_id': data.id,
-                    'product_id': data.product_id.id,
-                    'partner_id': self.partner_id.id
-                }
-                self.env[
-                    'project.task'].create(task_values)
         return res
 
     @api.multi
