@@ -121,7 +121,7 @@
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">UND.</td>
                                 <td  t-if="o.picking_type_id.code == 'outgoing'" style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">MIN.</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. OBRA</td>
-                                <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. REMITIDA</td>
+                                <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. DEVUELTA</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64; border-radius:6px 6px 6px 6px!important;">SALDO OBRA</td>
                             </tr>
                              <tr t-foreach="o.move_lines" t-as="move">
