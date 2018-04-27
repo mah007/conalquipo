@@ -1207,6 +1207,26 @@ class SaleOrderLine(models.Model):
                     self.price_unit = uom_list.cost_byUom   
                     self.min_sale_qty = uom_list.quantity
 
+    @api.multi
+    def _action_launch_procurement_rule(self):
+        res = super(SaleOrderLine, self)._action_launch_procurement_rule()
+        self._propagate_picking_project()
+        return res
+
+    @api.multi
+    def _propagate_picking_project(self):
+        """
+        This function write the `project_id` of the `sale_order` on the Stock
+        Picking Order.
+
+        :return: True
+        """
+        for order in self.mapped('order_id'):
+            for picking in order.picking_ids:
+                picking.write({'project_id': order.project_id.id})
+        return True
+
+
 class SaleProductComponents(models.Model):
     _name = "sale.product.components"
     _description = "A model for store and manage the products components"
