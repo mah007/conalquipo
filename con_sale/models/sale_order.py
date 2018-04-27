@@ -223,15 +223,16 @@ class SaleOrder(models.Model):
         self.function_add_picking_owner()
         # Create task for product
         for data in self.order_line:
-            task_values = {
-                'name': "Service: " + str(data.product_id.name),
-                'project_id': self.project_id.id,
-                'sale_line_id': self.id,
-                'product_id': data.product_id.id,
-                'partner_id': self.partner_id.id
-            }
-            self.env[
-                'project.task'].create(task_values)
+            if data.components_ids:
+                task_values = {
+                    'name': "Service: " + str(data.product_id.name),
+                    'project_id': self.project_id.id,
+                    'sale_line_id': data.id,
+                    'product_id': data.product_id.id,
+                    'partner_id': self.partner_id.id
+                }
+                self.env[
+                    'project.task'].create(task_values)
         return res
 
     @api.multi
