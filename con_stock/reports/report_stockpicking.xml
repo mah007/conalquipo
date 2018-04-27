@@ -245,12 +245,18 @@
                             <br/>
                             <br/>
                             <br/>
-                            <div style="text-align:center; height:40px; width:100%;">
-                                <span t-if="o.picking_type_id.code == 'incoming'">El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte
-                                    de la obra se exigirá lo mismo</span>
-                                <span t-if="o.picking_type_id.code == 'outgoing'">El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte
+                            <div style="text-align:left; height:40px; width:100%;">
+                                <t t-if="o.picking_type_id.code == 'incoming'">
+                                    <span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte
+                                     de la obra se exigirá lo mismo.</span>
+                                    <strong>Los productos devueltos pueden generar costos de reparación que le serán facturados.</strong>
+                                </t>
+
+                                <t t-if="o.picking_type_id.code == 'outgoing'">
+                                    <span >El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte
                                     de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto.</span>
-                            </div>
+                                </t>
+                                </div>
                        </div>
                     </div>
                     <div class="footer">

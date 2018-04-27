@@ -165,8 +165,10 @@ class SaleOrder(models.Model):
     @api.multi
     def _prepare_invoice(self):
         """
-        Prepare the dict of values to create the new invoice for a sales order. This method may be
-        overridden to implement custom invoice generation (making sure to call super() to establish
+        Prepare the dict of values to create the new invoice for a sales
+        order.
+        This method may be overridden to implement custom invoice 
+        generation (making sure to call super() to establish 
         a clean extension chain).
         """
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
@@ -202,7 +204,7 @@ class SaleOrder(models.Model):
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
                                     ('project_id', '=', self.project_id.id)
-                                    ], limit=1)
+                                   ], limit=1)
             if order_id:
                 for line in self.order_line:
                     line_copy = line.copy({'order_id': order_id.id})
@@ -210,7 +212,7 @@ class SaleOrder(models.Model):
                 self.update({'state': 'merged',
                              'sale_order_id': order_id.id,
                              'confirmation_date': fields.Datetime.now()
-                             })
+                            })
                 if self.env.context.get('send_email'):
                     self.force_quotation_send()
                 res = True
@@ -219,6 +221,17 @@ class SaleOrder(models.Model):
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
+        # Create task for product
+        for data in self.order_line:
+            task_values = {
+                'name': "Service: " + str(data.product_id.name),
+                'project_id': self.project_id.id,
+                'sale_line_id': self.id,
+                'product_id': data.product_id.id,
+                'partner_id': self.partner_id.id
+            }
+            self.env[
+                'project.task'].create(task_values)
         return res
 
     @api.multi
@@ -295,8 +308,9 @@ class SaleOrder(models.Model):
         if res.project_id:
             return res
         else:
-            raise UserError(_('You need specify a work in this sale order'))
-            
+            raise UserError(_(
+                'You need specify a work in this sale order'))
+
     @api.multi
     def write(self, values):
         # Overwrite sale order write
@@ -463,12 +477,14 @@ class SaleOrder(models.Model):
                     _('Receive')),
                 'product_uom_qty': 1,
                 'product_uom': carrier.product_id.uom_id.id,
+                'bill_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,
                 'price_unit': price_unit,
                 'tax_id': [(6, 0, taxes_ids)],
                 'is_delivery': True,
                 'delivery_direction': 'out' if x == 0 else 'in',
                 'picking_ids': picking_ids,
+                'vehicle_id': self.vehicle.id,
             }
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
@@ -518,11 +534,11 @@ class SaleOrderLine(models.Model):
     # Operators
     add_operator = fields.Boolean('Add Operator')
     mess_operated = fields.Boolean('Message Operated', default=False)
-    service_operator = fields.Many2one('product.product',
-                                       string='Service Operator',
-                                       domain=[('sale_ok', '=', True),
-                                               ('type', '=', 'service')],
-                                       change_default=True, ondelete='restrict')
+    # service_operator = fields.Many2one
+    #     'product.product', string='Service Operator',
+    #     domain=[('sale_ok', '=', True),
+    #             ('type', '=', 'service')],
+    #     change_default=True, ondelete='restrict')
     product_operate = fields.Many2one('product.product',
                                       string='Product Operate',
                                       domain=[('sale_ok', '=', True),
@@ -537,10 +553,27 @@ class SaleOrderLine(models.Model):
     delivery_direction = fields.Selection([('in', 'collection'),
                                            ('out', 'delivery')],
                                           string="Delivery Type")
-    picking_ids = fields.Many2many('stock.picking', 'order_line_picking_rel',
-                                  'picking_id', 'sale_order_line_id',
-                                   string="Pickings",
-                                   help="Linked picking to the delivery cost")
+    picking_ids = fields.Many2many(
+        'stock.picking', 'order_line_picking_rel',
+        'picking_id', 'sale_order_line_id',
+        string="Pickings",
+        help="Linked picking to the delivery cost")
+    vehicle_id = fields.Many2one(
+        'fleet.vehicle', string="Vehicle",
+        help="Linked vehicle to the delivery cost")
+
+    @api.multi
+    def name_get(self):
+        res = []
+        if self._context.get('special_display', False):
+            for rec in self:
+                vehicle = "{} {}".format(rec.vehicle_id.model_id.name,
+                                          rec.vehicle_id.license_plate)
+                name = "{} - {} - {}".format(rec.name, rec.price_unit, vehicle)
+                res.append((rec.id, name))
+        else:
+            res = super(SaleOrderLine, self).name_get()
+        return res
 
     @api.one
     @api.constrains('start_date', 'end_date')
@@ -654,8 +687,13 @@ class SaleOrderLine(models.Model):
             result['domain'] = {
                 'bill_uom': [('id', 'in', uoms_list)]}
         else:
-            self.bill_uom = self.product_uom.id
+            self.bill_uom = self.product_id.product_tmpl_id.sale_uom.id
             self.bill_uom_qty = self.product_uom_qty
+            result['domain'] = {
+                'bill_uom': [
+                    ('id',
+                     'in',
+                     [self.product_id.product_tmpl_id.sale_uom.id])]}
         if self.product_id.is_operated:
             self.mess_operated = True
         else:
@@ -790,21 +828,21 @@ class SaleOrderLine(models.Model):
     def create(self, values):
         # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
-        if values.get('service_operator'):
-            new_line_operator = {
-                'product_id': values['service_operator'],
-                'name': 'Operator ' + '%s'%(
-                    line.product_id.default_code or ''),
-                'product_operate': values['product_id'],
-                'product_uom': line.product_id.product_tmpl_id.uom_id.id,
-                'order_id': line.order_id.id,
-                'parent_component': line.product_id.id,
-                'parent_line': line.id,
-                'bill_uom': line.product_id.product_tmpl_id.uom_id.id,
-                'bill_uom_qty': line.product_uom_qty,
-            }
+        # if values.get('service_operator'):
+        #     new_line_operator = {
+        #         'product_id': values['service_operator'],
+        #         'name': 'Operator ' + '%s'%(
+        #             line.product_id.default_code or ''),
+        #         'product_operate': values['product_id'],
+        #         'product_uom': line.product_id.product_tmpl_id.uom_id.id,
+        #         'order_id': line.order_id.id,
+        #         'parent_component': line.product_id.id,
+        #         'parent_line': line.id,
+        #         'bill_uom': line.product_id.product_tmpl_id.sale_uom.id,
+        #         'bill_uom_qty': line.product_uom_qty,
+        #     }
             # ~ Create new record for operator
-            self.create(new_line_operator)
+            # self.create(new_line_operator)
         # Check owner
         if line.owner_id:
             self.function_management_buy(line)

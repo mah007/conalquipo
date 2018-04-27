@@ -66,6 +66,12 @@
             <field name="arch" type="xml">
                 <data>
 
+                    <field name="uom_po_id" position="before">
+                        <field name="sale_uom" 
+                        attrs="{'required':[('multiples_uom', '=', False)],
+                        'invisible':[('multiples_uom', '!=', False)]}"/>
+                    </field>
+
                     <field name="list_price" position="before">
                         <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
                     </field>

@@ -336,9 +336,7 @@ class StockPicking(Model):
                 [('id', '=', vals.get('partner_id'))])
             if partner.picking_warn == 'block':
                 raise UserError(_(partner.picking_warn_msg))
-
         res = super(StockPicking, self).create(vals)
-        res.update({'project_id': res.sale_id.project_id.id})
         return res
 
     @api.multi

@@ -55,11 +55,11 @@
                         <field name="order_type" invisible="1"/>
                         <field name="min_sale_qty" readonly="1"/>
                         <field name="bill_uom_qty" required="1"/>
-                        <field name="bill_uom" attrs="{'invisible': [('product_uoms','=',False)], 'required': [('product_uoms','=',True)]}"/>
+                        <field name="bill_uom" required="1"/>
                     </group>
                     <group string="Operator section" attrs="{'invisible': [('mess_operated', '=', False)]}">
                         <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
-                        <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/>
+                        <!-- <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/> -->
                         <field name="product_components" invisible="1"/>
                         <field name="product_uoms" invisible="1"/>
                     </group>
@@ -166,7 +166,7 @@
                 <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': [('state', 'not in', ['sale'])]}"/>
             </xpath>
 
-            <xpath expr="//sheet" position="before">
+            <!-- <xpath expr="//sheet" position="before">
                 <field name="operators_services" invisible="1"/>
                  <div role="alert"
                       class="o_notification_box alert alert-dismissible alert-info" style="margin-bottom:0px;"
@@ -176,18 +176,18 @@
                           added to the quote when it is saved.</strong>
                     </div>
                 </div>
-            </xpath>
+            </xpath> -->
 
 
             <xpath expr="//field[@name='order_line']/form//group" position="before">
                 <field name="mess_operated" invisible="1"/>
-                    <div class="alert alert-danger" role="alert"
+                    <!-- <div class="alert alert-danger" role="alert"
                        style="margin-bottom:0px;"
                          attrs="{'invisible': [('mess_operated','=',False)]}">
                       This product supports an operator please remember to
                       add it if necessary, the operator will be appear when
                       the sale order has been saved.
-                    </div>
+                    </div> -->
             </xpath>
 
         </field>
