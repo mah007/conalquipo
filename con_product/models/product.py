@@ -207,20 +207,24 @@ class ProductTemplate(Model):
         'product.components', 'product_id', string='Components')
     product_origin = fields.Many2one('stock.location',
                                      string="Location Origin")
-    replenishment_charge = fields.Many2one('product.template',
-                                           string='Replenishment charge')
+    replenishment_charge = fields.Many2one(
+        'product.template', string='Replenishment charge')
     min_qty_rental = fields.Integer(string='Min Qty rental')
     multiples_uom = fields.Boolean(string="Has multiples uom?",
                                 default=False)
     uoms_ids = fields.One2many(
         'product.multiples.uom', 'product_id', string='Multiples UOMs')
-    employee_ids = fields.Many2many(comodel_name='hr.employee',
-                                    string='Employee', search='hr_employee',
-                                    track_visibility='onchange')
-    is_operated = fields.Boolean('Is Operated')
+    employee_ids = fields.Many2many(
+        comodel_name='hr.employee',
+        string='Employee',
+        search='hr_employee', track_visibility='onchange')
+    is_operated = fields.Boolean(
+        string='Is Operated')
     sale_uom = fields.Many2one(
         'product.uom',
         string='Sale UoM')
+    generate_task = fields.Boolean(
+        string="Generate task?", default=False)
 
 
 class ProductProduct(Model):

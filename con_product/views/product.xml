@@ -101,6 +101,10 @@
                             <field name="multiples_uom"/>
                             <label for="multiples_uom"/>
                         </div>
+                        <div>
+                            <field name="generate_task"/>
+                            <label for="generate_task"/>
+                        </div>
                     </xpath>
 
                     <xpath expr="//page[@name='general_information']" position="after">

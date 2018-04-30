@@ -185,6 +185,14 @@ class SaleOrder(models.Model):
             if self.state == 'sale':
                 purchase_id.button_confirm()
 
+    def _convert_qty_company_hours(self):
+        company_time_uom_id = self.env.user.company_id.project_time_mode_id
+        if self.product_uom.id != company_time_uom_id.id and self.product_uom.category_id.id == company_time_uom_id.category_id.id:
+            planned_hours = self.product_uom._compute_quantity(self.product_uom_qty, company_time_uom_id)
+        else:
+            planned_hours = self.product_uom_qty
+        return planned_hours
+
     @api.multi
     def action_confirm(self):
         for purchase_id in self.purchase_ids:
@@ -215,32 +223,48 @@ class SaleOrder(models.Model):
                             })
                 # Create task for product
                 for data in order_id.order_line:
-                    if data.components_ids:
+                    if data.product_id.product_tmpl_id.generate_task or \
+                       data.bill_uom == 'Day(s)':
                         task_values = {
                             'name': "Service: " + str(data.product_id.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
+                            'so_line': data.id,
                             'product_id': data.product_id.id,
-                            'partner_id': self.partner_id.id
+                            'partner_id': self.partner_id.id,
+                            'company_id': self.company_id.id,
+                            'email_from': self.partner_id.email,
+                            'user_id': False,
+                            'planned_hours': data.bill_uom_qty,
+                            'remaining_hours': data.bill_uom_qty,
                         }
-                        self.env[
+                        task = self.env[
                             'project.task'].create(task_values)
+                        data.write({'task_id': task.id})
                 if self.env.context.get('send_email'):
                     self.force_quotation_send()
                 res = True
             else:
                 # Create task for product
                 for data in self.order_line:
-                    if data.components_ids:
+                    if data.product_id.product_tmpl_id.generate_task or \
+                       data.bill_uom == 'Day(s)':
                         task_values = {
                             'name': "Service: " + str(data.product_id.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
+                            'so_line': data.id,
                             'product_id': data.product_id.id,
-                            'partner_id': self.partner_id.id
+                            'partner_id': self.partner_id.id,
+                            'company_id': self.company_id.id,
+                            'email_from': self.partner_id.email,
+                            'user_id': False,
+                            'planned_hours': data.bill_uom_qty,
+                            'remaining_hours': data.bill_uom_qty,
                         }
-                        self.env[
+                        task = self.env[
                             'project.task'].create(task_values)
+                        data.write({'task_id': task.id})
                 res = super(SaleOrder, self).action_confirm()
         self._propagate_picking_project()
         self._get_components()
