@@ -12,6 +12,9 @@ class ProjectTask(models.Model):
     product_id = fields.Many2one('product.product', string="Product",
                                  help="The associated product to the service "
                                       "task")
+    uom_id = fields.Many2one(
+        'product.uom', string="UoM",
+        help="The associated UoM to the service task")
 
     @api.multi
     def action_create_calendar_event(self):

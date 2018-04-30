@@ -25,6 +25,11 @@
                 <button string="Schedule Task" name="action_create_calendar_event"
                 type="object" class="oe_stat_button" icon="fa-calendar" widget="statinfo" />
             </xpath>
+
+            <field name="tag_ids" position="before">
+                <field name="uom_id" readonly="1"/>
+            </field>
+
         </field>
     </record>
 

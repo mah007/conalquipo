@@ -72,6 +72,10 @@ class SaleOrder(models.Model):
     delivery_price = fields.Float(
         string='Estimated Delivery Price',
         readonly=False, copy=False)
+    task_id = fields.Many2one(comodel_name='project.task',
+                              string='Task', ondelete='cascade',
+                              index=True, copy=False,
+                              track_visibility='onchange')
 
     @api.multi
     @api.onchange('order_line')
@@ -224,7 +228,8 @@ class SaleOrder(models.Model):
                 # Create task for product
                 for data in order_id.order_line:
                     if data.product_id.product_tmpl_id.generate_task or \
-                       data.bill_uom == 'Day(s)':
+                       data.bill_uom.name != 'Day(s)' and not \
+                       data.is_delivery:
                         task_values = {
                             'name': "Service: " + str(data.product_id.name),
                             'project_id': self.project_id.id,
@@ -235,6 +240,7 @@ class SaleOrder(models.Model):
                             'company_id': self.company_id.id,
                             'email_from': self.partner_id.email,
                             'user_id': False,
+                            'uom_id': data.bill_uom.id,
                             'planned_hours': data.bill_uom_qty,
                             'remaining_hours': data.bill_uom_qty,
                         }
@@ -248,7 +254,8 @@ class SaleOrder(models.Model):
                 # Create task for product
                 for data in self.order_line:
                     if data.product_id.product_tmpl_id.generate_task or \
-                       data.bill_uom == 'Day(s)':
+                       data.bill_uom.name != 'Day(s)' and not \
+                       data.is_delivery:
                         task_values = {
                             'name': "Service: " + str(data.product_id.name),
                             'project_id': self.project_id.id,
@@ -259,6 +266,7 @@ class SaleOrder(models.Model):
                             'company_id': self.company_id.id,
                             'email_from': self.partner_id.email,
                             'user_id': False,
+                            'uom_id': data.bill_uom.id,
                             'planned_hours': data.bill_uom_qty,
                             'remaining_hours': data.bill_uom_qty,
                         }
