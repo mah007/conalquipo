@@ -46,10 +46,15 @@ class StockMove(Model):
         string='Description')
     returned = fields.Integer('returned')
 
+    @api.multi
     @api.onchange('employee_id')
     def employee_id_change_task(self):
         if self.employee_id:
-            self.env['project.task'].write({'mess_operated': mess_operated})
+            task = self.env['project.task'].search(
+                [('sale_line_id', '=', self._origin.sale_line_id.id)])
+            if task:
+                task.update({
+                    'user_id': self.employee_id.id})
 
     def _action_done(self, merge=True):
         res = super(StockMove, self)._action_done()

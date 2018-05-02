@@ -231,7 +231,12 @@ class SaleOrder(models.Model):
                        data.bill_uom.name != 'Day(s)' and not \
                        data.is_delivery:
                         task_values = {
-                            'name': "Service: " + str(data.product_id.name),
+                           'name': "Task for: " \
+                             + str(self.project_id.name) \
+                             + " - " \
+                             + str(data.product_id.name) \
+                             + " - " + \
+                             str(data.bill_uom.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
                             'so_line': data.id,
@@ -257,7 +262,12 @@ class SaleOrder(models.Model):
                        data.bill_uom.name != 'Day(s)' and not \
                        data.is_delivery:
                         task_values = {
-                            'name': "Service: " + str(data.product_id.name),
+                           'name': "Task for: " \
+                             + str(self.project_id.name) \
+                             + " - " \
+                             + str(data.product_id.name) \
+                             + " - " + \
+                             str(data.bill_uom.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
                             'so_line': data.id,
