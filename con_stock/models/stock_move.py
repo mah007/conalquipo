@@ -46,15 +46,22 @@ class StockMove(Model):
         string='Description')
     returned = fields.Integer('returned')
 
-    @api.multi
     @api.onchange('employee_id')
     def employee_id_change_task(self):
         if self.employee_id:
             task = self.env['project.task'].search(
                 [('sale_line_id', '=', self._origin.sale_line_id.id)])
             if task:
-                task.update({
-                    'user_id': self.employee_id.id})
+                task.update({'user_id': self.employee_id.user_id.id})
+
+    @api.model
+    def write(self, vals):
+        res = super(StockMove, self).write(vals)
+        task = self.env['project.task'].search(
+            [('sale_line_id', '=', self.sale_line_id.id)])
+        if task:
+            task.write({'user_id': self.employee_id.user_id.id})
+        return res
 
     def _action_done(self, merge=True):
         res = super(StockMove, self)._action_done()
@@ -108,12 +115,8 @@ class StockMoveLine(Model):
     @api.model
     def create(self, vals):
         res = super(StockMoveLine, self).create(vals)
-
-        # if res.product_id.is_operated \
-        #         and res.move_id.sale_line_id.service_operator:
         if res.product_id.is_operated:
             res.picking_id.update({'mess_operated': True})
-
         return res
 
     @api.onchange('assigned_operator')
