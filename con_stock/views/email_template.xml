@@ -17,6 +17,8 @@
 
 % set moves = ctx.get('move_line_ids', [])
 
+% set products = ctx.get('products_lst', [])
+
 % set qty_remissions = 0
 
 % set qty_receipts = 0
@@ -42,23 +44,19 @@
                             % for linem in moves:
                                 % for linew in workers:
                                     % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:
-                                        <tr>         
-                                            <td>
-                                                ${linem['product_id'].name}           
-                                            </td>
-                                            <td>
-                                                % if linem['picking_id'].picking_type_id.name == 'Delivery Orders':
-                                                    % set qty_remissions = qty_remissions + 1
-                                                % endif
-                                                ${qty_remissions} 
-                                            </td>          
-                                            <td>
-                                                % if linem['picking_id'].picking_type_id.name == 'Receipts':
-                                                    % set qty_receipts = qty_receipts + 1
-                                                % endif
-                                                ${qty_receipts} 
-                                            </td>                          
-                                        </tr>
+                                        % for linepro in products:
+                                            % if linem['product_id'].name == {linepro['name']:
+                                                <tr>         
+                                                    <td>
+                                                        ${linepro['name']}
+                                                    </td>
+                                                    <td>
+                                                    </td>          
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            % endif
+                                        % endfor
                                     % endif
                                 % endfor
                             % endfor
