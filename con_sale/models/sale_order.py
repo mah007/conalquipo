@@ -906,7 +906,7 @@ class SaleOrderLine(models.Model):
         if product_muoms != True:
             line.price_unit = line.product_id.product_tmpl_id.list_price
             line.min_sale_qty = \
-                self.product_id.product_tmpl_id.min_qty_rental             
+                line.product_id.product_tmpl_id.min_qty_rental             
         else:
             for uom_list in line.product_id.product_tmpl_id.uoms_ids:
                 if line.bill_uom.id == uom_list.uom_id.id:

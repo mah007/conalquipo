@@ -27,20 +27,14 @@ class StockScrap(models.Model):
 
     def action_validate(self):
         res = super(StockScrap, self).action_validate()
-        print('SCRAP scr')
         if isinstance(res, dict):
             warn = res.get('res_model', '')
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
-
-        print('SCRAP ANT')
         if any([not res, not self.picking_id.sale_id,
                 not self.product_id.replenishment_charge,
                 not self.scrap_location_id.is_charge_replacement]):
             return res
-
-        print('SCRAP PRE')
-        # import pdb; pdb.set_trace()
         reple_id = self.product_id.replenishment_charge
         self.picking_id.sale_id.order_line.create({
             'order_id': self.picking_id.sale_id.id,
@@ -50,7 +44,6 @@ class StockScrap(models.Model):
             'name': _('Replenishment %s') % (reple_id.name),
             'product_uom': reple_id.uom_id.id,
         })
-        print('SCRAP')
         return res
 
 
@@ -74,5 +67,4 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
             'name': _('Replenishment %s') % (reple_id.name),
             'product_uom': reple_id.uom_id.id,
         })
-        print('WARN')
         return res
