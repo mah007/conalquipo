@@ -29,7 +29,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         domain="[('order_id', '=', sale_order_id), "
                "('delivery_direction', 'in', ['in']),"
                "('picking_ids', '=', False)]")
-
     reason = fields.Selection([
         ('0', 'End project-work'),
         ('2', 'Change Because of Malfunction'),
@@ -38,7 +37,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         ('2', 'The equipment did not serve you'),
         ('0', 'No longer need it'),
     ], string="Reason")
-
     notes = fields.Text(string="Notes",)
 
     @api.onchange('carrier_type')

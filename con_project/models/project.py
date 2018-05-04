@@ -135,8 +135,13 @@ class ProjectWorks(models.Model):
                      ['location_dest_id', '=',
                       data.location_dest_id.id],
                      ['state', '=', 'done']])
-            for moves in move:
-                moves_data.append(moves.id)
+            for p1 in move:
+                if not p1.returned and p1.sale_line_id:
+                    moves_data.append(p1.id)
+            for p2 in move:
+                if p2.returned and p2.returned in moves_data:
+                    moves_data.remove(p2.returned)
+
         domain = [('id', 'in', moves_data)]
         return {
             'name': _('Products'),

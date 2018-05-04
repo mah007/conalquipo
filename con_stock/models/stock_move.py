@@ -57,10 +57,11 @@ class StockMove(Model):
     @api.model
     def write(self, vals):
         res = super(StockMove, self).write(vals)
-        task = self.env['project.task'].search(
-            [('sale_line_id', '=', self.sale_line_id.id)])
-        if task:
-            task.write({'user_id': self.employee_id.user_id.id})
+        for data in self:
+            task = self.env['project.task'].search(
+                [('sale_line_id', '=', data.sale_line_id.id)])
+            if task:
+                task.write({'user_id': data.employee_id.user_id.id})
         return res
 
     def _action_done(self, merge=True):
