@@ -186,6 +186,17 @@ class ProductTemplate(Model):
         if self.type != 'service' and self.location_id:
             return self.location_id.color
 
+    @api.multi
+    @api.onchange('replenishment_charge')
+    def replenishment_charge_validation(self):
+        """
+        Validation for replenishment_charge: Needs to be service type
+        """
+        if self.replenishment_charge and \
+           not self.replenishment_charge.type == "service":
+            raise UserError(_(
+                "This product needs to be a service type"))
+
     state_id = fields.Many2one(
         'product.states', string="State",
         default=_get_default_state)
