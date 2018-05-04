@@ -79,7 +79,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             stock_move = [child_move]
             location_id = self.env['stock.location'].browse([des_location])
 
-
         picking_ids = []
         picking = self.env['stock.picking'].create({
             'partner_id': partner_id,
@@ -95,30 +94,33 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             'carrier_type': carrier_type,
         })
 
-
         for move in stock_move:
-            product_origin = move.product_id.product_origin.id
-            if product_origin != des_location:
-                picking_ids.extend(self._create_stock_picking(
-                    partner_id, project_id, picking_type, des_location,
-                    product_origin, origin, sale_id, group_id, return_reason,
-                    user_notes, carrier_type, move))
-            self.env['stock.move'].create({
-                'name': _('New Move:') + move.product_id.display_name,
-                'partner_id': partner_id,
-                'project_id': project_id,
-                'product_id': move.product_id.id,
-                'product_uom_qty': move.quantity_done,
-                'product_uom': move.product_uom.id,
-                'location_dest_id': des_location,
-                'location_id': src_location,
-                'returned': move.id,
-                'picking_id': picking.id,
-                'group_id': move.group_id.id,
-                'state': 'draft',
-                'sale_line_id': move.sale_line_id.id,
-            })
-            picking_ids.append(picking)
+            if move.sale_line_id:
+                product_origin = move.product_id.product_origin.id
+                if product_origin != des_location:
+                    picking_ids.extend(self._create_stock_picking(
+                        partner_id,
+                        project_id,
+                        picking_type, des_location,
+                        product_origin, origin, sale_id,
+                        group_id, return_reason,
+                        user_notes, carrier_type, move))
+                self.env['stock.move'].create({
+                    'name': _('New Move:') + move.product_id.display_name,
+                    'partner_id': partner_id,
+                    'project_id': project_id,
+                    'product_id': move.product_id.id,
+                    'product_uom_qty': move.quantity_done,
+                    'product_uom': move.product_uom.id,
+                    'location_dest_id': des_location,
+                    'location_id': src_location,
+                    'returned': move.id,
+                    'picking_id': picking.id,
+                    'group_id': move.group_id.id,
+                    'state': 'draft',
+                    'sale_line_id': move.sale_line_id.id,
+                })
+                picking_ids.append(picking)
         return picking_ids
 
     @api.multi
@@ -134,7 +136,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             self.sale_order_id.procurement_group_id.id, self.reason,
             self.notes, self.carrier_type
         ))
-
         so_pickings = [x.id for x in self.sale_order_id.picking_ids]
         new_pickings = [x.id for x in picking_ids]
         so_pickings.extend(new_pickings)

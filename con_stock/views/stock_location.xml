@@ -21,6 +21,7 @@
         <field name="inherit_id" ref="stock.view_location_form"/>
         <field name="arch" type="xml">
             <data>
+            
                 <field name="barcode" position="after">
                     <field name="set_default_location" />
                     <field name="set_product_state" />
@@ -29,6 +30,11 @@
                     <field name="color" widget="color"
                         attrs="{'invisible':[('product_state', '=', False)]}"/>
                 </field>
+
+                <xpath expr="//field[@name='return_location']" position="after">
+                    <field name="is_charge_replacement" attrs="{'invisible': ['|', ('scrap_location', '=', False), ('usage', '!=', 'inventory')]}"/>
+                </xpath>
+
             </data>
         </field>
     </record>

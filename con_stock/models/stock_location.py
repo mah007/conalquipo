@@ -44,3 +44,7 @@ class StockLocation(Model):
         'product.states', string="Set state")
     color = fields.Char(
         string="Color", compute=_get_color, store=True)
+    is_charge_replacement = fields.Boolean(
+        'Charge for Replacement?',
+        help='Mark this check if you want the products that move to this '
+        'location to be charged when making a reposition.')
