@@ -49,7 +49,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     def _create_stock_picking(self, partner_id, project_id, picking_type,
                               src_location, des_location, origin, sale_id,
                               group_id, return_reason, user_notes,
-                              carrier_type, child_move=False):
+                              carrier_type):
         """
         This function create a picking and the stock moves necessaries
         for do a movement between the locations for the return of the
@@ -66,21 +66,19 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         :param return_reason: The reason for the product's return (Char).
         :param user_notes: Notes about the picking return (Char).
         :param carrier_type: Carrier type of the Picking (Char).
-        :param child_move: Movement to copy (Recordset).
         :return: A record with the picking ID's
         """
 
-        if not child_move:
-            stock_move = self.env['stock.move'].search(
-                [('location_dest_id', '=', src_location),
-                 ('state', '=', 'done'),
-                 ('picking_id.project_id', '=', project_id)])
-        else:
-            stock_move = [child_move]
-            location_id = self.env['stock.location'].browse([des_location])
+        stock_move = self.env['stock.move'].search(
+            [('location_dest_id', '=', src_location),
+             ('state', '=', 'done'),
+             ('picking_id.project_id', '=', project_id)])
 
-        picking_ids = []
-        picking = self.env['stock.picking'].create({
+        picking_ids = list()
+        move_ids_groups = dict()
+
+        # ~ Create Main Picking
+        picking_main = self.env['stock.picking'].create({
             'partner_id': partner_id,
             'project_id': project_id,
             'picking_type_id': picking_type,
@@ -95,16 +93,47 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         })
 
         for move in stock_move:
-            if move.sale_line_id:
-                product_origin = move.product_id.product_origin.id
-                if product_origin != des_location:
-                    picking_ids.extend(self._create_stock_picking(
-                        partner_id,
-                        project_id,
-                        picking_type, des_location,
-                        product_origin, origin, sale_id,
-                        group_id, return_reason,
-                        user_notes, carrier_type, move))
+            self.env['stock.move'].create({
+                'name': _('New Move:') + move.product_id.display_name,
+                'partner_id': partner_id,
+                'project_id': project_id,
+                'product_id': move.product_id.id,
+                'product_uom_qty': move.quantity_done,
+                'product_uom': move.product_uom.id,
+                'location_dest_id': des_location,
+                'location_id': src_location,
+                'returned': move.id,
+                'picking_id': picking_main.id,
+                'group_id': move.group_id.id,
+                'state': 'draft',
+                'sale_line_id': move.sale_line_id.id,
+            })
+        picking_ids.append(picking_main)
+        # ~ End main picking creation
+        for move in stock_move:
+            product_origin = move.product_id.product_origin.id
+            if product_origin != des_location:
+                if move_ids_groups.get(product_origin):
+                    move_ids_groups[product_origin].append(move)
+                else:
+                    move_ids_groups.update({product_origin: [move]})
+
+        for picking in move_ids_groups.keys():
+            picking_id = self.env['stock.picking'].create({
+                'partner_id': partner_id,
+                'project_id': project_id,
+                'picking_type_id': picking_type,
+                'location_id': des_location,
+                'location_dest_id': picking,
+                'origin': origin,
+                'sale_id': sale_id,
+                'group_id': group_id,
+                'return_reason': return_reason,
+                'user_notes': user_notes,
+                'carrier_type': carrier_type,
+            })
+
+            for move in move_ids_groups[picking]:
                 self.env['stock.move'].create({
                     'name': _('New Move:') + move.product_id.display_name,
                     'partner_id': partner_id,
@@ -112,20 +141,21 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'product_id': move.product_id.id,
                     'product_uom_qty': move.quantity_done,
                     'product_uom': move.product_uom.id,
-                    'location_dest_id': des_location,
+                    'location_dest_id': picking,
                     'location_id': src_location,
                     'returned': move.id,
-                    'picking_id': picking.id,
+                    'picking_id': picking_id.id,
                     'group_id': move.group_id.id,
                     'state': 'draft',
                     'sale_line_id': move.sale_line_id.id,
                 })
-                picking_ids.append(picking)
+
+            picking_ids.append(picking_id)
         return picking_ids
 
     @api.multi
     def action_create_advertisement(self):
-        picking_ids = []
+        picking_ids = list()
 
         # Create the picking for return products
         picking_ids.extend(self._create_stock_picking(
