@@ -80,10 +80,12 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             stock_move = [child_move]
             location_id = self.env['stock.location'].browse([des_location])
 
-
         picking_ids = []
 
-        if last_des_location == des_location:
+        print("SCR: {} DES: {} LAST-DES: {}".format(src_location, des_location,
+                                  last_des_location))
+
+        if last_des_location != src_location:
             picking = self.env['stock.picking'].create({
                 'partner_id': partner_id,
                 'project_id': project_id,
@@ -99,7 +101,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             })
         else:
             picking = last_picking
-
 
         for move in stock_move:
             product_origin = move.product_id.product_origin.id
@@ -139,7 +140,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             self.sale_order_id.procurement_group_id.id, self.reason,
             self.notes, self.carrier_type
         ))
-
         so_pickings = [x.id for x in self.sale_order_id.picking_ids]
         new_pickings = [x.id for x in picking_ids]
         so_pickings.extend(new_pickings)
