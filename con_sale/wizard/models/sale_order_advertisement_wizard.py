@@ -49,7 +49,8 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     def _create_stock_picking(self, partner_id, project_id, picking_type,
                               src_location, des_location, origin, sale_id,
                               group_id, return_reason, user_notes,
-                              carrier_type, child_move=False):
+                              carrier_type, child_move, last_picking,
+                              last_des_location):
         """
         This function create a picking and the stock moves necessaries
         for do a movement between the locations for the return of the
@@ -81,19 +82,23 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
 
 
         picking_ids = []
-        picking = self.env['stock.picking'].create({
-            'partner_id': partner_id,
-            'project_id': project_id,
-            'picking_type_id': picking_type,
-            'location_id': src_location,
-            'location_dest_id': des_location,
-            'origin': origin,
-            'sale_id': sale_id,
-            'group_id': group_id,
-            'return_reason': return_reason,
-            'user_notes': user_notes,
-            'carrier_type': carrier_type,
-        })
+
+        if last_des_location == des_location:
+            picking = self.env['stock.picking'].create({
+                'partner_id': partner_id,
+                'project_id': project_id,
+                'picking_type_id': picking_type,
+                'location_id': src_location,
+                'location_dest_id': des_location,
+                'origin': origin,
+                'sale_id': sale_id,
+                'group_id': group_id,
+                'return_reason': return_reason,
+                'user_notes': user_notes,
+                'carrier_type': carrier_type,
+            })
+        else:
+            picking = last_picking
 
 
         for move in stock_move:
@@ -102,7 +107,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 picking_ids.extend(self._create_stock_picking(
                     partner_id, project_id, picking_type, des_location,
                     product_origin, origin, sale_id, group_id, return_reason,
-                    user_notes, carrier_type, move))
+                    user_notes, carrier_type, move, picking, product_origin))
             self.env['stock.move'].create({
                 'name': _('New Move:') + move.product_id.display_name,
                 'partner_id': partner_id,
