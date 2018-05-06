@@ -22,10 +22,6 @@
 
 % set moves = ctx.get('move_line_ids', [])
 
-% set qty_remissions = 0
-
-% set qty_receipts = 0
-
 % if partners:
     % for linep in partners:
         <table border="1" width="800">
@@ -39,27 +35,33 @@
                             <th colspan="8" bgcolor="#F1F1F1">${linew['name']}</th>
                         </tr>
                         <tr>
-                            <th align="left" bgcolor="#A9A9A9">Product</th>
-                            <th align="left" bgcolor="#A9A9A9">Remissions</th>
-                            <th align="left" bgcolor="#A9A9A9">Receipts</th>
+                            <th align="left" bgcolor="#A9A9A9">Producto</th>
+                            <th align="left" bgcolor="#A9A9A9">Remisiones</th>
+                            <th align="left" bgcolor="#A9A9A9">Devoluciones</th>
                         </tr>
                         % for linepro in products:
                             % for linem in moves:
-                                % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']:
+                                % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'customer':
                                     <tr>
                                         <td>
                                             ${linepro['product_tmpl_id'].name}
                                         </td>
-                                        % if linem['location_dest_id'].usage == 'customer':
-                                            <td>
-                                                ${linem['product_uom_qty']}
-                                            </td>
-                                        % endif       
-                                        % if linem['location_dest_id'].usage == 'internal':
-                                            <td>
-                                                ${linem['product_uom_qty']}
-                                            </td>
-                                        % endif  
+                                        <td>
+                                        % set qty_remissions = 0.0
+                                        % for linem in moves:
+                                            % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'customer':
+                                                ${qty_remissions+linem['product_uom_qty']}
+                                            % endif
+                                        % endfor
+                                        </td>
+                                        <td>
+                                        % set qty_receipts = 0.0
+                                        % for linem in moves:
+                                            % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'internal' and linem['returned']:
+                                                ${qty_receipts+linem['product_uom_qty']}
+                                            % endif
+                                        % endfor
+                                        </td>
                                     </tr>
                                 % endif
                             % endfor
