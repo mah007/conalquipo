@@ -2,22 +2,25 @@
 <odoo>
     <data noupdate="0">
 
+        <delete model="mail.template" id="stock_automatic_email_template"/>
+
         <record id="stock_automatic_email_template" model="mail.template">
             <field name="model_id" ref="con_stock.model_stock_picking"/>
-            <field name="auto_delete" eval="True"/>
             <field name="name">Send stock moves mail</field>
             <field name="subject">${ctx['subject']}</field>
             <field name="email_from">${ctx['senders'].login}</field>
             <field name="email_to">${ctx['recipients']}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">en_US</field>
             <field name="body_html"><![CDATA[
 
 % set partners = ctx.get('partner_lst', [])
 
 % set workers = ctx.get('works_lst', [])
 
-% set moves = ctx.get('move_line_ids', [])
-
 % set products = ctx.get('products_lst', [])
+
+% set moves = ctx.get('move_line_ids', [])
 
 % set qty_remissions = 0
 
@@ -35,32 +38,32 @@
                         <tr>
                             <th colspan="8" bgcolor="#F1F1F1">${linew['name']}</th>
                         </tr>
-                        % if moves:
-                            <tr>
-                                <th align="left" bgcolor="#A9A9A9">Product</th>
-                                <th align="left" bgcolor="#A9A9A9">Remissions</th>
-                                <th align="left" bgcolor="#A9A9A9">Receipts</th>
-                            </tr>
+                        <tr>
+                            <th align="left" bgcolor="#A9A9A9">Product</th>
+                            <th align="left" bgcolor="#A9A9A9">Remissions</th>
+                            <th align="left" bgcolor="#A9A9A9">Receipts</th>
+                        </tr>
+                        % for linepro in products:
                             % for linem in moves:
-                                % for linew in workers:
-                                    % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:
-                                        % for linepro in products:
-                                            % if linem['product_id'].name == {linepro['name']:
-                                                <tr>         
-                                                    <td>
-                                                        ${linepro['name']}
-                                                    </td>
-                                                    <td>
-                                                    </td>          
-                                                    <td>
-                                                    </td>
-                                                </tr>
-                                            % endif
-                                        % endfor
-                                    % endif
-                                % endfor
+                                % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']:
+                                    <tr>
+                                        <td>
+                                            ${linepro['product_tmpl_id'].name}
+                                        </td>
+                                        % if linem['location_dest_id'].usage == 'customer':
+                                            <td>
+                                                ${linem['product_uom_qty']}
+                                            </td>
+                                        % endif       
+                                        % if linem['location_dest_id'].usage == 'internal':
+                                            <td>
+                                                ${linem['product_uom_qty']}
+                                            </td>
+                                        % endif  
+                                    </tr>
+                                % endif
                             % endfor
-                        % endif
+                        % endfor
                     % endif
                 % endfor                        
             % endif

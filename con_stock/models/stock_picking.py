@@ -370,8 +370,11 @@ class StockPicking(Model):
         # Stock move objects
         move_line_ids = self.env[
             'stock.move'].search(
-                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')],
+                [
+                #  ['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                #  ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')],
+                 ['location_dest_id.usage', 'in',
+                  ['customer', 'internal']],                
                  ['state', '=', 'done']])
         # Generate data for template
         partner_lst = []
@@ -382,8 +385,6 @@ class StockPicking(Model):
                 partner_lst.append(data.picking_id.partner_id)
                 works_lst.append(data.picking_id.project_id)
                 products_lst.append(data.product_id)
-        _logger.warning('AQUI')
-        _logger.warning(list(set(products_lst)))
         # Mail template
         template = self.env.ref(
             'con_stock.stock_automatic_email_template')
@@ -401,7 +402,7 @@ class StockPicking(Model):
             'partner_lst': list(set(partner_lst)),
             'works_lst': list(set(works_lst)),
             'move_line_ids': list(set(move_line_ids)),
-            'products_ids': list(set(products_lst))
+            'products_lst': list(set(products_lst))
         })
         # Send mail
         if mail_template and partner_lst and \
