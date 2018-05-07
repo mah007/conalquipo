@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <delete model="mail.template" id="stock_automatic_email_template"/>
+
+        <record id="stock_automatic_email_template" model="mail.template">
+            <field name="model_id" ref="con_stock.model_stock_picking"/>
+            <field name="name">Send stock moves mail</field>
+            <field name="subject">${ctx['subject']}</field>
+            <field name="email_from">${ctx['senders'].login}</field>
+            <field name="email_to">${ctx['recipients']}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">en_US</field>
+            <field name="body_html"><![CDATA[
+
+% set partners = ctx.get('partner_lst', [])
+
+% set workers = ctx.get('works_lst', [])
+
+% set products = ctx.get('products_lst', [])
+
+% set moves = ctx.get('move_line_ids', [])
+
+% if partners:
+    % for linep in partners:
+        <table border="1" width="800">
+            <tr>
+                <th colspan="8" align="left" bgcolor="#FF9238">${linep['name']}</th>
+            </tr>
+            % if workers:
+                % for linew in workers:
+                    % if linew['partner_id'].name == linep['name']:
+                        <tr>
+                            <th colspan="8" bgcolor="#F1F1F1">${linew['name']}</th>
+                        </tr>
+                        <tr>
+                            <th align="left" bgcolor="#A9A9A9">Producto</th>
+                            <th align="left" bgcolor="#A9A9A9">Remisiones</th>
+                            <th align="left" bgcolor="#A9A9A9">Devoluciones</th>
+                        </tr>
+                        % for linepro in products:
+                            % for linem in moves:
+                                % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'customer':
+                                    <tr>
+                                        <td>
+                                            ${linepro['product_tmpl_id'].name}
+                                        </td>
+                                        <td>
+                                        % set qty_remissions = 0.0
+                                        % for linem in moves:
+                                            % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'customer':
+                                                ${qty_remissions+linem['product_uom_qty']}
+                                            % endif
+                                        % endfor
+                                        </td>
+                                        <td>
+                                        % set qty_receipts = 0.0
+                                        % for linem in moves:
+                                            % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name'] and linem['product_id'].product_tmpl_id == linepro['product_tmpl_id'] and linem['sale_line_id'] and linem['location_dest_id'].usage == 'internal' and linem['returned']:
+                                                ${qty_receipts+linem['product_uom_qty']}
+                                            % endif
+                                        % endfor
+                                        </td>
+                                    </tr>
+                                % endif
+                            % endfor
+                        % endfor
+                    % endif
+                % endfor                        
+            % endif
+        </table>
+    % endfor
+% endif
+
+]]></field>
+
+        </record>
+
+    </data>
+</odoo>

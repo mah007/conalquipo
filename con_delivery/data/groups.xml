@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_shipping_order">
+            <field name="name">Can cancel shipping order</field>
+            <field name="category_id" ref="con_delivery.module_extra_shipping_access"/>
+        </record>
+
+        <record id="group_equipment_change" model="res.groups">
+            <field name="name">Equipment Change</field>
+            <field name="category_id" ref="base.module_category_warehouse_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+    </data>
+</odoo>

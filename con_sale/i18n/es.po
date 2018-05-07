@@ -1,25 +1,157 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* con_sale
+# 	* con_sale
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-07 14:53+0000\n"
-"PO-Revision-Date: 2018-02-07 14:53+0000\n"
+"POT-Creation-Date: 2018-04-18 19:13+0000\n"
+"PO-Revision-Date: 2018-04-18 14:25-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: con_sale
-#: code:addons/con_sale/models/product_oum.py:38
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid ""
+"<strong>Some products have an operator, these will be\n"
+"                          added to the quote when it is saved.</strong>"
+msgstr ""
+"<strong>Algunos productos tienen operador, estos seran\n"
+"                          añadidos cuando la orden sea guardada.</strong>"
+
+#. module: con_sale
+#: model:ir.model,name:con_sale.model_sale_product_components
+msgid "A model for store and manage the products components"
+msgstr "A model for store and manage the products components"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_add_operator
+msgid "Add Operator"
+msgstr "Añadir operador"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Advertisement"
+msgstr "Anuncio"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_assigned_operator
+msgid "Assigned Operator"
+msgstr "Operador asignado"
+
+#. module: con_sale
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "Bad attention"
+msgstr "Mala atención"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_invoice_address
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_carrier_type
+msgid "Carrier Responsible"
+msgstr "Transportista responsable"
+
+#. module: con_sale
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "Change Because of Malfunction"
+msgstr "Cambio por malfuncionamiento"
+
+#. module: con_sale
+#: selection:sale.order,carrier_type:0
+#: selection:sale.order.advertisement.wizard,carrier_type:0
+msgid "Client"
+msgstr "Cliente"
+
+#. module: con_sale
+#: selection:sale.order,carrier_type:0
+#: selection:sale.order.advertisement.wizard,carrier_type:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_is_component
+msgid "Component"
+msgstr "Componente"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_components_ids
+msgid "Components"
+msgstr "Componentes"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Create Advertisement"
+msgstr "Crear Anuncio"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_create_uid
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_create_date
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Dates section"
+msgstr "Sección de fechas"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_quantity
+msgid "Default quantity"
+msgstr "Cant. por defecto"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Delivered Quantity"
+msgstr "Cantidad Entregada"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:462
 #, python-format
-msgid "Conversion from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!."
-msgstr "La conversión de Product UoM% s a Default UoM% s no es posible ya que ambos pertenecen a diferentes categorías."
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_delivery_direction
+msgid "Delivery Type"
+msgstr "Tipo de entrega"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_location_dest_id
+msgid "Destination Location"
+msgstr "Ubicación Destino"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_display_name
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:1120
+#, python-format
+msgid "Do you need to specify a sale UOM"
+msgstr "Necesita especificar una unidad de venta"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_end_date
@@ -27,17 +159,86 @@ msgid "End"
 msgstr "Fin"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "End project-work"
+msgstr "Finalización de obra"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_account_invoice_line
-msgid "Invoice Line"
-msgstr "Línea de Factura"
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_is_extra
+msgid "Extra"
+msgstr "Extra"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:41
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_extra
+msgid "Extra product"
+msgstr "Producto extra"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_sale_order_line_id
+msgid "Fleet Line"
+msgstr "Linea de flete"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_components
+msgid "Have components?"
+msgstr "Tiene componentes?"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_id
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Invoiced Quantity"
+msgstr "Cantidad Facturada"
+
+#. module: con_sale
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "It seems very expensive"
+msgstr "Parece muy costoso"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard___last_update
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_write_uid
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_write_date
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_sale
+#: model:ir.model.fields,help:con_sale.field_sale_order_line_picking_ids
+msgid "Linked picking to the delivery cost"
+msgstr "Picking enlazado al costo de entrega"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Logistic section"
+msgstr "Sección logística"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_signs_ids
+msgid "Main signs"
+msgstr "Firmas"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:48
 #: model:ir.ui.view,arch_db:con_sale.sale_order_view_search_inherit_quotation
 #, python-format
 msgid "Merged"
@@ -49,28 +250,83 @@ msgid "Merged In"
 msgstr "Fusionada En"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_owner_id
-msgid "Owner"
-msgstr "Propietario"
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_mess_operated
+msgid "Message Operated"
+msgstr "Message Operated"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_product_uom
-msgid "Product Unit of Measure"
-msgstr "Unidad de Medida del Producto"
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_min_sale_qty
+msgid "Min QTY"
+msgstr "Cant. Min."
 
 #. module: con_sale
-#: selection:account.invoice,invoice_type:0
-#: selection:purchase.order,order_type:0
-msgid "Purchase"
-msgstr "Compra"
+#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:102
+#, python-format
+msgid "New Move:"
+msgstr "Nuevo movimiento:"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_purchase_order
-msgid "Purchase Order"
-msgstr "Orden de Compra"
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "No longer need it"
+msgstr "Ya no se necesita"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_purchase_order_line
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_notes
+msgid "Notes"
+msgstr "Notas"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_operators_services
+msgid "Operator Services"
+msgstr "Servicios de operador"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Operator section"
+msgstr "Sección de operador"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Ordered Quantity"
+msgstr "Cantidad Ordenada"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_parent_component
+msgid "Parent component"
+msgstr "Padre del componente"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_parent_line
+msgid "Parent line"
+msgstr "Linea padre"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_partner_id
+msgid "Partner"
+msgstr "Asociado"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_picking_ids
+msgid "Pickings"
+msgstr "Albaranes"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_operate
+msgid "Product Operate"
+msgstr "Producto operado"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_product_id
+msgid "Product component"
+msgstr "Producto componente"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_project_id
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_project_id
+msgid "Project"
+msgstr "Obra"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Línea de Orden de Compra"
@@ -81,19 +337,9 @@ msgid "Purchase Orders"
 msgstr "Órdenes de Compra"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_bill_uom_qty
-msgid "Quantity to Purchase"
-msgstr "Ctdad de Compra"
-
-#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty
 msgid "Quantity to Sale"
 msgstr "Cant. vendida"
-
-#. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_qty_shipped
-msgid "Quantity to be shipped"
-msgstr "Cant. a Despachar"
 
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_order
@@ -101,27 +347,35 @@ msgid "Quotation"
 msgstr "Cotización"
 
 #. module: con_sale
-#: selection:account.invoice,invoice_type:0
-#: selection:purchase.order,order_type:0
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_reason
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:463
+#, python-format
+msgid "Receive"
+msgstr "Recibo"
+
+#. module: con_sale
 #: selection:sale.order,order_type:0
 msgid "Rent"
 msgstr "Arriendo"
 
 #. module: con_sale
-#: selection:account.invoice,invoice_type:0
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_carrier_type
+msgid "Responsable"
+msgstr "Responsable"
+
+#. module: con_sale
 #: selection:sale.order,order_type:0
 msgid "Sale"
 msgstr "Venta"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_purchase_order_sale_order_id
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_sale_order_id
 msgid "Sale Order"
-msgstr "Pedido de venta"
-
-#. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_sale_order_line_id
-msgid "Sale Order Line"
-msgstr "Línea de Orden de Venta"
+msgstr "Orden de Venta"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_sale_order_ids
@@ -130,14 +384,64 @@ msgid "Sale Orders related"
 msgstr "Ordenes de Venta Relacionadas"
 
 #. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_sale_line_id
+msgid "Sale line"
+msgstr "Linea de venta"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Sale section"
+msgstr "Sección de venta"
+
+#. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de Pedido de Venta"
 
 #. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Sales Order Lines"
+msgstr "Líneas de la Orden de Venta"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_service_operator
+msgid "Service Operator"
+msgstr "Servicio de operador"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_order_form_with_carrier_inherit
+msgid "Set price"
+msgstr "Precio establecido."
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_shipping_address
+msgid "Shipping"
+msgstr "Transporte"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Shipping Address"
+msgstr "Dirección de obra"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Signs"
+msgstr "Firmas/Documentos"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_location_id
+msgid "Source Location"
+msgstr "Ubicación Origen"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_start_date
 msgid "Start"
-msgstr "Inicio"
+msgstr "Iniciar"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_stock_move_status
+msgid "Stock move status"
+msgstr "Estatus de movimiento de stock"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_subleased
@@ -155,13 +459,31 @@ msgid "Supplier"
 msgstr "Subarrendador"
 
 #. module: con_sale
-#: model:ir.model,name:con_sale.model_stock_picking
-msgid "Transfer"
-msgstr "Transferir"
+#: code:addons/con_sale/models/sale_order.py:561
+#: code:addons/con_sale/models/sale_order.py:578
+#: code:addons/con_sale/models/sale_order.py:851
+#: code:addons/con_sale/models/sale_order.py:904
+#, python-format
+msgid "The end date can't be less than start date"
+msgstr "La fecha final no puede ser menor a la fecha inicial"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_account_invoice_invoice_type
-#: model:ir.model.fields,field_description:con_sale.field_purchase_order_order_type
+#: selection:sale.order.advertisement.wizard,reason:0
+msgid "The equipment did not serve you"
+msgstr "El equipo no fue necesario"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid ""
+"This product supports an operator please remember to\n"
+"                      add it if necessary, the operator will be appear when\n"
+"                      the sale order has been saved."
+msgstr ""
+"Este producto requiere un operador, por favor recuerde\n"
+"                      añadirlo si es necesario, el operador aparecerá\n"
+"                      cuando la orden este guardada."
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_order_type
 msgid "Type"
 msgstr "Tipo"
@@ -172,37 +494,50 @@ msgid "Type Order"
 msgstr "Tipo de orden"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_account_invoice_line_bill_uom
-msgid "Unit of Measure of Sale"
-msgstr "Und. de medida de venta"
-
-#. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_purchase_order_line_bill_uom
-msgid "Unit of Measure to Purchase"
-msgstr "Und. de medida de Compra"
-
-#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
 msgid "Unit of Measure to Sale"
 msgstr "Und. de medida de venta"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
-msgid "Advertisement"
-msgstr "Anuncio"
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_vehicle
+#: model:ir.ui.view,arch_db:con_sale.view_order_form_with_carrier_inherit
+msgid "Vehicle"
+msgstr "Vehículo"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
-msgid "Create Advertisement"
-msgstr "Crear Anuncio"
+#: model:ir.ui.view,arch_db:con_sale.sale_order_tree_con
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Works"
+msgstr "Obras"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
-msgid "Discard"
-msgstr "Descartar"
+#: code:addons/con_sale/models/sale_order.py:298
+#: code:addons/con_sale/models/sale_order.py:305
+#, python-format
+msgid "You need specify a work in this sale order"
+msgstr "Ud. necesita especificar una obra a esta orden."
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "advertisement"
 msgstr "Anuncio"
 
+#. module: con_sale
+#: selection:sale.order.line,delivery_direction:0
+msgid "collection"
+msgstr "Colección"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "days"
+msgstr "días"
+
+#. module: con_sale
+#: selection:sale.order.line,delivery_direction:0
+msgid "delivery"
+msgstr "Envío"
+
+#. module: con_sale
+#: model:ir.model,name:con_sale.model_sale_order_advertisement_wizard
+msgid "sale.order.advertisement.wizard"
+msgstr "sale.order.advertisement.wizard"

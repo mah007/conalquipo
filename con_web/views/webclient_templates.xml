@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <template id="assets_backend_con" name="web_enterprise assets backend CON" inherit_id="web.assets_backend">
+          <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/con_web/static/src/css/conalquipo.css"/>
+         </xpath>
+     </template>
+</odoo>

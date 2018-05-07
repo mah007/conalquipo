@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <menuitem id="menu_set_locations" name="Set locations colors" parent="stock.menu_stock_config_settings"
+      sequence="0" action="con_stock.action_set_locations" groups="base.group_system"/>
+
+  </data>
+</odoo>

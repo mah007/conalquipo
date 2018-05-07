@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Product availability',
+    'name': "Conalquipo's products customizations",
     'version': '1.1',
     'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
     'category': 'Products',
@@ -28,8 +28,8 @@
     'summary': 'Adds custom states to products that'
                ' can be changed at specific times of the workflow.',
     'depends': [
-        'base', 'stock', 'product', 'mrp', 'sale', 'purchase',
-        'web_widget_color', 'con_sale'
+        'base', 'stock', 'product', 'sale', 'purchase',
+        'web_widget_color', 'con_hr'
     ],
     'description':
     """
@@ -39,9 +39,7 @@
     'data': [
         'views/product.xml',
         'views/product_states.xml',
-        'views/stock_location.xml',
-        'views/stock_picking.xml',
-        'views/sale_order_view.xml',
+        'data/product.states.csv',
     ],
     'qweb': [
     ],

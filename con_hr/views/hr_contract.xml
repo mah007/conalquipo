@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_contract_form_inherit_cont" model="ir.ui.view">
+        <field name="name">hr.contract.form.inherit.cont</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='duration_group']" position="after">
+                <group name="other_info" string="other information">
+                    <field name="is_driver"/>
+                    <field name="license_category" attrs="{'invisible': [('is_driver','=', False)]}"/>
+                    <field name="license_number" attrs="{'invisible': [('is_driver','=', False)]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

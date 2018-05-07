@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20171030\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-09 01:04+0000\n"
-"PO-Revision-Date: 2018-01-08 20:10-0500\n"
+"POT-Creation-Date: 2018-04-18 19:33+0000\n"
+"PO-Revision-Date: 2018-04-18 14:40-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_description
@@ -23,9 +23,19 @@ msgid "A little description about the state"
 msgstr "Una pequeña descripción sobre el estado"
 
 #. module: con_product
+#: model:ir.model,name:con_product.model_product_components
+msgid "A model for store and manage the products components"
+msgstr "Modelo para almacenar y gestionar los componentes de los productos"
+
+#. module: con_product
 #: model:ir.model,name:con_product.model_product_states
 msgid "A model for store and manage the products states"
 msgstr "Modelo para almacenar y gestionar los estados de los productos"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_multiples_uom
+msgid "A model for store multiples uoms"
+msgstr "Modelo para almacenar múltiples unidades de medida"
 
 #. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
@@ -33,9 +43,9 @@ msgid "A state is a action that affect the product throw of the workflow."
 msgstr "Un estado es una acción que afecta el producto durante el flujo"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_stock_location_set_product_state
-msgid "Change the state to all products when arrive to this location"
-msgstr "Cambia el estado de todos los productos cuando llegan a esta ubicación"
+#: model:ir.model.fields,field_description:con_product.field_product_components_child
+msgid "Child"
+msgstr "Hijo"
 
 #. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
@@ -43,11 +53,45 @@ msgid "Click to create a new state."
 msgstr "Click para crear un nuevo estado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_color
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Color"
+msgstr "Color"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Color:"
+msgstr "Color:"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_components_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_components_ids
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Components"
+msgstr "Componentes"
+
+#. module: con_product
+#: code:addons/con_product/models/product_uom.py:38
+#, python-format
+msgid "Conversion from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!."
+msgstr "Conversión from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!."
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_cost_byUom
+msgid "Cost by UOM"
+msgstr "Costo por unidad"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_create_uid
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_uid
 #: model:ir.model.fields,field_description:con_product.field_product_states_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_create_date
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_create_date
 msgid "Created on"
 msgstr "Creado"
@@ -58,24 +102,37 @@ msgid "Customize Product States"
 msgstr "Personalizar estados de los productos"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_quantity
+msgid "Default quantity"
+msgstr "Cant. por defecto"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_description
 msgid "Description"
 msgstr "Descripción"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_display_name
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_display_name
 #: model:ir.model.fields,field_description:con_product.field_product_states_display_name
 msgid "Display Name"
 msgstr "Nombre Público"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_stock_move_not_explode
-msgid "Don't explode"
-msgstr "Don't explode"
-
-#. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
 msgid "Each state include a sequence for a easily ordering."
 msgstr "Cada estado incluye una secuencia para ordenar de forma facil"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_employee_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_employee_ids
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_extra
+msgid "Extra product"
+msgstr "Producto extra"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_components
@@ -84,29 +141,63 @@ msgid "Has components?"
 msgstr "Tiene componentes?"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_multiples_uom
+#: model:ir.model.fields,field_description:con_product.field_product_template_multiples_uom
+msgid "Has multiples uom?"
+msgstr "Tiene múltiples unidades?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_id
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_id
 #: model:ir.model.fields,field_description:con_product.field_product_states_id
 msgid "ID"
 msgstr "ID"
 
 #. module: con_product
-#: model:ir.model,name:con_product.model_stock_location
-msgid "Inventory Locations"
-msgstr "Ubicaciones de Inventario"
+#: model:ir.model.fields,field_description:con_product.field_product_product_is_operated
+#: model:ir.model.fields,field_description:con_product.field_product_template_is_operated
+#: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
+msgid "Is Operated"
+msgstr "Es operado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components___last_update
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom___last_update
 #: model:ir.model.fields,field_description:con_product.field_product_states___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_write_uid
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_uid
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_uid
 msgid "Last Updated by"
 msgstr "Actualizado por"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_write_date
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_date
 msgid "Last Updated on"
 msgstr "Actualizado"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_search
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_product_origin
+#: model:ir.model.fields,field_description:con_product.field_product_template_product_origin
+msgid "Location Origin"
+msgstr "Ubicación origen"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Location:"
+msgstr "Ubicación actual:"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_unavailable
@@ -115,14 +206,41 @@ msgid "Make the product unavailable when the product have this state"
 msgstr "Hacer que el producto no esté disponible cuando el producto tenga este estado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_min_qty_rental
+#: model:ir.model.fields,field_description:con_product.field_product_template_min_qty_rental
+msgid "Min Qty rental"
+msgstr "Cant. Min. Renta"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_quantity
+msgid "Min quantity"
+msgstr "Cant. Min"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Multiples UOM"
+msgstr "Múltiples unidades de medida"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_uoms_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_uoms_ids
+msgid "Multiples UOMs"
+msgstr "Múltiples unidades de medidas"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_name
 msgid "Name"
 msgstr "Nombre"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_stock_move_manual_create
-msgid "Not Auto"
-msgstr "Not Auto"
+#: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
+msgid "Operated"
+msgstr "Operado"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Origin:"
+msgstr "Ubicación origen:"
 
 #. module: con_product
 #: model:ir.ui.view,arch_db:con_product.product_states_form_view
@@ -146,6 +264,22 @@ msgid "Product Template"
 msgstr "Plantilla del Producto"
 
 #. module: con_product
+#: model:ir.model,name:con_product.model_product_uom
+msgid "Product Unit of Measure"
+msgstr "Unidad de Medida del Producto"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_product_child_id
+msgid "Product component"
+msgstr "Producto componente"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_product_id
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_product_id
+msgid "Product parent"
+msgstr "Producto padre"
+
+#. module: con_product
 #: model:ir.ui.view,arch_db:con_product.product_states_view_search
 msgid "Products State Search"
 msgstr "Búsqueda de estados de productos"
@@ -156,14 +290,25 @@ msgid "Products States"
 msgstr "Estados de productos"
 
 #. module: con_product
-#: model:ir.model,name:con_product.model_purchase_order
-msgid "Purchase Order"
-msgstr "Orden de Compra"
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Products components"
+msgstr "Componentes"
 
 #. module: con_product
-#: model:ir.model,name:con_product.model_sale_order
-msgid "Quotation"
-msgstr "Cotización"
+#: model:ir.model.fields,field_description:con_product.field_product_product_replenishment_charge
+#: model:ir.model.fields,field_description:con_product.field_product_template_replenishment_charge
+msgid "Replenishment charge"
+msgstr "Cargo por reabastecimiento"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_uom_id
+msgid "Sale UOM"
+msgstr "Unidad de medida de venta"
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_states_color
+msgid "Select the color of the state"
+msgstr "Seleccione el color del estado"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_sequence
@@ -176,20 +321,39 @@ msgid "Set as a default value when the product is created"
 msgstr "Establecer como valor predeterminado cuando se crea el producto"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_stock_location_product_state
-msgid "Set state"
-msgstr "Asignar estado"
-
-#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_state_id
 #: model:ir.model.fields,field_description:con_product.field_product_template_state_id
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 msgid "State"
 msgstr "Estado"
 
 #. module: con_product
-#: model:ir.model,name:con_product.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de Existencias"
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "State:"
+msgstr "Estado:"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_search
+msgid "States"
+msgstr "Estados"
+
+#. module: con_product
+#: code:addons/con_product/models/product.py:155
+#: code:addons/con_product/models/product.py:174
+#: code:addons/con_product/models/product.py:259
+#: code:addons/con_product/models/product.py:279
+#, python-format
+msgid "The following location don't have a state asigned"
+msgstr "La ubicación no tiene un estado definido, debe asignarla"
+
+#. module: con_product
+#: code:addons/con_product/models/product.py:44
+#: code:addons/con_product/models/product.py:78
+#: code:addons/con_product/models/product.py:89
+#, python-format
+msgid "The following state '%s' is the actual default for all products"
+msgstr "El estado '%s' es la ubicación actual por defecto para todos los productos"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_name
@@ -197,19 +361,19 @@ msgid "The name for the state for example:Fixing, Unavailable, sold, etc.."
 msgstr "El nombre del estado, por ejemplo: Fijación, No disponible, vendido, entre otros."
 
 #. module: con_product
+#: sql_constraint:product.states:0
+msgid "The sequence must be unique and right now already exists"
+msgstr "La secuencia debe ser única y actualmente existe."
+
+#. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_sequence
 msgid "The sequence priority the state will be ordered following this sequence"
 msgstr "La prioridad de secuencia se ordenará según esta secuencia"
 
 #. module: con_product
-#: model:ir.model.fields,help:con_product.field_stock_move_not_explode
-msgid "This flag don't repeat the method explode for this move"
-msgstr "This flag don't repeat the method explode for this move"
-
-#. module: con_product
-#: model:ir.model,name:con_product.model_stock_picking
-msgid "Transfer"
-msgstr "Transferir"
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "UOMs for product"
+msgstr "Unidades de medida para productos"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_product_components

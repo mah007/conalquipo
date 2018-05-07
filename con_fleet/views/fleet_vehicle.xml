@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+      <record model="ir.ui.view" id="fleet_vehicle_view_form_inherit_con">
+              <field name="name">fleet.vehicle.form</field>
+              <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+              <field name="model">fleet.vehicle</field>
+              <field name="arch" type="xml">
+              
+                <xpath expr="//field[@name='residual_value']" position="after">
+                  <field name="license_category"
+                  string="category of license that requires"/>
+                </xpath>
+
+                <xpath expr="//field[@name='driver_id']" position="before">
+                    <field name="holder"/>
+                </xpath>
+
+                <xpath expr="//field[@name='vin_sn']" position="before">
+                    <field name="num_motor"/>
+                </xpath>
+
+                <xpath expr="//field[@name='seats']" position="before">
+                    <field name="type"/>
+                    <field name="capacity"/>
+                </xpath>
+
+                <xpath expr="//field[@name='color']" position="after">
+                    <field name="mark"/>
+                    <field name="model"/>
+                    <field name="reference"/>
+                </xpath>
+
+                <xpath expr="//group[2]/group[2]" position="after">
+                    <group name="bearing_information" colspan="2">
+                        <group string="Bearing information">
+                            <field name="traffic" />
+                            <field name="licence_date" />
+                            <field name="soat" />
+                            <field name="tec_mechanic" />
+                            <field name="gravamen" />
+                            <field name="bearing" />
+                            <field name="affiliation" />
+                        </group>
+                    </group>
+                </xpath>
+
+              </field>
+      </record>
+
+
+
+  </data>
+</openerp>

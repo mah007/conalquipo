@@ -8,13 +8,14 @@
     'category': 'HR',
     'sequence': 10,
     'summary': 'HR',
-    'depends': ['timesheet_grid',],
+    'depends': ['timesheet_grid', 'product'],
     'description':
     """
         HR Timesheet customizations.
+        - Add product uom to timesheet.
     """,
     'data': ['views/hr_timesheet.xml',
-             ],
+    ],
     'qweb': [
     ],
     'demo': [
