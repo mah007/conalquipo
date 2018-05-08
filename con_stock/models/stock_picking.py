@@ -370,8 +370,8 @@ class StockPicking(Model):
         # Stock move objects
         move_line_ids = self.env[
             'stock.move'].search(
-                [['date', '>=', time.strftime('%Y-%m-01 00:00:00')],
-                 ['date', '<=', time.strftime('%Y-%m-08 23:59:59')],
+                [['date', '>=', time.strftime('%Y-%m-%d 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-%d 23:59:59')],
                  ['state', '=', 'done']])
         # Generate data for template
         products_lst = []
@@ -415,3 +415,158 @@ class StockPicking(Model):
         if mail_template and move_in and new_product_lst:
             mail_template.with_context(ctx).send_mail(
                 self.id, force_send=True, raise_exception=True)
+
+    @api.multi
+    def send_mail_notification_biweekly(self):
+        """
+        Stock mail weekly notifications
+        """
+        # senders
+        uid = SUPERUSER_ID
+        user_id = self.env[
+            'res.users'].browse(uid)
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Can receive stock notifications email biweekly']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c, c) for c in recipients)
+        # Stock move objects
+        move_line_ids = self.env[
+            'stock.move'].search(
+                [['date', '>=', time.strftime('%Y-%m-01 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-15 23:59:59')],
+                 ['state', '=', 'done']])
+        # Generate data for template
+        products_lst = []
+        move_in = []
+        move_out = []
+        for data in move_line_ids:
+            if data.sale_line_id:
+                products_lst.append(data.product_id)
+            if not data.returned \
+                and data.picking_id.location_dest_id.usage \
+                == 'customer' and \
+                data.picking_id.location_id.usage \
+                == 'internal':
+                move_in.append(data)
+            if data.returned \
+                and data.picking_id.location_dest_id.usage \
+                == 'internal' and \
+                data.picking_id.location_id.usage \
+                == 'customer':
+                move_out.append(data)
+        # Mail template
+        template = self.env.ref(
+            'con_stock.stock_automatic_email_template')
+        mail_template = self.env['mail.template'].browse(template.id)
+        # Mail subject
+        date = time.strftime('%d-%m-%Y')
+        subject = "Notificación quincenal de movimientos: " + str(date)
+        # Update the context
+        new_product_lst = sorted(list(set(products_lst)))
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'senders': user_id,
+            'recipients': formated,
+            'subject': subject,
+            'date': date,
+            'products_lst': new_product_lst,
+            'move_in': move_in,
+            'move_out': move_out
+        })
+        # Send mail
+        if mail_template and move_in and new_product_lst:
+            mail_template.with_context(ctx).send_mail(
+                self.id, force_send=True, raise_exception=True)
+
+    @api.multi
+    def send_mail_notification_monthly(self):
+        """
+        Stock mail monthly notifications
+        """
+        # senders
+        uid = SUPERUSER_ID
+        user_id = self.env[
+            'res.users'].browse(uid)
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Can receive stock notifications email monthly']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c, c) for c in recipients)
+        # Stock move objects
+        move_line_ids = self.env[
+            'stock.move'].search(
+                [['date', '>=', time.strftime('%Y-%m-01 00:00:00')],
+                 ['date', '<=', time.strftime('%Y-%m-28 23:59:59')],
+                 ['state', '=', 'done']])
+        # Generate data for template
+        products_lst = []
+        move_in = []
+        move_out = []
+        for data in move_line_ids:
+            if data.sale_line_id:
+                products_lst.append(data.product_id)
+            if not data.returned \
+                and data.picking_id.location_dest_id.usage \
+                == 'customer' and \
+                data.picking_id.location_id.usage \
+                == 'internal':
+                move_in.append(data)
+            if data.returned \
+                and data.picking_id.location_dest_id.usage \
+                == 'internal' and \
+                data.picking_id.location_id.usage \
+                == 'customer':
+                move_out.append(data)
+        # Mail template
+        template = self.env.ref(
+            'con_stock.stock_automatic_email_template')
+        mail_template = self.env['mail.template'].browse(template.id)
+        # Mail subject
+        date = time.strftime('%d-%m-%Y')
+        subject = "Notificación mensual de movimientos: " + str(date)
+        # Update the context
+        new_product_lst = sorted(list(set(products_lst)))
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'senders': user_id,
+            'recipients': formated,
+            'subject': subject,
+            'date': date,
+            'products_lst': new_product_lst,
+            'move_in': move_in,
+            'move_out': move_out
+        })
+        # Send mail
+        if mail_template and move_in and new_product_lst:
+            mail_template.with_context(ctx).send_mail(
+                self.id, force_send=True, raise_exception=True)
+
