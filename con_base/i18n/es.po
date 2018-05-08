@@ -30,7 +30,7 @@ msgstr "Dirección"
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "City"
-msgstr "Ciudad"
+msgstr "Barrio"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_code

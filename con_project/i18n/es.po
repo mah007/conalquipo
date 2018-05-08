@@ -66,12 +66,12 @@ msgstr "Escoja un correo electrónico de obra"
 #: model:ir.model.fields,field_description:con_project.field_project_project_city
 #: model:ir.ui.view,arch_db:con_project.project_form_works
 msgid "City"
-msgstr "Ciudad"
+msgstr "Barrio"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_project_city2
 msgid "City2"
-msgstr "Ciudad"
+msgstr "Barrio"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_product_available_company_id
