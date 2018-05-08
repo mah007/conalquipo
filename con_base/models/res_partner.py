@@ -36,7 +36,14 @@ class ResPartnerCode(models.Model):
         'res.country', string='Country', ondelete='restrict',
         default=_get_default_country)
     l10n_co_document_type = fields.Selection(
-        selection_add=[('nit', 'NIT')])
+        [('nit', 'NIT'),
+         ('id_card', 'Tarjeta de Identidad'),
+         ('passport', 'Pasaporte'),
+         ('foreign_id_card', 'Cedula de Extranjeria'),
+         ('external_id', 'ID del Exterior')],
+        string='Document Type',
+        help='Indicates to what document the information in here belongs to.'
+        )
     state_id = fields.Many2one(
         "res.country.state", string='State',
         ondelete='restrict')
