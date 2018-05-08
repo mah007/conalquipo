@@ -17,7 +17,9 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
     def action_change(self):
         for new_p in self.product_ids:
             if new_p.new_product_id:
-                new_p.move_line.update({'product_id': new_p.new_product_id.id})
+                new_p.move_line.update({'product_id': new_p.new_product_id.id,
+                                        'description':
+                                            new_p.new_product_id.name})
                 new_p.move_line.sale_line_id.update(
                     {'product_id': new_p.new_product_id.id,
                      'name': new_p.new_product_id.name})
