@@ -23,60 +23,124 @@ class ProjectWorks(models.Model):
         result = super(ProjectWorks, self).default_get(flds)
         return result
 
-    work_code = fields.Char(string='Work Code')
+    work_code = fields.Char(
+        string='Work Code', track_visibility='onchange')
     work_date_creation = fields.Date(
         string="Work date creation",
-        default=fields.Date.today())
+        default=fields.Date.today(),
+        track_visibility='onchange')
     invoice_limit_date = fields.Date(
-        string="Invoice limit date")
-    email = fields.Char()
-    observations = fields.Html(string='Observations', required=False)
+        string="Invoice limit date",
+        track_visibility='onchange')
+    email = fields.Char(
+        track_visibility='onchange')
+    observations = fields.Html(
+        string='Observations',
+        required=False,
+        track_visibility='onchange')
     partner_code = fields.Char(
-        string='Partner Code', compute='_get_partner_code', store=True)
+        string='Partner Code',
+        compute='_get_partner_code',
+        store=True,
+        track_visibility='onchange')
     legal_cont_responsible = fields.Many2one(
-        'res.partner', string='Legal Responsible')
-    contact_number = fields.Char(string='contact Number')
+        'res.partner',
+        string='Legal Responsible',
+        track_visibility='onchange')
+    contact_number = fields.Char(
+        string='contact Number',
+        track_visibility='onchange')
     work_responsible = fields.Many2one(
-        'res.partner', string='Work Responsible')
+        'res.partner',
+        string='Work Responsible',
+        track_visibility='onchange')
     work_resident = fields.Many2one(
-        'res.partner', string='Work Resident')
+        'res.partner',
+        string='Work Resident',
+        track_visibility='onchange')
     work_storer = fields.Many2one(
-        'res.partner', string='Work Storer')
+        'res.partner',
+        string='Work Storer',
+        track_visibility='onchange')
     work_contact = fields.Many2one(
-        'res.partner', string='Work contact')
-    work_phone = fields.Char(string='Work Phone')
+        'res.partner',
+        string='Work contact',
+        track_visibility='onchange')
+    work_phone = fields.Char(
+        string='Work Phone',
+        track_visibility='onchange')
     work_owner = fields.Many2one(
-        'res.partner', string='Work Owner')
-    owner_phone = fields.Char(string='Owner Phone')
+        'res.partner',
+        string='Work Owner',
+        track_visibility='onchange')
+    owner_phone = fields.Char(
+        string='Owner Phone',
+        track_visibility='onchange')
     work_interventor = fields.Many2one(
-        'res.partner', string='Work Interventor')
-    business_name = fields.Char(string='Business name')
-    interventor_phone = fields.Char(string='Interventor Phone')
-    street1 = fields.Char()
-    street1_2 = fields.Char()
-    phone1 = fields.Char(string='Phone')
-    zip = fields.Char(change_default=True)
-    city = fields.Char()
+        'res.partner',
+        string='Work Interventor',
+        track_visibility='onchange')
+    business_name = fields.Char(
+        string='Business name',
+        track_visibility='onchange')
+    interventor_phone = fields.Char(
+        string='Interventor Phone',
+        track_visibility='onchange')
+    street1 = fields.Char(
+        track_visibility='onchange')
+    street1_2 = fields.Char(
+        track_visibility='onchange')
+    phone1 = fields.Char(
+        string='Phone',
+        track_visibility='onchange')
+    zip = fields.Char(
+        change_default=True,
+        track_visibility='onchange')
+    city = fields.Char(
+        track_visibility='onchange')
     state_id = fields.Many2one(
-        "res.country.state", string='State', ondelete='restrict')
-    municipality_id = fields.Many2one('res.country.municipality',
-                                      string='Municipality')
+        "res.country.state",
+        string='State',
+        ondelete='restrict',
+        track_visibility='onchange')
+    municipality_id = fields.Many2one(
+        'res.country.municipality',
+        string='Municipality',
+        track_visibility='onchange')
     country_id = fields.Many2one(
-        'res.country', string='Country', ondelete='restrict')
-    street2_1 = fields.Char()
-    street2_2 = fields.Char()
-    phone2 = fields.Char(string='Phone')
-    zip2 = fields.Char(change_default=True)
-    city2 = fields.Char()
+        'res.country',
+        string='Country',
+        ondelete='restrict',
+        track_visibility='onchange')
+    street2_1 = fields.Char(
+        track_visibility='onchange')
+    street2_2 = fields.Char(
+        track_visibility='onchange')
+    phone2 = fields.Char(
+        string='Phone',
+        track_visibility='onchange')
+    zip2 = fields.Char(
+        change_default=True,
+        track_visibility='onchange')
+    city2 = fields.Char(
+        track_visibility='onchange')
     state2_id = fields.Many2one(
-        "res.country.state", string='State', ondelete='restrict')
-    municipality2_id = fields.Many2one('res.country.municipality',
-                                       string='Municipality')
+        "res.country.state",
+        string='State',
+        ondelete='restrict')
+    municipality2_id = fields.Many2one(
+        'res.country.municipality',
+        string='Municipality',
+        track_visibility='onchange')
     country2_id = fields.Many2one(
-        'res.country', string='Country', ondelete='restrict')
+        'res.country',
+        string='Country',
+        ondelete='restrict',
+        track_visibility='onchange')
     product_count = fields.Integer(
         compute='_compute_product_count',
-        string="Number of products on work")
+        string="Number of products on work",
+        track_visibility='onchange')
 
     def _compute_product_count(self):
         """
@@ -178,6 +242,37 @@ class ProjectWorks(models.Model):
             if numbers:
                 max_number = max(numbers) + 1
             res.work_code = str(p_code) + '-' + str(max_number)
+            # Send notification to users when works is created
+            recipients = []
+            groups = self.env[
+                'res.groups'].search(
+                    [['name',
+                    '=',
+                    'Administrative assistant']])
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.login)
+            body = _(
+                'Attention: The work %s are created by %s') % (
+                    res.name, res.create_uid.name)
+            res.send_followers(body, recipients)
+            res.send_to_channel(body, recipients)
         else:
             raise UserError(_("You need to select a client!"))
         return res
+
+    def send_followers(self, body, recipients):
+        if recipients:
+            self.message_post(body=body, type="notification",
+                              subtype="mt_comment",
+                              partner_ids=recipients)
+
+    def send_to_channel(self, body, recipients):
+        if recipients:
+            ch_ob = self.env['mail.channel']
+            ch = ch_ob.sudo().search([('name', 'ilike', 'general')])
+            ch.message_post(attachment_id=[],
+                            body=body, content_subtype="html",
+                            message_type="comment", partner_ids=recipients,
+                            subtype="mail.mt_comment")
+            return True
