@@ -885,21 +885,6 @@ class SaleOrderLine(models.Model):
     def create(self, values):
         # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
-        # if values.get('service_operator'):
-        #     new_line_operator = {
-        #         'product_id': values['service_operator'],
-        #         'name': 'Operator ' + '%s'%(
-        #             line.product_id.default_code or ''),
-        #         'product_operate': values['product_id'],
-        #         'product_uom': line.product_id.product_tmpl_id.uom_id.id,
-        #         'order_id': line.order_id.id,
-        #         'parent_component': line.product_id.id,
-        #         'parent_line': line.id,
-        #         'bill_uom': line.product_id.product_tmpl_id.sale_uom.id,
-        #         'bill_uom_qty': line.product_uom_qty,
-        #     }
-            # ~ Create new record for operator
-            # self.create(new_line_operator)
         # Check owner
         if line.owner_id:
             self.function_management_buy(line)

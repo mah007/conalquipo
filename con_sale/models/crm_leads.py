@@ -19,5 +19,25 @@
 #
 ##############################################################################
 
-from . import sale_order
-from . import crm_leads
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
+
+
+class CrmLead(models.Model):
+    _inherit = 'crm.lead'
+
+    @api.model
+    def _get_default_country(self):
+        country = self.env[
+            'res.country'].search([('code', '=', 'CO')], limit=1)
+        return country
+
+    country_id = fields.Many2one(
+        'res.country', string='Country', ondelete='restrict',
+        default=_get_default_country)
+    state_id = fields.Many2one(
+        "res.country.state", string='State',
+        ondelete='restrict')
+    municipality_id = fields.Many2one(
+        'res.country.municipality',
+        string='Municipality')'
