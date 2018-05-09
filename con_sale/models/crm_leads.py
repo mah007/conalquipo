@@ -40,4 +40,4 @@ class CrmLead(models.Model):
         ondelete='restrict')
     municipality_id = fields.Many2one(
         'res.country.municipality',
-        string='Municipality')'
+        string='Municipality')
