@@ -37,6 +37,7 @@ class ResPartnerCode(models.Model):
         default=_get_default_country)
     l10n_co_document_type = fields.Selection(
         [('nit', 'NIT'),
+         ('citizenship_card', 'Citizenship card'),
          ('id_card', 'Tarjeta de Identidad'),
          ('passport', 'Pasaporte'),
          ('foreign_id_card', 'Cedula de Extranjeria'),
@@ -49,6 +50,17 @@ class ResPartnerCode(models.Model):
         ondelete='restrict')
     municipality_id = fields.Many2one('res.country.municipality',
                                       string='Municipality')
+    category_id = fields.Many2many(
+        'res.partner.category',
+        column1='partner_id',
+        column2='category_id',
+        string='Tradename',
+        default=_default_category)
+
+    def _default_category(self):
+        return self.env[
+            'res.partner.category'].browse(
+                self._context.get('category_id'))
 
     @api.model
     def create(self, values):
