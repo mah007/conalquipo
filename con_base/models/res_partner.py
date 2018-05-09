@@ -31,7 +31,13 @@ class ResPartnerCode(models.Model):
             'res.country'].search([('code', '=', 'CO')], limit=1)
         return country
 
-    partner_code = fields.Char(string='Partner Code')
+    def _default_category(self):
+        return self.env[
+            'res.partner.category'].browse(
+                self._context.get('category_id'))
+
+    partner_code = fields.Char(
+        string='Partner Code')
     country_id = fields.Many2one(
         'res.country', string='Country', ondelete='restrict',
         default=_get_default_country)
@@ -48,19 +54,15 @@ class ResPartnerCode(models.Model):
     state_id = fields.Many2one(
         "res.country.state", string='State',
         ondelete='restrict')
-    municipality_id = fields.Many2one('res.country.municipality',
-                                      string='Municipality')
+    municipality_id = fields.Many2one(
+        'res.country.municipality',
+        string='Municipality')
     category_id = fields.Many2many(
         'res.partner.category',
         column1='partner_id',
         column2='category_id',
         string='Tradename',
         default=_default_category)
-
-    def _default_category(self):
-        return self.env[
-            'res.partner.category'].browse(
-                self._context.get('category_id'))
 
     @api.model
     def create(self, values):

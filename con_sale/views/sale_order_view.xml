@@ -166,28 +166,8 @@
                 <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': [('state', 'not in', ['sale'])]}"/>
             </xpath>
 
-            <!-- <xpath expr="//sheet" position="before">
-                <field name="operators_services" invisible="1"/>
-                 <div role="alert"
-                      class="o_notification_box alert alert-dismissible alert-info" style="margin-bottom:0px;"
-                         attrs="{'invisible': [('operators_services','=', 0)]}">
-                    <div>
-                      <strong>Some products have an operator, these will be
-                          added to the quote when it is saved.</strong>
-                    </div>
-                </div>
-            </xpath> -->
-
-
             <xpath expr="//field[@name='order_line']/form//group" position="before">
                 <field name="mess_operated" invisible="1"/>
-                    <!-- <div class="alert alert-danger" role="alert"
-                       style="margin-bottom:0px;"
-                         attrs="{'invisible': [('mess_operated','=',False)]}">
-                      This product supports an operator please remember to
-                      add it if necessary, the operator will be appear when
-                      the sale order has been saved.
-                    </div> -->
             </xpath>
 
         </field>
