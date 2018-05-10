@@ -93,6 +93,22 @@
                             <span>Fecha-hora de anuncio: </span><strong><span t-field="o.scheduled_date"/></strong>
                         </div>
                         <br/>
+
+                        <t t-set="total_in" t-value="0"/>
+                        <t t-set="total_out" t-value="0"/> 
+                        <t t-set="total_work" t-value="0"/> 
+                        <t t-foreach="o.move_lines" t-as="move_work">
+                            <t t-if="not move_work.returned and move_work.picking_id.location_dest_id.usage == 'customer' and move_work.picking_id.location_id.usage == 'internal'">
+                                <t t-set="total_work" t-value="total_in+move_work.move_line_ids.qty_done"/>
+                            </t>
+                        </t>
+                        <t t-foreach="o.move_lines" t-as="move_work">
+                            <t t-if="move_work.returned and move_work.picking_id.location_dest_id.usage == 'internal' and move_work.picking_id.location_id.usage == 'customer'">
+                                <t t-set="total_work" t-value="total_out+move_work.move_line_ids.qty_done"/>
+                            </t>
+                        </t>
+                        <t t-set="total_work" t-value="total_in-total_out"/>
+
                         <table style="border-radius:6px 6px 6px 6px !important;">
                             <colgroup>
 
@@ -121,25 +137,45 @@
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">UND.</td>
                                 <td  t-if="o.picking_type_id.code == 'outgoing'" style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">MIN.</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. OBRA</td>
-                                <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. DEVUELTA</td>
+                                <t t-if="o.picking_type_id.code == 'outgoing'">
+                                    <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. ENVIADA</td>
+                                </t>
+                                <t t-if="o.picking_type_id.code == 'incoming'">
+                                    <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. DEVUELTA</td>
+                                </t>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64; border-radius:6px 6px 6px 6px!important;">SALDO OBRA</td>
                             </tr>
                              <tr t-foreach="o.move_lines" t-as="move">
                                  <td style="padding:5px; border: 1px solid;"><span t-field="move.product_id.default_code"/></td>
-
                                  <td style="padding:5px; border: 1px solid;"><span t-field="move.product_id"/></td>
-
                                  <td style="padding:5px; border: 1px solid;"><span t-field="move.product_uom"/></td>
-
                                  <td t-if="o.picking_type_id.code == 'outgoing'" style="padding:5px; border: 1px solid;"><span t-field="move.sale_line_id.min_sale_qty"/></td>
 
-                                 <td style="padding:5px; border: 1px solid;"><span t-field="move.product_uom_qty"/></td>
-
-                                 <td style="padding:5px; border: 1px solid;"><span t-field="move.product_qty"/></td>
-
                                  <td style="padding:5px; border: 1px solid;">
-                                 <t t-esc="move.product_uom_qty - move.product_qty"/>
+                                    <t t-esc="total_work"/>
                                  </td>
+
+                                <t t-if="o.picking_type_id.code == 'outgoing'">
+                                 <td style="padding:5px; border: 1px solid;">
+                                    <t t-esc="move.move_line_ids.qty_done"/>
+                                 </td>
+                                </t>
+                               <t t-if="o.picking_type_id.code == 'incoming'">
+                                 <td style="padding:5px; border: 1px solid;">
+                                    <t t-esc="move.move_line_ids.qty_done"/>
+                                 </td>
+                                </t>
+
+                                <t t-if="o.picking_type_id.code == 'outgoing'">
+                                    <td style="padding:5px; border: 1px solid;">
+                                        <t t-esc="total_work + move.move_line_ids.ordered_qty"/>
+                                    </td>
+                                </t>
+                                <t t-if="o.picking_type_id.code == 'incoming'">
+                                   <td style="padding:5px; border: 1px solid;">
+                                        <t t-esc="total_work - move.move_line_ids.ordered_qty"/>
+                                    </td>
+                                </t>
                              </tr>
                         </table>
                         <br/>
