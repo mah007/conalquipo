@@ -84,6 +84,59 @@ class StockPicking(Model):
                                     string="Delivery Cost")
 
     @api.multi
+    def _product_availibility_on_project(self, partner_id=False,
+                                         project_id=False,
+                                         product_id=False):
+
+        if not any([product_id, partner_id, project_id]): return False
+
+        def sum_reduce(object=False):
+            if not object: return 0
+            return sum([x.quantity_done for x in object])
+
+        self.ensure_one()
+
+        out_pickings = self.env['stock.picking'].search(
+            [('partner_id', '=', partner_id),
+             ('project_id', '=', project_id),
+             ('state', '=', 'done'),
+             ('location_dest_id', '=', self.env.ref(
+                 'stock.stock_location_customers').id)])
+
+        in_pickings = self.env['stock.picking'].search(
+            [('partner_id', '=', partner_id),
+             ('project_id', '=', project_id),
+             ('state', '=', 'done'),
+             ('location_id', '=', self.env.ref(
+                 'stock.stock_location_customers').id)])
+
+        _LOGGER.info('Out Picking Ids: {}'.format(out_pickings))
+        _LOGGER.info('In Picking Ids: {}'.format(in_pickings))
+
+        out_moves = self.env['stock.move'].search(
+            [('product_id', '=', product_id), ('state', '=', 'done'),
+             ('location_dest_id', '=', self.env.ref(
+                 'stock.stock_location_customers').id),
+             ('picking_id', 'in', out_pickings._ids)]) or False
+
+        in_moves = self.env['stock.move'].search(
+            [('product_id', '=', product_id), ('state', '=', 'done'),
+             ('location_id', '=', self.env.ref(
+                 'stock.stock_location_customers').id),
+             ('picking_id', 'in', in_pickings._ids)]) or False
+
+        _LOGGER.info('In Moves: {}'.format(in_moves))
+        _LOGGER.info('Out Moves: {}'.format(out_moves))
+
+        in_qty = sum_reduce(in_moves)
+        out_qty = sum_reduce(out_moves)
+
+        _LOGGER.info('Out Qty: {}'.format(out_qty))
+        _LOGGER.info('In Qty: {}'.format(in_qty))
+
+        return out_qty - in_qty
+
+    @api.multi
     def action_equipment_change(self):
         line = []
         for ml in self.move_lines:
