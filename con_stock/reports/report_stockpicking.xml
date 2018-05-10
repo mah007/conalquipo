@@ -120,7 +120,7 @@
                                 <td style="border: 1px solid #C65A00; text-align:center; background-color: #FFAA64; border-radius:6px 6px 6px 6px!important;">CÓDIGO</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">DESCRIPCIÓN</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">UND.</td>
-                                <td  t-if="o.picking_type_id.code == 'outgoing'" style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">MIN.</td>
+                                <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">MIN.</td>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. OBRA</td>
                                 <t t-if="o.picking_type_id.code == 'outgoing'">
                                     <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">CANT. ENVIADA</td>
@@ -130,86 +130,38 @@
                                 </t>
                                 <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64; border-radius:6px 6px 6px 6px!important;">SALDO OBRA</td>
                             </tr>
-                            <t t-if="o.picking_type_id.code == 'outgoing'">
-                                <tr t-foreach="o.move_lines" t-as="move">
-                                    <t t-set="total_in" t-value="0"/>
-                                    <t t-set="total_out" t-value="0"/> 
-                                    <t t-set="total_work" t-value="0"/> 
-                                    <t t-if="not move.returned and move.picking_id.location_dest_id.usage == 'customer' and move.picking_id.location_id.usage == 'internal'">
-                                        <t t-set="total_in" t-value="total_in+move.move_line_ids.qty_done"/>
-                                    </t>
-                                    <t t-if="move.returned and move.picking_id.location_dest_id.usage == 'internal' and move.picking_id.location_id.usage == 'customer'">
-                                        <t t-set="total_out" t-value="total_out+move.move_line_ids.qty_done"/>
-                                    </t>
-                                    <t t-set="total_work" t-value="total_in-total_out"/>
+                            <tr t-foreach="o.move_lines" t-as="move">
+                                <td style="padding:5px; border: 1px solid;">
+                                    <span t-field="move.product_id.default_code"/>
+                                </td>
+                                <td style="padding:5px; border: 1px solid;">
+                                    <span t-field="move.product_id"/>
+                                </td>
+                                <td style="padding:5px; border: 1px solid;">
+                                    <span t-field="move.product_uom"/>
+                                </td>
+                                <td style="padding:5px; border: 1px solid;">
+                                    <span t-field="move.sale_line_id.min_sale_qty"/>
+                                </td>
+                                <td style="padding:5px; border: 1px solid;">
+                                    <t t-esc="move.product_count"/>
+                                </td>
+                                <td style="padding:5px; border: 1px solid;">
+                                    <t t-esc="move.product_uom_qty"/>
+                                </td>
 
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_id.default_code"/>
+                               <t t-if="o.picking_type_id.code == 'outgoing'">
+                                    <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">
+                                        <t t-esc="move.product_uom_qty + move.product_uom_qty"/>
                                     </td>
+                                </t>
+                                <t t-if="o.picking_type_id.code == 'incoming'">
                                     <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_id"/>
-                                        </td>
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_uom"/>
+                                        <t t-esc="move.product_uom_qty - move.product_uom_qty"/>
                                     </td>
-                                    <td t-if="o.picking_type_id.code == 'outgoing'" style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.sale_line_id.min_sale_qty"/>
-                                    </td>
+                                </t>
 
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work"/>
-                                    </td>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="move.product_uom_qty"/>
-                                    </td>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work + move.product_uom_qty"/>
-                                    </td>
-                                </tr>
-                            </t>
-
-                            <t t-if="o.picking_type_id.code == 'incoming'">
-                                <tr t-foreach="o.move_lines" t-as="move">
-                                    <t t-set="total_in" t-value="0"/>
-                                    <t t-set="total_out" t-value="0"/> 
-                                    <t t-set="total_work" t-value="0"/> 
-                                    <t t-if="not move.returned and move.picking_id.location_dest_id.usage == 'customer' and move.picking_id.location_id.usage == 'internal'">
-                                        <t t-set="total_in" t-value="total_in+move.product_uom_qty"/>
-                                    </t>
-                                    <t t-if="move.returned and move.picking_id.location_dest_id.usage == 'internal' and move.picking_id.location_id.usage == 'customer'">
-                                        <t t-set="total_out" t-value="total_out+move.product_uom_qty"/>
-                                    </t>
-                                    <t t-set="total_work" t-value="total_in+total_out"/>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_id.default_code"/>
-                                    </td>
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_id"/>
-                                        </td>
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.product_uom"/>
-                                    </td>
-                                    <td t-if="o.picking_type_id.code == 'outgoing'" style="padding:5px; border: 1px solid;">
-                                        <span t-field="move.sale_line_id.min_sale_qty"/>
-                                    </td>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work"/>
-                                    </td>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="move.product_uom_qty"/>
-                                    </td>
-
-                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work - move.product_uom_qty"/>
-                                    </td>
-                                </tr>
-                            </t>
-
+                            </tr>
                         </table>
                         <br/>
                         <br/>

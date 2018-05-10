@@ -45,6 +45,49 @@ class StockMove(Model):
     description = fields.Char(
         string='Description')
     returned = fields.Integer('returned')
+    product_count = fields.Float(
+        compute='_compute_product_count',
+        string="On work",
+        track_visibility='onchange')
+
+    def _compute_product_count(self):
+        """
+        Method to count the products on works
+        """
+        for record in self:
+            product_qty_in = 0.0
+            product_qty_out = 0.0
+            picking = self.env[
+                'stock.picking'].search(
+                    [['partner_id', '=', record.picking_id.partner_id.id],
+                     ['location_dest_id.usage', 'in',
+                      ['customer', 'internal']],
+                     ['project_id', '=', record.picking_id.project_id.id]
+                    ])
+            for data in picking:
+                moves = self.env[
+                    'stock.move'].search(
+                        [['picking_id', '=', data.id],
+                         ['location_dest_id',
+                          '=',
+                          data.location_dest_id.id],
+                         ['product_id', '=', record.product_id.id],
+                         ['state', '=', 'done']])
+                if moves:
+                    for p in moves:
+                        if not p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'customer' and \
+                           p.picking_id.location_id.usage \
+                           == 'internal':
+                            product_qty_in += p.product_uom_qty
+                        if p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'internal' and \
+                           p.picking_id.location_id.usage \
+                           == 'customer':
+                            product_qty_out += p.product_uom_qty
+            record.product_count = product_qty_in - product_qty_out
 
     @api.onchange('employee_id')
     def employee_id_change_task(self):
