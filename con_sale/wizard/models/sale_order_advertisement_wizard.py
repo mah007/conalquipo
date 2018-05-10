@@ -69,6 +69,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         :return: A record with the picking ID's
         """
 
+
         stock_move = self.env['stock.move'].search(
             [('location_dest_id', '=', src_location),
              ('state', '=', 'done'),
@@ -93,21 +94,30 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         })
 
         for move in stock_move:
-            self.env['stock.move'].create({
-                'name': _('New Move:') + move.product_id.display_name,
-                'partner_id': partner_id,
-                'project_id': project_id,
-                'product_id': move.product_id.id,
-                'product_uom_qty': move.quantity_done,
-                'product_uom': move.product_uom.id,
-                'location_dest_id': des_location,
-                'location_id': src_location,
-                'returned': move.id,
-                'picking_id': picking_main.id,
-                'group_id': move.group_id.id,
-                'state': 'draft',
-                'sale_line_id': move.sale_line_id.id,
-            })
+            duplicate = self.env['stock.move'].search(
+                [('picking_id', '=', picking_main.id),
+                 ('product_id', '=', move.product_id.id)])
+
+            if duplicate and duplicate.location_dest_id.id == des_location:
+                qty = duplicate.product_uom_qty + move.quantity_done
+                duplicate.write({'product_uom_qty': qty})
+            else:
+                self.env['stock.move'].create({
+                    'name': _('New Move:') + move.product_id.display_name,
+                    'partner_id': partner_id,
+                    'project_id': project_id,
+                    'product_id': move.product_id.id,
+                    'product_uom_qty': move.quantity_done,
+                    'product_uom': move.product_uom.id,
+                    'location_dest_id': des_location,
+                    'location_id': src_location,
+                    'returned': move.id,
+                    'picking_id': picking_main.id,
+                    'group_id': move.group_id.id,
+                    'state': 'draft',
+                    'sale_line_id': move.sale_line_id.id,
+                })
+
         picking_ids.append(picking_main)
         # ~ End main picking creation
         for move in stock_move:
