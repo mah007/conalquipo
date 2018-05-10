@@ -157,23 +157,23 @@
 
                                 <t t-if="o.picking_type_id.code == 'outgoing'">
                                  <td style="padding:5px; border: 1px solid;">
-                                    <t t-esc="move.product_uom_qty"/>
+                                    <t t-esc="move.move_line_ids.qty_done"/>
                                  </td>
                                 </t>
                                <t t-if="o.picking_type_id.code == 'incoming'">
                                  <td style="padding:5px; border: 1px solid;">
-                                    <t t-esc="move.product_uom_qty"/>
+                                    <t t-esc="move.move_line_ids.qty_done"/>
                                  </td>
                                 </t>
 
                                 <t t-if="o.picking_type_id.code == 'outgoing'">
                                     <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work + move.product_uom_qty"/>
+                                        <t t-esc="total_work + move.move_line_ids.ordered_qty"/>
                                     </td>
                                 </t>
                                 <t t-if="o.picking_type_id.code == 'incoming'">
                                    <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="total_work - move.product_uom_qty"/>
+                                        <t t-esc="total_work - move.move_line_ids.ordered_qty"/>
                                     </td>
                                 </t>
                              </tr>
