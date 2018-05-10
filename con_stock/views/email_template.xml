@@ -24,6 +24,7 @@
     <table border="1" width="800">
         <tr>
             <th align="left" bgcolor="#A9A9A9">Producto</th>
+            <th align="left" bgcolor="#A9A9A9">Disponibilidad</th>
             <th align="left" bgcolor="#A9A9A9">Remisiones</th>
             <th align="left" bgcolor="#A9A9A9">Devoluciones</th>
         </tr>
@@ -31,6 +32,18 @@
             <tr>
                 <td>
                     ${linepro['product_tmpl_id'].name}
+                </td>
+                <td>
+                    % set stock = []
+                    % for linem in move_in:
+                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']
+                            % if linem['sale_line_id']
+                                %if stock.append(linem['sale_line_id'].real_available)
+                                % endif
+                            % endif
+                        % endif
+                    % endfor
+                    ${stock[0]}
                 </td>
                 <td>
                     % set total = []
