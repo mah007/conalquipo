@@ -99,12 +99,12 @@
                         <t t-set="total_work" t-value="0"/> 
                         <t t-foreach="o.move_lines" t-as="move_work">
                             <t t-if="not move_work.returned and move_work.picking_id.location_dest_id.usage == 'customer' and move_work.picking_id.location_id.usage == 'internal'">
-                                <t t-set="total_work" t-value="total_in+move_work.move_line_ids.qty_done"/>
+                                <t t-set="total_in" t-value="total_in+move_work.move_line_ids.qty_done"/>
                             </t>
                         </t>
                         <t t-foreach="o.move_lines" t-as="move_work">
                             <t t-if="move_work.returned and move_work.picking_id.location_dest_id.usage == 'internal' and move_work.picking_id.location_id.usage == 'customer'">
-                                <t t-set="total_work" t-value="total_out+move_work.move_line_ids.qty_done"/>
+                                <t t-set="total_out" t-value="total_out+move_work.move_line_ids.qty_done"/>
                             </t>
                         </t>
                         <t t-set="total_work" t-value="total_in-total_out"/>
