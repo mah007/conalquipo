@@ -151,16 +151,15 @@
                                 </td>
 
                                <t t-if="o.picking_type_id.code == 'outgoing'">
-                                    <td style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">
-                                        <t t-esc="move.product_uom_qty + move.product_uom_qty"/>
+                                    <td style="padding:5px; border: 1px solid;">
+                                        <t t-esc="move.product_count + move.product_uom_qty"/>
                                     </td>
                                 </t>
                                 <t t-if="o.picking_type_id.code == 'incoming'">
                                     <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="move.product_uom_qty - move.product_uom_qty"/>
+                                        <t t-esc="move.product_count - move.product_uom_qty"/>
                                     </td>
                                 </t>
-
                             </tr>
                         </table>
                         <br/>
