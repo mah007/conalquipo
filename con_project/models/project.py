@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+import time
 import logging
-_logger = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
+from odoo import models, fields, api, _, SUPERUSER_ID
+from odoo.exceptions import UserError
 
 
 class ProjectWorks(models.Model):
@@ -257,6 +258,7 @@ class ProjectWorks(models.Model):
                     res.name, res.create_uid.name)
             res.send_followers(body, recipients)
             res.send_to_channel(body, recipients)
+            res.send_mail(body)
         else:
             raise UserError(_("You need to select a client!"))
         return res
@@ -276,3 +278,48 @@ class ProjectWorks(models.Model):
                             message_type="comment", partner_ids=recipients,
                             subtype="mail.mt_comment")
             return True
+
+    @api.multi
+    def send_mail(self, body):
+        recipients = []
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Administrative assistant']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c, c) for c in recipients)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_project.create_work_email_template')
+            mail_template = self.env[
+                'mail.template'].browse(template.id)
+            # senders
+            uid = SUPERUSER_ID
+            user_id = self.env[
+                'res.users'].browse(uid)
+            date = time.strftime('%d-%m-%Y')
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': body,
+                'date': date,
+            })
+            # Send mail
+            if mail_template:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)

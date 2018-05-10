@@ -40,6 +40,13 @@
                 </group>
             </xpath>
 
+            <field name="category_id" position="replace">
+                <field name="category_id" 
+                string="Tradename"
+                widget="many2many_tags" 
+                options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tradename"/>
+            </field>
+
         </field>
     </record>
 

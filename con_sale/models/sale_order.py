@@ -76,6 +76,48 @@ class SaleOrder(models.Model):
                               string='Task', ondelete='cascade',
                               index=True, copy=False,
                               track_visibility='onchange')
+    product_count = fields.Integer(
+        compute='_compute_product_count',
+        string="Number of products on work",
+        track_visibility='onchange')
+
+    def _compute_product_count(self):
+        """
+        Method to count the products on works
+        """
+        for record in self:
+            product_qty_in = 0.0
+            product_qty_out = 0.0
+            picking = self.env[
+                'stock.picking'].search(
+                    [['partner_id', '=', record.partner_id.id],
+                     ['location_dest_id.usage', 'in',
+                      ['customer', 'internal']],
+                     ['project_id', '=', record.project_id.id]
+                    ])
+            for data in picking:
+                moves = self.env[
+                    'stock.move'].search(
+                        [['picking_id', '=', data.id],
+                         ['location_dest_id',
+                          '=',
+                          data.location_dest_id.id],
+                         ['state', '=', 'done']])
+                if moves:
+                    for p in moves:
+                        if not p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'customer' and \
+                           p.picking_id.location_id.usage \
+                           == 'internal':
+                            product_qty_in += p.product_uom_qty
+                        if p.returned \
+                           and p.picking_id.location_dest_id.usage \
+                           == 'internal' and \
+                           p.picking_id.location_id.usage \
+                           == 'customer':
+                            product_qty_out += p.product_uom_qty
+            record.product_count = product_qty_in - product_qty_out
 
     @api.multi
     @api.onchange('order_line')
@@ -885,21 +927,6 @@ class SaleOrderLine(models.Model):
     def create(self, values):
         # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
-        # if values.get('service_operator'):
-        #     new_line_operator = {
-        #         'product_id': values['service_operator'],
-        #         'name': 'Operator ' + '%s'%(
-        #             line.product_id.default_code or ''),
-        #         'product_operate': values['product_id'],
-        #         'product_uom': line.product_id.product_tmpl_id.uom_id.id,
-        #         'order_id': line.order_id.id,
-        #         'parent_component': line.product_id.id,
-        #         'parent_line': line.id,
-        #         'bill_uom': line.product_id.product_tmpl_id.sale_uom.id,
-        #         'bill_uom_qty': line.product_uom_qty,
-        #     }
-            # ~ Create new record for operator
-            # self.create(new_line_operator)
         # Check owner
         if line.owner_id:
             self.function_management_buy(line)
