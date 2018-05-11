@@ -45,6 +45,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             if rec.carrier_type == 'client':
                 self.sale_order_line_id = False
 
+
     @api.multi
     def _create_stock_picking(self, partner_id, project_id, picking_type,
                               src_location, des_location, origin, sale_id,
@@ -68,6 +69,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         :param carrier_type: Carrier type of the Picking (Char).
         :return: A record with the picking ID's
         """
+
 
         stock_move = self.env['stock.move'].search(
             [('location_dest_id', '=', src_location),
@@ -93,21 +95,36 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         })
 
         for move in stock_move:
-            self.env['stock.move'].create({
-                'name': _('New Move:') + move.product_id.display_name,
-                'partner_id': partner_id,
-                'project_id': project_id,
-                'product_id': move.product_id.id,
-                'product_uom_qty': move.quantity_done,
-                'product_uom': move.product_uom.id,
-                'location_dest_id': des_location,
-                'location_id': src_location,
-                'returned': move.id,
-                'picking_id': picking_main.id,
-                'group_id': move.group_id.id,
-                'state': 'draft',
-                'sale_line_id': move.sale_line_id.id,
-            })
+
+            if picking_main._product_availibility_on_project(
+                    partner_id, project_id, move.product_id.id) <= 0:
+                continue
+
+            duplicate = self.env['stock.move'].search(
+                [('picking_id', '=', picking_main.id),
+                 ('product_id', '=', move.product_id.id)])
+
+            if duplicate and duplicate.location_dest_id.id == des_location:
+                continue
+            else:
+                self.env['stock.move'].create({
+                    'name': _('New Move:') + move.product_id.display_name,
+                    'partner_id': partner_id,
+                    'project_id': project_id,
+                    'product_id': move.product_id.id,
+                    'product_uom_qty':
+                        picking_main._product_availibility_on_project(
+                          partner_id, project_id, move.product_id.id),
+                    'product_uom': move.product_uom.id,
+                    'location_dest_id': des_location,
+                    'location_id': src_location,
+                    'returned': move.id,
+                    'picking_id': picking_main.id,
+                    'group_id': move.group_id.id,
+                    'state': 'draft',
+                    'sale_line_id': move.sale_line_id.id,
+                })
+
         picking_ids.append(picking_main)
         # ~ End main picking creation
         for move in stock_move:
