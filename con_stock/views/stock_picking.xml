@@ -54,6 +54,10 @@
                     <field name="product_count" readonly="1"/>
                 </xpath>
 
+                <xpath expr='//field[@name="move_lines"]/tree//field[@name="quantity_done"]' position="replace">
+                    <field name="quantity_done" string="Done" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                </xpath>
+
                 <xpath expr='//field[@name="move_lines"]/tree//field[@name="product_uom"]' position="after">
                     <field name="employee_ids" invisible="True"/>
                     <field name="employee_id" domain="[('id', 'in', employee_ids)]" options='{"create":False}'/>
