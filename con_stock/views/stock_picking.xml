@@ -50,7 +50,7 @@
                 </xpath>
 
                 <xpath expr='//field[@name="move_lines"]/tree//field[@name="quantity_done"]' position="replace">
-                    <field name="quantity_done" string="Done"/>
+                    <field name="quantity_done" string="Done" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
                 </xpath>
 
                 <xpath expr='//field[@name="move_lines"]/tree//field[@name="is_quantity_done_editable"]' position="replace">
