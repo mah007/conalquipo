@@ -24,6 +24,12 @@ class ProjectWorks(models.Model):
         result = super(ProjectWorks, self).default_get(flds)
         return result
 
+    @api.model
+    def _get_default_country(self):
+        country = self.env[
+            'res.country'].search([('code', '=', 'CO')], limit=1)
+        return country
+
     work_code = fields.Char(
         string='Work Code', track_visibility='onchange')
     work_date_creation = fields.Date(
@@ -112,6 +118,7 @@ class ProjectWorks(models.Model):
         'res.country',
         string='Country',
         ondelete='restrict',
+        default=_get_default_country,
         track_visibility='onchange')
     street2_1 = fields.Char(
         track_visibility='onchange')
@@ -137,6 +144,7 @@ class ProjectWorks(models.Model):
         'res.country',
         string='Country',
         ondelete='restrict',
+        default=_get_default_country,
         track_visibility='onchange')
     product_count = fields.Integer(
         compute='_compute_product_count',
