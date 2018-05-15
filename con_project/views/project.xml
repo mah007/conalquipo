@@ -2,6 +2,25 @@
 <openerp>
   <data>
 
+    <record id="open_view_project_list_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="0"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="project.open_view_project_all"/>
+        <field name="view_id" ref="project.view_project"/>
+    </record>
+
+    <record id="open_view_project_list_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="act_window_id" ref="project.open_view_project_all"/>
+        <field name="view_id" ref="project.view_project_kanban"/>
+    </record>
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="view_id" ref=""/>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
     <!-- PROJECT SEARCH -->
     <record id="view_project_code_search" model="ir.ui.view">
       <field name="name">project.code.search</field>
