@@ -158,6 +158,7 @@ class ProjectWorks(models.Model):
         string="Number of products on work",
         track_visibility='onchange')
 
+
     def _compute_product_count(self):
         """
         Method to count the products on works

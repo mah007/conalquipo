@@ -96,7 +96,7 @@
             <group>
               <field name="user_id" string="Project Manager"
                 attrs="{'readonly':[('active','=',False)]}" required="0"/>
-              <field name="partner_id" string="Customer" required="0"/>
+              <field name="partner_id" string="Customer" required="0" domain="[('parent_id', '=', False)]"/>
               <field name="business_name" string="Business name" required="0" domain="[('parent_id', '=', partner_id)]" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}"/>
               <field name="partner_code" string="Partner Code" readonly="1"/>
             </group>
