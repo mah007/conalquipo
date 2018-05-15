@@ -15,14 +15,27 @@ class ProjectWorks(models.Model):
     def _get_partner_code(self):
         if self.partner_id:
             self.partner_code = self.partner_id.partner_code
-            self.country_id = self.partner_id.country_id.id
             self.country2_id = self.partner_id.country_id.id
+            self.state2_id = self.partner_id.state_id.id
+            self.municipality2_id = self.partner_id.municipality_id.id
+            self.city2 = self.partner_id.city
+            self.phone2 = self.partner_id.phone
+            self.phone2 = self.partner_id.phone
+            self.street2_1 = self.partner_id.street
+            self.street2_2 = self.partner_id.street2
+            self.zip2 = self.partner_id.zip
 
     @api.model
     def default_get(self, flds):
         # ~Todo: What that hell is flds?, change to a descriptive variable name
         result = super(ProjectWorks, self).default_get(flds)
         return result
+
+    @api.model
+    def _get_default_country(self):
+        country = self.env[
+            'res.country'].search([('code', '=', 'CO')], limit=1)
+        return country
 
     work_code = fields.Char(
         string='Work Code', track_visibility='onchange')
@@ -112,6 +125,7 @@ class ProjectWorks(models.Model):
         'res.country',
         string='Country',
         ondelete='restrict',
+        default=_get_default_country,
         track_visibility='onchange')
     street2_1 = fields.Char(
         track_visibility='onchange')
@@ -137,11 +151,13 @@ class ProjectWorks(models.Model):
         'res.country',
         string='Country',
         ondelete='restrict',
+        default=_get_default_country,
         track_visibility='onchange')
     product_count = fields.Integer(
         compute='_compute_product_count',
         string="Number of products on work",
         track_visibility='onchange')
+
 
     def _compute_product_count(self):
         """

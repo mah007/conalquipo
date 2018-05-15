@@ -151,7 +151,7 @@
                                     <t t-esc="move.product_uom_qty"/>
                                 </td>
 
-                               <t t-if="o.picking_type_id.code == 'outgoing'">
+                                <t t-if="o.picking_type_id.code == 'outgoing'">
                                     <td style="padding:5px; border: 1px solid;">
                                         <t t-esc="move.product_count + move.product_uom_qty"/>
                                     </td>

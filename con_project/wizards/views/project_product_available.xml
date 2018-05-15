@@ -48,7 +48,7 @@
         <menuitem id="menu_product_available_works"
             name="Products available on works"
             sequence="0"
-            parent="project.menu_project_config"
+            parent="project.menu_project_report"
             action="con_project.action_wizard_project"/>
 
     </data>

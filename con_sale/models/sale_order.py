@@ -633,11 +633,6 @@ class SaleOrderLine(models.Model):
     # Operators
     add_operator = fields.Boolean('Add Operator')
     mess_operated = fields.Boolean('Message Operated', default=False)
-    # service_operator = fields.Many2one
-    #     'product.product', string='Service Operator',
-    #     domain=[('sale_ok', '=', True),
-    #             ('type', '=', 'service')],
-    #     change_default=True, ondelete='restrict')
     product_operate = fields.Many2one('product.product',
                                       string='Product Operate',
                                       domain=[('sale_ok', '=', True),
