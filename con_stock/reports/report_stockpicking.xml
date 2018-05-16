@@ -148,17 +148,27 @@
                                     <t t-esc="move.product_count"/>
                                 </td>
                                 <td style="padding:5px; border: 1px solid;">
-                                    <t t-esc="move.product_uom_qty"/>
+                                    <t t-esc="move.quantity_done"/>
                                 </td>
 
                                 <t t-if="o.picking_type_id.code == 'outgoing'">
                                     <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="move.product_count + move.product_uom_qty"/>
+                                        <t t-if="not move.picking_id.state == 'done'">
+                                            <t t-esc="move.product_count + move.quantity_done"/>
+                                        </t>
+                                        <t t-if="move.picking_id.state == 'done'">
+                                            <t t-esc="move.product_count + move.quantity_done - move.product_uom_qty"/>
+                                        </t>
                                     </td>
                                 </t>
                                 <t t-if="o.picking_type_id.code == 'incoming'">
                                     <td style="padding:5px; border: 1px solid;">
-                                        <t t-esc="move.product_count - move.product_uom_qty"/>
+                                        <t t-if="not move.picking_id.state == 'done'">
+                                            <t t-esc="move.product_count - move.quantity_done"/>
+                                        </t>
+                                        <t t-if="move.picking_id.state == 'done'">
+                                            <t t-esc="move.product_count - move.quantity_done + move.product_uom_qty"/>
+                                        </t>
                                     </td>
                                 </t>
 
