@@ -142,7 +142,8 @@ class ProjectWorks(models.Model):
     state2_id = fields.Many2one(
         "res.country.state",
         string='State',
-        ondelete='restrict')
+        ondelete='restrict',
+        track_visibility='onchange')
     municipality2_id = fields.Many2one(
         'res.country.municipality',
         string='Municipality',
