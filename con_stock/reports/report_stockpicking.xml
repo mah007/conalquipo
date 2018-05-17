@@ -321,6 +321,8 @@
         id="action_report_delivery_con"
         model="stock.picking"
         report_type="qweb-pdf"
+        attachment="(object.state == 'done') and
+        ('Movimiento Inventario: '+(object.picking_type_id.name)+'.pdf')"
         name="con_stock.report_delivery_con"
         file="con_stock.report_delivery_con"
     />
