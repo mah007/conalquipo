@@ -47,6 +47,11 @@
                 options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tradename"/>
             </field>
 
+            <field name="property_product_pricelist" position="replace">
+                <field name="can_edit_pricelist" invisible="1"/>
+                <field name="property_product_pricelist" groups="product.group_sale_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)], 'readonly': [('can_edit_pricelist','=',False)]}"/>
+            </field>
+
         </field>
     </record>
 
