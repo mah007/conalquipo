@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="product_category_andamios" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Andamios</field>
+        </record>
+
+        <record id="product_category_1" model="product.category">
+            <field name="parent_id" ref="product_category_andamios"/>
+            <field name="name">Andamios colgantes</field>
+        </record>
+        
+        <record id="product_category_2" model="product.category">
+            <field name="parent_id" ref="product_category_andamios"/>
+            <field name="name">Andamios de tijera</field>
+        </record>
+
+        <record id="product_category_3" model="product.category">
+            <field name="parent_id" ref="product_category_andamios"/>
+            <field name="name">Andamios de carga</field>
+        </record> 
+
+        <record id="product_category_4" model="product.category">
+            <field name="parent_id" ref="product_category_andamios"/>
+            <field name="name">Sistema dalmine</field>
+        </record> 
+
+        <record id="product_category_5" model="product.category">
+            <field name="parent_id" ref="product_category_andamios"/>
+            <field name="name">Andamios multidireccionales</field>
+        </record> 
+
+       <record id="product_category_formaleteria" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Formaletería</field>
+        </record>
+
+        <record id="product_category_6" model="product.category">
+            <field name="parent_id" ref="product_category_formaleteria"/>
+            <field name="name">Formaletería para losa</field>
+        </record> 
+
+        <record id="product_category_7" model="product.category">
+            <field name="parent_id" ref="product_category_formaleteria"/>
+            <field name="name">Formaletería circular</field>
+        </record> 
+
+        <record id="product_category_8" model="product.category">
+            <field name="parent_id" ref="product_category_formaleteria"/>
+            <field name="name">Formaletería man-hole y otros</field>
+        </record> 
+
+        <record id="product_category_9" model="product.category">
+            <field name="parent_id" ref="product_category_formaleteria"/>
+            <field name="name">Formaletería de muro</field>
+        </record> 
+
+        <record id="product_category_10" model="product.category">
+            <field name="parent_id" ref="product_category_formaleteria"/>
+            <field name="name">Formaletería modular (Para columna y muro)</field>
+        </record> 
+
+        <record id="product_category_11" model="product.category">
+            <field name="parent_id" ref="product_category_10"/>
+            <field name="name">Para formaletería de 1.20 m.</field>
+        </record> 
+
+        <record id="product_category_12" model="product.category">
+            <field name="parent_id" ref="product_category_10"/>
+            <field name="name">Para formaletería de 2.40 m y 2.70 m.</field>
+        </record> 
+
+       <record id="product_category_equipo_electromecanico" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Equipo electromecánico</field>
+        </record>
+
+       <record id="product_category_plantas_electricas" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Plantas eléctricas</field>
+        </record>
+
+       <record id="product_category_demolicion_otros" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Equipo para demolición/Compactación/Movimientos materiales</field>
+        </record>
+
+       <record id="product_category_13" model="product.category">
+            <field name="parent_id" ref="product_category_demolicion_otros"/>
+            <field name="name">Con operador y combustible x HORA</field>
+        </record>
+
+       <record id="product_category_14" model="product.category">
+            <field name="parent_id" ref="product_category_demolicion_otros"/>
+            <field name="name">Maquinaria por MES (Con operador mín 90 hr/mes y combustible)</field>
+        </record>
+
+       <record id="product_category_destaquiadores" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Destaquiadores de tuberías y ductos</field>
+        </record>
+
+       <record id="product_category_malacates_torresg" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Malacates y torres grúas</field>
+        </record>
+
+       <record id="product_category_instalacionesProvisionales" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Instalaciones provisionales</field>
+        </record>
+
+       <record id="product_category_equiposVarios" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Equipos varios</field>
+        </record>
+
+       <record id="product_category_acarreos" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Acarreos (No tienen descuento)</field>
+        </record>
+
+    </data>
+</odoo>

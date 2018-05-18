@@ -18,5 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+_logger = logging.getLogger(__name__)
+from odoo import models,api
 
-from . import models
+
+class ResBaseConfigSettings(models.TransientModel):
+    _inherit = "res.config.settings"
+
+    @api.one 
+    def set_pricelist_parameters(self):
+        _logger.info("> Settings pricelist parameters")
+        settings = self.env['res.config.settings'].create({
+            'multi_sales_price': True,
+            'multi_sales_price_method': 'formula'
+        })
+        settings.execute()
+        _logger.info("> ... done.")
