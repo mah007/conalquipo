@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Base',
     'depends': [
-        'base', 'delivery',
+        'base', 'delivery', 'product'
     ],
     'description':
     """
