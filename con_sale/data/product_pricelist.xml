@@ -1,0 +1,112 @@
+
+<odoo>
+    <data noupdate="1">
+        <!-- Price list -->
+
+        <record id="list1" model="product.pricelist">
+            <field name="name">Andamios colgantes</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="list2" model="product.pricelist">
+            <field name="name">Andamios de tijera</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="list3" model="product.pricelist">
+            <field name="name">Andamios de carga</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <record id="list4" model="product.pricelist">
+            <field name="name">Sistema dalmine</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="list4" model="product.pricelist">
+            <field name="name">Andamios multidireccionales</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="list5" model="product.pricelist">
+            <field name="name">Formaleteria para losa</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="list6" model="product.pricelist">
+            <field name="name">Formaleteria circular</field>
+            <field name="sequence">7</field>
+        </record>
+
+        <record id="list7" model="product.pricelist">
+            <field name="name">Formaleteria man-hole y otros</field>
+            <field name="sequence">8</field>
+        </record>
+
+        <record id="list8" model="product.pricelist">
+            <field name="name">Formaleteria de muro</field>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="list9" model="product.pricelist">
+            <field name="name">Esquinero para muros y fosos</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="list10" model="product.pricelist">
+            <field name="name">Formaleteria modular: Para formaletería de 1.20 m</field>
+            <field name="sequence">11</field>
+        </record>
+
+        <record id="list11" model="product.pricelist">
+            <field name="name">Formaleteria modular: Para formaletería de 2.40 m y 2.70 m</field>
+            <field name="sequence">12</field>
+        </record>
+
+        <record id="list12" model="product.pricelist">
+            <field name="name">Equipo electromecanico</field>
+            <field name="sequence">13</field>
+        </record>
+
+        <record id="list13" model="product.pricelist">
+            <field name="name">Plantas electricas</field>
+            <field name="sequence">14</field>
+        </record>
+
+        <record id="list14" model="product.pricelist">
+            <field name="name">Equipo demolición/Compactación/Mov. Mat.: Con operador y combustible x HORA</field>
+            <field name="sequence">15</field>
+        </record>
+
+        <record id="list15" model="product.pricelist">
+            <field name="name">Equipo demolición/Compactación/Mov. Mat.: Maquinaria por MES (Con operador mín 90 hr/mes y combustible</field>
+            <field name="sequence">16</field>
+        </record>
+
+        <record id="list16" model="product.pricelist">
+            <field name="name">Destaquiadores de tuberias y ductos</field>
+            <field name="sequence">17</field>
+        </record>
+
+        <record id="list17" model="product.pricelist">
+            <field name="name">Malacates y torres grúas</field>
+            <field name="sequence">18</field>
+        </record>
+
+        <record id="list18" model="product.pricelist">
+            <field name="name">Instalaciones provisionales</field>
+            <field name="sequence">19</field>
+        </record>
+
+        <record id="list19" model="product.pricelist">
+            <field name="name">Equipos varios</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="list20" model="product.pricelist">
+            <field name="name">Equipos varios</field>
+            <field name="sequence">21</field>
+        </record>
+
+    </data>
+</odoo>

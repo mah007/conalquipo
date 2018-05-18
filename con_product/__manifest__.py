@@ -40,6 +40,7 @@
         'views/product.xml',
         'views/product_states.xml',
         'data/product.states.csv',
+        'data/product_category.xml',
     ],
     'qweb': [
     ],

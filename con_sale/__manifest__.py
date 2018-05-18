@@ -32,6 +32,8 @@
              'views/sale_report_inherit.xml',
              'wizard/views/sale_order_advertisement_wizard.xml',
              'views/crm_leads_view.xml',
+             'data/res_config.yml',
+             'data/product_pricelist.xml',
             ],
 
     'installable': True,
