@@ -11,6 +11,8 @@
             <xpath expr="//form/sheet/group/group[1]" position="replace">
                 <group>
                     <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                    <field name="can_edit_doc_delivered" invisible="1"/>
+                    <field name="documents_delivered" attrs="{'readonly': [('can_edit_doc_delivered','=',False)]}"/>
                     <field name="partner_code"/>
                     <field name="l10n_co_document_type"/>
                     <field name="l10n_co_verification_code" invisible="1"/>

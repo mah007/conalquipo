@@ -75,6 +75,16 @@ class ResPartnerCode(models.Model):
         track_visibility='onchange')
     can_edit_pricelist = fields.Boolean(
         compute='_compute_can_edit_pricelist')
+    documents_delivered = fields.Boolean(
+        string='Documents delivered',
+        track_visibility='onchange')
+    can_edit_doc_delivered = fields.Boolean(
+        compute='_compute_can_edit_doc_delivered')
+
+    def _compute_can_edit_doc_delivered(self):
+        for data in self:
+            data.can_edit_doc_delivered = self.env.user.has_group(
+                'con_profile.group_commercial_director')
 
     def _compute_can_edit_pricelist(self):
         for data in self:
@@ -94,3 +104,5 @@ class ResPartnerCode(models.Model):
             'ir.sequence'].next_by_code('res.partner.code')
         res = super(ResPartnerCode, self).create(values)
         return res
+
+
