@@ -257,6 +257,17 @@ class SaleOrder(models.Model):
                 dl_ids.update({'picking_ids': [(4, picking.id)]})
 
         if self.partner_id:
+            # If partner have documents
+            attachment_ids = self.env[
+                'ir.attachment'].search([
+                    ('res_id', '=',self.partner_id.id),
+                    ('res_model', '=', 'res.partner')])
+            if not attachment_ids:
+                raise UserError(_(
+                    "You need to attach the client's validation documents"))
+            if not self.partner_id.documents_delivered:
+                raise UserError(_(
+                    "The client has not delivered all the documents"))
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
                                     ('project_id', '=', self.project_id.id)

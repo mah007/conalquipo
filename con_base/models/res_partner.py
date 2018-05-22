@@ -75,6 +75,9 @@ class ResPartnerCode(models.Model):
         track_visibility='onchange')
     can_edit_pricelist = fields.Boolean(
         compute='_compute_can_edit_pricelist')
+    documents_delivered = fields.Boolean(
+        string='Documents delivered',
+        track_visibility='onchange')
 
     def _compute_can_edit_pricelist(self):
         for data in self:
@@ -94,3 +97,5 @@ class ResPartnerCode(models.Model):
             'ir.sequence'].next_by_code('res.partner.code')
         res = super(ResPartnerCode, self).create(values)
         return res
+
+
