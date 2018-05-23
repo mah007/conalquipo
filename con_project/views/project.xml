@@ -147,7 +147,7 @@
                     <field name="zip" placeholder="ZIP"     class="o_address_country"
                            required="0"/>
                     <field name="sector_id" placeholder="Sector"
-                        options='{"no_open": True}'/>
+                        options='{"no_open": True}' domain="[('parent_id','=',False)]"/>
                     <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector"/>
                   </div>
                 </group>
@@ -169,7 +169,7 @@
                       class="o_address_street" required="0"/>
                     <field name="zip2" placeholder="ZIP" class="o_address_country" required="0"/>
                     <field name="sector_id2" placeholder="Sector"
-                        options='{"no_open": True}'/>
+                        options='{"no_open": True}' domain="[('parent_id','=',False)]"/>
                     <field name="secondary_sector_ids2" widget="many2many_tags" placeholder="Secondary Sector"/>
                   </div>
                 </group>

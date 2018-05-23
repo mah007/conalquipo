@@ -82,11 +82,13 @@ class ResPartnerCode(models.Model):
         compute='_compute_can_edit_doc_delivered')
     sector_id = fields.Many2one(
         comodel_name='res.partner.sector',
-        string='Main Sector')
+        string='Main Sector',
+        track_visibility='onchange')
     secondary_sector_ids = fields.Many2many(
         comodel_name='res.partner.sector',
         string="Secondary Sectors",
-        domain="[('id', '!=', sector_id)]")
+        domain="[('parent_id', '=', sector_id)]",
+        track_visibility='onchange')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):

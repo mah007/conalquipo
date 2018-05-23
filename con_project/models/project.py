@@ -160,18 +160,22 @@ class ProjectWorks(models.Model):
         track_visibility='onchange')
     sector_id = fields.Many2one(
         comodel_name='res.partner.sector',
-        string='Main Sector')
+        string='Work Sector',
+        track_visibility='onchange')
     secondary_sector_ids = fields.Many2many(
         comodel_name='res.partner.sector',
-        string="Secondary Sectors",
-        domain="[('id', '!=', sector_id)]")
+        string="Secondary work sectors",
+        domain="[('parent_id', '=', sector_id)]",
+        track_visibility='onchange')
     sector_id2 = fields.Many2one(
         comodel_name='res.partner.sector',
-        string='Main Sector')
+        string='Invoice Sector',
+        track_visibility='onchange')
     secondary_sector_ids2 = fields.Many2many(
         comodel_name='res.partner.sector',
-        string="Secondary Sectors",
-        domain="[('id', '!=', sector_id)]")
+        string="Secondary invoice sectors",
+        domain="[('parent_id', '=', sector_id2)]",
+        track_visibility='onchange')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):
