@@ -499,6 +499,37 @@ class SaleOrder(models.Model):
                     self.id, force_send=True, raise_exception=True)
 
     @api.multi
+    def send_mail_sale_order_check(self):
+        """
+        Sale order checks mails
+        """
+        check_orders = self.search(
+            [('state', 'in',['draft', 'sent'])])
+        _logger.warning(check_orders)
+        if check_orders:
+            for data in check_orders:
+                body = 'The order needs attention: ' + str(
+                    data.name)
+                # Create activity
+                activity_obj = self.env['mail.activity']
+                res_model_id = self.env['ir.model'].search(
+                    [('model', '=', 'sale.order')],
+                    limit=1)
+                date = time.strftime('%Y-%m-%d')
+                activity_info = {
+                    'res_id': data.id,
+                    'res_model_id': res_model_id.id,
+                    'res_model': 'sale.order',
+                    'activity_type_id': 1,
+                    'summary': body,
+                    'res_name': data.name,
+                    'note': '<p>prueba<br></p>',
+                    'date_deadline': date
+                }
+                activity_obj.create(activity_info)
+                self.send_mail(body)
+
+    @api.multi
     def write(self, values):
         # Overwrite sale order write
         res = super(SaleOrder, self).write(values)
