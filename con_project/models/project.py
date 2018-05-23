@@ -158,7 +158,36 @@ class ProjectWorks(models.Model):
         compute='_compute_product_count',
         string="Number of products on work",
         track_visibility='onchange')
+    sector_id = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string='Work Sector',
+        track_visibility='onchange')
+    secondary_sector_ids = fields.Many2many(
+        comodel_name='res.partner.sector',
+        string="Secondary work sectors",
+        domain="[('parent_id', '=', sector_id)]",
+        track_visibility='onchange')
+    sector_id2 = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string='Invoice Sector',
+        track_visibility='onchange')
+    secondary_sector_ids2 = fields.Many2many(
+        comodel_name='res.partner.sector',
+        string="Secondary invoice sectors",
+        domain="[('parent_id', '=', sector_id2)]",
+        track_visibility='onchange')
 
+    @api.constrains('sector_id', 'secondary_sector_ids')
+    def _check_sectors(self):
+        if self.sector_id in self.secondary_sector_ids:
+            raise exceptions.Warning(_('The main sector must be different '
+                                       'from the secondary sectors.'))
+
+    @api.constrains('sector_id2', 'secondary_sector_ids2')
+    def _check_sectors(self):
+        if self.sector_id2 in self.secondary_sector_ids2:
+            raise exceptions.Warning(_('The main sector must be different '
+                                       'from the secondary sectors.'))
 
     def _compute_product_count(self):
         """

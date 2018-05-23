@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions, _
 
 
 class ResPartnerCode(models.Model):
@@ -80,6 +80,21 @@ class ResPartnerCode(models.Model):
         track_visibility='onchange')
     can_edit_doc_delivered = fields.Boolean(
         compute='_compute_can_edit_doc_delivered')
+    sector_id = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string='Main Sector',
+        track_visibility='onchange')
+    secondary_sector_ids = fields.Many2many(
+        comodel_name='res.partner.sector',
+        string="Secondary Sectors",
+        domain="[('parent_id', '=', sector_id)]",
+        track_visibility='onchange')
+
+    @api.constrains('sector_id', 'secondary_sector_ids')
+    def _check_sectors(self):
+        if self.sector_id in self.secondary_sector_ids:
+            raise exceptions.Warning(_('The main sector must be different '
+                                       'from the secondary sectors.'))
 
     def _compute_can_edit_doc_delivered(self):
         for data in self:
