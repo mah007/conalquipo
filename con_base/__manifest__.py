@@ -21,8 +21,10 @@
         - res.country.municipality: Adds colombian municipalities.
     """,
     'data': [
+        'security/ir.model.access.csv',
         'sequences/client_sequence.xml',
         'views/res_partner.xml',
+        'views/res_partner_sector.xml',
         'views/res_company.xml',
         'views/res_country_municipality.xml',
         'data/res.country.municipality.csv',
