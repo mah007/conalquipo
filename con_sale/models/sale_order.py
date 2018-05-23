@@ -18,15 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from odoo import fields, models, api, _
+import time
+import logging
+_logger = logging.getLogger(__name__)
+from odoo import fields, models, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -415,11 +415,88 @@ class SaleOrder(models.Model):
     def create(self, values):
         # Overwrite sale order create
         res = super(SaleOrder, self).create(values)
+        # Send notification to users when works is created
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Commercial director']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        body = _(
+            'Attention: The order %s are created by %s') % (
+                res.name, res.create_uid.name)
+        res.send_followers(body, recipients)
+        res.send_to_channel(body, recipients)
+        res.send_mail(body)
         if res.project_id:
             return res
         else:
             raise UserError(_(
                 'You need specify a work in this sale order'))
+
+    def send_followers(self, body, recipients):
+        if recipients:
+            self.message_post(body=body, type="notification",
+                              subtype="mt_comment",
+                              partner_ids=recipients)
+
+    def send_to_channel(self, body, recipients):
+        if recipients:
+            ch_ob = self.env['mail.channel']
+            ch = ch_ob.sudo().search([('name', 'ilike', 'general')])
+            ch.message_post(attachment_id=[],
+                            body=body, content_subtype="html",
+                            message_type="comment", partner_ids=recipients,
+                            subtype="mail.mt_comment")
+            return True
+
+    @api.multi
+    def send_mail(self, body):
+        recipients = []
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Commercial director']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c, c) for c in recipients)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_sale.create_order_email_template')
+            mail_template = self.env[
+                'mail.template'].browse(template.id)
+            # senders
+            uid = SUPERUSER_ID
+            user_id = self.env[
+                'res.users'].browse(uid)
+            date = time.strftime('%d-%m-%Y')
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': body,
+                'date': date,
+            })
+            # Send mail
+            if mail_template:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def write(self, values):
