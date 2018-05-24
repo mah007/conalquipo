@@ -35,6 +35,7 @@
              'data/product_pricelist.xml',
              'data/email_template.xml',
              'data/cron_template.xml',
+             'views/res_config_settings.xml',
             ],
 
     'installable': True,

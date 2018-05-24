@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_con_sale" model="ir.ui.view">
+        <field name="name">res.config.settings.view.inherit.con_sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='multi_company']" position="after">
+
+                <h2>Sale order notifications</h2>
+                <div class="row mt16 o_settings_container"
+                     name="sale_order_notifications">
+
+                    <div class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label string="Activities notifications"/>
+                            <div class="text-muted">
+                                Activities days notifications for (draft, sent) orders
+                            </div>
+                            <div>
+                                <field name="days_activities"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box" groups="base.group_no_one">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                           <label string="mail notifications"/>
+                            <div class="text-muted">
+                                Email days notifications for (draft, sent) orders 
+                            </div>
+                            <div>
+                                <field name="days_expiration"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
