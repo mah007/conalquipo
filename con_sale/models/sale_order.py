@@ -523,11 +523,6 @@ class SaleOrder(models.Model):
             for data in check_orders:
                 body = 'The order needs attention: ' + str(
                     data.name)
-                # Create activity
-                activity_obj = self.env['mail.activity']
-                res_model_id = self.env['ir.model'].search(
-                    [('model', '=', 'sale.order')],
-                    limit=1)
                 # Values
                 res_config_obj = self.env['res.config.settings']
                 values = res_config_obj.search([])
@@ -544,6 +539,11 @@ class SaleOrder(models.Model):
                     date_order + timedelta(
                         days=val_email))
                 if date_order < end_date_activity and now != end_date_email:
+                    # Create activity
+                    activity_obj = self.env['mail.activity']
+                    res_model_id = self.env['ir.model'].search(
+                        [('model', '=', 'sale.order')],
+                        limit=1)
                     activity_info = {
                         'res_id': data.id,
                         'res_model_id': res_model_id.id,
