@@ -19,11 +19,12 @@
 #
 ##############################################################################
 import time
+from datetime import timedelta
+from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
 from odoo import fields, models, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
-from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
@@ -504,8 +505,7 @@ class SaleOrder(models.Model):
         Sale order checks mails
         """
         check_orders = self.search(
-            [('state', 'in',['draft', 'sent'])])
-        _logger.warning(check_orders)
+            [('state', 'in', ['draft', 'sent'])])
         if check_orders:
             for data in check_orders:
                 body = 'The order needs attention: ' + str(
@@ -515,19 +515,30 @@ class SaleOrder(models.Model):
                 res_model_id = self.env['ir.model'].search(
                     [('model', '=', 'sale.order')],
                     limit=1)
-                date = time.strftime('%Y-%m-%d')
-                activity_info = {
-                    'res_id': data.id,
-                    'res_model_id': res_model_id.id,
-                    'res_model': 'sale.order',
-                    'activity_type_id': 1,
-                    'summary': body,
-                    'res_name': data.name,
-                    'note': '<p>prueba<br></p>',
-                    'date_deadline': date
-                }
-                activity_obj.create(activity_info)
-                self.send_mail(body)
+                now = datetime.now()
+                date_order = datetime.strptime(
+                    data.date_order, DEFAULT_SERVER_DATETIME_FORMAT)
+                end_date_1 = (
+                    now + timedelta(
+                        days=1))
+                end_date_5 = (
+                    date_order + timedelta(
+                        days=5))
+                if date_order < end_date_1 and now != end_date_5:
+                    activity_info = {
+                        'res_id': data.id,
+                        'res_model_id': res_model_id.id,
+                        'res_model': 'sale.order',
+                        'activity_type_id': 1,
+                        'summary': body,
+                        'res_name': data.name,
+                        'note': '<p>The order needs attention<br></p>',
+                        'date_deadline': end_date_1
+                    }
+                    activity_obj.create(activity_info)
+                # If sale order is 5 days old
+                if now >= end_date_5:
+                    self.send_mail(body)
 
     @api.multi
     def write(self, values):
