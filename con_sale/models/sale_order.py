@@ -81,6 +81,17 @@ class SaleOrder(models.Model):
         compute='_compute_product_count',
         string="Number of products on work",
         track_visibility='onchange')
+    cancel_options = fields.Selection(
+        [('no_vehicle_availability', 'No vehicle availability'),
+         ('no_team_maintenance', 'There is no product for Maintenance'),
+         ('no_operator', 'There is no operator'),
+         ('no_stock', 'There is no stock'),
+         ('hogh_prices', ' High prices'),
+         ('i_got_it', 'I already got it'),
+         ('not_need-it', 'He does not need it'),
+         ('delay_response', 'Delay in response'),
+         ('Other', 'Other')],
+        string='Cancel reason')
 
     def _compute_product_count(self):
         """
