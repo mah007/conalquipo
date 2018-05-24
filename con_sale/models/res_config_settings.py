@@ -18,6 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import time
+from datetime import timedelta
+from datetime import datetime
+import logging
+_logger = logging.getLogger(__name__)
+from odoo import fields, models, api, _
 
-from . import sale_order
-from . import res_config_settings
+
+class con_sale_config_settings(models.TransientModel):
+    _inherit = 'res.config.settings'
+
+    days_activities = fields.Integer(
+        string='Days to activity on draft quotations',
+        default=1)
+    days_expiration = fields.Integer(
+        string='Days to expiration on draft quotations and send mails',
+        default=5)

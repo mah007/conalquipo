@@ -517,25 +517,33 @@ class SaleOrder(models.Model):
         """
         check_orders = self.search(
             [('state', 'in', ['draft', 'sent'])])
+        val_activity = 0
+        val_email = 0
         if check_orders:
             for data in check_orders:
                 body = 'The order needs attention: ' + str(
                     data.name)
-                # Create activity
-                activity_obj = self.env['mail.activity']
-                res_model_id = self.env['ir.model'].search(
-                    [('model', '=', 'sale.order')],
-                    limit=1)
+                # Values
+                res_config_obj = self.env['res.config.settings']
+                values = res_config_obj.search([])
+                for vals in values:
+                    val_activity = vals.days_activities
+                    val_email = vals.days_expiration
                 now = datetime.now()
                 date_order = datetime.strptime(
                     data.date_order, DEFAULT_SERVER_DATETIME_FORMAT)
-                end_date_1 = (
+                end_date_activity = (
                     now + timedelta(
-                        days=1))
-                end_date_5 = (
+                        days=val_activity))
+                end_date_email = (
                     date_order + timedelta(
-                        days=5))
-                if date_order < end_date_1 and now != end_date_5:
+                        days=val_email))
+                if date_order < end_date_activity and now != end_date_email:
+                    # Create activity
+                    activity_obj = self.env['mail.activity']
+                    res_model_id = self.env['ir.model'].search(
+                        [('model', '=', 'sale.order')],
+                        limit=1)
                     activity_info = {
                         'res_id': data.id,
                         'res_model_id': res_model_id.id,
@@ -544,11 +552,11 @@ class SaleOrder(models.Model):
                         'summary': body,
                         'res_name': data.name,
                         'note': '<p>The order needs attention<br></p>',
-                        'date_deadline': end_date_1
+                        'date_deadline': end_date_activity
                     }
                     activity_obj.create(activity_info)
-                # If sale order is 5 days old
-                if now >= end_date_5:
+                # Send email notifications
+                if now >= end_date_email:
                     self.send_mail(body)
 
     @api.multi
