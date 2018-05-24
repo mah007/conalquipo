@@ -33,6 +33,8 @@
              'wizard/views/sale_order_advertisement_wizard.xml',
              'data/res_config.yml',
              'data/product_pricelist.xml',
+             'data/email_template.xml',
+             'data/cron_template.xml',
             ],
 
     'installable': True,

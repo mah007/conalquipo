@@ -18,15 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from odoo import fields, models, api, _
-from odoo.exceptions import UserError
+import time
+from datetime import timedelta
 from datetime import datetime
+import logging
+_logger = logging.getLogger(__name__)
+from odoo import fields, models, api, _, SUPERUSER_ID
+from odoo.exceptions import UserError
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -80,6 +81,17 @@ class SaleOrder(models.Model):
         compute='_compute_product_count',
         string="Number of products on work",
         track_visibility='onchange')
+    cancel_options = fields.Selection(
+        [('no_vehicle_availability', 'No vehicle availability'),
+         ('no_team_maintenance', 'There is no product for Maintenance'),
+         ('no_operator', 'There is no operator'),
+         ('no_stock', 'There is no stock'),
+         ('hogh_prices', ' High prices'),
+         ('i_got_it', 'I already got it'),
+         ('not_need-it', 'He does not need it'),
+         ('delay_response', 'Delay in response'),
+         ('Other', 'Other')],
+        string='Cancel reason')
 
     def _compute_product_count(self):
         """
@@ -415,11 +427,129 @@ class SaleOrder(models.Model):
     def create(self, values):
         # Overwrite sale order create
         res = super(SaleOrder, self).create(values)
+        # Send notification to users when works is created
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Commercial director']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        body = _(
+            'Attention: The order %s are created by %s') % (
+                res.name, res.create_uid.name)
+        res.send_followers(body, recipients)
+        res.send_to_channel(body, recipients)
+        res.send_mail(body)
         if res.project_id:
             return res
         else:
             raise UserError(_(
                 'You need specify a work in this sale order'))
+
+    def send_followers(self, body, recipients):
+        if recipients:
+            self.message_post(body=body, type="notification",
+                              subtype="mt_comment",
+                              partner_ids=recipients)
+
+    def send_to_channel(self, body, recipients):
+        if recipients:
+            ch_ob = self.env['mail.channel']
+            ch = ch_ob.sudo().search([('name', 'ilike', 'general')])
+            ch.message_post(attachment_id=[],
+                            body=body, content_subtype="html",
+                            message_type="comment", partner_ids=recipients,
+                            subtype="mail.mt_comment")
+            return True
+
+    @api.multi
+    def send_mail(self, body):
+        recipients = []
+        # Recipients
+        recipients = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Commercial director']])
+        for data in groups:
+            for users in data.users:
+                recipients.append(users.login)
+        html_escape_table = {
+            "&": "&amp;",
+            '"': "&quot;",
+            "'": "&apos;",
+            ">": "&gt;",
+            "<": "&lt;",
+        }
+        formated = "".join(
+            html_escape_table.get(c, c) for c in recipients)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_sale.create_order_email_template')
+            mail_template = self.env[
+                'mail.template'].browse(template.id)
+            # senders
+            uid = SUPERUSER_ID
+            user_id = self.env[
+                'res.users'].browse(uid)
+            date = time.strftime('%d-%m-%Y')
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': body,
+                'date': date,
+            })
+            # Send mail
+            if mail_template:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
+
+    @api.multi
+    def send_mail_sale_order_check(self):
+        """
+        Sale order checks mails
+        """
+        check_orders = self.search(
+            [('state', 'in', ['draft', 'sent'])])
+        if check_orders:
+            for data in check_orders:
+                body = 'The order needs attention: ' + str(
+                    data.name)
+                # Create activity
+                activity_obj = self.env['mail.activity']
+                res_model_id = self.env['ir.model'].search(
+                    [('model', '=', 'sale.order')],
+                    limit=1)
+                now = datetime.now()
+                date_order = datetime.strptime(
+                    data.date_order, DEFAULT_SERVER_DATETIME_FORMAT)
+                end_date_1 = (
+                    now + timedelta(
+                        days=1))
+                end_date_5 = (
+                    date_order + timedelta(
+                        days=5))
+                if date_order < end_date_1 and now != end_date_5:
+                    activity_info = {
+                        'res_id': data.id,
+                        'res_model_id': res_model_id.id,
+                        'res_model': 'sale.order',
+                        'activity_type_id': 1,
+                        'summary': body,
+                        'res_name': data.name,
+                        'note': '<p>The order needs attention<br></p>',
+                        'date_deadline': end_date_1
+                    }
+                    activity_obj.create(activity_info)
+                # If sale order is 5 days old
+                if now >= end_date_5:
+                    self.send_mail(body)
 
     @api.multi
     def write(self, values):
