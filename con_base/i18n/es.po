@@ -197,7 +197,7 @@ msgstr "Logo para Footer"
 #. module: con_base
 #: selection:res.partner,week_list:0
 msgid "Friday"
-msgstr "Friday"
+msgstr "Viernes"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector122

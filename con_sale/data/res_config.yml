@@ -6,6 +6,7 @@
       'group_sale_pricelist': True,
       'group_product_pricelist': False,
       'group_pricelist_item': True,
+      'group_warning_sale': True,
       'multi_sales_price': True,
       'multi_sales_price_method': 'formula',
       'sale_pricelist_setting': 'formula',
