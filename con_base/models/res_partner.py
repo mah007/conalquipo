@@ -89,6 +89,43 @@ class ResPartnerCode(models.Model):
         string="Secondary Sectors",
         domain="[('parent_id', '=', sector_id)]",
         track_visibility='onchange')
+    is_administrative_assistant = fields.Boolean(
+        compute='_compute_is_administrative_assistant',
+        default=True)
+    start_day = fields.Integer(
+        string='Invoice start day',
+        track_visibility='onchange',
+        default=1)
+    end_day = fields.Integer(
+        string='Invoice end day',
+        track_visibility='onchange',
+        default=15)
+    week_list = fields.Selection([
+        ('MO', 'Monday'),
+        ('TU', 'Tuesday'),
+        ('WE', 'Wednesday'),
+        ('TH', 'Thursday'),
+        ('FR', 'Friday'),
+        ('SA', 'Saturday'),
+        ('SU', 'Sunday')
+    ], string='Invoice Weekday', track_visibility='onchange')
+
+    @api.onchange('start_day', 'end_day')
+    def onchange_days(self):
+        if self.end_day < self.start_day:
+            raise exceptions.Warning(_('The end day can not be less than '
+                                       'start day.'))
+        if self.start_day > 31:
+            raise exceptions.Warning(_('The start day can not be greater than '
+                                       '31.'))
+        if self.end_day > 31:
+            raise exceptions.Warning(_('The end day can not be greater than '
+                                       '31.'))
+
+    def _compute_is_administrative_assistant(self):
+        for data in self:
+            data.is_administrative_assistant = self.env.user.has_group(
+                'con_profile.group_administrative_assistant')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):
