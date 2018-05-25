@@ -29,6 +29,7 @@
         'views/res_country_municipality.xml',
         'data/res.country.municipality.csv',
         'data/sectors.xml',
+        'data/messages.xml',
     ],
     'qweb': [
     ],

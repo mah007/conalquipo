@@ -64,7 +64,7 @@
     </record>
 
     <record id="view_partner_property_form_inherit" model="ir.ui.view">
-        <field name="name">view.partner.property.form,pricelist</field>
+        <field name="name">view.partner.property.form.pricelist</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="product.view_partner_property_form"/>
         <field name="arch" type="xml">
@@ -104,6 +104,24 @@
                         string="Sector"
                         context="{'group_by': 'sector_id'}"/>
             </filter>
+        </field>
+    </record>
+
+    <record id="res_partner_view_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.buttons.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <field name="sale_warn" position="after">
+                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="sale_warn_msg" position="replace">
+                <field name="sale_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
         </field>
     </record>
 
