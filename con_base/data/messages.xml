@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="res.partner.messages" id="msg1">
+            <field name="name">Anticipo para cada obra nueva</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg2">
+            <field name="name">Revisión de solicitud para segunda obra</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg3">
+            <field name="name">Límite de cupo</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg4">
+            <field name="name">Contado entrega factura</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg5">
+            <field name="name">Contado entrega equipo</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg6">
+            <field name="name">Autorización expresa del Gerente cliente o autorizado por escrito</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg7">
+            <field name="name">Ver carta empleados retirados</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg8">
+            <field name="name">Chequear cartera antes de despachar</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg9">
+            <field name="name">Actualizar solicitud de Crédito</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg10">
+            <field name="name">No despachar sin orden de compra</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg11">
+            <field name="name">Bloqueo total</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg12">
+            <field name="name">Gerencia a Gerencia (Dejaron cuentas pendientes)</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg13">
+            <field name="name">Previa autorización de gerencia</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg14">
+            <field name="name">Moroso "condicionado" a previo pago o abono</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg15">
+            <field name="name">Moroso para "solicitar" abono o pago</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg16">
+            <field name="name">Pagaron pero "duritos" - Cliente muy problemático - de difícil trato</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg17">
+            <field name="name">Cliente de Bogotá</field>
+        </record>
+
+        <record model="res.partner.messages" id="msg18">
+            <field name="name">En posición riesgosa</field>
+        </record>
+
+    </data>
+</odoo>

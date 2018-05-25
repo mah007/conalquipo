@@ -18,7 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import logging
+_LOGGER = logging.getLogger(__name__)
 from odoo import models, fields, api, exceptions, _
 
 
@@ -109,6 +110,25 @@ class ResPartnerCode(models.Model):
         ('SA', 'Saturday'),
         ('SU', 'Sunday')
     ], string='Invoice Weekday', track_visibility='onchange')
+    messages_id = fields.Many2many(
+        'res.partner.messages',
+        string="Messages",
+        ondelete="restrict",
+        track_visibility='onchange')
+
+    @api.onchange('sale_warn', 'messages_id')
+    def onchange_messages(self):
+        list_msg = []
+        self.sale_warn_msg = ""
+        if self.sale_warn in ['warning', 'block']:
+            self.sale_warn_msg = ""
+            if self.messages_id:
+                for data in self.messages_id:
+                    list_msg.append(data.name)
+            self.sale_warn_msg = ' - '.join(list_msg)
+        else:
+            self.messages_id = False
+            self.update({'sale_warn_msg': ""})
 
     @api.onchange('start_day', 'end_day')
     def onchange_days(self):
@@ -155,3 +175,7 @@ class ResPartnerCode(models.Model):
         return res
 
 
+class ResPartnerMessages(models.Model):
+    _name = 'res.partner.messages'
+
+    name = fields.Char('Message', translate=True)
