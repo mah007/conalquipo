@@ -115,11 +115,8 @@ class ResPartnerCode(models.Model):
         if self.end_day < self.start_day:
             raise exceptions.Warning(_('The end day can not be less than '
                                        'start day.'))
-        if self.start_day > 31:
-            raise exceptions.Warning(_('The start day can not be greater than '
-                                       '31.'))
-        if self.end_day > 31:
-            raise exceptions.Warning(_('The end day can not be greater than '
+        if self.start_day > 31 or self.end_day > 31:
+            raise exceptions.Warning(_('The days can not be greater than '
                                        '31.'))
 
     def _compute_is_administrative_assistant(self):
