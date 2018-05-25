@@ -176,18 +176,26 @@ class ProjectWorks(models.Model):
         string="Secondary invoice sectors",
         domain="[('parent_id', '=', sector_id2)]",
         track_visibility='onchange')
+    is_administrative_assistant = fields.Boolean(
+        compute='_compute_is_administrative_assistant',
+        default=True)
+
+    def _compute_is_administrative_assistant(self):
+        for data in self:
+            data.is_administrative_assistant = self.env.user.has_group(
+                'con_profile.group_administrative_assistant')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):
         if self.sector_id in self.secondary_sector_ids:
-            raise exceptions.Warning(_('The main sector must be different '
-                                       'from the secondary sectors.'))
+            raise UserError(_('The main sector must be different '
+                              'from the secondary sectors.'))
 
     @api.constrains('sector_id2', 'secondary_sector_ids2')
     def _check_sectors(self):
         if self.sector_id2 in self.secondary_sector_ids2:
-            raise exceptions.Warning(_('The main sector must be different '
-                                       'from the secondary sectors.'))
+            raise UserError(_('The main sector must be different '
+                              'from the secondary sectors.'))
 
     def _compute_product_count(self):
         """
