@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-18 19:30+0000\n"
-"PO-Revision-Date: 2018-04-18 14:31-0500\n"
+"POT-Creation-Date: 2018-05-25 17:27+0000\n"
+"PO-Revision-Date: 2018-05-25 12:28-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
@@ -28,9 +28,71 @@ msgid "Address"
 msgstr "Dirección"
 
 #. module: con_base
+#: model:res.partner.sector,name:con_base.sector91
+msgid "Ameríca"
+msgstr "Ameríca"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector133
+msgid "Av. Ferrocarril"
+msgstr "Av. Ferrocarril"
+
+#. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
-msgid "City"
+msgid "Barrio"
 msgstr "Barrio"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector121
+msgid "Bello"
+msgstr "Bello"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector71
+msgid "Belén"
+msgstr "Belén"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector61
+msgid "Buenos Aires"
+msgstr "Buenos Aires"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector103
+msgid "Calazans"
+msgstr "Calazans"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector141
+msgid "Caldas"
+msgstr "Caldas"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_can_edit_doc_delivered
+#: model:ir.model.fields,field_description:con_base.field_res_users_can_edit_doc_delivered
+msgid "Can Edit Doc Delivered"
+msgstr "Can Edit Doc Delivered"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_can_edit_pricelist
+#: model:ir.model.fields,field_description:con_base.field_res_users_can_edit_pricelist
+msgid "Can Edit Pricelist"
+msgstr "Can Edit Pricelist"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector161
+msgid "Caribe"
+msgstr "Caribe"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector01
+msgid "Centro"
+msgstr "Centro"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_child_ids
+msgid "Children"
+msgstr "Hijos"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_code
@@ -53,19 +115,26 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: con_base
+#: model:res.partner.sector,name:con_base.sector123
+msgid "Copacabana"
+msgstr "Copacabana"
+
+#. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "Country"
 msgstr "País"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_uid
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_date
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_date
 msgid "Created on"
-msgstr "Creado"
+msgstr "Creado en"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_delivery_carrier_id
@@ -75,12 +144,13 @@ msgstr "Transportista"
 #. module: con_base
 #: model:ir.model.fields,help:con_base.field_res_country_municipality_sequence
 msgid "Determine the display order"
-msgstr "Determine el orden de visualización"
+msgstr "Determinar el orden de visualización"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_display_name
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_display_name
 msgid "Display Name"
-msgstr "Nombre Público"
+msgstr "Nombre a mostrar"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
@@ -88,14 +158,86 @@ msgid "Document number"
 msgstr "Número de documento"
 
 #. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_documents_delivered
+#: model:ir.model.fields,field_description:con_base.field_res_users_documents_delivered
+msgid "Documents delivered"
+msgstr "Documentos entregados"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector41
+msgid "Envigado"
+msgstr "Envigado"
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner_sector.py:65
+#, python-format
+msgid "Error! You cannot create recursive sectors."
+msgstr "Error! You cannot create recursive sectors."
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector101
+msgid "Estadio"
+msgstr "Estadio"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector53
+msgid "Estrella"
+msgstr "Estrella"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector102
+msgid "Floresta"
+msgstr "Floresta"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_footer_logo
 msgid "Footer Logo"
 msgstr "Logo para Footer"
 
 #. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Friday"
+msgstr "Friday"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector122
+msgid "Girardota"
+msgstr "Girardota"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector52
+msgid "Guayabal"
+msgstr "Guayabal"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_id
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7416
 msgid "ID"
 msgstr "ID"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_week_list
+#: model:ir.model.fields,field_description:con_base.field_res_users_week_list
+msgid "Invoice Weekday"
+msgstr "Día semana facturación"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_end_day
+#: model:ir.model.fields,field_description:con_base.field_res_users_end_day
+msgid "Invoice end day"
+msgstr "Día final facturación"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_start_day
+#: model:ir.model.fields,field_description:con_base.field_res_users_start_day
+msgid "Invoice start day"
+msgstr "Día inicial facturación"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_is_administrative_assistant
+#: model:ir.model.fields,field_description:con_base.field_res_users_is_administrative_assistant
+msgid "Is Administrative Assistant"
+msgstr "Is Administrative Assistant"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_iso_logo
@@ -103,19 +245,48 @@ msgid "Iso Logo"
 msgstr "Logo Iso"
 
 #. module: con_base
+#: model:res.partner.sector,name:con_base.sector51
+msgid "Itaguí"
+msgstr "Itaguí"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality___last_update
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector___last_update
 msgid "Last Modified on"
-msgstr "Última Modificación el"
+msgstr "Última modificación en"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_uid
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_uid
 msgid "Last Updated by"
-msgstr "Actualizado por"
+msgstr "Última actualización de"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_date
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_date
 msgid "Last Updated on"
-msgstr "Actualizado"
+msgstr "Última actualización en"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector81
+msgid "Laureles"
+msgstr "Laureles"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_sector_id
+msgid "Main Sector"
+msgstr "Main Sector"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector62
+msgid "Milagrosa"
+msgstr "Milagrosa"
+
+#. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Monday"
+msgstr "Lunes"
 
 #. module: con_base
 #: model:ir.actions.act_window,name:con_base.action_country_municipality
@@ -135,14 +306,195 @@ msgstr "Municipio"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_name
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_name
 msgid "Name"
 msgstr "Nombre"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector181
+msgid "Oriente"
+msgstr "Oriente"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector151
+msgid "Otro departamento"
+msgstr "Otro departamento"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_parent_id
+msgid "Parent"
+msgstr "Padre"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_parent_left
+msgid "Parent Left"
+msgstr "Padre izquierdo"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_parent_right
+msgid "Parent Right"
+msgstr "Padre derecho"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_partner_code
 #: model:ir.model.fields,field_description:con_base.field_res_users_partner_code
 msgid "Partner Code"
 msgstr "Código de cliente"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector31
+msgid "Poblado"
+msgstr "Poblado"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector21
+msgid "Poblado arriba"
+msgstr "Poblado arriba"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector132
+msgid "Prado centro"
+msgstr "Prado centro"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector111
+msgid "Robledo"
+msgstr "Robledo"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector171
+msgid "Sabaneta"
+msgstr "Sabaneta"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector93
+msgid "San Javier"
+msgstr "San Javier"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector92
+msgid "San Juan"
+msgstr "San Juan"
+
+#. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Saturday"
+msgstr "Sabado"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Secondary Sector"
+msgstr "Secondary Sector"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_secondary_sector_ids
+#: model:ir.model.fields,field_description:con_base.field_res_users_secondary_sector_ids
+msgid "Secondary Sectors"
+msgstr "Secondary Sectors"
+
+#. module: con_base
+#: model:ir.model,name:con_base.model_res_partner_sector
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+#: model:ir.ui.view,arch_db:con_base.view_res_partner_filter_sector
+msgid "Sector"
+msgstr "Sector"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector1
+msgid "Sector 1"
+msgstr "Sector 1"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector10
+msgid "Sector 10"
+msgstr "Sector 10"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector11
+msgid "Sector 11"
+msgstr "Sector 11"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector12
+msgid "Sector 12"
+msgstr "Sector 12"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector13
+msgid "Sector 13"
+msgstr "Sector 13"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector14
+msgid "Sector 14"
+msgstr "Sector 14"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector15
+msgid "Sector 15"
+msgstr "Sector 15"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector16
+msgid "Sector 16"
+msgstr "Sector 16"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector17
+msgid "Sector 17"
+msgstr "Sector 17"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector18
+msgid "Sector 18"
+msgstr "Sector 18"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector2
+msgid "Sector 2"
+msgstr "Sector 2"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector3
+msgid "Sector 3"
+msgstr "Sector 3"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector4
+msgid "Sector 4"
+msgstr "Sector 4"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector5
+msgid "Sector 5"
+msgstr "Sector 5"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector6
+msgid "Sector 6"
+msgstr "Sector 6"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector7
+msgid "Sector 7"
+msgstr "Sector 7"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector8
+msgid "Sector 8"
+msgstr "Sector 8"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector9
+msgid "Sector 9"
+msgstr "Sector 9"
+
+#. module: con_base
+#: model:ir.actions.act_window,name:con_base.res_partner_sector_action
+#: model:ir.ui.menu,name:con_base.menu_res_partner_sector
+#: model:ir.ui.view,arch_db:con_base.res_partner_sector_tree_view
+msgid "Sectors"
+msgstr "Sectors"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_sequence
@@ -166,9 +518,57 @@ msgid "Street..."
 msgstr "Calle..."
 
 #. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Sunday"
+msgstr "Domingo"
+
+#. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "Tags..."
 msgstr "Etiquetas..."
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner.py:119
+#, python-format
+msgid "The days can not be greater than 31."
+msgstr "Los días no pueden ser mayores a 31."
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner.py:116
+#, python-format
+msgid "The end day can not be less than start day."
+msgstr "El día final no puede ser menor al día inicial."
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner.py:130
+#, python-format
+msgid "The main sector must be different from the secondary sectors."
+msgstr "The main sector must be different from the secondary sectors."
+
+#. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Thursday"
+msgstr "Jueves"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Tradename"
+msgstr "Nombre comercial"
+
+#. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Tuesday"
+msgstr "Martes"
+
+#. module: con_base
+#: model:res.partner.sector,name:con_base.sector131
+msgid "Villa Hermosa"
+msgstr "Villa Hermosa"
+
+#. module: con_base
+#: selection:res.partner,week_list:0
+msgid "Wednesday"
+msgstr "Miercoles"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
