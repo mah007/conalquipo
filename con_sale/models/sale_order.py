@@ -114,15 +114,15 @@ class SaleOrder(models.Model):
         # Need products on sale lines validation
         self.ensure_one()
         if not self.order_line:
-            raise UserError(_('Necesitas agregar productos!'))
-        
+            raise UserError(_('You need to add products!'))
+
         # Users can confirm sales overlimit
         users_list = []
         groups = self.env[
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Puede confirmar ventas que sobrepase el límite']])
+                  'Can confirm sales with overlimit']])
         for data in groups:
             for users in data.users:
                 users_list.append(users.id)
@@ -148,11 +148,11 @@ class SaleOrder(models.Model):
                 invoices_list.append((4, data.id))
 
                 if actual_user not in users_list and \
-                not self.partner_id.over_credit:   
+                 not self.partner_id.over_credit:   
                     # Not credit define and due invoice
                     if self.partner_id.credit_limit == 0.0 and \
-                    due < today:        
-                        msg = "Tiene factura vencida!"
+                     due < today:        
+                        msg = "Has an expired bill!"
                         self.write({'message_invoice': msg,
                                     'due_invoice_ids': invoices_list,
                                     'available_amount': amount})
@@ -160,8 +160,8 @@ class SaleOrder(models.Model):
                     # Credit define and due invoice
                     elif self.partner_id.credit_limit > 0.0 and \
                         due < today and \
-                        amount < -1:
-                            msg = "Excede limite y tiene factura vencida!"
+                         amount < -1:
+                            msg = "Exceeds limit and has expired invoice!"
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'available_amount': amount})
@@ -169,19 +169,19 @@ class SaleOrder(models.Model):
                     # Credit define and not due invoice but pending
                     elif self.partner_id.credit_limit > 0.0 and \
                         due > today and \
-                        amount < -1:
-                            msg = "Excede limite en facturas pendientes!"
+                         amount < -1:
+                            msg = "Exceeds limit on outstanding invoices!"
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'available_amount': amount})              
         # Credit define and not invoice pending
         else:
             amount = self.partner_id.credit_limit - (
-                amount_residual + self.amount_total)  
+                amount_residual + self.amount_total)
             if amount < -1 and \
-               actual_user not in users_list and \
-               not self.partner_id.over_credit:                    
-                    msg = "Excede limite de credito!"
+             actual_user not in users_list and \
+                 not self.partner_id.over_credit:
+                 msg = "Exceeds credit limit!"
                     self.write({'message_invoice': msg,
                                 'due_invoice_ids': [(5,)],
                                 'available_amount': amount})
