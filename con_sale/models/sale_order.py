@@ -98,7 +98,7 @@ class SaleOrder(models.Model):
     message_invoice = fields.Char('Messages')
     can_confirm = fields.Boolean('Can confirm')
     due_invoice_ids = fields.Many2many(
-        "account.invoice", string='Facturas relacionadas')
+        "account.invoice", string='Related invoices')
 
     @api.multi
     def check_limit(self):
