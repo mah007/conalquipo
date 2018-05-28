@@ -148,10 +148,10 @@ class SaleOrder(models.Model):
                 invoices_list.append((4, data.id))
 
                 if actual_user not in users_list and \
-                 not self.partner_id.over_credit:   
+                not self.partner_id.over_credit:
                     # Not credit define and due invoice
                     if self.partner_id.credit_limit == 0.0 and \
-                     due < today:        
+                    due < today:
                         msg = _("Has an expired bill!")
                         self.write({'message_invoice': msg,
                                     'due_invoice_ids': invoices_list,
@@ -160,30 +160,28 @@ class SaleOrder(models.Model):
 
                     # Credit define and due invoice
                     elif self.partner_id.credit_limit > 0.0 and \
-                        due < today and \
-                         amount < -1:
-                            msg = _("Exceeds limit and has expired invoice!")
-                            self.write({'message_invoice': msg,
-                                        'due_invoice_ids': invoices_list,
-                                        'can_confirm': False,
-                                        'available_amount': amount})
+                    due < today and amount < -1:
+                        msg = _("Exceeds limit and has expired invoice!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': invoices_list,
+                                    'can_confirm': False,
+                                    'available_amount': amount})
 
                     # Credit define and not due invoice but pending
                     elif self.partner_id.credit_limit > 0.0 and \
-                        due > today and \
-                         amount < -1:
-                            msg = _("Exceeds limit on outstanding invoices!")
-                            self.write({'message_invoice': msg,
-                                        'due_invoice_ids': invoices_list,
-                                        'can_confirm': False,
-                                        'available_amount': amount})          
+                    due > today and amount < -1:
+                        msg = _("Exceeds limit on outstanding invoices!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': invoices_list,
+                                    'can_confirm': False,
+                                    'available_amount': amount})
                     # Invoice but pending and not exceeds
                     elif self.partner_id.credit_limit > 0.0 and due < today:
                         msg = _("Have outstanding invoices!")
                         self.write({'message_invoice': msg,
                                     'can_confirm': True,
                                     'due_invoice_ids': invoices_list,
-                                    'available_amount': amount})              
+                                    'available_amount': amount})      
         # Credit define and not invoice pending
         else:
             if self.partner_id.credit_limit != 0.0:
@@ -191,12 +189,12 @@ class SaleOrder(models.Model):
                     amount_residual + self.amount_total)
                 if amount < -1 and \
                 actual_user not in users_list and \
-                    not self.partner_id.over_credit:
-                        msg = _("Exceeds credit limit!")
-                        self.write({'message_invoice': msg,
-                                    'can_confirm': False,
-                                    'due_invoice_ids': [(5,)],
-                                    'available_amount': amount})
+                not self.partner_id.over_credit:
+                    msg = _("Exceeds credit limit!")
+                    self.write({'message_invoice': msg,
+                                'can_confirm': False,
+                                'due_invoice_ids': [(5,)],
+                                'available_amount': amount})
         return True
 
     @api.depends('partner_id')
