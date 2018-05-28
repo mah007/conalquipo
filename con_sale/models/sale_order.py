@@ -152,7 +152,7 @@ class SaleOrder(models.Model):
                     # Not credit define and due invoice
                     if self.partner_id.credit_limit == 0.0 and \
                      due < today:        
-                        msg = "Has an expired bill!"
+                        msg = _("Has an expired bill!")
                         self.write({'message_invoice': msg,
                                     'due_invoice_ids': invoices_list,
                                     'available_amount': amount})
@@ -161,7 +161,7 @@ class SaleOrder(models.Model):
                     elif self.partner_id.credit_limit > 0.0 and \
                         due < today and \
                          amount < -1:
-                            msg = "Exceeds limit and has expired invoice!"
+                            msg = _("Exceeds limit and has expired invoice!")
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'available_amount': amount})
@@ -170,21 +170,22 @@ class SaleOrder(models.Model):
                     elif self.partner_id.credit_limit > 0.0 and \
                         due > today and \
                          amount < -1:
-                            msg = "Exceeds limit on outstanding invoices!"
+                            msg = _("Exceeds limit on outstanding invoices!")
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'available_amount': amount})              
         # Credit define and not invoice pending
         else:
-            amount = self.partner_id.credit_limit - (
-                amount_residual + self.amount_total)
-            if amount < -1 and \
-             actual_user not in users_list and \
-                 not self.partner_id.over_credit:
-                 msg = "Exceeds credit limit!"
-                    self.write({'message_invoice': msg,
-                                'due_invoice_ids': [(5,)],
-                                'available_amount': amount})
+            if self.partner_id.credit_limit != 0.0:
+                amount = self.partner_id.credit_limit - (
+                    amount_residual + self.amount_total)
+                if amount < -1 and \
+                actual_user not in users_list and \
+                    not self.partner_id.over_credit:
+                        msg = _("Exceeds credit limit!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': [(5,)],
+                                    'available_amount': amount})
         if self.message_invoice:
             self.write({'can_confirm': False,
                         'available_amount': amount})

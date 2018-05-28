@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 18:12+0000\n"
-"PO-Revision-Date: 2018-05-28 13:15-0500\n"
+"POT-Creation-Date: 2018-05-28 18:47+0000\n"
+"PO-Revision-Date: 2018-05-28 13:50-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -101,7 +101,7 @@ msgid "Assigned Operator"
 msgstr "Operador asignado"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:558
+#: code:addons/con_sale/models/sale_order.py:559
 #, python-format
 msgid "Attention: The order %s are created by %s"
 msgstr "Atención: La orden %s ha  creada por %s"
@@ -238,7 +238,7 @@ msgid "Delivered Quantity"
 msgstr "Cantidad Entregada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:842
+#: code:addons/con_sale/models/sale_order.py:843
 #, python-format
 msgid "Delivery"
 msgstr "Entrega"
@@ -321,6 +321,24 @@ msgid "Esquinero para muros y fosos"
 msgstr "Esquinero para muros y fosos"
 
 #. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:185
+#, python-format
+msgid "Exceeds credit limit!"
+msgstr "Excede el limite de crédito!"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:164
+#, python-format
+msgid "Exceeds limit and has expired invoice!"
+msgstr "Excede el limite y tiene facturas vencidas!"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:173
+#, python-format
+msgid "Exceeds limit on outstanding invoices!"
+msgstr "Excede el limite en facturas pendientes!"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_is_extra
 msgid "Extra"
 msgstr "Extra"
@@ -364,6 +382,12 @@ msgstr "Formaleteria modular: Para formaletería de 2.40 m y 2.70 m"
 #: model:product.pricelist,name:con_sale.list5
 msgid "Formaleteria para losa"
 msgstr "Formaleteria para losa"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:155
+#, python-format
+msgid "Has an expired bill!"
+msgstr "Tiene factura(s) vencida(s)"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_components
@@ -625,7 +649,7 @@ msgid "Reason"
 msgstr "Motivo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:843
+#: code:addons/con_sale/models/sale_order.py:844
 #, python-format
 msgid "Receive"
 msgstr "Recibo"
@@ -767,16 +791,16 @@ msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:399
+#: code:addons/con_sale/models/sale_order.py:400
 #, python-format
 msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:955
-#: code:addons/con_sale/models/sale_order.py:972
-#: code:addons/con_sale/models/sale_order.py:1251
-#: code:addons/con_sale/models/sale_order.py:1326
+#: code:addons/con_sale/models/sale_order.py:956
+#: code:addons/con_sale/models/sale_order.py:973
+#: code:addons/con_sale/models/sale_order.py:1252
+#: code:addons/con_sale/models/sale_order.py:1327
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -845,8 +869,8 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:567
-#: code:addons/con_sale/models/sale_order.py:685
+#: code:addons/con_sale/models/sale_order.py:568
+#: code:addons/con_sale/models/sale_order.py:686
 #, python-format
 msgid "You need specify a work in this sale order"
 msgstr "Ud. necesita especificar una obra a esta orden."
@@ -858,7 +882,7 @@ msgid "You need to add products!"
 msgstr "Ud. necesita agregar productos a las lineas"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:396
+#: code:addons/con_sale/models/sale_order.py:397
 #, python-format
 msgid "You need to attach the client's validation documents"
 msgstr "Ud. necesita adjuntar los documentos para validar al cliente"
