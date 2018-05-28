@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-25 17:27+0000\n"
-"PO-Revision-Date: 2018-05-25 12:28-0500\n"
+"POT-Creation-Date: 2018-05-28 18:18+0000\n"
+"PO-Revision-Date: 2018-05-28 13:20-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,14 +23,35 @@ msgid "(edit)"
 msgstr "(editar)"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg9
+msgid "Actualizar solicitud de Crédito"
+msgstr "Actualizar solicitud de Crédito"
+
+#. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "Address"
 msgstr "Dirección"
 
 #. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_over_credit
+#: model:ir.model.fields,field_description:con_base.field_res_users_over_credit
+msgid "Allow Over Credit?"
+msgstr "Permite sobrepasar limite de credito?"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector91
 msgid "Ameríca"
 msgstr "Ameríca"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg1
+msgid "Anticipo para cada obra nueva"
+msgstr "Anticipo para cada obra nueva"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg6
+msgid "Autorización expresa del Gerente cliente o autorizado por escrito"
+msgstr "Autorización expresa del Gerente cliente o autorizado por escrito"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector133
@@ -51,6 +72,11 @@ msgstr "Bello"
 #: model:res.partner.sector,name:con_base.sector71
 msgid "Belén"
 msgstr "Belén"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg11
+msgid "Bloqueo total"
+msgstr "Bloqueo total"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector61
@@ -77,7 +103,7 @@ msgstr "Can Edit Doc Delivered"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_can_edit_pricelist
 #: model:ir.model.fields,field_description:con_base.field_res_users_can_edit_pricelist
 msgid "Can Edit Pricelist"
-msgstr "Can Edit Pricelist"
+msgstr "Puede editar tarifa"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector161
@@ -90,9 +116,19 @@ msgid "Centro"
 msgstr "Centro"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg8
+msgid "Chequear cartera antes de despachar"
+msgstr "Chequear cartera antes de despachar"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_child_ids
 msgid "Children"
 msgstr "Hijos"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg17
+msgid "Cliente de Bogotá"
+msgstr "Cliente de Bogotá"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_code
@@ -115,6 +151,16 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg5
+msgid "Contado entrega equipo"
+msgstr "Contado entrega equipo"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg4
+msgid "Contado entrega factura"
+msgstr "Contado entrega factura"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector123
 msgid "Copacabana"
 msgstr "Copacabana"
@@ -126,12 +172,14 @@ msgstr "País"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_uid
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_create_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_date
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_create_date
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_date
 msgid "Created on"
 msgstr "Creado en"
@@ -148,6 +196,7 @@ msgstr "Determinar el orden de visualización"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_display_name
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_display_name
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
@@ -162,6 +211,11 @@ msgstr "Número de documento"
 #: model:ir.model.fields,field_description:con_base.field_res_users_documents_delivered
 msgid "Documents delivered"
 msgstr "Documentos entregados"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg18
+msgid "En posición riesgosa"
+msgstr "En posición riesgosa"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector41
@@ -200,6 +254,11 @@ msgid "Friday"
 msgstr "Viernes"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg12
+msgid "Gerencia a Gerencia (Dejaron cuentas pendientes)"
+msgstr "Gerencia a Gerencia (Dejaron cuentas pendientes)"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector122
 msgid "Girardota"
 msgstr "Girardota"
@@ -211,6 +270,7 @@ msgstr "Guayabal"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_id
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id_7452
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7416
 msgid "ID"
 msgstr "ID"
@@ -251,18 +311,21 @@ msgstr "Itaguí"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality___last_update
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages___last_update
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector___last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_uid
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_write_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_uid
 msgid "Last Updated by"
 msgstr "Última actualización de"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_date
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_write_date
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
@@ -273,10 +336,26 @@ msgid "Laureles"
 msgstr "Laureles"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg3
+msgid "Límite de cupo"
+msgstr "Límite de cupo"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id
 #: model:ir.model.fields,field_description:con_base.field_res_users_sector_id
 msgid "Main Sector"
 msgstr "Main Sector"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_name
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_messages_id
+msgid "Messages"
+msgstr "Mensajes"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector62
@@ -287,6 +366,16 @@ msgstr "Milagrosa"
 #: selection:res.partner,week_list:0
 msgid "Monday"
 msgstr "Lunes"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg14
+msgid "Moroso \"condicionado\" a previo pago o abono"
+msgstr "Moroso \"condicionado\" a previo pago o abono"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg15
+msgid "Moroso para \"solicitar\" abono o pago"
+msgstr "Moroso para \"solicitar\" abono o pago"
 
 #. module: con_base
 #: model:ir.actions.act_window,name:con_base.action_country_municipality
@@ -311,6 +400,11 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg10
+msgid "No despachar sin orden de compra"
+msgstr "No despachar sin orden de compra"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector181
 msgid "Oriente"
 msgstr "Oriente"
@@ -319,6 +413,11 @@ msgstr "Oriente"
 #: model:res.partner.sector,name:con_base.sector151
 msgid "Otro departamento"
 msgstr "Otro departamento"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg16
+msgid "Pagaron pero \"duritos\" - Cliente muy problemático - de difícil trato"
+msgstr "Pagaron pero \"duritos\" - Cliente muy problemático - de difícil trato"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_parent_id
@@ -355,6 +454,16 @@ msgstr "Poblado arriba"
 #: model:res.partner.sector,name:con_base.sector132
 msgid "Prado centro"
 msgstr "Prado centro"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg13
+msgid "Previa autorización de gerencia"
+msgstr "Previa autorización de gerencia"
+
+#. module: con_base
+#: model:res.partner.messages,name:con_base.msg2
+msgid "Revisión de solicitud para segunda obra"
+msgstr "Revisión de solicitud para segunda obra"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector111
@@ -528,19 +637,19 @@ msgid "Tags..."
 msgstr "Etiquetas..."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:119
+#: code:addons/con_base/models/res_partner.py:141
 #, python-format
 msgid "The days can not be greater than 31."
 msgstr "Los días no pueden ser mayores a 31."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:116
+#: code:addons/con_base/models/res_partner.py:138
 #, python-format
 msgid "The end day can not be less than start day."
 msgstr "El día final no puede ser menor al día inicial."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:130
+#: code:addons/con_base/models/res_partner.py:152
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
 msgstr "The main sector must be different from the secondary sectors."
@@ -561,6 +670,11 @@ msgid "Tuesday"
 msgstr "Martes"
 
 #. module: con_base
+#: model:res.partner.messages,name:con_base.msg7
+msgid "Ver carta empleados retirados"
+msgstr "Ver carta empleados retirados"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector131
 msgid "Villa Hermosa"
 msgstr "Villa Hermosa"
@@ -579,3 +693,8 @@ msgstr "C.P."
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "e.g. BE0477472701"
 msgstr "Por ejemplo, ESA00000000"
+
+#. module: con_base
+#: model:ir.model,name:con_base.model_res_partner_messages
+msgid "res.partner.messages"
+msgstr "res.partner.messages"

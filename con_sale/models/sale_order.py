@@ -92,7 +92,131 @@ class SaleOrder(models.Model):
          ('delay_response', 'Delay in response'),
          ('Other', 'Other')],
         string='Cancel reason')
+    limit = fields.Float(
+        'Credit limit', compute='get_limit', store=True)
+    available_amount = fields.Float('Available amount')
+    message_invoice = fields.Char('Messages')
+    can_confirm = fields.Boolean('Can confirm')
+    due_invoice_ids = fields.Many2many(
+        "account.invoice", string='Related invoices')
 
+    @api.multi
+    def check_limit(self):
+        """
+        Checks the limits
+        """
+        # Init data
+        actual_user = self.env.user.id
+        amount_residual = 0.0
+        amount = 0.0
+        msg = ''
+
+        # Need products on sale lines validation
+        self.ensure_one()
+        if not self.order_line:
+            raise UserError(_('You need to add products!'))
+
+        # Users can confirm sales overlimit
+        users_list = []
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  'Can confirm sales with overlimit']])
+        for data in groups:
+            for users in data.users:
+                users_list.append(users.id)
+
+        # Invoices
+        today_dt = datetime.now().strftime('%Y-%m-%d')
+        invoice_obj = self.env['account.invoice']
+        invoices = invoice_obj.search(
+            [('partner_id', '=', self.partner_id.id),
+             ('state', 'in', ['draft', 'open'])])
+        invoices_list = []
+
+        self.due_invoice_ids = [(5,)]
+        self.message_invoice = ''
+
+        if invoices:
+            for data in invoices:
+                amount_residual += data.residual
+                due = datetime.strptime(data.date_due, '%Y-%m-%d')
+                today = datetime.strptime(today_dt, '%Y-%m-%d')
+                amount = self.partner_id.credit_limit - (
+                    amount_residual + self.amount_total)
+                invoices_list.append((4, data.id))
+
+                if actual_user not in users_list and \
+                not self.partner_id.over_credit:
+                    # Not credit define and due invoice
+                    if self.partner_id.credit_limit == 0.0 and \
+                    due < today:
+                        msg = _("Has an expired bill!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': invoices_list,
+                                    'can_confirm': False,
+                                    'available_amount': amount})
+
+                    # Credit define and due invoice
+                    elif self.partner_id.credit_limit > 0.0 and \
+                    due < today and amount < -1:
+                        msg = _("Exceeds limit and has expired invoice!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': invoices_list,
+                                    'can_confirm': False,
+                                    'available_amount': amount})
+
+                    # Credit define and not due invoice but pending
+                    elif self.partner_id.credit_limit > 0.0 and \
+                    due > today and amount < -1:
+                        msg = _("Exceeds limit on outstanding invoices!")
+                        self.write({'message_invoice': msg,
+                                    'due_invoice_ids': invoices_list,
+                                    'can_confirm': False,
+                                    'available_amount': amount})
+                    # Invoice but pending and not exceeds
+                    elif self.partner_id.credit_limit > 0.0 and due < today:
+                        msg = _("Have outstanding invoices!")
+                        self.write({'message_invoice': msg,
+                                    'can_confirm': True,
+                                    'due_invoice_ids': invoices_list,
+                                    'available_amount': amount})
+        # Credit define and not invoice pending
+        else:
+            if self.partner_id.credit_limit != 0.0:
+                amount = self.partner_id.credit_limit - (
+                    amount_residual + self.amount_total)
+                if amount < -1 and \
+                actual_user not in users_list and \
+                not self.partner_id.over_credit:
+                    msg = _("Exceeds credit limit!")
+                    self.write({'message_invoice': msg,
+                                'can_confirm': False,
+                                'due_invoice_ids': [(5,)],
+                                'available_amount': amount})
+        if self.partner_id.credit_limit == 0.0:
+            self.write({'can_confirm': True})
+        return True
+
+    @api.depends('partner_id')
+    def get_limit(self):
+        """
+        Show in sale order form the limit amount
+        """
+        for data in self:
+            data.limit = data.partner_id.credit_limit
+
+    @api.onchange('amount_total', 'partner_id')
+    def change_can_confirm(self):
+        """
+        Show in sale order form the limit amount
+        """
+        self.write({'can_confirm': False,
+                    'due_invoice_ids': [],
+                    'message_invoice': '',
+                    'available_amount': 0.0})
+        
     def _compute_product_count(self):
         """
         Method to count the products on works

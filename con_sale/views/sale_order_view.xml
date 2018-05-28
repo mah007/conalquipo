@@ -7,6 +7,34 @@
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
 
+            <header position="replace">
+
+                <header>
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice" groups="sale.group_proforma_sales" class="btn-primary" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True}"/>
+                    <button name="print_quotation" string="Print" type="object" states="draft" class="btn-primary o_sale_print"/>
+                    <button name="action_confirm" id="action_confirm"
+                        string="Confirm Sale" class="btn-primary" type="object"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['sent']), ('can_confirm', '=', False)]}"/>
+                    <button name="action_confirm"
+                        string="Confirm Sale" type="object"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('can_confirm', '=', False)]}"/>
+                    <button name="check_limit"
+                        string="Check limit" type="object"
+                        attrs="{'invisible': [('can_confirm', '=', True)]}"/>
+                    <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice" groups="sale.group_proforma_sales" attrs="{'invisible': ['|', ('state', '=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True}"/>
+                    <button name="print_quotation" string="Print" type="object" states="sent,sale" class="o_sale_print"/>
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="sent,sale"/>
+                    <button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel"/>
+                    <button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>
+                    <button name="action_done" type="object" string="Lock" states="sale"
+                        help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."/>
+                    <button name="action_unlock" type="object" string="Unlock" states="done" groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/>
+                </header>
+
+            </header>
+
             <xpath expr="//field[@name='order_line']/form/group[1]" position="replace">
                 <group>
                     <group string="Logistic section">
@@ -85,6 +113,12 @@
 
             <field name="partner_id" position="after">
                 <field name="project_id" string="Works" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id, 'default_partner_id': partner_id}"/>
+                <field name="limit" force_save="1"/>
+                <field name="available_amount" readonly="1" force_save="1"/>
+                <field name="message_invoice" readonly="1" force_save="1"/>
+                <field name="can_confirm" invisible="1"/>
+                <field name="due_invoice_ids" widget="many2many_tags"
+                    options="{'no_create': True}" readonly="1" force_save="1"/>
             </field>
 
             <xpath expr="//sheet/notebook" position="before">
@@ -187,6 +221,7 @@
         <field name="name" position="after">
             <field name="partner_id"/>
             <field name="project_id" string="Works"/>
+            <field name="message_invoice"/>
         </field>
 
       </field>
