@@ -73,6 +73,12 @@
                 <field name="can_edit_pricelist" invisible="1"/>
                 <field name="property_product_pricelist" groups="product.group_sale_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)], 'readonly': [('can_edit_pricelist','=',False)]}"/>
             </field>
+
+            <group name="acc_sale" position="inside">
+                <field name="credit_limit"/>
+                <field name="over_credit"/>
+            </group>
+
         </field>
     </record>
 

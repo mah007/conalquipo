@@ -115,6 +115,8 @@ class ResPartnerCode(models.Model):
         string="Messages",
         ondelete="restrict",
         track_visibility='onchange')
+    over_credit = fields.Boolean(
+        'Allow Over Credit?', track_visibility='onchange')
 
     @api.onchange('sale_warn', 'messages_id')
     def onchange_messages(self):
