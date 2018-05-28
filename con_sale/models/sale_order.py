@@ -181,7 +181,7 @@ class SaleOrder(models.Model):
                         self.write({'message_invoice': msg,
                                     'can_confirm': True,
                                     'due_invoice_ids': invoices_list,
-                                    'available_amount': amount})      
+                                    'available_amount': amount})
         # Credit define and not invoice pending
         else:
             if self.partner_id.credit_limit != 0.0:
@@ -195,6 +195,8 @@ class SaleOrder(models.Model):
                                 'can_confirm': False,
                                 'due_invoice_ids': [(5,)],
                                 'available_amount': amount})
+        if self.partner_id.credit_limit == 0.0:
+            self.write({'can_confirm': True})
         return True
 
     @api.depends('partner_id')
