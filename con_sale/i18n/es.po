@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 18:47+0000\n"
-"PO-Revision-Date: 2018-05-28 13:50-0500\n"
+"POT-Creation-Date: 2018-05-28 19:37+0000\n"
+"PO-Revision-Date: 2018-05-28 14:39-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es_CO\n"
+"Language: es\n"
 "X-Generator: Poedit 2.0.7\n"
 
 #. module: con_sale
@@ -101,7 +101,7 @@ msgid "Assigned Operator"
 msgstr "Operador asignado"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:559
+#: code:addons/con_sale/models/sale_order.py:564
 #, python-format
 msgid "Attention: The order %s are created by %s"
 msgstr "Atención: La orden %s ha  creada por %s"
@@ -238,7 +238,7 @@ msgid "Delivered Quantity"
 msgstr "Cantidad Entregada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:843
+#: code:addons/con_sale/models/sale_order.py:848
 #, python-format
 msgid "Delivery"
 msgstr "Entrega"
@@ -321,19 +321,19 @@ msgid "Esquinero para muros y fosos"
 msgstr "Esquinero para muros y fosos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:185
+#: code:addons/con_sale/models/sale_order.py:195
 #, python-format
 msgid "Exceeds credit limit!"
 msgstr "Excede el limite de crédito!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:164
+#: code:addons/con_sale/models/sale_order.py:165
 #, python-format
 msgid "Exceeds limit and has expired invoice!"
 msgstr "Excede el limite y tiene facturas vencidas!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:173
+#: code:addons/con_sale/models/sale_order.py:175
 #, python-format
 msgid "Exceeds limit on outstanding invoices!"
 msgstr "Excede el limite en facturas pendientes!"
@@ -393,6 +393,12 @@ msgstr "Tiene factura(s) vencida(s)"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_components
 msgid "Have components?"
 msgstr "Tiene componentes?"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:182
+#, python-format
+msgid "Have outstanding invoices!"
+msgstr "Tiene facturas pendientes!"
 
 #. module: con_sale
 #: selection:sale.order,cancel_options:0
@@ -649,7 +655,7 @@ msgid "Reason"
 msgstr "Motivo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:844
+#: code:addons/con_sale/models/sale_order.py:849
 #, python-format
 msgid "Receive"
 msgstr "Recibo"
@@ -791,16 +797,16 @@ msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:400
+#: code:addons/con_sale/models/sale_order.py:405
 #, python-format
 msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:956
-#: code:addons/con_sale/models/sale_order.py:973
-#: code:addons/con_sale/models/sale_order.py:1252
-#: code:addons/con_sale/models/sale_order.py:1327
+#: code:addons/con_sale/models/sale_order.py:961
+#: code:addons/con_sale/models/sale_order.py:978
+#: code:addons/con_sale/models/sale_order.py:1257
+#: code:addons/con_sale/models/sale_order.py:1332
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -869,8 +875,8 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:568
-#: code:addons/con_sale/models/sale_order.py:686
+#: code:addons/con_sale/models/sale_order.py:573
+#: code:addons/con_sale/models/sale_order.py:691
 #, python-format
 msgid "You need specify a work in this sale order"
 msgstr "Ud. necesita especificar una obra a esta orden."
@@ -882,7 +888,7 @@ msgid "You need to add products!"
 msgstr "Ud. necesita agregar productos a las lineas"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:397
+#: code:addons/con_sale/models/sale_order.py:402
 #, python-format
 msgid "You need to attach the client's validation documents"
 msgstr "Ud. necesita adjuntar los documentos para validar al cliente"
