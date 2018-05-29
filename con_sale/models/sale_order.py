@@ -478,7 +478,59 @@ class SaleOrder(models.Model):
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
+        # Groups notifications for specific templates
+        users = []
+        mail_users = []
+        body = _(
+            'Attention: The order %s are created by %s with template: %s') % (
+                self.name, self.create_uid.name, self.template_id.name)
+        if self.template_id:
+            groups = self.template_id.groups_ids
+            for groupdata in groups:
+                user_groups = groupdata.users
+                for datausers in user_groups:
+                    users.append(datausers.id)
+                    mail_users.append(datausers.login)
+            new_users = list(set(users))
+            new_mail_users = list(set(mail_users))
+            self.send_followers(body, new_users)
+            self.send_to_channel(body, new_users)
+            self.send_mail_wtemplate(body, new_mail_users)
         return res
+
+    @api.multi
+    def send_mail_wtemplate(self, body, recipients):
+        if recipients:
+            html_escape_table = {
+                "&": "&amp;",
+                '"': "&quot;",
+                "'": "&apos;",
+                ">": "&gt;",
+                "<": "&lt;",
+            }
+            formated = "".join(
+                html_escape_table.get(c, c) for c in recipients)
+            # Mail template
+            template = self.env.ref(
+                'con_sale.create_order_email_template')
+            mail_template = self.env[
+                'mail.template'].browse(template.id)
+            # senders
+            uid = SUPERUSER_ID
+            user_id = self.env[
+                'res.users'].browse(uid)
+            date = time.strftime('%d-%m-%Y')
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': body,
+                'date': date,
+            })
+            # Send mail
+            if mail_template:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def _propagate_picking_project(self):
@@ -591,7 +643,6 @@ class SaleOrder(models.Model):
 
     @api.multi
     def send_mail(self, body):
-        recipients = []
         # Recipients
         recipients = []
         groups = self.env[
