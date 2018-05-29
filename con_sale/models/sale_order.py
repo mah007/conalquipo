@@ -197,6 +197,8 @@ class SaleOrder(models.Model):
                                 'available_amount': amount})
         if self.partner_id.credit_limit == 0.0:
             self.write({'can_confirm': True})
+        if self.partner_id.over_credit:
+            self.write({'can_confirm': True})
         return True
 
     @api.depends('partner_id')
