@@ -18,7 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+_logger = logging.getLogger(__name__)
+from odoo import fields, models, api, _
 
-from . import sale_order
-from . import res_config_settings
-from . import sale_quote_template
+
+class SaleQuoteTemplate(models.Model):
+    _inherit = 'sale.quote.template'
+
+    groups_ids = fields.Many2many(
+        "res.groups", string='Notifications to groups')
