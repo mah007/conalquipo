@@ -29,25 +29,50 @@ class SaleQuoteTemplate(models.Model):
     groups_ids = fields.Many2many(
         "res.groups", string='Notifications to groups')
 
+    @api.model
+    def create(self, values):
+        res = super(SaleQuoteTemplate, self).create(values)
+        for data in res.quote_line:
+            components_ids = data.product_id.product_tmpl_id.components_ids
+            if components_ids and not data.indicted:
+                data.write({'indicted': True})
+                for p in components_ids:
+                    values = {
+                        'product_id': p.product_child_id.id,
+                        'product_uom_qty': p.quantity,
+                        'product_uom_id': p.product_child_id.product_tmpl_id.sale_uom.id,
+                        'name': 'Comp. ' + str(
+                            data.product_id.product_tmpl_id.name),
+                        'price_unit': 0,
+                        'quote_id': res.id,
+                        'indicted': True
+                    }
+                    res.quote_line.create(values)
+        return res
+
+    @api.multi
+    def write(self, values):
+        res = super(SaleQuoteTemplate, self).write(values)
+        for data in self.quote_line:
+            components_ids = data.product_id.product_tmpl_id.components_ids
+            if components_ids and not data.indicted:
+                data.write({'indicted': True})
+                for p in components_ids:
+                    values = {
+                        'product_id': p.product_child_id.id,
+                        'product_uom_qty': p.quantity,
+                        'product_uom_id': p.product_child_id.product_tmpl_id.sale_uom.id,
+                        'name': 'Comp. ' + str(
+                            data.product_id.product_tmpl_id.name),
+                        'price_unit': 0,
+                        'quote_id': self.id,
+                        'indicted': True
+                    }
+                    self.quote_line.create(values)
+        return res
+
 
 class SaleQuoteLine(models.Model):
-    _inherit = 'sale.quote.line'
+    _inherit = "sale.quote.line"
 
-    @api.onchange('product_id')
-    def _onchange_product_id(self):
-        res = super(SaleQuoteLine, self)._onchange_product_id()
-        components_ids = self.product_id.product_tmpl_id.components_ids
-        if components_ids:
-            for p in components_ids:
-                values = {
-                    'product_id': p.product_child_id.id,
-                    'product_uom_qty': p.quantity,
-                    'product_uom_id': p.product_child_id.product_tmpl_id.sale_uom.id,
-                    'quote_id': 1,
-                    'name': 'Prueba',
-                    'price_unit': 200
-                }
-
-                self.create(values)
-        _logger.warning(components_ids)
-        return res
+    indicted = fields.Boolean(string='Indicted')
