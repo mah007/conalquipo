@@ -100,6 +100,13 @@ class SaleOrder(models.Model):
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices')
 
+    @api.onchange('template_id')
+    def onchange_template_id(self):
+        result = super(SaleOrder, self).onchange_template_id()
+        for line in self.order_line:
+            line.product_id_change()
+        return result
+
     @api.multi
     def check_limit(self):
         """
@@ -381,6 +388,16 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        if self.order_line:
+            for pr in self.order_line:
+                if not pr.bill_uom:
+                    raise UserError(_(
+                        "You need define a sale uom for product: %s"
+                    ) % pr.product_id.name)
+                if pr.bill_uom_qty <= 0.0:
+                    raise UserError(_(
+                        "You need specify a quantity for product: %s"
+                    ) % pr.product_id.name)  
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
         # ~ dl_ids: Deliveries Lines Ids
@@ -928,11 +945,32 @@ class SaleOrderLine(models.Model):
         'cancel': [('readonly', True)],
     }
 
+    @api.model
+    def _compute_uoms(self):
+        # Compute availables uoms for product
+        uom_list = []
+        for data in self:
+            uoms = data.product_id.product_tmpl_id.uoms_ids
+            if data.product_id:
+                if uoms:
+                    for p in uoms:
+                        uom_list.append(p.uom_id.id)
+                    data.compute_uoms = uom_list
+                else:
+                    data.compute_uoms = \
+                    [data.product_id.product_tmpl_id.sale_uom.id]
+
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
     order_type = fields.Selection(related='order_id.order_type',
                                   string="Type Order")
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
+    bill_uom = fields.Many2one(
+        'product.uom',
+        string='Unit of Measure to Sale')
+    compute_uoms = fields.Many2many(
+        'product.uom',
+        compute='_compute_uoms',
+        store=False)
     owner_id = fields.Many2one('res.partner', string='Supplier',
                                states=READONLY_STATES_OWNER,
                                change_default=True, track_visibility='always')
@@ -949,7 +987,7 @@ class SaleOrderLine(models.Model):
         store=True)
     # Components
     product_components = fields.Boolean('Have components?')
-    product_uoms  = fields.Boolean('Multiple uoms?') 
+    product_uoms  = fields.Boolean('Multiple uoms?')
     is_component = fields.Boolean('Component')
     is_extra = fields.Boolean('Extra')
     parent_component = fields.Many2one(
@@ -1084,8 +1122,6 @@ class SaleOrderLine(models.Model):
         result = super(SaleOrderLine, self).product_id_change()
         self.product_components = False
         self.product_uoms = False
-        self.bill_uom_qty = 1.0
-        self.bill_uom = False
         self.components_ids = [(5,)]
         self.uoms_ids = [(5,)]
         products_ids = []
@@ -1412,6 +1448,7 @@ class SaleOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
+            line.product_id_change()
 
     @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
                  'qty_invoiced', 'bill_uom_qty')
@@ -1587,17 +1624,18 @@ class SaleOrderLine(models.Model):
     def price_bill_qty(self):
         """
         Get price for specific uom of product
-        """         
+        """
         product_muoms = self.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
             self.price_unit = self.product_id.product_tmpl_id.list_price
             self.min_sale_qty = \
-                self.product_id.product_tmpl_id.min_qty_rental 
+                self.product_id.product_tmpl_id.min_qty_rental
         else:
             for uom_list in self.product_id.product_tmpl_id.uoms_ids:
                 if self.bill_uom.id == uom_list.uom_id.id:
-                    self.price_unit = uom_list.cost_byUom   
+                    self.price_unit = uom_list.cost_byUom
                     self.min_sale_qty = uom_list.quantity
+        self.product_id_change()
 
     @api.multi
     def _action_launch_procurement_rule(self):
