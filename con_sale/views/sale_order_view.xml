@@ -83,7 +83,8 @@
                         <field name="order_type" invisible="1"/>
                         <field name="min_sale_qty" readonly="1"/>
                         <field name="bill_uom_qty" required="1"/>
-                        <field name="bill_uom" required="1"/>
+                        <field name="compute_uoms" readonly="0" invisible="1"/>
+                        <field name="bill_uom" required="1" domain="[('id', 'in', compute_uoms)]"/>
                     </group>
                     <group string="Operator section" attrs="{'invisible': [('mess_operated', '=', False)]}">
                         <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>

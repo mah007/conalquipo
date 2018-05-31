@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_quote_template_inherit" model="ir.ui.view">
+        <field name="name">sale.quote.template.inherit</field>
+        <field name="model">sale.quote.template</field>
+        <field name="inherit_id" ref="website_quote.view_sale_quote_template_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form/sheet/group" position="replace">
+                <group>
+                    <group>
+                        <label for="number_of_days" string="Quotation expires after"/>
+                        <div id="number_of_days">
+                            <field name="number_of_days" class="oe_inline"/> days
+                        </div>
+                    </group>
+
+                    <group>
+                        <field name="groups_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+     
+</odoo>

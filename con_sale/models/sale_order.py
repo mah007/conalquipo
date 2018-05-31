@@ -100,6 +100,13 @@ class SaleOrder(models.Model):
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices')
 
+    @api.onchange('template_id')
+    def onchange_template_id(self):
+        result = super(SaleOrder, self).onchange_template_id()
+        for line in self.order_line:
+            line.product_id_change()
+        return result
+
     @api.multi
     def check_limit(self):
         """
@@ -196,6 +203,8 @@ class SaleOrder(models.Model):
                                 'due_invoice_ids': [(5,)],
                                 'available_amount': amount})
         if self.partner_id.credit_limit == 0.0:
+            self.write({'can_confirm': True})
+        if self.partner_id.over_credit:
             self.write({'can_confirm': True})
         return True
 
@@ -379,6 +388,16 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        if self.order_line:
+            for pr in self.order_line:
+                if not pr.bill_uom:
+                    raise UserError(_(
+                        "You need define a sale uom for product: %s"
+                    ) % pr.product_id.name)
+                if pr.bill_uom_qty <= 0.0:
+                    raise UserError(_(
+                        "You need specify a quantity for product: %s"
+                    ) % pr.product_id.name)  
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
         # ~ dl_ids: Deliveries Lines Ids
@@ -478,7 +497,59 @@ class SaleOrder(models.Model):
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
+        # Groups notifications for specific templates
+        users = []
+        mail_users = []
+        body = _(
+            'Attention: The order %s are created by %s with template: %s') % (
+                self.name, self.create_uid.name, self.template_id.name)
+        if self.template_id:
+            groups = self.template_id.groups_ids
+            for groupdata in groups:
+                user_groups = groupdata.users
+                for datausers in user_groups:
+                    users.append(datausers.id)
+                    mail_users.append(datausers.login)
+            new_users = list(set(users))
+            new_mail_users = list(set(mail_users))
+            self.send_followers(body, new_users)
+            self.send_to_channel(body, new_users)
+            self.send_mail_wtemplate(body, new_mail_users)
         return res
+
+    @api.multi
+    def send_mail_wtemplate(self, body, recipients):
+        if recipients:
+            html_escape_table = {
+                "&": "&amp;",
+                '"': "&quot;",
+                "'": "&apos;",
+                ">": "&gt;",
+                "<": "&lt;",
+            }
+            formated = "".join(
+                html_escape_table.get(c, c) for c in recipients)
+            # Mail template
+            template = self.env.ref(
+                'con_sale.create_order_email_template')
+            mail_template = self.env[
+                'mail.template'].browse(template.id)
+            # senders
+            uid = SUPERUSER_ID
+            user_id = self.env[
+                'res.users'].browse(uid)
+            date = time.strftime('%d-%m-%Y')
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': body,
+                'date': date,
+            })
+            # Send mail
+            if mail_template:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def _propagate_picking_project(self):
@@ -591,7 +662,6 @@ class SaleOrder(models.Model):
 
     @api.multi
     def send_mail(self, body):
-        recipients = []
         # Recipients
         recipients = []
         groups = self.env[
@@ -875,11 +945,32 @@ class SaleOrderLine(models.Model):
         'cancel': [('readonly', True)],
     }
 
+    @api.model
+    def _compute_uoms(self):
+        # Compute availables uoms for product
+        uom_list = []
+        for data in self:
+            uoms = data.product_id.product_tmpl_id.uoms_ids
+            if data.product_id:
+                if uoms:
+                    for p in uoms:
+                        uom_list.append(p.uom_id.id)
+                    data.compute_uoms = uom_list
+                else:
+                    data.compute_uoms = \
+                    [data.product_id.product_tmpl_id.sale_uom.id]
+
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
     order_type = fields.Selection(related='order_id.order_type',
                                   string="Type Order")
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to Sale')
+    bill_uom = fields.Many2one(
+        'product.uom',
+        string='Unit of Measure to Sale')
+    compute_uoms = fields.Many2many(
+        'product.uom',
+        compute='_compute_uoms',
+        store=False)
     owner_id = fields.Many2one('res.partner', string='Supplier',
                                states=READONLY_STATES_OWNER,
                                change_default=True, track_visibility='always')
@@ -896,7 +987,7 @@ class SaleOrderLine(models.Model):
         store=True)
     # Components
     product_components = fields.Boolean('Have components?')
-    product_uoms  = fields.Boolean('Multiple uoms?') 
+    product_uoms  = fields.Boolean('Multiple uoms?')
     is_component = fields.Boolean('Component')
     is_extra = fields.Boolean('Extra')
     parent_component = fields.Many2one(
@@ -1031,8 +1122,6 @@ class SaleOrderLine(models.Model):
         result = super(SaleOrderLine, self).product_id_change()
         self.product_components = False
         self.product_uoms = False
-        self.bill_uom_qty = 1.0
-        self.bill_uom = False
         self.components_ids = [(5,)]
         self.uoms_ids = [(5,)]
         products_ids = []
@@ -1359,6 +1448,7 @@ class SaleOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
+            line.product_id_change()
 
     @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
                  'qty_invoiced', 'bill_uom_qty')
@@ -1534,17 +1624,18 @@ class SaleOrderLine(models.Model):
     def price_bill_qty(self):
         """
         Get price for specific uom of product
-        """         
+        """
         product_muoms = self.product_id.product_tmpl_id.multiples_uom
         if product_muoms != True:
             self.price_unit = self.product_id.product_tmpl_id.list_price
             self.min_sale_qty = \
-                self.product_id.product_tmpl_id.min_qty_rental 
+                self.product_id.product_tmpl_id.min_qty_rental
         else:
             for uom_list in self.product_id.product_tmpl_id.uoms_ids:
                 if self.bill_uom.id == uom_list.uom_id.id:
-                    self.price_unit = uom_list.cost_byUom   
+                    self.price_unit = uom_list.cost_byUom
                     self.min_sale_qty = uom_list.quantity
+        self.product_id_change()
 
     @api.multi
     def _action_launch_procurement_rule(self):
