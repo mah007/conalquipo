@@ -1,1 +1,3 @@
 prettytable==0.7.2
+twilio==6.14.3
+workalendar==2.4.0
