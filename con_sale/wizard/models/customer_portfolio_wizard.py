@@ -62,7 +62,6 @@ class CustomerPortfolio(models.TransientModel):
              'invoice_ids'])
         res = res and res[0] or {}
         datas['form'] = res
-        _logger.warning(res)
         return self.env.ref(
             'con_sale.action_report_customer_portfolio'
         ).with_context(landscape=True).report_action([], data=datas)
