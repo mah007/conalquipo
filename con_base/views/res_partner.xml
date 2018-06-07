@@ -8,6 +8,31 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//form/sheet/notebook/page/field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="before">
+                <field name="contact_person" attrs="{'invisible': [('type','!=','contact')]}"/>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_kanban_details']" position="replace">
+                <div class="oe_kanban_details">
+                    <field name="name"/>
+                    <div t-if="record.contact_person.raw_value === true" style="color:green;font-weight: bold;">
+                        CONTACT PERSON <field name="contact_person" invisible="1"/>
+                    </div>
+                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                    <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                    <div t-if="record.type.raw_value != 'contact'">
+                        <div>
+                            <field name="zip"/>
+                            <field name="city"/>
+                        </div>
+                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                        <field name="country_id"/>
+                    </div>
+                    <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                </div>
+            </xpath>
+
             <xpath expr="//form/sheet/group/group[1]" position="replace">
                 <group>
                     <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>

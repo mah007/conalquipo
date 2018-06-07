@@ -117,6 +117,13 @@ class ResPartnerCode(models.Model):
         track_visibility='onchange')
     over_credit = fields.Boolean(
         'Allow Over Credit?', track_visibility='onchange')
+    contact_person = fields.Boolean(
+        'Contact person?', track_visibility='onchange')
+
+    @api.onchange('type')
+    def onchange_type_contact(self):
+        if self.type != 'contact':
+            self.contact_person = False
 
     @api.onchange('sale_warn', 'messages_id')
     def onchange_messages(self):

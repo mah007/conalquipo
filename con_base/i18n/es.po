@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 18:18+0000\n"
-"PO-Revision-Date: 2018-05-28 13:20-0500\n"
+"POT-Creation-Date: 2018-06-07 22:17+0000\n"
+"PO-Revision-Date: 2018-06-07 17:21-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,11 @@ msgid "Buenos Aires"
 msgstr "Buenos Aires"
 
 #. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "CONTACT PERSON"
+msgstr "PERSONA DE CONTACTO"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector103
 msgid "Calazans"
 msgstr "Calazans"
@@ -97,7 +102,7 @@ msgstr "Caldas"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_can_edit_doc_delivered
 #: model:ir.model.fields,field_description:con_base.field_res_users_can_edit_doc_delivered
 msgid "Can Edit Doc Delivered"
-msgstr "Can Edit Doc Delivered"
+msgstr "Puede asignar documentos de cliente"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_can_edit_pricelist
@@ -149,6 +154,12 @@ msgstr "Configuración de Reportes"
 #: model:ir.model,name:con_base.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_contact_person
+#: model:ir.model.fields,field_description:con_base.field_res_users_contact_person
+msgid "Contact person?"
+msgstr "Es la persona de contacto?"
 
 #. module: con_base
 #: model:res.partner.messages,name:con_base.msg5
@@ -226,7 +237,7 @@ msgstr "Envigado"
 #: code:addons/con_base/models/res_partner_sector.py:65
 #, python-format
 msgid "Error! You cannot create recursive sectors."
-msgstr "Error! You cannot create recursive sectors."
+msgstr "Error! No puede crear sectores recursivos"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector101
@@ -297,7 +308,7 @@ msgstr "Día inicial facturación"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_is_administrative_assistant
 #: model:ir.model.fields,field_description:con_base.field_res_users_is_administrative_assistant
 msgid "Is Administrative Assistant"
-msgstr "Is Administrative Assistant"
+msgstr "Es asistente administrativo"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_iso_logo
@@ -344,7 +355,7 @@ msgstr "Límite de cupo"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id
 #: model:ir.model.fields,field_description:con_base.field_res_users_sector_id
 msgid "Main Sector"
-msgstr "Main Sector"
+msgstr "Sector"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_name
@@ -361,6 +372,11 @@ msgstr "Mensajes"
 #: model:res.partner.sector,name:con_base.sector62
 msgid "Milagrosa"
 msgstr "Milagrosa"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Mobile:"
+msgstr "Móvil:"
 
 #. module: con_base
 #: selection:res.partner,week_list:0
@@ -441,6 +457,11 @@ msgid "Partner Code"
 msgstr "Código de cliente"
 
 #. module: con_base
+#: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector31
 msgid "Poblado"
 msgstr "Poblado"
@@ -493,13 +514,13 @@ msgstr "Sabado"
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "Secondary Sector"
-msgstr "Secondary Sector"
+msgstr "Sector secundario"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_partner_secondary_sector_ids
 #: model:ir.model.fields,field_description:con_base.field_res_users_secondary_sector_ids
 msgid "Secondary Sectors"
-msgstr "Secondary Sectors"
+msgstr "Sectores secundarios"
 
 #. module: con_base
 #: model:ir.model,name:con_base.model_res_partner_sector
@@ -603,7 +624,7 @@ msgstr "Sector 9"
 #: model:ir.ui.menu,name:con_base.menu_res_partner_sector
 #: model:ir.ui.view,arch_db:con_base.res_partner_sector_tree_view
 msgid "Sectors"
-msgstr "Sectors"
+msgstr "Sectores"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_sequence
@@ -637,22 +658,22 @@ msgid "Tags..."
 msgstr "Etiquetas..."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:141
+#: code:addons/con_base/models/res_partner.py:148
 #, python-format
 msgid "The days can not be greater than 31."
 msgstr "Los días no pueden ser mayores a 31."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:138
+#: code:addons/con_base/models/res_partner.py:145
 #, python-format
 msgid "The end day can not be less than start day."
 msgstr "El día final no puede ser menor al día inicial."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:152
+#: code:addons/con_base/models/res_partner.py:159
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
-msgstr "The main sector must be different from the secondary sectors."
+msgstr "El sector principal debe ser diferente al sector secundario."
 
 #. module: con_base
 #: selection:res.partner,week_list:0
