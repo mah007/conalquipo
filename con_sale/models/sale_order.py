@@ -203,7 +203,10 @@ class SaleOrder(models.Model):
                                 'due_invoice_ids': [(5,)],
                                 'available_amount': amount})
         if self.partner_id.credit_limit == 0.0:
-            self.write({'can_confirm': True})
+            msg = _("Without credit limit define!")
+            self.write({
+                'can_confirm': True,
+                'message_invoice': msg})
         if self.partner_id.over_credit:
             self.write({'can_confirm': True})
         return True

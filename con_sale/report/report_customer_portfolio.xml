@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_report_customer_portfolio"
+        model="account.invoice"
+        string="Customer portfolio report"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_sale.report_customer_portfolio"
+        file="con_sale.report_customer_portfolio" 
+    />
+    
+    <template id="report_customer_portfolio">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <center><h1>Customer portfolio</h1></center>
+            
+                    <t t-foreach="data['partner_ids']" t-as="partner">
+                        <t t-foreach="data['invoice_ids']" t-as="invoice">
+                            <t t-if="invoice.project_id.partner_id.id == partner.id">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="partner.name"/>
+                                            </strong>
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="invoice.project_id.name"/>
+                                            </strong>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">Draft</th>
+                                        <th align="left" bgcolor="#A9A9A9">Open</th>
+                                        <th align="left" bgcolor="#A9A9A9">Paid</th>
+                                    </tr>
+                                    <tr>
+                                        <t t-foreach="data['invoice_ids']" t-as="invoice">
+                                            <t t-if="invoice.project_id.partner_id.id == partner.id">
+                                                <td>                               <t t-if="invoice.state == 'draft'">
+                                                        <span t-esc="invoice.amount_total"/>
+                                                    </t>
+                                                </td>
+                                                    <t t-if="invoice.state == 'open'">
+                                                        <span t-esc="invoice.amount_total"/>
+                                                    </t>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <t t-if="invoice.state == 'paid'">
+                                                        <span t-esc="invoice.amount_total"/>
+                                                    </t>
+                                                </td>
+                                            </t>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

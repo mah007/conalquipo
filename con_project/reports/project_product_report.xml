@@ -6,8 +6,9 @@
         model="project.project"
         string="Project product report"
         report_type="qweb-pdf"
-        name="con_project_works.report_product_project"
-        file="con_project_works.report_product_project" 
+        menu="False"
+        name="con_project.report_product_project"
+        file="con_project.report_product_project" 
     />
     
     <template id="report_product_project">
@@ -15,57 +16,53 @@
             <t t-call="web.internal_layout">
                 <div class="page">
                     <center><h1>Products on works</h1></center>
-                    <div class="row mt32">
-                        <div class="col-xs-3">
-                        
-                            <strong>Dates:</strong>
-                            <p>
-                                <p>
-                                Date from: <span t-esc="data['date_from']"/><br />
-                                Date to: <span t-esc="data['date_to']"/>
-                                </p>
-                            </p>
-                        </div>
-                    </div>
             
-                    <t t-foreach="data['project_ids']" t-as="project">
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <strong>
-                                            <span t-esc="project.name"/>
-                                        </strong>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th align="left" bgcolor="#A9A9A9">Date</th>
-                                    <th align="left" bgcolor="#A9A9A9">Reference</th>
-                                    <th align="left" bgcolor="#A9A9A9">Product</th>
-                                    <th align="left" bgcolor="#A9A9A9">Qty done</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="data['move_line_ids']" t-as="moves">
-                                    <tr> 
-                                        <td>
-                                            <span t-esc="moves.date"/>
-                                        </td>
-                                        <td>
-                                            <span t-esc="moves.reference"/>
-                                        </td>
-                                        <td>
-                                            <span t-esc="moves.product_id.name"/>
-                                        </td>
-                                        <td>
-                                            <span t-esc="moves.qty_done"/>
-                                        </td>
+                    <t t-foreach="data['partner_ids']" t-as="partner">
+                        <t t-foreach="data['picking_ids']" t-as="picking">
+                            <t t-if="picking.project_id.partner_id.id == partner.id">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="partner.name"/>
+                                            </strong>
+                                        </th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="picking.project_id.name"/>
+                                            </strong>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                        <tr>
+                                            <th align="left" bgcolor="#A9A9A9">Producto</th>
+                                            <th align="left" bgcolor="#A9A9A9">Disponibilidad</th>
+                                            <th align="left" bgcolor="#A9A9A9">Cantidad en obra</th>
+                                        </tr>
+                                        <tr>
+                                            <t t-foreach="picking.move_lines" t-as="moves">
+                                                <td>
+                                                    <span t-esc="moves.product_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="moves.sale_line_id.real_available"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="moves.product_count"/>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                </table>
+                            </t>
+                        </t>
                     </t>
-
                 </div>
             </t>
         </t>
