@@ -129,7 +129,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Can confirm sales with overlimit']])
+                  self.env.ref(
+                      'con_profile.group_sale_overlimit').name]])
         for data in groups:
             for users in data.users:
                 users_list.append(users.id)
@@ -395,8 +396,6 @@ class SaleOrder(models.Model):
             for pr in self.order_line:
                 # Small qty of products
                 actual_user = self.env.uid
-                _logger.warning('AQUIIIIIIIIII')
-                _logger.warning(actual_user)
                 users_list = []
                 groups = self.env[
                     'res.groups'].search(
@@ -407,9 +406,6 @@ class SaleOrder(models.Model):
                 for data in groups:
                     for users in data.users:
                         users_list.append(users.id)
-                _logger.warning(users_list)
-                _logger.warning(pr.bill_uom_qty)
-                _logger.warning(pr.min_sale_qty)
                 if pr.bill_uom_qty < pr.min_sale_qty \
                  and actual_user not in users_list:
                     raise UserError(_(
@@ -654,7 +650,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Commercial director']])
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
@@ -694,7 +691,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Commercial director']])
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
