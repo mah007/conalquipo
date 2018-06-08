@@ -129,7 +129,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Can confirm sales with overlimit']])
+                  self.env.ref(
+                      'con_profile.group_sale_overlimit').name]])
         for data in groups:
             for users in data.users:
                 users_list.append(users.id)
@@ -393,6 +394,24 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         if self.order_line:
             for pr in self.order_line:
+                # Small qty of products
+                actual_user = self.env.uid
+                users_list = []
+                groups = self.env[
+                    'res.groups'].search(
+                        [['name',
+                          '=',
+                          self.env.ref(
+                              'con_profile.group_sale_small_qty').name]])
+                for data in groups:
+                    for users in data.users:
+                        users_list.append(users.id)
+                if pr.bill_uom_qty < pr.min_sale_qty \
+                 and actual_user not in users_list:
+                    raise UserError(_(
+                        "You can't confirm, the qty is smaller for: %s"
+                    ) % pr.product_id.name)
+                ###
                 if not pr.bill_uom:
                     raise UserError(_(
                         "You need define a sale uom for product: %s"
@@ -400,7 +419,7 @@ class SaleOrder(models.Model):
                 if pr.bill_uom_qty <= 0.0:
                     raise UserError(_(
                         "You need specify a quantity for product: %s"
-                    ) % pr.product_id.name)  
+                    ) % pr.product_id.name)
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
         # ~ dl_ids: Deliveries Lines Ids
@@ -631,7 +650,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Commercial director']])
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
@@ -671,7 +691,8 @@ class SaleOrder(models.Model):
             'res.groups'].search(
                 [['name',
                   '=',
-                  'Commercial director']])
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         for data in groups:
             for users in data.users:
                 recipients.append(users.login)
