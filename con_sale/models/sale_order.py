@@ -402,7 +402,8 @@ class SaleOrder(models.Model):
                     'res.groups'].search(
                         [['name',
                           '=',
-                          'Can confirm smaller quantities']])
+                          self.env.ref(
+                              'con_profile.group_sale_small_qty').name]])
                 for data in groups:
                     for users in data.users:
                         users_list.append(users.id)
