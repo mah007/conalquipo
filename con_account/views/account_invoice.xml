@@ -27,6 +27,19 @@
                 <field name="uom_id" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
             </xpath>
 
+            <xpath expr="//sheet/notebook" position="before">
+                <div>
+                    <group name="address_client_details" class="hidden-xs">
+                        <group string="Shipping Address">
+                            <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                        </group>
+                        <group string="Invoice Address">
+                            <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                        </group>
+                    </group>
+                </div>
+            </xpath>
+
         </field>
     </record>
 
