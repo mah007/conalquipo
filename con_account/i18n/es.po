@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-12 18:29+0000\n"
+"PO-Revision-Date: 2018-06-12 13:30-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.0.8\n"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_invoice_address
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+msgid "DRAFT INVOICE"
+msgstr "FACTURA EN BORRADOR"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de Factura"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_line_owner_id
+msgid "Owner"
+msgstr "Propietario"
+
+#. module: con_account
+#: selection:account.invoice,invoice_type:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_line_qty_shipped
+msgid "Quantity to be shipped"
+msgstr "Cantidad a ser entregada"
+
+#. module: con_account
+#: selection:account.invoice,invoice_type:0
+msgid "Rent"
+msgstr "Arriendo"
+
+#. module: con_account
+#: selection:account.invoice,invoice_type:0
+msgid "Sale"
+msgstr "Venta"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_shipping_address
+msgid "Shipping"
+msgstr "Transporte"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Shipping Address"
+msgstr "Dirección de obra"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_invoice_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_line_bill_uom
+msgid "Unit of Measure of Sale"
+msgstr "Unidad de medida de la venta"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_id
+msgid "Work"
+msgstr "Obra"
