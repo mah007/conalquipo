@@ -1321,7 +1321,7 @@ class SaleOrderLine(models.Model):
             for uom_list in line.product_id.product_tmpl_id.uoms_ids:
                 if line.bill_uom.id == uom_list.uom_id.id:
                     line.price_unit = uom_list.cost_byUom
-                    line.min_sale_qty = uom_list.quantity      
+                    line.min_sale_qty = uom_list.quantity
         # Create in lines extra products for components
         if line.components_ids:
             for data in line.components_ids:
