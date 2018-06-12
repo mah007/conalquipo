@@ -81,7 +81,7 @@
                             <field name="customer_lead" class="oe_inline"/> days
                         </div>
                         <field name="order_type" invisible="1"/>
-                        <field name="min_sale_qty" readonly="1"/>
+                        <field name="min_sale_qty" readonly="0"/>
                         <field name="bill_uom_qty" required="1"/>
                         <field name="compute_uoms" readonly="0" invisible="1"/>
                         <field name="bill_uom" required="1" domain="[('id', 'in', compute_uoms)]"/>
