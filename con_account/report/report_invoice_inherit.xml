@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_invoice_inherit" model="ir.ui.view">
+            <field name="name">Report Sale Document</field>
+            <field name="inherit_id" ref="account.report_invoice_document"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@class='page']" position="before">
+                    <t t-if="o.type == 'out_invoice' and o.state == 'draft'">
+                        <div 
+                        style="position:absolute;opacity:0.25;z-index:1000;transform:rotate(300deg);-webkit-transform:rotate(300deg);width:150%;">
+                        <p style="font-size:50px;">DRAFT INVOICE</p>
+                        </div>
+                    </t>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

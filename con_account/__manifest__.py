@@ -18,7 +18,8 @@
         - Adds project_id, invoice_type field to account.invoice.line model.
     """,
     'data': [
-        'views/account_invoice.xml'
+        'views/account_invoice.xml',
+        'report/report_invoice_inherit.xml',
     ],
     'qweb': [
     ],
