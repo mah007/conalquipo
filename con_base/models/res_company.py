@@ -27,3 +27,5 @@ class ResCompany(models.Model):
 
     iso_logo = fields.Binary(string='Iso Logo')
     footer_logo = fields.Binary(string="Footer Logo")
+    account_extra_perm = fields.Many2many(
+        'res.groups', string="Account extra permissions")

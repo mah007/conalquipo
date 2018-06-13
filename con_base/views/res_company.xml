@@ -13,6 +13,11 @@
                             <field name="footer_logo" widget="image"/>
                         </group>
                     </page>
+                    <page name="account_extra_perm" string="Extra permissions">
+                        <group>
+                            <field name="account_extra_perm" widget="many2many_tags"/>
+                        </group>
+                    </page>
                 </xpath>
            </data>
         </field>
