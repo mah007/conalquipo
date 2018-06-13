@@ -18,14 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+_logger = logging.getLogger(__name__)
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from datetime import datetime
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
-import logging
-_logger = logging.getLogger(__name__)
 
 
 class AccountInvoiceLine(models.Model):
@@ -51,6 +50,26 @@ class AccountInvoice(models.Model):
                                    compute="_get_merge_address")
     invoice_address = fields.Text(string="Billing",
                                   compute="_get_merge_address")
+
+    @api.multi
+    def write(self, values):
+        # Overwrite account invoice write
+        res = super(AccountInvoice, self).write(values)
+        # Account extra permissions
+        groups_company = []
+        users_in_acc_groups = []
+        actual_user = self.env.user.id
+        user_company = self.env['res.users'].browse([self._uid]).company_id
+        for acc_groups in user_company.account_extra_perm:
+            groups_company.append(acc_groups)
+        for data in groups_company:
+            for acc_users in data.users:
+                users_in_acc_groups.append(acc_users.id)
+        if actual_user in users_in_acc_groups:
+            return res
+        else:
+            raise UserError(_(
+                "You don't have permission to edit the record!"))
 
     @api.depends('project_id')
     def _get_merge_address(self):
@@ -128,7 +147,7 @@ class AccountInvoice(models.Model):
                 {'journal_id': self.journal_id.id,
                  'type': 'in_invoice'})._default_account(),
             'price_unit': line.order_id.currency_id.compute(
-                line.price_unit,  self.currency_id, round=False),
+                line.price_unit, self.currency_id, round=False),
             'quantity': quantity,
             'discount': 0.0,
             'account_analytic_id': line.account_analytic_id.id,
