@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-07 22:17+0000\n"
-"PO-Revision-Date: 2018-06-07 17:21-0500\n"
+"POT-Creation-Date: 2018-06-13 17:16+0000\n"
+"PO-Revision-Date: 2018-06-13 12:17-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,12 +15,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "(edit)"
 msgstr "(editar)"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_account_extra_perm
+msgid "Account extra permissions"
+msgstr "Permisos extras contabilidad"
 
 #. module: con_base
 #: model:res.partner.messages,name:con_base.msg9
@@ -248,6 +253,11 @@ msgstr "Estadio"
 #: model:res.partner.sector,name:con_base.sector53
 msgid "Estrella"
 msgstr "Estrella"
+
+#. module: con_base
+#: model:ir.ui.view,arch_db:con_base.view_company_form
+msgid "Extra permissions"
+msgstr "Permisos extras"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector102
