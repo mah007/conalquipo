@@ -17,9 +17,11 @@ class CustomerPortfolio(models.TransientModel):
     def _get_data_partners(self):
       # Selections
         self.invoice_ids = [(5,)]
+        self.project_ids = [(5,)]
         all_partners = self.env['res.partner'].search([])
         if self.typeselection == 'manual':
             self.partner_ids = [(5,)]
+            self.project_ids = [(5,)]
         else:
             self.partner_ids = list(all_partners._ids)
 
@@ -27,9 +29,11 @@ class CustomerPortfolio(models.TransientModel):
     def _get_data_report(self):
         # Data
         self.invoice_ids = [(5,)]
+        self.project_ids = [(5,)]
         self.can_print = False
         partners = []
         invoices_lst = []
+        project_lst = []
         all_partners = self.env['res.partner'].search([])
 
         # Selections
@@ -37,15 +41,18 @@ class CustomerPortfolio(models.TransientModel):
             partners = list(all_partners._ids)
         else:
             partners = self.partner_ids._ids
-
         if partners:
             invoices = self.env['account.invoice'].search(
-                [('partner_id', 'in', partners)]) or False
+                [('partner_id', 'in', partners),
+                 ('state', 'in', ['draft', 'open'])]) or False
             if invoices:
+                for data in invoices:
+                    project_lst.append(data.project_id.id)
                 invoices_lst = invoices._ids
                 for info in self:
                     info.partner_ids = partners
                     info.invoice_ids = invoices_lst
+                    info.project_ids = project_lst
                     if info.invoice_ids:
                         info.can_print = True
 
@@ -61,6 +68,9 @@ class CustomerPortfolio(models.TransientModel):
     invoice_ids = fields.Many2many(
         'account.invoice',
         string="Invoices")
+    project_ids = fields.Many2many(
+        'project.project',
+        string="Projects")
     can_print = fields.Boolean('Can print')
 
     @api.multi
@@ -72,7 +82,7 @@ class CustomerPortfolio(models.TransientModel):
         datas = {'ids': self.env.context.get('active_ids', [])}
         res = self.read(
             ['company_id', 'typeselection', 'partner_ids',
-             'invoice_ids'])
+             'invoice_ids', 'project_ids'])
         res = res and res[0] or {}
         datas['form'] = res
         return self.env.ref(

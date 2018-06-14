@@ -16,10 +16,11 @@
                         </group>
                         <group>
                             <field name="partner_ids" widget="many2many_tags" attrs="{'invisible': [('typeselection', '=', 'all')]}"/>
+                            <field name="project_ids" widget="many2many_tags" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Invoices" invisible="1">
+                        <page string="Invoices" invisible="0">
                             <field name="invoice_ids"/>
                         </page>
                     </notebook>
