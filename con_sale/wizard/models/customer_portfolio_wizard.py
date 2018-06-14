@@ -13,14 +13,24 @@ class CustomerPortfolio(models.TransientModel):
         company = self.env['res.users'].browse([self._uid]).company_id
         return company
 
-    @api.onchange(
-        'typeselection', 'partner_ids', 'invoice_ids')
+    @api.onchange('typeselection')
+    def _get_data_partners(self):
+      # Selections
+        self.invoice_ids = [(5,)]
+        all_partners = self.env['res.partner'].search([])
+        if self.typeselection == 'manual':
+            self.partner_ids = [(5,)]
+        else:
+            self.partner_ids = list(all_partners._ids)
+
+    @api.onchange('partner_ids', 'invoice_ids')
     def _get_data_report(self):
         # Data
+        self.invoice_ids = [(5,)]
+        self.can_print = False
         partners = []
         invoices_lst = []
         all_partners = self.env['res.partner'].search([])
-        all_projects = self.env['project.project'].search([])
 
         # Selections
         if self.typeselection == 'all':
@@ -36,6 +46,8 @@ class CustomerPortfolio(models.TransientModel):
                 for info in self:
                     info.partner_ids = partners
                     info.invoice_ids = invoices_lst
+                    if info.invoice_ids:
+                        info.can_print = True
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -49,6 +61,7 @@ class CustomerPortfolio(models.TransientModel):
     invoice_ids = fields.Many2many(
         'account.invoice',
         string="Invoices")
+    can_print = fields.Boolean('Can print')
 
     @api.multi
     def print_report(self):

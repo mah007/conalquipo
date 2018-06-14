@@ -207,6 +207,7 @@ class SaleOrder(models.Model):
             msg = _("Without credit limit define!")
             self.write({
                 'can_confirm': True,
+                'available_amount': 0.0,
                 'message_invoice': msg})
         if self.partner_id.over_credit:
             self.write({'can_confirm': True})

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 15:10+0000\n"
-"PO-Revision-Date: 2018-06-08 10:15-0500\n"
+"POT-Creation-Date: 2018-06-14 17:39+0000\n"
+"PO-Revision-Date: 2018-06-14 12:41-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_sale
 #: model:mail.template,body_html:con_sale.create_order_email_template
@@ -106,13 +106,13 @@ msgid "Assigned Operator"
 msgstr "Operador asignado"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:660
+#: code:addons/con_sale/models/sale_order.py:659
 #, python-format
 msgid "Attention: The order %s are created by %s"
 msgstr "Atención: La orden %s ha  creada por %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:528
+#: code:addons/con_sale/models/sale_order.py:526
 #, python-format
 msgid "Attention: The order %s are created by %s with template: %s"
 msgstr "Atención: La orden %s ha sido creada por %s utilizando la plantilla: %s"
@@ -136,6 +136,11 @@ msgstr "Facturación"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_can_confirm
 msgid "Can confirm"
 msgstr "Puede confirmar"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_can_print
+msgid "Can print"
+msgstr "Can print"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.customer_portfolio_wizard_view
@@ -361,19 +366,19 @@ msgid "Esquinero para muros y fosos"
 msgstr "Esquinero para muros y fosos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:200
+#: code:addons/con_sale/models/sale_order.py:201
 #, python-format
 msgid "Exceeds credit limit!"
 msgstr "Excede el limite de crédito!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:171
+#: code:addons/con_sale/models/sale_order.py:172
 #, python-format
 msgid "Exceeds limit and has expired invoice!"
 msgstr "Excede el limite y tiene facturas vencidas!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:180
+#: code:addons/con_sale/models/sale_order.py:181
 #, python-format
 msgid "Exceeds limit on outstanding invoices!"
 msgstr "Excede el limite en facturas pendientes!"
@@ -424,7 +429,7 @@ msgid "Formaleteria para losa"
 msgstr "Formaleteria para losa"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:162
+#: code:addons/con_sale/models/sale_order.py:163
 #, python-format
 msgid "Has an expired bill!"
 msgstr "Tiene factura(s) vencida(s)"
@@ -435,7 +440,7 @@ msgid "Have components?"
 msgstr "Tiene componentes?"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:187
+#: code:addons/con_sale/models/sale_order.py:188
 #, python-format
 msgid "Have outstanding invoices!"
 msgstr "Tiene facturas pendientes!"
@@ -759,6 +764,7 @@ msgstr "Recibo"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_due_invoice_ids
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "Related invoices"
 msgstr "Facturas relacionadas"
 
@@ -821,7 +827,7 @@ msgstr "Líneas de pedidos de venta"
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_typeselection
 msgid "Selection type"
-msgstr "Selection type"
+msgstr "Tipo de selección"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -904,7 +910,7 @@ msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:449
+#: code:addons/con_sale/models/sale_order.py:447
 #, python-format
 msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
@@ -976,7 +982,7 @@ msgid "Vehicle"
 msgstr "Vehículo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:206
+#: code:addons/con_sale/models/sale_order.py:207
 #, python-format
 msgid "Without credit limit define!"
 msgstr "Sin limite de crédito definido!"
@@ -988,25 +994,25 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:414
+#: code:addons/con_sale/models/sale_order.py:412
 #, python-format
 msgid "You can't confirm, the qty is smaller for: %s"
 msgstr "No puede confirmar orden con cantidad menor permitida de: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:419
+#: code:addons/con_sale/models/sale_order.py:417
 #, python-format
 msgid "You need define a sale uom for product: %s"
 msgstr "Ud. necesita definir la unidad de medida de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:423
+#: code:addons/con_sale/models/sale_order.py:421
 #, python-format
 msgid "You need specify a quantity for product: %s"
 msgstr "Ud. necesita especificar la cantidad de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:669
+#: code:addons/con_sale/models/sale_order.py:668
 #: code:addons/con_sale/models/sale_order.py:786
 #, python-format
 msgid "You need specify a work in this sale order"
@@ -1019,7 +1025,7 @@ msgid "You need to add products!"
 msgstr "Ud. necesita agregar productos a las lineas"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:446
+#: code:addons/con_sale/models/sale_order.py:444
 #, python-format
 msgid "You need to attach the client's validation documents"
 msgstr "Ud. necesita adjuntar los documentos para validar al cliente"
