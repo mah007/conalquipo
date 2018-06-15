@@ -97,7 +97,7 @@ class ProductTemplate(Model):
     @api.multi
     @api.onchange('type')
     def get_type(self):
-        if self.type in ['service', 'consu']: 
+        if self.type in ['service', 'consu']:
             self.location_id = False
             self.state_id = False
             self.color = False
@@ -135,7 +135,7 @@ class ProductTemplate(Model):
                 return self.env[
                     'stock.location'].search(
                         [('set_default_location', '=', True)],
-                         limit=1) or False
+                        limit=1) or False
 
     @api.multi
     @api.onchange('location_id')
@@ -146,7 +146,7 @@ class ProductTemplate(Model):
 
         :return: None
         """
-        if self.location_id.product_state: 
+        if self.location_id.product_state:
             location_obj = self.env['stock.location']
             location = location_obj.search([('id', '=', self.location_id.id)])
             self.state_id = location.product_state.id
@@ -154,7 +154,8 @@ class ProductTemplate(Model):
         else:
             if self.location_id:
                 raise UserError(_(
-                    "The following location don't have a state asigned"))          
+                    "The following location don't have a state asigned"))
+
     @api.multi
     @api.onchange('state_id')
     def get_default_location(self):
@@ -164,7 +165,7 @@ class ProductTemplate(Model):
 
         :return: None
         """
-        if self.location_id.product_state: 
+        if self.location_id.product_state:
             location_obj = self.env['stock.location']
             location = location_obj.search(
                 [('location_id', '=', self.location_id.location_id.id),
@@ -216,13 +217,16 @@ class ProductTemplate(Model):
                                 default=False)
     components_ids = fields.One2many(
         'product.components', 'product_id', string='Components')
-    product_origin = fields.Many2one('stock.location',
-                                     string="Location Origin")
+    product_origin = fields.Many2one(
+        'stock.location',
+        string="Location Origin",
+        domain=[('usage', '=', 'internal')])
     replenishment_charge = fields.Many2one(
         'product.template', string='Replenishment charge')
     min_qty_rental = fields.Integer(string='Min Qty rental')
-    multiples_uom = fields.Boolean(string="Has multiples uom?",
-                                default=False)
+    multiples_uom = fields.Boolean(
+        string="Has multiples uom?",
+        default=False)
     uoms_ids = fields.One2many(
         'product.multiples.uom', 'product_id', string='Multiples UOMs')
     employee_ids = fields.Many2many(
