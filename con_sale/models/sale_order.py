@@ -1414,7 +1414,8 @@ class SaleOrderLine(models.Model):
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_component': True,
-                            'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                            'bill_uom':\
+                                data.product_id.product_tmpl_id.uom_id.id
                         }
                         _logger.warning(component)
                         component.write(new_line_component)
@@ -1435,7 +1436,8 @@ class SaleOrderLine(models.Model):
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_extra': True,
-                            'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                            'bill_uom':\
+                                data.product_id.product_tmpl_id.uom_id.id
                         }
                         _logger.warning(extra)
                         extra.write(new_line_extra)
