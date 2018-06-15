@@ -1,0 +1,11 @@
+-
+  Stock
+-
+  !record {model: res.config.settings, id: con_default_stock_properties}:
+    {
+      'group_stock_multi_locations': True,
+      'group_uom': True,
+    }
+-
+  !python {model: res.config.settings}: |
+        self.browse(ref('con_default_stock_properties')).execute()
