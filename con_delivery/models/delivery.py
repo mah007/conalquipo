@@ -55,7 +55,13 @@ class DeliveryCarrier(models.Model):
                                             'delivery_carrier_id',
                                             string='Lines Delivery Carrier'
                                                    'Cost', copy=True)
-                                                
+    product_id = fields.Many2one(
+        'product.product',
+        string='Delivery Product',
+        required=True,
+        ondelete='restrict',
+        domain=[('product_tmpl_id.for_shipping', '=', True)])
+
     @api.onchange('state_ids')
     def onchange_states(self):
         """

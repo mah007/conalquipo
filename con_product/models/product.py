@@ -240,7 +240,8 @@ class ProductTemplate(Model):
         string='Sale UoM')
     generate_task = fields.Boolean(
         string="Generate task?", default=False)
-
+    for_shipping = fields.Boolean(
+        string='Use for shipping?')
 
 class ProductProduct(Model):
     _inherit = "product.product"
