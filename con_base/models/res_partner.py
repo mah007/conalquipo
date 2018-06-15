@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import logging
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 from odoo import models, fields, api, exceptions, _
 
 
@@ -181,6 +181,9 @@ class ResPartnerCode(models.Model):
         values['partner_code'] = self.env[
             'ir.sequence'].next_by_code('res.partner.code')
         res = super(ResPartnerCode, self).create(values)
+        pay_term = self.env.user.company_id.default_payment_term_id.id
+        if pay_term:
+            res.property_payment_term_id = pay_term
         return res
 
 

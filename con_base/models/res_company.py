@@ -29,3 +29,5 @@ class ResCompany(models.Model):
     footer_logo = fields.Binary(string="Footer Logo")
     account_extra_perm = fields.Many2many(
         'res.groups', string="Account extra permissions")
+    default_payment_term_id = fields.Many2one(
+        'account.payment.term', string="Default customer payment terms")
