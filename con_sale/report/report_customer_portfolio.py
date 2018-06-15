@@ -19,9 +19,17 @@ class ReportCustomerPortfolio(models.AbstractModel):
         invoice_ids = self.env[
             'account.invoice'].browse(
                 data.get('form', {}).get('invoice_ids', False))
+        project_ids = self.env[
+            'project.project'].browse(
+                data.get('form', {}).get('project_ids', False))
+        company_id = self.env[
+            'res.company'].browse(
+                data.get('form', {}).get('company_id', False))
         return {
             'doc_ids': data.get('ids', data.get('active_ids')),
             'doc_model': 'account.invoice',
             'data': dict(data,
                          partner_ids=partner_ids,
-                         invoice_ids=invoice_ids),}
+                         invoice_ids=invoice_ids,
+                         project_ids=project_ids,
+                         company_id=company_id),}

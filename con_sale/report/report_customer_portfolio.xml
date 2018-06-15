@@ -18,56 +18,58 @@
                     <center><h1>Customer portfolio</h1></center>
             
                     <t t-foreach="data['partner_ids']" t-as="partner">
-                        <t t-foreach="data['invoice_ids']" t-as="invoice">
-                            <t t-if="invoice.project_id.partner_id.id == partner.id">
-                                <table class="table table-condensed">
-                                    <tr>
-                                        <th align="left" bgcolor="#A9A9A9">
-                                            <strong>
-                                                <span t-esc="partner.name"/>
-                                            </strong>
-                                        </th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
+                        <table class="table table-condensed">
+                            <tr>
+                                <th align="left" bgcolor="#A9A9A9">
+                                    <strong>
+                                        Partner: <span t-esc="partner.name"/>
+                                    </strong>
+                                </th>
+                                <th></th>
+                            </tr>
+                            <t t-foreach="data['project_ids']" t-as="project">
+                                <t t-if="partner.id == project.partner_id.id">
                                     <tr>
                                         <td align="left" bgcolor="#A9A9A9">
                                             <strong>
-                                                <span t-esc="invoice.project_id.name"/>
+                                                Work: <span t-esc="project.name"/>
                                             </strong>
                                         </td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <th align="left" bgcolor="#A9A9A9">Draft</th>
-                                        <th align="left" bgcolor="#A9A9A9">Open</th>
-                                        <th align="left" bgcolor="#A9A9A9">Paid</th>
+                                        <th align="left" bgcolor="#A9A9A9">Draft invoices</th>
+                                        <th align="left" bgcolor="#A9A9A9">Open invoices</th>
                                     </tr>
                                     <tr>
-                                        <t t-foreach="data['invoice_ids']" t-as="invoice">
-                                            <t t-if="invoice.project_id.partner_id.id == partner.id">
-                                                <td>                               <t t-if="invoice.state == 'draft'">
-                                                        <span t-esc="invoice.amount_total"/>
+                                        <td>
+                                            <t t-set="total_di" t-value="0.0"/>
+                                            <t t-foreach="data['invoice_ids']" t-as="inv">
+                                                <t t-if="inv.project_id.id==project.id">
+                                                    <t t-if="inv.state=='draft'">
+                                                        <t t-set="total_di" t-value="total_di+inv.amount_total"/>
                                                     </t>
-                                                </td>
-                                                    <t t-if="invoice.state == 'open'">
-                                                        <span t-esc="invoice.amount_total"/>
-                                                    </t>
-                                                <td>
-                                                </td>
-                                                <td>
-                                                    <t t-if="invoice.state == 'paid'">
-                                                        <span t-esc="invoice.amount_total"/>
-                                                    </t>
-                                                </td>
+                                                </t>
                                             </t>
-                                        </t>
+                                            <span t-esc="total_di"/>
+                                        </td>
+                                        <td>
+                                            <t t-set="total_di" t-value="0.0"/>
+                                            <t t-foreach="data['invoice_ids']" t-as="inv">
+                                                <t t-if="inv.project_id.id==project.id">
+                                                    <t t-if="inv.state=='open'">
+                                                        <t t-set="total_di" t-value="total_di+inv.amount_total"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <span t-esc="total_di"/>
+                                        </td>
                                     </tr>
-                                </table>
+                                </t>
                             </t>
-                        </t>
+                        </table>
                     </t>
+
                 </div>
             </t>
         </t>
