@@ -39,10 +39,11 @@
                 'base', 'delivery', 'mrp_repair', 'product',
                 'con_project', 'con_delivery', 'hr'],
     'data': [
+        'views/email_template.xml',
         'reports/report_stockpicking.xml',
         'data/module_category.xml',
         'data/groups.xml',
-        'views/email_template.xml',
+        'data/res_config.yml',
         'views/cron_template.xml',
         'views/shipping_templates.xml',
         'wizards/views/set_location_wizard.xml',

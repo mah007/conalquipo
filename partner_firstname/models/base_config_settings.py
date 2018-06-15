@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
-_logger = logging.getLogger(__name__)
 from odoo import api, fields, models
+_logger = logging.getLogger(__name__)
 
 
 class ResConfigSettings(models.TransientModel):
@@ -68,10 +68,7 @@ class ResConfigSettings(models.TransientModel):
     def _partners_for_recalculating(self):
         return self.env['res.partner'].search([
             ('is_company', '=', False),
-            ('firstname', '!=', False),
-            ('second_firstname', '!=', False),
-            ('lastname', '!=', False),
-            ('second_lastname', '!=', False),
+            ('firstname', '!=', False), ('lastname', '!=', False),
         ])
 
     @api.multi
