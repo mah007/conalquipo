@@ -131,9 +131,10 @@ class SaleOrder(models.Model):
                   '=',
                   self.env.ref(
                       'con_profile.group_sale_overlimit').name]])
-        for data in groups:
-            for users in data.users:
-                users_list.append(users.id)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    users_list.append(users.id)
 
         # Invoices
         today_dt = datetime.now().strftime('%Y-%m-%d')
@@ -404,9 +405,10 @@ class SaleOrder(models.Model):
                           '=',
                           self.env.ref(
                               'con_profile.group_sale_small_qty').name]])
-                for data in groups:
-                    for users in data.users:
-                        users_list.append(users.id)
+                if groups:
+                    for data in groups:
+                        for users in data.users:
+                            users_list.append(users.id)
                 if pr.bill_uom_qty < pr.min_sale_qty \
                  and actual_user not in users_list:
                     raise UserError(_(
@@ -429,10 +431,11 @@ class SaleOrder(models.Model):
              ('picking_ids', '=', False),
              ('order_id', '=', self.id)])
         customer_location = self.env.ref('stock.stock_location_customers')
-        for picking in self.picking_ids:
-            if picking.state not in ['done', 'cancel'] and \
-                    picking.location_dest_id.id == customer_location.id:
-                dl_ids.update({'picking_ids': [(4, picking.id)]})
+        if customer_location:
+            for picking in self.picking_ids:
+                if picking.state not in ['done', 'cancel'] and \
+                        picking.location_dest_id.id == customer_location.id:
+                    dl_ids.update({'picking_ids': [(4, picking.id)]})
 
         if self.partner_id:
             # If partner have documents
@@ -653,9 +656,10 @@ class SaleOrder(models.Model):
                   '=',
                   self.env.ref(
                       'con_profile.group_commercial_director').name]])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.login)
         body = _(
             'Attention: The order %s are created by %s') % (
                 res.name, res.create_uid.name)
@@ -688,15 +692,17 @@ class SaleOrder(models.Model):
     def send_mail(self, body):
         # Recipients
         recipients = []
+        mail_template = None
         groups = self.env[
             'res.groups'].search(
                 [['name',
                   '=',
                   self.env.ref(
                       'con_profile.group_commercial_director').name]])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.login)
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",
@@ -710,8 +716,9 @@ class SaleOrder(models.Model):
             # Mail template
             template = self.env.ref(
                 'con_sale.create_order_email_template')
-            mail_template = self.env[
-                'mail.template'].browse(template.id)
+            if template:
+                mail_template = self.env[
+                    'mail.template'].browse(template.id)
             # senders
             uid = SUPERUSER_ID
             user_id = self.env[
