@@ -1,0 +1,10 @@
+-
+  Partner First Name
+-
+  !record {model: res.config.settings, id: partner_firstname_properties}:
+    {
+      'partner_names_order': 'first_last',
+    }
+-
+  !python {model: res.config.settings}: |
+        self.browse(ref('partner_firstname_properties')).execute()
