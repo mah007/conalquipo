@@ -100,13 +100,6 @@ class SaleOrder(models.Model):
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices')
 
-    @api.onchange('template_id')
-    def onchange_template_id(self):
-        result = super(SaleOrder, self).onchange_template_id()
-        for line in self.order_line:
-            line.product_id_change()
-        return result
-
     @api.multi
     def check_limit(self):
         """
@@ -1482,7 +1475,6 @@ class SaleOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
-            line.product_id_change()
 
     @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
                  'qty_invoiced', 'bill_uom_qty')
@@ -1669,7 +1661,6 @@ class SaleOrderLine(models.Model):
                 if self.bill_uom.id == uom_list.uom_id.id:
                     self.price_unit = uom_list.cost_byUom
                     self.min_sale_qty = uom_list.quantity
-        self.product_id_change()
 
     @api.multi
     def _action_launch_procurement_rule(self):
