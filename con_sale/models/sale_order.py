@@ -824,6 +824,7 @@ class SaleOrder(models.Model):
                     lines.append({
                         'order_id': self._origin.id,
                         'name': new.name,
+                        'bill_uom_qty': new.product_uom_qty,
                         'product_uom_qty': new.product_uom_qty,
                         'product_uom': new.product_uom.id,
                         'product_id': new.product_id.id,
@@ -838,7 +839,7 @@ class SaleOrder(models.Model):
                 # ~ link new records
                 for new in lines:
                     self.update({'order_line': [(0, 0, new)]})
-                self.write({'carrier_id': None})
+                self.write({'carrier_id': None, 'vehicle': None})
 
     @api.onchange('carrier_id')
     def onchange_carrier_id(self):
@@ -943,6 +944,7 @@ class SaleOrder(models.Model):
                     carrier.name, _('Delivery') if x == 0 else
                     _('Receive')),
                 'product_uom_qty': 1,
+                'bill_uom_qty': 1,
                 'product_uom': carrier.product_id.uom_id.id,
                 'bill_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,
@@ -1455,27 +1457,27 @@ class SaleOrderLine(models.Model):
         Compute the amounts of the SO line.
         """
         for line in self:
-            if not line.product_id.product_tmpl_id.for_shipping:
-                quantity = line.bill_uom_qty * line.product_uom_qty
-                if quantity == 0.0 or False:
-                    raise UserError(
-                        _("Ordered or sale quantity can't be zero."))
-                price = line.price_unit * (
-                    1 - (line.discount or 0.0) / 100.0)
-
-                taxes = line.tax_id.compute_all(
-                    price, line.order_id.currency_id, quantity,
-                    product=line.product_id,
-                    partner=line.order_id.partner_shipping_id)
+            quantity = line.bill_uom_qty * line.product_uom_qty
+            if quantity == 0.0 or False:
                 line.update({
-                    'price_unit': price,
-                    'price_tax': sum(
-                        t.get(
-                            'amount', 0.0) for t in taxes.get(
-                                'taxes', [])),
-                    'price_total': taxes['total_included'],
-                    'price_subtotal': taxes['total_excluded'],
+                    'bill_uom_qty': 1,
+                    'product_uom_qty': 1
                 })
+            price = line.price_unit * (
+                1 - (line.discount or 0.0) / 100.0)
+            taxes = line.tax_id.compute_all(
+                price, line.order_id.currency_id, quantity,
+                product=line.product_id,
+                partner=line.order_id.partner_shipping_id)
+            line.update({
+                'price_unit': price,
+                'price_tax': sum(
+                    t.get(
+                        'amount', 0.0) for t in taxes.get(
+                            'taxes', [])),
+                'price_total': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
 
     @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
                  'qty_invoiced', 'bill_uom_qty')
