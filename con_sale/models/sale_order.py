@@ -1339,7 +1339,7 @@ class SaleOrderLine(models.Model):
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
-                        'owner_id': line.owner_id.id,
+                        'owner_id': data.owner_id.id,
                         'is_extra': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
@@ -1356,7 +1356,7 @@ class SaleOrderLine(models.Model):
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
                         'price_unit': 0.0,
-                        'owner_id': line.owner_id.id,
+                        'owner_id': data.owner_id.id,
                         'is_component': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
