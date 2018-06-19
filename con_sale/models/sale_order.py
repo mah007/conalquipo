@@ -1339,6 +1339,7 @@ class SaleOrderLine(models.Model):
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
+                        'owner_id': line.owner_id.id,
                         'is_extra': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
@@ -1355,6 +1356,7 @@ class SaleOrderLine(models.Model):
                         'product_uom_qty': qty,
                         'bill_uom_qty': qty,
                         'price_unit': 0.0,
+                        'owner_id': line.owner_id.id,
                         'is_component': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
@@ -1696,3 +1698,6 @@ class SaleProductComponents(models.Model):
         'product.product', string="Product component")
     quantity = fields.Integer('Default quantity', default=1)
     extra = fields.Boolean('Extra product')
+    owner_id = fields.Many2one(
+        'res.partner', string='Supplier',
+        change_default=True, track_visibility='always')
