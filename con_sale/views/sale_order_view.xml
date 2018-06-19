@@ -289,5 +289,5 @@
      <record id="sale.action_orders" model="ir.actions.act_window">
          <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel', 'merged'))]</field>
      </record>
-     
+
 </odoo>
