@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-18 19:33+0000\n"
-"PO-Revision-Date: 2018-04-18 14:40-0500\n"
+"POT-Creation-Date: 2018-06-19 19:34+0000\n"
+"PO-Revision-Date: 2018-06-19 14:36-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_description
@@ -41,6 +41,36 @@ msgstr "Modelo para almacenar múltiples unidades de medida"
 #: model:ir.actions.act_window,help:con_product.product_states_action
 msgid "A state is a action that affect the product throw of the workflow."
 msgstr "Un estado es una acción que afecta el producto durante el flujo"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_acarreos
+msgid "Acarreos (No tienen descuento)"
+msgstr "Acarreos (No tienen descuento)"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_andamios
+msgid "Andamios"
+msgstr "Andamios"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_1
+msgid "Andamios colgantes"
+msgstr "Andamios colgantes"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_3
+msgid "Andamios de carga"
+msgstr "Andamios de carga"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_2
+msgid "Andamios de tijera"
+msgstr "Andamios de tijera"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_5
+msgid "Andamios multidireccionales"
+msgstr "Andamios multidireccionales"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_child
@@ -72,6 +102,11 @@ msgid "Components"
 msgstr "Componentes"
 
 #. module: con_product
+#: model:product.category,name:con_product.product_category_13
+msgid "Con operador y combustible x HORA"
+msgstr "Con operador y combustible x HORA"
+
+#. module: con_product
 #: code:addons/con_product/models/product_uom.py:38
 #, python-format
 msgid "Conversion from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!."
@@ -94,7 +129,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_create_date
 msgid "Created on"
-msgstr "Creado"
+msgstr "Creado en"
 
 #. module: con_product
 #: model:ir.ui.view,arch_db:con_product.product_states_tree_view
@@ -112,11 +147,16 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: con_product
+#: model:product.category,name:con_product.product_category_destaquiadores
+msgid "Destaquiadores de tuberías y ductos"
+msgstr "Destaquiadores de tuberías y ductos"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_display_name
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_display_name
 #: model:ir.model.fields,field_description:con_product.field_product_states_display_name
 msgid "Display Name"
-msgstr "Nombre Público"
+msgstr "Nombre a mostrar"
 
 #. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
@@ -130,9 +170,60 @@ msgid "Employee"
 msgstr "Empleado"
 
 #. module: con_product
+#: model:product.category,name:con_product.product_category_equipo_electromecanico
+msgid "Equipo electromecánico"
+msgstr "Equipo electromecánico"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_demolicion_otros
+msgid "Equipo para demolición/Compactación/Movimientos materiales"
+msgstr "Equipo para demolición/Compactación/Movimientos materiales"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_equiposVarios
+msgid "Equipos varios"
+msgstr "Equipos varios"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_extra
 msgid "Extra product"
 msgstr "Producto extra"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_formaleteria
+msgid "Formaletería"
+msgstr "Formaletería"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_7
+msgid "Formaletería circular"
+msgstr "Formaletería circular"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_9
+msgid "Formaletería de muro"
+msgstr "Formaletería de muro"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_8
+msgid "Formaletería man-hole y otros"
+msgstr "Formaletería man-hole y otros"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_10
+msgid "Formaletería modular (Para columna y muro)"
+msgstr "Formaletería modular (Para columna y muro)"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_6
+msgid "Formaletería para losa"
+msgstr "Formaletería para losa"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_generate_task
+#: model:ir.model.fields,field_description:con_product.field_product_template_generate_task
+msgid "Generate task?"
+msgstr "Genera tareas?"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_components
@@ -154,6 +245,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: con_product
+#: model:product.category,name:con_product.product_category_instalacionesProvisionales
+msgid "Instalaciones provisionales"
+msgstr "Instalaciones provisionales"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_is_operated
 #: model:ir.model.fields,field_description:con_product.field_product_template_is_operated
 #: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
@@ -172,14 +268,14 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_uid
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_uid
 msgid "Last Updated by"
-msgstr "Actualizado por"
+msgstr "Última actualización de"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_write_date
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_date
 msgid "Last Updated on"
-msgstr "Actualizado"
+msgstr "Última actualización en"
 
 #. module: con_product
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
@@ -204,6 +300,16 @@ msgstr "Ubicación actual:"
 #: model:ir.model.fields,help:con_product.field_product_states_unavailable
 msgid "Make the product unavailable when the product have this state"
 msgstr "Hacer que el producto no esté disponible cuando el producto tenga este estado"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_malacates_torresg
+msgid "Malacates y torres grúas"
+msgstr "Malacates y torres grúas"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_14
+msgid "Maquinaria por MES (Con operador mín 90 hr/mes y combustible)"
+msgstr "Maquinaria por MES (Con operador mín 90 hr/mes y combustible)"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_min_qty_rental
@@ -241,6 +347,21 @@ msgstr "Operado"
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
 msgid "Origin:"
 msgstr "Ubicación origen:"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_11
+msgid "Para formaletería de 1.20 m."
+msgstr "Para formaletería de 1.20 m."
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_12
+msgid "Para formaletería de 2.40 m y 2.70 m."
+msgstr "Para formaletería de 2.40 m y 2.70 m."
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_plantas_electricas
+msgid "Plantas eléctricas"
+msgstr "Plantas eléctricas"
 
 #. module: con_product
 #: model:ir.ui.view,arch_db:con_product.product_states_form_view
@@ -306,6 +427,12 @@ msgid "Sale UOM"
 msgstr "Unidad de medida de venta"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_sale_uom
+#: model:ir.model.fields,field_description:con_product.field_product_template_sale_uom
+msgid "Sale UoM"
+msgstr "Unidad de medida de venta"
+
+#. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_color
 msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
@@ -319,6 +446,11 @@ msgstr "Secuencia"
 #: model:ir.model.fields,field_description:con_product.field_product_states_default_value
 msgid "Set as a default value when the product is created"
 msgstr "Establecer como valor predeterminado cuando se crea el producto"
+
+#. module: con_product
+#: model:product.category,name:con_product.product_category_4
+msgid "Sistema dalmine"
+msgstr "Sistema dalmine"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_state_id
@@ -339,10 +471,10 @@ msgid "States"
 msgstr "Estados"
 
 #. module: con_product
-#: code:addons/con_product/models/product.py:155
-#: code:addons/con_product/models/product.py:174
-#: code:addons/con_product/models/product.py:259
-#: code:addons/con_product/models/product.py:279
+#: code:addons/con_product/models/product.py:156
+#: code:addons/con_product/models/product.py:176
+#: code:addons/con_product/models/product.py:306
+#: code:addons/con_product/models/product.py:326
 #, python-format
 msgid "The following location don't have a state asigned"
 msgstr "La ubicación no tiene un estado definido, debe asignarla"
@@ -371,9 +503,21 @@ msgid "The sequence priority the state will be ordered following this sequence"
 msgstr "La prioridad de secuencia se ordenará según esta secuencia"
 
 #. module: con_product
+#: code:addons/con_product/models/product.py:198
+#, python-format
+msgid "This product needs to be a service type"
+msgstr "Este producto necesita ser del tipo servicio."
+
+#. module: con_product
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 msgid "UOMs for product"
 msgstr "Unidades de medida para productos"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_for_shipping
+#: model:ir.model.fields,field_description:con_product.field_product_template_for_shipping
+msgid "Use for shipping?"
+msgstr "Usado para acarreo?"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_product_components
