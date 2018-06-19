@@ -1456,11 +1456,11 @@ class SaleOrderLine(models.Model):
         """
         for line in self:
             quantity = 0.0
-            if line.bill_uom_qty > 0:
-                quantity = line.bill_uom_qty
-            else:
-                quantity = line.product_uom_qty
-
+            if line.bill_uom_qty and line.product_uom_qty:
+                quantity = line.bill_uom_qty * line.product_uom_qty
+            if quantity == 0.0:
+                raise UserError(
+                    _("Ordered or sale quantity can't be zero."))
             price = line.price_unit * (
                 1 - (line.discount or 0.0) / 100.0)
 
