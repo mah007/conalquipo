@@ -87,7 +87,7 @@
                     <field name="categ_id" position="after">
                         <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
                         <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
-                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
+                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}" readonly="1" force_save="1"/>
                         <field name="product_origin"
                         attrs="{'required':[('type', '=', 'product')], 'invisible':[('type', 'in', ['service', 'consu'])]}"/>
                     </field>
