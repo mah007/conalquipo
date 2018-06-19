@@ -1,34 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* con_sale
+#	* con_sale
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 19:06+0000\n"
-"PO-Revision-Date: 2018-06-19 14:09-0500\n"
+"POT-Creation-Date: 2018-06-19 22:44+0000\n"
+"PO-Revision-Date: 2018-06-19 22:44+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: es_CO\n"
-"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_sale
 #: model:mail.template,body_html:con_sale.create_order_email_template
-msgid ""
-"\n"
-"\n"
-"${ctx['subject']}\n"
-"\n"
-msgstr ""
-"\n"
+msgid "\n"
 "\n"
 "${ctx['subject']}\n"
 "\n"
+""
+msgstr "\n"
+"\n"
+"${ctx['subject']}\n"
+"\n"
+""
 
 #. module: con_sale
 #: selection:sale.order,cancel_options:0
@@ -281,7 +279,7 @@ msgid "Delivered Quantity"
 msgstr "Cantidad Entregada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:943
+#: code:addons/con_sale/models/sale_order.py:944
 #, python-format
 msgid "Delivery"
 msgstr "Entrega"
@@ -651,12 +649,6 @@ msgid "Ordered Quantity"
 msgstr "Cantidad Ordenada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1463
-#, python-format
-msgid "Ordered or sale quantity can't be zero."
-msgstr "Las cantidades ordenadas o las de venta no pueden ser cero."
-
-#. module: con_sale
 #: selection:sale.order,cancel_options:0
 msgid "Other"
 msgstr "Otro"
@@ -768,7 +760,7 @@ msgid "Reason"
 msgstr "Motivo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:944
+#: code:addons/con_sale/models/sale_order.py:945
 #, python-format
 msgid "Receive"
 msgstr "Recibo"
@@ -902,6 +894,7 @@ msgstr "Ordenes de Subarriendo"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_owner_id
+#: model:ir.model.fields,field_description:con_sale.field_sale_product_components_owner_id
 msgid "Supplier"
 msgstr "Subarrendador"
 
@@ -922,10 +915,10 @@ msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1077
-#: code:addons/con_sale/models/sale_order.py:1094
-#: code:addons/con_sale/models/sale_order.py:1371
-#: code:addons/con_sale/models/sale_order.py:1448
+#: code:addons/con_sale/models/sale_order.py:1079
+#: code:addons/con_sale/models/sale_order.py:1096
+#: code:addons/con_sale/models/sale_order.py:1375
+#: code:addons/con_sale/models/sale_order.py:1452
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -1091,3 +1084,4 @@ msgstr "res.config.settings"
 #: model:ir.model,name:con_sale.model_sale_order_advertisement_wizard
 msgid "sale.order.advertisement.wizard"
 msgstr "sale.order.advertisement.wizard"
+

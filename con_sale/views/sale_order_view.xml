@@ -149,6 +149,7 @@
                         <field name="product_id" domain="[('product_tmpl_id.type', '!=', 'service')]"/>
                         <field name="extra"/>
                         <field name="quantity"/>
+                        <field name="owner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
                     </tree>
                 </field>
             </xpath>
