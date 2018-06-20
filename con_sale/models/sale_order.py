@@ -962,6 +962,16 @@ class SaleOrder(models.Model):
                 break
         return True
         
+    @api.onchange('template_id')
+    def onchange_template_id(self):
+        res = super(SaleOrder, self).onchange_template_id()
+        self.order_lines = [(5, 0, 0)]
+        self.note = ''
+        template = self.template_id.with_context(lang=self.partner_id.lang)
+        if template.note:
+            self.note = template.note
+        return res
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
