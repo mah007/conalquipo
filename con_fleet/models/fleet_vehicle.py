@@ -59,7 +59,7 @@ class FleetVehicle(models.Model):
                                default=fields.Date.context_today)
     soat = fields.Date('SOAT', default=fields.Date.context_today,
                        track_visibility='onchange')
-    tec_mechanic = fields.Date('Tec Mechanic', track_visibility='onchange',
+    tec_mechanic = fields.Date('Tech Mechanic', track_visibility='onchange',
                                default=fields.Date.context_today)
     gravamen = fields.Date('Gravamen', default=fields.Date.context_today,
                            track_visibility='onchange')
