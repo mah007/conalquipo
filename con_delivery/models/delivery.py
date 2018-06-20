@@ -18,7 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+_logger = logging.getLogger(__name__)
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class DeliveryCarrierCost(models.Model):
@@ -33,28 +36,54 @@ class DeliveryCarrierCost(models.Model):
     """
     _name = 'delivery.carrier.cost'
 
-    vehicle = fields.Many2one(comodel_name='fleet.vehicle', string='Vehicle',
-                              ondelete='cascade', index=True, copy=False,
-                              track_visibility='onchange')
-    cost = fields.Float(string='Cost', track_visibility='onchange')
-    delivery_carrier_id = fields.Many2one('delivery.carrier',
-                                          string='Delivery Carrier',
-                                          ondelete='cascade', index=True,
-                                          copy=False,
-                                          track_visibility='onchange')
+    vehicle = fields.Many2one(
+        comodel_name='fleet.vehicle',
+        string='Vehicle',
+        ondelete='cascade',
+        index=True, copy=False,
+        track_visibility='onchange')
+    cost = fields.Float(
+        string='Cost',
+        track_visibility='onchange')
+    delivery_carrier_id = fields.Many2one(
+        'delivery.carrier',
+        string='Delivery Carrier',
+        ondelete='cascade', index=True,
+        copy=False,
+        track_visibility='onchange')
+
+    @api.model
+    def create(self, values):
+        record = super(DeliveryCarrierCost, self).create(values)
+        if not record.vehicle:
+            raise UserError(_("The vehicle is required on the line"))
+        if not record.cost:
+            raise UserError(_("The cost is required on the line"))
+        return record
+
+    @api.multi
+    def write(self, values):
+        record = super(DeliveryCarrierCost, self).write(values)
+        if not self.vehicle:
+            raise UserError(_("The vehicle is required on the line"))
+        if not self.cost:
+            raise UserError(_("The cost is required on the line"))
+        return record
 
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
-    municipality_ids = fields.One2many('res.country.municipality',
-                                       'delivery_carrier_id',
-                                       string='Municipality', copy=True,
-                                       track_visibility='onchange')
-    delivery_carrier_cost = fields.One2many('delivery.carrier.cost',
-                                            'delivery_carrier_id',
-                                            string='Lines Delivery Carrier'
-                                                   'Cost', copy=True)
+    municipality_ids = fields.One2many(
+        'res.country.municipality',
+        'delivery_carrier_id',
+        string='Municipality', copy=True,
+        track_visibility='onchange')
+    delivery_carrier_cost = fields.One2many(
+        'delivery.carrier.cost',
+        'delivery_carrier_id',
+        string='Lines Delivery Carrier'
+        'Cost', copy=True)
     product_id = fields.Many2one(
         'product.product',
         string='Delivery Product',
@@ -71,12 +100,17 @@ class DeliveryCarrier(models.Model):
 
         :return: None
         """
-        self.country_ids = [(6, 0, self.country_ids.ids +
-                             self.state_ids.mapped('country_id.id'))]
-        self.municipality_ids = [(6, 0, self.municipality_ids.ids +
-                                  self.municipality_ids.mapped('state_id.id'))
-                                 ]
-
+        self.country_ids = [
+            (6,
+             0,
+             self.country_ids.ids + self.state_ids.mapped(
+                 'country_id.id'))]
+        self.municipality_ids = [
+            (6,
+             0,
+             self.municipality_ids.ids + self.municipality_ids.mapped(
+                 'state_id.id'))]
+     
 
 class ShippingDriver(models.Model):
     """
@@ -97,19 +131,23 @@ class ShippingDriver(models.Model):
     _name = 'shipping.driver'
 
     driver_ids = fields.Many2one(
-        'hr.employee', string='Employee', ondelete='cascade', index=True,
+        'hr.employee',
+        string='Employee',
+        ondelete='cascade', index=True,
         copy=False, track_visibility='onchange')
-    job_title = fields.Selection([('driver', 'Driver'),
-                                  ('assistant', 'Assistant')],
-                                 string='HR Type', default='driver'
-                                 )
+    job_title = fields.Selection(
+        [('driver', 'Driver'),
+         ('assistant', 'Assistant')],
+        string='HR Type', default='driver')
     stock_picking_id = fields.Many2one(
-        'stock.picking', string='Stock Picking', ondelete='cascade',
-        index=True, copy=False, track_visibility='onchange')
-
-    identification_id = fields.Char(string='Identification No',
-                                    related="driver_ids.identification_id",
-                                    store=True)
+        'stock.picking', string='Stock Picking',
+        ondelete='cascade',
+        index=True, copy=False,
+        track_visibility='onchange')
+    identification_id = fields.Char(
+        string='Identification No',
+        related="driver_ids.identification_id",
+        store=True)
 
     @api.onchange('job_title')
     def onchange_job_title(self):

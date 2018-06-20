@@ -11,16 +11,14 @@
                    </xpath>
                    <xpath expr="//page[2]" position="after">
                         <page string="Cost for Vehicle" name="vehicle">
-                            <group>
-                                <group>
-                                    <field name="delivery_carrier_cost" mode="tree" nolabel="1">
-                                         <tree editable="bottom">
-                                             <field name="vehicle"/>
-                                             <field name="cost"/>
-                                         </tree>
-                                    </field>
-                                </group>
-                            </group>
+
+                            <field name="delivery_carrier_cost" mode="tree" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="vehicle"/>
+                                        <field name="cost"/>
+                                    </tree>
+                            </field>
+
                         </page>
                   </xpath>
               </field>
