@@ -961,7 +961,7 @@ class SaleOrder(models.Model):
             if not receipt:
                 break
         return True
-        
+  
     @api.onchange('template_id')
     def onchange_template_id(self):
         res = super(SaleOrder, self).onchange_template_id()

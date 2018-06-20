@@ -59,6 +59,8 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The vehicle is required on the line"))
         if not record.cost:
             raise UserError(_("The cost is required on the line"))
+        if record.cost < 0:
+            raise UserError(_("The cost can't be negative"))
         return record
 
     @api.multi
@@ -68,6 +70,8 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The vehicle is required on the line"))
         if not self.cost:
             raise UserError(_("The cost is required on the line"))
+        if self.cost < 0:
+            raise UserError(_("The cost can't be negative"))
         return record
 
 
@@ -111,6 +115,20 @@ class DeliveryCarrier(models.Model):
              self.municipality_ids.ids + self.municipality_ids.mapped(
                  'state_id.id'))]
      
+    @api.model
+    def create(self, values):
+        record = super(DeliveryCarrier, self).create(values)
+        if record.amount < 0:
+            raise UserError(_("The amount limit can't be negative"))
+        return record
+
+    @api.multi
+    def write(self, values):
+        record = super(DeliveryCarrier, self).write(values)
+        if self.amount < 0:
+            raise UserError(_("The amount limit can't be negative"))
+        return record
+
 
 class ShippingDriver(models.Model):
     """

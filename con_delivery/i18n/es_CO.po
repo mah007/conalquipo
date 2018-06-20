@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 15:51+0000\n"
-"PO-Revision-Date: 2018-06-20 10:55-0500\n"
+"POT-Creation-Date: 2018-06-20 20:41+0000\n"
+"PO-Revision-Date: 2018-06-20 15:43-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -135,27 +135,41 @@ msgid "Stock Picking"
 msgstr "Selección de Existencias"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:159
+#: code:addons/con_delivery/models/delivery.py:122
+#: code:addons/con_delivery/models/delivery.py:129
+#, python-format
+msgid "The amount limit can't be negative"
+msgstr "El limite o cantidad del método de envío no puede ser negativo"
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:177
 #, python-format
 msgid "The category of the driver's license of this employee does not coincide with the category required by the vehicle assiging this order"
 msgstr "La categoría de la licencia de conducir de este empleado no coincide con la categoría requerida por el vehículo que asigne esta orden."
 
 #. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:63
+#: code:addons/con_delivery/models/delivery.py:74
+#, python-format
+msgid "The cost can't be negative"
+msgstr "El costo del vehiculo no puede ser negativo"
+
+#. module: con_delivery
 #: code:addons/con_delivery/models/delivery.py:61
-#: code:addons/con_delivery/models/delivery.py:70
+#: code:addons/con_delivery/models/delivery.py:72
 #, python-format
 msgid "The cost is required on the line"
 msgstr "El costo es requerido en la línea"
 
 #. module: con_delivery
 #: code:addons/con_delivery/models/delivery.py:59
-#: code:addons/con_delivery/models/delivery.py:68
+#: code:addons/con_delivery/models/delivery.py:70
 #, python-format
 msgid "The vehicle is required on the line"
 msgstr "El vehículo es requerido en la línea"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:164
+#: code:addons/con_delivery/models/delivery.py:182
 #, python-format
 msgid "This employee does not possess driving skills"
 msgstr "Este empleado no posee habilidades de conducción"
