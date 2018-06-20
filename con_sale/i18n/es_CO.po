@@ -1,32 +1,34 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* con_sale
+# 	* con_sale
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 22:44+0000\n"
-"PO-Revision-Date: 2018-06-19 22:44+0000\n"
+"POT-Creation-Date: 2018-06-20 20:44+0000\n"
+"PO-Revision-Date: 2018-06-20 15:46-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_sale
 #: model:mail.template,body_html:con_sale.create_order_email_template
-msgid "\n"
+msgid ""
+"\n"
 "\n"
 "${ctx['subject']}\n"
 "\n"
-""
-msgstr "\n"
+msgstr ""
+"\n"
 "\n"
 "${ctx['subject']}\n"
 "\n"
-""
 
 #. module: con_sale
 #: selection:sale.order,cancel_options:0
@@ -215,6 +217,11 @@ msgstr "Confirmar Venta"
 #: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
 msgid "Create Advertisement"
 msgstr "Crear Anuncio"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Create Invoice"
+msgstr "Crear Factura"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_create_uid
@@ -915,10 +922,10 @@ msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1079
-#: code:addons/con_sale/models/sale_order.py:1096
-#: code:addons/con_sale/models/sale_order.py:1375
-#: code:addons/con_sale/models/sale_order.py:1452
+#: code:addons/con_sale/models/sale_order.py:1089
+#: code:addons/con_sale/models/sale_order.py:1106
+#: code:addons/con_sale/models/sale_order.py:1385
+#: code:addons/con_sale/models/sale_order.py:1462
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -1084,4 +1091,3 @@ msgstr "res.config.settings"
 #: model:ir.model,name:con_sale.model_sale_order_advertisement_wizard
 msgid "sale.order.advertisement.wizard"
 msgstr "sale.order.advertisement.wizard"
-

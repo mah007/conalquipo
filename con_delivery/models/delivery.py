@@ -20,6 +20,7 @@
 ##############################################################################
 import logging
 _logger = logging.getLogger(__name__)
+from collections import Counter
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
@@ -59,6 +60,8 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The vehicle is required on the line"))
         if not record.cost:
             raise UserError(_("The cost is required on the line"))
+        if record.cost < 0:
+            raise UserError(_("The cost can't be negative"))
         return record
 
     @api.multi
@@ -68,6 +71,8 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The vehicle is required on the line"))
         if not self.cost:
             raise UserError(_("The cost is required on the line"))
+        if self.cost < 0:
+            raise UserError(_("The cost can't be negative"))
         return record
 
 
@@ -111,6 +116,42 @@ class DeliveryCarrier(models.Model):
              self.municipality_ids.ids + self.municipality_ids.mapped(
                  'state_id.id'))]
      
+    @api.model
+    def create(self, values):
+        vehicle_list = []
+        record = super(DeliveryCarrier, self).create(values)
+        if record.amount < 0:
+            raise UserError(_("The amount limit can't be negative"))
+        for data in record.delivery_carrier_cost:
+            vehicle_list.append(data.vehicle.id)
+        count = Counter(vehicle_list)
+        new_list = [[k, ]*v for k, v in count.items()]
+        for nlist in new_list:
+            if len(nlist) > 1:
+                veh = self.env['delivery.carrier.cost'].browse(nlist[0])
+                raise UserError(_(
+                    "The vehicle %s already asigned in delivery carrier"
+                    ) % veh.vehicle.name)
+        return record
+
+    @api.multi
+    def write(self, values):
+        vehicle_list = []
+        record = super(DeliveryCarrier, self).write(values)
+        if self.amount < 0:
+            raise UserError(_("The amount limit can't be negative"))
+        for data in self.delivery_carrier_cost:
+            vehicle_list.append(data.vehicle.id)
+        count = Counter(vehicle_list)
+        new_list = [[k, ]*v for k, v in count.items()]
+        for nlist in new_list:
+            if len(nlist) > 1:
+                veh = self.env['delivery.carrier.cost'].browse(nlist[0])
+                raise UserError(_(
+                    "The vehicle %s already asigned in delivery carrier"
+                    ) % veh.vehicle.name)
+        return record
+
 
 class ShippingDriver(models.Model):
     """
