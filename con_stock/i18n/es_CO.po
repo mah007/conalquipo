@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20180122\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-18 19:42+0000\n"
-"PO-Revision-Date: 2018-04-18 14:52-0500\n"
+"POT-Creation-Date: 2018-06-21 22:43+0000\n"
+"PO-Revision-Date: 2018-06-21 17:47-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,132 +15,134 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. module: con_stock
 #: model:mail.template,body_html:con_stock.stock_automatic_email_template
 msgid ""
 "\n"
 "\n"
-"% set partners = ctx.get('partner_lst', [])\n"
+"% set products = ctx.get('products_lst', [])\n"
 "\n"
-"% set workers = ctx.get('works_lst', [])\n"
+"% set move_in = ctx.get('move_in', [])\n"
 "\n"
-"% set moves = ctx.get('move_line_ids', [])\n"
+"% set move_out = ctx.get('move_out', [])\n"
 "\n"
-"% set qty_remissions = 0\n"
-"\n"
-"% set qty_receipts = 0\n"
-"\n"
-"% if partners:\n"
-"    % for linep in partners:\n"
-"        <table border=\"1\" width=\"800\">\n"
+"% if products:\n"
+"    <table border=\"1\" width=\"800\">\n"
+"        <tr>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Producto</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Disponibilidad</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Remisiones</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Devoluciones</th>\n"
+"        </tr>\n"
+"        % for linepro in products:\n"
 "            <tr>\n"
-"                <th colspan=\"8\" align=\"left\" bgcolor=\"#FF9238\">${linep['name']}</th>\n"
-"            </tr>\n"
-"            % if workers:\n"
-"                % for linew in workers:\n"
-"                    % if linew['partner_id'].name == linep['name']:\n"
-"                        <tr>\n"
-"                            <th colspan=\"8\" bgcolor=\"#F1F1F1\">${linew['name']}</th>\n"
-"                        </tr>\n"
-"                        % if moves:\n"
-"                            <tr>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Product</th>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Remissions</th>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Receipts</th>\n"
-"                            </tr>\n"
-"                            % for linem in moves:\n"
-"                                % for linew in workers:\n"
-"                                    % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:\n"
-"                                        <tr>         \n"
-"                                            <td>\n"
-"                                                ${linem['product_id'].name}           \n"
-"                                            </td>\n"
-"                                            <td>\n"
-"                                                % if linem['picking_id'].picking_type_id.name == 'Delivery Orders':\n"
-"                                                    % set qty_remissions = qty_remissions + 1\n"
-"                                                % endif\n"
-"                                                ${qty_remissions} \n"
-"                                            </td>          \n"
-"                                            <td>\n"
-"                                                % if linem['picking_id'].picking_type_id.name == 'Receipts':\n"
-"                                                    % set qty_receipts = qty_receipts + 1\n"
-"                                                % endif\n"
-"                                                ${qty_receipts} \n"
-"                                            </td>                          \n"
-"                                        </tr>\n"
-"                                    % endif\n"
-"                                % endfor\n"
-"                            % endfor\n"
+"                <td>\n"
+"                    ${linepro['product_tmpl_id'].name}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set stock = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                %if stock.append(linem['sale_line_id'].real_available)\n"
+"                                % endif\n"
+"                            % endif\n"
 "                        % endif\n"
-"                    % endif\n"
-"                % endfor                        \n"
-"            % endif\n"
-"        </table>\n"
-"    % endfor\n"
+"                    % endfor\n"
+"                    ${stock[0]}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_out:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"            </tr>\n"
+"        % endfor            \n"
+"    </table>\n"
 "% endif\n"
 "\n"
 msgstr ""
 "\n"
 "\n"
-"% set partners = ctx.get('partner_lst', [])\n"
+"% set products = ctx.get('products_lst', [])\n"
 "\n"
-"% set workers = ctx.get('works_lst', [])\n"
+"% set move_in = ctx.get('move_in', [])\n"
 "\n"
-"% set moves = ctx.get('move_line_ids', [])\n"
+"% set move_out = ctx.get('move_out', [])\n"
 "\n"
-"% set qty_remissions = 0\n"
-"\n"
-"% set qty_receipts = 0\n"
-"\n"
-"% if partners:\n"
-"    % for linep in partners:\n"
-"        <table border=\"1\" width=\"800\">\n"
+"% if products:\n"
+"    <table border=\"1\" width=\"800\">\n"
+"        <tr>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Producto</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Disponibilidad</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Remisiones</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Devoluciones</th>\n"
+"        </tr>\n"
+"        % for linepro in products:\n"
 "            <tr>\n"
-"                <th colspan=\"8\" align=\"left\" bgcolor=\"#FF9238\">${linep['name']}</th>\n"
-"            </tr>\n"
-"            % if workers:\n"
-"                % for linew in workers:\n"
-"                    % if linew['partner_id'].name == linep['name']:\n"
-"                        <tr>\n"
-"                            <th colspan=\"8\" bgcolor=\"#F1F1F1\">${linew['name']}</th>\n"
-"                        </tr>\n"
-"                        % if moves:\n"
-"                            <tr>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Product</th>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Remissions</th>\n"
-"                                <th align=\"left\" bgcolor=\"#A9A9A9\">Receipts</th>\n"
-"                            </tr>\n"
-"                            % for linem in moves:\n"
-"                                % for linew in workers:\n"
-"                                    % if linem['picking_id'].project_id.name == linew['name'] and linew['partner_id'].name == linep['name']:\n"
-"                                        <tr>         \n"
-"                                            <td>\n"
-"                                                ${linem['product_id'].name}           \n"
-"                                            </td>\n"
-"                                            <td>\n"
-"                                                % if linem['picking_id'].picking_type_id.name == 'Delivery Orders':\n"
-"                                                    % set qty_remissions = qty_remissions + 1\n"
-"                                                % endif\n"
-"                                                ${qty_remissions} \n"
-"                                            </td>          \n"
-"                                            <td>\n"
-"                                                % if linem['picking_id'].picking_type_id.name == 'Receipts':\n"
-"                                                    % set qty_receipts = qty_receipts + 1\n"
-"                                                % endif\n"
-"                                                ${qty_receipts} \n"
-"                                            </td>                          \n"
-"                                        </tr>\n"
-"                                    % endif\n"
-"                                % endfor\n"
-"                            % endfor\n"
+"                <td>\n"
+"                    ${linepro['product_tmpl_id'].name}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set stock = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                %if stock.append(linem['sale_line_id'].real_available)\n"
+"                                % endif\n"
+"                            % endif\n"
 "                        % endif\n"
-"                    % endif\n"
-"                % endfor                        \n"
-"            % endif\n"
-"        </table>\n"
-"    % endfor\n"
+"                    % endfor\n"
+"                    ${stock[0]}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_out:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"            </tr>\n"
+"        % endfor            \n"
+"    </table>\n"
 "% endif\n"
 "\n"
 
@@ -242,6 +244,26 @@ msgstr "<span>Condiciones externas</span>"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                     de la obra se exigirá lo mismo.</span>\n"
+"                                    <strong>Los productos devueltos pueden generar costos de reparación que le serán facturados.</strong>"
+msgstr ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                     de la obra se exigirá lo mismo.</span>\n"
+"                                    <strong>Los productos devueltos pueden generar costos de reparación que le serán facturados.</strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto.</span>"
+msgstr ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto.</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "<span>FIRMA REVISADO</span>"
 msgstr "<span>FIRMA REVISADO</span>"
 
@@ -322,13 +344,18 @@ msgstr "Facturación"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "CANT. OBRA"
-msgstr "CANT. OBRA"
+msgid "CANT. DEVUELTA"
+msgstr "CANT. DEVUELTA"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "CANT. REMITIDA"
-msgstr "CANT. REMITIDA"
+msgid "CANT. ENVIADA"
+msgstr "CANT. ENVIADA"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "CANT. OBRA"
+msgstr "CANT. OBRA"
 
 #. module: con_stock
 #: model:res.groups,name:con_stock.group_notifications_biweekly
@@ -377,6 +404,11 @@ msgid "Change the state to all products when arrive to this location"
 msgstr "Cambie el estado a todos los productos cuando llegue a esta ubicación"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_is_charge_replacement
+msgid "Charge for Replacement?"
+msgstr "Cargo por reemplazo?"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_child_product
 msgid "Child product"
 msgstr "Producto hijo"
@@ -408,7 +440,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_create_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_create_date
 msgid "Created on"
-msgstr "Creado"
+msgstr "Creado en"
 
 #. module: con_stock
 #: selection:set.inv.locations,get_locations:0
@@ -426,6 +458,11 @@ msgid "DESCRIPCIÓN"
 msgstr "DESCRIPCIÓN"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_set_default_location
+msgid "Default location for products"
+msgstr "Ubicación por defecto para los productos"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_delivery_cost
 #: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
 msgid "Delivery Cost"
@@ -435,6 +472,11 @@ msgstr "Costo de envío"
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_description
 msgid "Description"
 msgstr "Descripción"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+msgid "Dest. Location"
+msgstr "Ubicación Dest."
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
@@ -454,7 +496,7 @@ msgstr "Descartar"
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_display_name
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_display_name
 msgid "Display Name"
-msgstr "Nombre Público"
+msgstr "Nombre a mostrar"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
@@ -462,27 +504,14 @@ msgid "Do Cancellation"
 msgstr "Realizar cancelación"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Done"
+msgstr "Terminado"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_driver_client
 msgid "Driver"
 msgstr "Conductor"
-
-#. module: con_stock
-#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid ""
-"El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
-"                                    de la obra se exigirá lo mismo"
-msgstr ""
-"El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
-"                                    de la obra se exigirá lo mismo"
-
-#. module: con_stock
-#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid ""
-"El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
-"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto."
-msgstr ""
-"El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
-"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto."
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
@@ -598,7 +627,7 @@ msgstr "Inmediatamente ( ) avisan después ( )"
 #. module: con_stock
 #: selection:set.inv.locations,get_locations:0
 msgid "Internal"
-msgstr "Internal"
+msgstr "Interno"
 
 #. module: con_stock
 #: model:ir.model,name:con_stock.model_stock_inventory
@@ -641,7 +670,7 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_uid
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_uid
 msgid "Last Updated by"
-msgstr "Actualizado por"
+msgstr "Última actualización de"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_write_date
@@ -650,7 +679,7 @@ msgstr "Actualizado por"
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_date
 msgid "Last Updated on"
-msgstr "Actualizado"
+msgstr "Última actualización en"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_license_plate
@@ -668,6 +697,11 @@ msgid "Lines"
 msgstr "Líneas"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
 msgid "Log a note..."
 msgstr "Registrar una nota..."
@@ -681,6 +715,11 @@ msgstr "MIN."
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_attachment_ids
 msgid "Main Attachments"
 msgstr "Adjuntos"
+
+#. module: con_stock
+#: model:ir.model.fields,help:con_stock.field_stock_location_is_charge_replacement
+msgid "Mark this check if you want the products that move to this location to be charged when making a reposition."
+msgstr "Marque este checkbox si desea que se carguen los productos que se trasladan a esta ubicación al realizar una reposición."
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_mess_operated
@@ -703,9 +742,26 @@ msgid "No longer need it"
 msgstr "No es necesario"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_product_count
+msgid "On work"
+msgstr "En obra"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "Operador:"
 msgstr "Operador:"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_employee_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
+msgid "Operator"
+msgstr "Operador"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_employee_ids
+msgid "Operators"
+msgstr "Operators"
 
 #. module: con_stock
 #: model:ir.model,name:con_stock.model_stock_move_line
@@ -719,6 +775,7 @@ msgstr "Página: <span class=\"page\"/>/<span class=\"topage\"/>"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_line_partner_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_tree_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
@@ -749,6 +806,11 @@ msgid "Post Journal Entries"
 msgstr "Validar asientos"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
 msgid "Proceed"
 msgstr "Proceder"
@@ -764,8 +826,8 @@ msgid "Product New"
 msgstr "Nuevo producto"
 
 #. module: con_stock
-#: model:ir.model.fields,field_description:con_stock.field_stock_move_project_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_project_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_tree_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
@@ -812,6 +874,13 @@ msgid "Repair requests"
 msgstr "Solicitudes de reparación"
 
 #. module: con_stock
+#: code:addons/con_stock/models/stock_scrap.py:44
+#: code:addons/con_stock/models/stock_scrap.py:67
+#, python-format
+msgid "Replenishment %s"
+msgstr "Reposición %s"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_responsible
 msgid "Responsible"
 msgstr "Responsable"
@@ -827,12 +896,17 @@ msgid "SALDO OBRA"
 msgstr "SALDO OBRA"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Scrap"
+msgstr "Chatarra"
+
+#. module: con_stock
 #: model:ir.model.fields,help:con_stock.field_set_inv_locations_lines_color
 msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:143
+#: code:addons/con_stock/models/stock_picking.py:196
 #, python-format
 msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
 msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
@@ -954,7 +1028,7 @@ msgid "View"
 msgstr "Vista"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:143
+#: code:addons/con_stock/models/stock_picking.py:196
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
@@ -966,8 +1040,15 @@ msgstr "Peso"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_line_project_id
-msgid "Work"
-msgstr "Work"
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_project_id
+msgid "Works"
+msgstr "Obras"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:381
+#, python-format
+msgid "You need specify a operator for: %s"
+msgstr "Necesita especificar un operado para: %s"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_equipment_cw_id
@@ -990,20 +1071,15 @@ msgid "product.change.wizard"
 msgstr "product.change.wizard"
 
 #. module: con_stock
-#: model:ir.model.fields,field_description:con_stock.field_stock_location_project_id
-msgid "project"
-msgstr "Obra"
-
-#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_returned
 msgid "returned"
 msgstr "Devuelto"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:47
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:49
 #, python-format
 msgid "selected product does not have quantity available in the inventory"
-msgstr "selected product does not have quantity available in the inventory"
+msgstr "El producto seleccionado no tiene disponibilidad en el inventario"
 
 #. module: con_stock
 #: model:ir.model,name:con_stock.model_set_inv_locations
@@ -1024,3 +1100,13 @@ msgstr "stock.picking.cancel.wizard"
 #: model:ir.model,name:con_stock.model_stock_picking_equipment_change_wizard
 msgid "stock.picking.equipment.change.wizard"
 msgstr "stock.picking.equipment.change.wizard"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_scrap
+msgid "stock.scrap"
+msgstr "stock.scrap"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_warn_insufficient_qty_scrap
+msgid "stock.warn.insufficient.qty.scrap"
+msgstr "stock.warn.insufficient.qty.scrap"
