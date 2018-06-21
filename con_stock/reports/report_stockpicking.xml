@@ -316,15 +316,44 @@
         </t>
     </template>
 
+    <template id="report_delivery_document_shipping" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@class='page']" position="inside">
+            <p t-if="o.note"><span t-field="o.note" /></p>
+        </xpath>
+    </template>
+
     <report
         string="Movimiento de Inventario"
         id="action_report_delivery_con"
         model="stock.picking"
         report_type="qweb-pdf"
+        menu="False"
         attachment="(object.state == 'done') and
         ('Movimiento Inventario: '+(object.picking_type_id.name)+'.pdf')"
         name="con_stock.report_delivery_con"
         file="con_stock.report_delivery_con"
     />
+
+    <report
+        string="Picking Operations"
+        id="stock.action_report_picking"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        menu="False"
+        name="stock.report_picking"
+        file="stock.report_picking_operations"
+        print_report_name="'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+    />
+
+    <report
+        string="Delivery Slip"
+        id="stock.action_report_delivery"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        menu="False"
+        name="stock.report_deliveryslip"
+        file="stock.report_deliveryslip"
+        print_report_name="'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"
+        />
 
 </odoo>

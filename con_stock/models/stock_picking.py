@@ -623,3 +623,8 @@ class StockPicking(Model):
             mail_template.with_context(ctx).send_mail(
                 self.id, force_send=True, raise_exception=True)
 
+    @api.multi
+    def do_print_picking2(self):
+        self.write({'printed': True})
+        return self.env.ref(
+            'con_stock.action_report_delivery_con').report_action(self)
