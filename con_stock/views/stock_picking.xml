@@ -2,34 +2,6 @@
 <odoo>
     <data>
 
-        <!-- <report
-            string="Picking Operations"
-            id="action_report_picking"
-            model="stock.picking"
-            report_type="qweb-pdf"
-            menu="False"
-            name="stock.report_picking"
-            file="stock.report_picking_operations"
-            print_report_name="'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
-        />
-
-        <report
-            string="Delivery Slip"
-            id="action_report_delivery"
-            model="stock.picking"
-            report_type="qweb-pdf"
-            menu="False"
-            name="stock.report_deliveryslip"
-            file="stock.report_deliveryslip"
-            print_report_name="'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"
-        /> -->
-
-        <template id="report_delivery_document_shipping" inherit_id="stock.report_delivery_document">
-            <xpath expr="//div[@class='page']" position="inside">
-                <p t-if="o.note"><span t-field="o.note" /></p>
-            </xpath>
-        </template>
-
         <record id="view_stock_picking_form_inherit" model="ir.ui.view">
             <field name="name">inherit.stock.picking.form</field>
             <field name="model">stock.picking</field>
@@ -56,11 +28,11 @@
                 </button>
 
                 <xpath expr="//button[@name='do_print_picking']" position="replace">
-                    <button name="do_print_picking2" string="Print 1" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'partially_available')), ('is_locked', '=', False)]}"/>
+                    <button name="do_print_picking2" string="Print" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'partially_available')), ('is_locked', '=', False)]}"/>
                 </xpath>
 
                 <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
-                    <button name="%(con_stock.action_report_delivery_con)d" string="Print 2" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('is_locked', '=', False)]}" type="action" groups="base.group_user"/>
+                    <button name="%(con_stock.action_report_delivery_con)d" string="Print" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('is_locked', '=', False)]}" type="action" groups="base.group_user"/>
                 </xpath>
 
                 <xpath expr="//header" position="before">
