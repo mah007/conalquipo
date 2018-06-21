@@ -75,9 +75,9 @@
                             <span t-if="o.vehicle_client" t-field="o.vehicle_client"/>
                             <span> / </span>
                             <span>CONDUCTOR: </span>
-                            <t t-foreach="o.job_title" t-as="d">
-                                <t t-if="d.type_hr == 'driver'">
-                                    <span t-if="d.job_title.name"  t-field="d.job_title.name"/>
+                            <t t-foreach="o.driver_ids" t-as="d">
+                                <t t-if="d.job_title == 'driver'">
+                                    <span t-if="d.driver_ids.name"  t-field="d.driver_ids.name"/>
                                 </t>
                              </t>
                              <span t-if="o.driver_client" t-field="o.driver_client"/>
@@ -271,13 +271,25 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding:5px;"><span>Nombre:</span></td>
+                                        <td style="padding:5px;">
+                                        <span>Nombre: 
+                                            <span t-field="o.responsible"/>
+                                        </span>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding:5px;"><span>C.C.</span></td>
+                                        <td style="padding:5px;">
+                                        <span>C.C. 
+                                            <span t-field="o.id_number"/>
+                                        </span>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td style="padding:5px;"><span>Cargo:</span></td>
+                                        <td style="padding:5px;">
+                                        <span>Cargo: 
+                                            <span t-field="o.job_title"/>
+                                        </span>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
