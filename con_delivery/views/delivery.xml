@@ -2,26 +2,42 @@
     <odoo>
 
         <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
-              <field name="name">delivery.carrier.form</field>
-              <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
-              <field name="model">delivery.carrier</field>
-              <field name="arch" type="xml">
-                  <xpath expr="//field[@name='state_ids']" position="after">
-                       <field name="municipality_ids" widget="many2many_tags"/>
-                   </xpath>
-                   <xpath expr="//page[2]" position="after">
-                        <page string="Cost for Vehicle" name="vehicle">
+            <field name="name">delivery.carrier.form</field>
+            <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+            <field name="model">delivery.carrier</field>
+            <field name="arch" type="xml">
 
-                            <field name="delivery_carrier_cost" mode="tree" nolabel="1">
-                                    <tree editable="bottom">
-                                        <field name="vehicle"/>
-                                        <field name="cost"/>
-                                    </tree>
+                <xpath expr="//field[@name='state_ids']" position="after">
+                    <field name="municipality_ids" widget="many2many_tags"/>
+                </xpath>
+
+                <xpath expr="//page[1]" position="replace">
+                    <page string="Pricing" attrs="{'invisible': [('delivery_type', 'not in', ['fixed', 'base_on_rule'])]}">
+
+                        <group attrs="{'invisible':[('delivery_type', '!=', 'fixed')]}">
+                            <group attrs="{'invisible':[('price_type', '!=', 'fixed_price')]}">
+                                <field name="fixed_price"/>
+                            </group>
+                            <field name="delivery_carrier_cost" mode="tree" nolabel="1" attrs="{'invisible':[('price_type', '!=', 'multiple_prices')]}">
+                                <tree editable="bottom">
+                                    <field name="vehicle"/>
+                                    <field name="cost"/>
+                                </tree>
                             </field>
+                        </group>
 
-                        </page>
-                  </xpath>
-              </field>
+                        <group name="general" attrs="{'invisible':[('delivery_type', '!=', 'base_on_rule')]}">
+                            <field name="price_rule_ids" nolabel="1"/>
+                        </group>
+
+                    </page>
+                </xpath>
+
+                <field name="product_id" position="before">
+                    <field name="price_type" attrs="{'invisible': [('delivery_type','=', 'base_on_rule')]}" />
+                </field>
+
+            </field>
         </record>
 
     </odoo>
