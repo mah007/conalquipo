@@ -94,11 +94,17 @@ class SaleOrder(models.Model):
         string='Cancel reason')
     limit = fields.Float(
         'Credit limit', compute='get_limit', store=True)
-    available_amount = fields.Float('Available amount')
-    message_invoice = fields.Char('Messages')
+    available_amount = fields.Float(
+        'Available amount', track_visibility='onchange')
+    message_invoice = fields.Char(
+        'Messages', track_visibility='onchange')
     can_confirm = fields.Boolean('Can confirm')
     due_invoice_ids = fields.Many2many(
-        "account.invoice", string='Related invoices')
+        "account.invoice", string='Related invoices',
+        track_visibility='onchange')
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange')
 
     @api.multi
     def check_limit(self):
