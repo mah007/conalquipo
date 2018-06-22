@@ -30,7 +30,7 @@ msgstr "Puede confirmar ventas que pasen el limite"
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_sale_small_qty
 msgid "Can confirm smaller quantities"
-msgstr "Puede confirmar ordenes con cantidades mínimas a las permitidas del producto"
+msgstr "Confirmar ordenes con cantidades mínimas"
 
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_commercial_director

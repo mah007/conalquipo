@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Base',
     'depends': [
-        'base', 'delivery', 'product'
+        'base', 'delivery', 'product', 'hr'
     ],
     'description':
     """
@@ -23,6 +23,7 @@
     'data': [
         'security/ir.model.access.csv',
         'sequences/client_sequence.xml',
+        'views/res_users.xml',
         'views/res_partner.xml',
         'views/res_partner_sector.xml',
         'views/res_company.xml',

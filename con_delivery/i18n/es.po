@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 21:39+0000\n"
-"PO-Revision-Date: 2018-06-20 16:40-0500\n"
+"POT-Creation-Date: 2018-06-22 21:05+0000\n"
+"PO-Revision-Date: 2018-06-22 16:06-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,11 +36,6 @@ msgstr "Forma de envío"
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_cost
 msgid "Cost"
 msgstr "Costo"
-
-#. module: con_delivery
-#: model:ir.ui.view,arch_db:con_delivery.view_delivery_carrier_form_inherit
-msgid "Cost for Vehicle"
-msgstr "Costo por vehiculo"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_create_uid
@@ -86,6 +81,11 @@ msgid "Extra shipping access"
 msgstr "Accesos extras para envíos"
 
 #. module: con_delivery
+#: selection:delivery.carrier,price_type:0
+msgid "Fixed price"
+msgstr "Precio fijo"
+
+#. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_job_title
 msgid "HR Type"
 msgstr "HR Type"
@@ -117,7 +117,7 @@ msgstr "Última actualización de"
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_write_date
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Actualizado"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_delivery_carrier_cost
@@ -125,9 +125,24 @@ msgid "Lines Delivery CarrierCost"
 msgstr "Lines Delivery CarrierCost"
 
 #. module: con_delivery
+#: selection:delivery.carrier,price_type:0
+msgid "Multiple prices"
+msgstr "Precios multiples"
+
+#. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_municipality_ids
 msgid "Municipality"
 msgstr "Municipio"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_price_type
+msgid "Price Type"
+msgstr "Tipos de precios"
+
+#. module: con_delivery
+#: model:ir.ui.view,arch_db:con_delivery.view_delivery_carrier_form_inherit
+msgid "Pricing"
+msgstr "Precios"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_stock_picking_id
@@ -135,14 +150,14 @@ msgid "Stock Picking"
 msgstr "Selección de Existencias"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:124
-#: code:addons/con_delivery/models/delivery.py:142
+#: code:addons/con_delivery/models/delivery.py:133
+#: code:addons/con_delivery/models/delivery.py:151
 #, python-format
 msgid "The amount limit can't be negative"
 msgstr "El limite o cantidad del método de envío no puede ser negativo"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:200
+#: code:addons/con_delivery/models/delivery.py:209
 #, python-format
 msgid "The category of the driver's license of this employee does not coincide with the category required by the vehicle assiging this order"
 msgstr "La categoría de la licencia de conducir de este empleado no coincide con la categoría requerida por el vehículo que asigne esta orden."
@@ -162,8 +177,8 @@ msgid "The cost is required on the line"
 msgstr "El costo es requerido en la línea"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:132
-#: code:addons/con_delivery/models/delivery.py:150
+#: code:addons/con_delivery/models/delivery.py:141
+#: code:addons/con_delivery/models/delivery.py:159
 #, python-format
 msgid "The vehicle %s already asigned in delivery carrier"
 msgstr "El vehículo %s ya esta asignado en este método de envío."
@@ -176,7 +191,7 @@ msgid "The vehicle is required on the line"
 msgstr "El vehículo es requerido en la línea"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:205
+#: code:addons/con_delivery/models/delivery.py:214
 #, python-format
 msgid "This employee does not possess driving skills"
 msgstr "Este empleado no posee habilidades de conducción"

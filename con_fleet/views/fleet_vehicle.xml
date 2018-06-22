@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-  <data>
+<odoo>
+    <data>
 
-      <record model="ir.ui.view" id="fleet_vehicle_view_form_inherit_con">
-              <field name="name">fleet.vehicle.form</field>
-              <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
-              <field name="model">fleet.vehicle</field>
-              <field name="arch" type="xml">
-              
+        <record model="ir.ui.view" id="fleet_vehicle_view_form_inherit_con">
+            <field name="name">fleet.vehicle.form</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="model">fleet.vehicle</field>
+            <field name="arch" type="xml">
+                
                 <xpath expr="//field[@name='residual_value']" position="after">
-                  <field name="license_category"
-                  string="category of license that requires"/>
+                    <field name="license_category" string="category of license that requires"/>
                 </xpath>
 
                 <xpath expr="//field[@name='driver_id']" position="before">
@@ -46,10 +45,8 @@
                     </group>
                 </xpath>
 
-              </field>
-      </record>
+            </field>
+        </record>
 
-
-
-  </data>
-</openerp>
+    </data>
+</odoo>

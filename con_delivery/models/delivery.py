@@ -95,6 +95,10 @@ class DeliveryCarrier(models.Model):
         required=True,
         ondelete='restrict',
         domain=[('product_tmpl_id.for_shipping', '=', True)])
+    price_type = fields.Selection(
+        [('fixed_price', 'Fixed price'),
+         ('multiple_prices', 'Multiple prices')],
+        string="Price Type", default="fixed_price")
 
     @api.onchange('state_ids')
     def onchange_states(self):
@@ -115,7 +119,12 @@ class DeliveryCarrier(models.Model):
              0,
              self.municipality_ids.ids + self.municipality_ids.mapped(
                  'state_id.id'))]
-     
+
+    @api.onchange('free_over')
+    def onchange_free_over(self):
+        if not self.free_over:
+            self.amount = 0.0
+
     @api.model
     def create(self, values):
         vehicle_list = []
