@@ -21,7 +21,7 @@
 
 import time
 import logging
-_LOGGER = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 from odoo.models import Model, api, _
 from odoo import fields, SUPERUSER_ID
 from odoo.exceptions import UserError
@@ -109,10 +109,6 @@ class StockPicking(Model):
              ('state', '=', 'done'),
              ('location_id', '=', self.env.ref(
                  'stock.stock_location_customers').id)])
-
-        _LOGGER.info('Out Picking Ids: {}'.format(out_pickings))
-        _LOGGER.info('In Picking Ids: {}'.format(in_pickings))
-
         out_moves = self.env['stock.move'].search(
             [('product_id', '=', product_id), ('state', '=', 'done'),
              ('location_dest_id', '=', self.env.ref(
@@ -124,16 +120,8 @@ class StockPicking(Model):
              ('location_id', '=', self.env.ref(
                  'stock.stock_location_customers').id),
              ('picking_id', 'in', in_pickings._ids)]) or False
-
-        _LOGGER.info('In Moves: {}'.format(in_moves))
-        _LOGGER.info('Out Moves: {}'.format(out_moves))
-
         in_qty = sum_reduce(in_moves)
         out_qty = sum_reduce(out_moves)
-
-        _LOGGER.info('Out Qty: {}'.format(out_qty))
-        _LOGGER.info('In Qty: {}'.format(in_qty))
-
         return out_qty - in_qty
 
     @api.multi
@@ -284,7 +272,6 @@ class StockPicking(Model):
                 'product_uom': l.product_uom.id,
                 'location_dest_id': self.location_dest_id.id,
             }
-            _logger.warning(vals)
             repair = mrp_repair_obj.create(vals)
             l.mrp_repair_id = repair.id
             self.repair_requests = True

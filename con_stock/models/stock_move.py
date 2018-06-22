@@ -137,7 +137,6 @@ class StockMove(Model):
         other = self.env['stock.move'].search([
             ('picking_id', '=', self.picking_id.id),
             ('origin', '=', self.origin)])
-        _logger.warning(other)
         for data in other:
             # Get the operators employees ids
             for data2 in data.product_id.product_tmpl_id.employee_ids:
