@@ -287,7 +287,6 @@ class SaleOrder(models.Model):
         """
         if self.order_line:
             operators = self.order_line.filtered(lambda line: line.add_operator)
-            _logger.info("Operators %s" % operators)
             self.operators_services = len(operators)
 
     def _compute_sign_ids(self):
@@ -617,7 +616,6 @@ class SaleOrder(models.Model):
         for inv in self.invoice_ids:
             for inv_ids in inv.invoice_line_ids:
                 owner = self.function_product_subleased(inv_ids.product_id)
-                _logger.info(owner)
                 if owner:
                     inv_ids.write({'owner_id': owner.id})
                 inv_ids.invoice_type = self.order_type
@@ -1430,7 +1428,6 @@ class SaleOrderLine(models.Model):
                             'bill_uom':\
                                 data.product_id.product_tmpl_id.uom_id.id
                         }
-                        _logger.warning(component)
                         component.write(new_line_component)
                     else:
                         extra = self.env['sale.order.line'].search(
@@ -1452,7 +1449,6 @@ class SaleOrderLine(models.Model):
                             'bill_uom':\
                                 data.product_id.product_tmpl_id.uom_id.id
                         }
-                        _logger.warning(extra)
                         extra.write(new_line_extra)
             # Dates validations
             if rec.end_date and rec.start_date:

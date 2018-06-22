@@ -143,6 +143,7 @@
                                 </td>
                                 <td style="padding:5px; border: 1px solid;">
                                     <span t-field="move.sale_line_id.min_sale_qty"/>
+                                    <span t-field="move.sale_line_id.bill_uom.name"/>
                                 </td>
                                 <td style="padding:5px; border: 1px solid;">
                                     <t t-esc="move.product_count"/>
