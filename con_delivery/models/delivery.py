@@ -115,7 +115,12 @@ class DeliveryCarrier(models.Model):
              0,
              self.municipality_ids.ids + self.municipality_ids.mapped(
                  'state_id.id'))]
-     
+
+    @api.onchange('free_over')
+    def onchange_free_over(self):
+        if not self.free_over:
+            self.amount = 0.0
+
     @api.model
     def create(self, values):
         vehicle_list = []

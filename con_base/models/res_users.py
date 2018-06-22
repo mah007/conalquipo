@@ -28,5 +28,5 @@ class ResUsers(models.Model):
 
     employee_ids = fields.Many2many(
         comodel_name='hr.employee',
-        string="Related employees",
+        string="Employees",
         track_visibility='onchange')

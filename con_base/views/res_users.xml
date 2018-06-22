@@ -8,7 +8,7 @@
             <data>
 
                 <xpath expr="//field[@name='partner_id']" position="after">
-                    <field name="employee_ids" widget="many2many_tags"/>
+                    <field name="employee_ids" widget="many2many_tags" string="Related employees"/>
                 </xpath>
 
             </data>
