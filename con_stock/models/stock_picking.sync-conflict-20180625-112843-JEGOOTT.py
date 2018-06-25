@@ -33,9 +33,7 @@ class StockPicking(Model):
     project_id = fields.Many2one(
         'project.project', string="Project", track_visibility='onchange')
     employee_id = fields.Many2one(
-        "hr.employee", string='Employee',
-        track_visibility='onchange',
-        domain=lambda self:self._getemployee())
+        'hr.employee', string="Employee", track_visibility='onchange')
     attachment_ids = fields.Many2many(
         'ir.attachment',
         compute='_compute_attachment_ids',
@@ -111,16 +109,6 @@ class StockPicking(Model):
         'order_line_picking_rel',
         'sale_order_line_id', 'picking_id',
         string="Delivery Cost", track_visibility='onchange')
-
-    @api.model
-    def _getemployee(self):
-        # Domain for the employee
-        employee_list = []
-        actual_user = self.env.user
-        other = actual_user.employee_ids
-        for data in other:
-            employee_list.append(data.id)
-        return [('id', 'in', employee_list)]
 
     @api.multi
     def _product_availibility_on_project(self, partner_id=False,

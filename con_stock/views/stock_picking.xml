@@ -74,7 +74,7 @@
 
                 <field name="partner_id" position="after">
                     <field name="project_id" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}"/>
-                    <field name="employee_id" required="1"/>
+                    <field name="employee_id" required="1" readonly="0" options="{'no_create': True}"/>
                 </field>
 
                 <field name="location_id" position="replace">
