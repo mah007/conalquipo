@@ -1475,8 +1475,7 @@ class SaleOrderLine(models.Model):
                         _("The end date can't be less than start date"))
         return res
 
-    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id',
-                 'bill_uom_qty')
+    @api.depends('discount', 'price_unit', 'tax_id')
     def _compute_amount(self):
         """
         Compute the amounts of the SO line.
@@ -1505,7 +1504,7 @@ class SaleOrderLine(models.Model):
             })
 
     @api.depends('state', 'product_uom_qty', 'qty_delivered', 'qty_to_invoice',
-                 'qty_invoiced', 'bill_uom_qty')
+                 'qty_invoiced')
     def _compute_invoice_status(self):
         """
         Compute the invoice status of a SO line. Possible statuses:
@@ -1545,7 +1544,7 @@ class SaleOrderLine(models.Model):
                 line.invoice_status = 'no'
 
     @api.depends('qty_invoiced', 'qty_delivered', 'product_uom_qty',
-                 'order_id.state', 'bill_uom_qty')
+                 'order_id.state')
     def _get_to_invoice_qty(self):
         """
         Compute the quantity to invoice. If the invoice policy is order, the
@@ -1568,7 +1567,7 @@ class SaleOrderLine(models.Model):
             else:
                 line.qty_to_invoice = 0
 
-    @api.depends('price_total', 'product_uom_qty', 'bill_uom_qty')
+    @api.depends('price_total', 'product_uom_qty')
     def _get_price_reduce_tax(self):
         for line in self:
             line.price_reduce_taxinc = line.price_total / line.bill_uom_qty\
@@ -1647,8 +1646,7 @@ class SaleOrderLine(models.Model):
         # negative discounts (= surcharge) are included in the display price
         return max(base_price, final_price)
 
-    @api.onchange(
-        'product_uom', 'product_uom_qty', 'bill_uom_qty')
+    @api.onchange('product_uom')
     def product_uom_change(self):
         if not self.product_uom or not self.product_id:
             self.price_unit = 0.0
