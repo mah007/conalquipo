@@ -75,6 +75,11 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The cost can't be negative"))
         return record
 
+    @api.onchange('free_over')
+    def onchange_free_over(self):
+        if not self.free_over:
+            self.amount = 0.0
+
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
@@ -120,10 +125,19 @@ class DeliveryCarrier(models.Model):
              self.municipality_ids.ids + self.municipality_ids.mapped(
                  'state_id.id'))]
 
-    @api.onchange('free_over')
-    def onchange_free_over(self):
-        if not self.free_over:
-            self.amount = 0.0
+    @api.onchange('delivery_carrier_cost')
+    def onchange_vehicle_list(self):
+        vehicle_list = []
+        if self.delivery_carrier_cost:
+            for data in self.delivery_carrier_cost:
+                vehicle_list.append(data.vehicle)
+            count = Counter(vehicle_list)
+            new_list = [[k, ]*v for k, v in count.items()]
+            for nlist in new_list:
+                if len(nlist) > 1:
+                    raise UserError(_(
+                        "The vehicle %s already asigned in delivery carrier"
+                        ) % nlist[0].name)
 
     @api.model
     def create(self, values):
@@ -132,15 +146,14 @@ class DeliveryCarrier(models.Model):
         if record.amount < 0:
             raise UserError(_("The amount limit can't be negative"))
         for data in record.delivery_carrier_cost:
-            vehicle_list.append(data.vehicle.id)
+            vehicle_list.append(data.vehicle)
         count = Counter(vehicle_list)
         new_list = [[k, ]*v for k, v in count.items()]
         for nlist in new_list:
             if len(nlist) > 1:
-                veh = self.env['delivery.carrier.cost'].browse(nlist[0])
                 raise UserError(_(
                     "The vehicle %s already asigned in delivery carrier"
-                    ) % veh.vehicle.name)
+                    ) % nlist[0].name)
         return record
 
     @api.multi
@@ -150,15 +163,14 @@ class DeliveryCarrier(models.Model):
         if self.amount < 0:
             raise UserError(_("The amount limit can't be negative"))
         for data in self.delivery_carrier_cost:
-            vehicle_list.append(data.vehicle.id)
+            vehicle_list.append(data.vehicle)
         count = Counter(vehicle_list)
         new_list = [[k, ]*v for k, v in count.items()]
         for nlist in new_list:
             if len(nlist) > 1:
-                veh = self.env['delivery.carrier.cost'].browse(nlist[0])
                 raise UserError(_(
                     "The vehicle %s already asigned in delivery carrier"
-                    ) % veh.vehicle.name)
+                    ) % nlist[0].name)
         return record
 
 
