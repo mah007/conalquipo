@@ -473,7 +473,7 @@ class SaleOrder(models.Model):
                 # Create task for product
                 for data in order_id.order_line:
                     if data.product_id.product_tmpl_id.generate_task or \
-                       data.bill_uom.name != 'Day(s)' and not \
+                       data.bill_uom.name == 'Day(s)' and not \
                        data.is_delivery:
                         task_values = {
                            'name': "Task for: " \
@@ -504,7 +504,7 @@ class SaleOrder(models.Model):
                 # Create task for product
                 for data in self.order_line:
                     if data.product_id.product_tmpl_id.generate_task or \
-                       data.bill_uom.name != 'Day(s)' and not \
+                       data.bill_uom.name == 'Day(s)' and not \
                        data.is_delivery:
                         task_values = {
                            'name': "Task for: " \
