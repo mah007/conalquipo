@@ -40,16 +40,22 @@ class AccountInvoiceLine(models.Model):
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    project_id = fields.Many2one('project.project', string="Work")
-    invoice_type = fields.Selection([('rent', 'Rent'),
-                                     ('purchase', 'Purchase'),
-                                     ('sale', 'Sale')],
-                                    string="Type", default="sale")
+    project_id = fields.Many2one(
+        'project.project', string="Work", track_visibility='onchange')
+    invoice_type = fields.Selection(
+        [('rent', 'Rent'),
+         ('purchase', 'Purchase'),
+         ('sale', 'Sale')],
+        string="Type", default="sale", track_visibility='onchange')
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping",
-                                   compute="_get_merge_address")
-    invoice_address = fields.Text(string="Billing",
-                                  compute="_get_merge_address")
+    shipping_address = fields.Text(
+        string="Shipping",
+        compute="_get_merge_address")
+    invoice_address = fields.Text(
+        string="Billing",
+        compute="_get_merge_address")
+    employee_id = fields.Many2one(
+        'hr.employee', string="Employee", track_visibility='onchange')
 
     @api.multi
     def write(self, values):
