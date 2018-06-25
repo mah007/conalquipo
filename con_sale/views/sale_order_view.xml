@@ -278,7 +278,7 @@
                                 'invisible': [('carrier_type','!=', 'company')],
                                 'required': [('carrier_type','=', 'company')]}"/>
                     <field name="vehicle" attrs="{'readonly':[('state','in',('done'))],
-                        'invisible': [('carrier_type','!=', 'company')],
+                        'invisible': ['|', ('carrier_type','!=', 'company'), ('carrier_id', '=', False)],
                         'required': [('carrier_type','=', 'company')]
                         }" string="Vehicle"/>
 
