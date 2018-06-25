@@ -104,7 +104,18 @@ class SaleOrder(models.Model):
         track_visibility='onchange')
     employee_id = fields.Many2one(
         "hr.employee", string='Employee',
-        track_visibility='onchange')
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
+
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
 
     @api.multi
     def check_limit(self):
@@ -1302,24 +1313,24 @@ class SaleOrderLine(models.Model):
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
     def _get_invoice_qty(self):
         for line in self:
-                qty_invoiced = 0.0
-                for invoice_line in line.invoice_lines:
-                    if invoice_line.invoice_id.state != 'cancel':
-                        data = {
-                            'out_invoice': lambda qty_invoice:
-                            qty_invoice +
-                            invoice_line.uom_id._compute_quantity(
-                                invoice_line.quantity, line.product_uom,
-                                rent=True),
-                            'out_refund': lambda qty_invoiced:
-                            qty_invoiced -
-                            invoice_line.uom_id._compute_quantity(
-                                invoice_line.quantity, line.product_uom,
-                                rent=True)
-                        }
-                        qty_invoiced = data.get(invoice_line.invoice_id.type,
-                                                lambda: 0)(qty_invoiced)
-                line.qty_invoiced = qty_invoiced
+            qty_invoiced = 0.0
+            for invoice_line in line.invoice_lines:
+                if invoice_line.invoice_id.state != 'cancel':
+                    data = {
+                        'out_invoice': lambda qty_invoice:
+                        qty_invoice +
+                        invoice_line.uom_id._compute_quantity(
+                            invoice_line.quantity, line.product_uom,
+                            rent=True),
+                        'out_refund': lambda qty_invoiced:
+                        qty_invoiced -
+                        invoice_line.uom_id._compute_quantity(
+                            invoice_line.quantity, line.product_uom,
+                            rent=True)
+                    }
+                    qty_invoiced = data.get(invoice_line.invoice_id.type,
+                                            lambda: 0)(qty_invoiced)
+            line.qty_invoiced = qty_invoiced
 
     @api.model
     def create(self, values):

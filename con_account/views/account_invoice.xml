@@ -15,6 +15,7 @@
 
             <field name="partner_id" position="after">
                 <field name="project_id"/>
+                <field name="employee_id" required="1" readonly="0" options="{'no_create': True}"/>
             </field>
 
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">

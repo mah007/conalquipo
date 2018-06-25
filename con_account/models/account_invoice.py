@@ -40,16 +40,34 @@ class AccountInvoiceLine(models.Model):
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    project_id = fields.Many2one('project.project', string="Work")
-    invoice_type = fields.Selection([('rent', 'Rent'),
-                                     ('purchase', 'Purchase'),
-                                     ('sale', 'Sale')],
-                                    string="Type", default="sale")
+    project_id = fields.Many2one(
+        'project.project', string="Work", track_visibility='onchange')
+    invoice_type = fields.Selection(
+        [('rent', 'Rent'),
+         ('purchase', 'Purchase'),
+         ('sale', 'Sale')],
+        string="Type", default="sale", track_visibility='onchange')
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping",
-                                   compute="_get_merge_address")
-    invoice_address = fields.Text(string="Billing",
-                                  compute="_get_merge_address")
+    shipping_address = fields.Text(
+        string="Shipping",
+        compute="_get_merge_address")
+    invoice_address = fields.Text(
+        string="Billing",
+        compute="_get_merge_address")
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
+
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
 
     @api.multi
     def write(self, values):

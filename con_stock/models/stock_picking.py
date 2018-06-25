@@ -30,13 +30,23 @@ from odoo.exceptions import UserError
 class StockPicking(Model):
     _inherit = "stock.picking"
 
-    project_id = fields.Many2one('project.project', string="Project")
-    attachment_ids = fields.Many2many('ir.attachment', compute='_compute_attachment_ids', string="Main Attachments")
+    project_id = fields.Many2one(
+        'project.project', string="Project", track_visibility='onchange')
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
+    attachment_ids = fields.Many2many(
+        'ir.attachment',
+        compute='_compute_attachment_ids',
+        string="Main Attachments", track_visibility='onchange')
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping",
-                                   compute="_get_merge_address")
-    invoice_address = fields.Text(string="Billing",
-                                  compute="_get_merge_address")
+    shipping_address = fields.Text(
+        string="Shipping",
+        compute="_get_merge_address", track_visibility='onchange')
+    invoice_address = fields.Text(
+        string="Billing",
+        compute="_get_merge_address", track_visibility='onchange')
     repair_requests = fields.Boolean(string='Repair request')
     mess_operated = fields.Boolean('Message Operated', default=False)
     reason = fields.Selection([
@@ -46,42 +56,71 @@ class StockPicking(Model):
         ('3', 'Bad attention'),
         ('2', 'The equipment did not serve you'),
         ('0', 'No longer need it'),
-    ], string="Reason")
-    type_sp = fields.Integer(related='picking_type_id.id', store=True)
-    carrier_type = fields.Selection(related='sale_id.carrier_type', store=True)
-    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle',
-                                 related='sale_id.vehicle',
-                                 onchange='onchange_vehicle_id',
-                                 track_visibility='onchange', store=True)
-
-    license_plate = fields.Char(related='vehicle_id.license_plate',
-                                string='License Plate',
-                                store=True)
-
-    driver_client = fields.Char(string='Driver', track_visibility='onchange')
-    id_driver_client = fields.Char(string='Identification No Driver',
-                                   store=True)
+    ], string="Reason", track_visibility='onchange')
+    type_sp = fields.Integer(
+        related='picking_type_id.id',
+        store=True, track_visibility='onchange')
+    carrier_type = fields.Selection(
+        related='sale_id.carrier_type',
+        store=True, track_visibility='onchange')
+    vehicle_id = fields.Many2one(
+        'fleet.vehicle', string='Vehicle',
+        related='sale_id.vehicle',
+        onchange='onchange_vehicle_id',
+        track_visibility='onchange', store=True)
+    license_plate = fields.Char(
+        related='vehicle_id.license_plate',
+        string='License Plate',
+        store=True, track_visibility='onchange')
+    driver_client = fields.Char(
+        string='Driver', track_visibility='onchange')
+    id_driver_client = fields.Char(
+        string='Identification No Driver',
+        store=True, track_visibility='onchange')
     driver_ids = fields.One2many(
-        'shipping.driver', 'stock_picking_id', string='Shipping Driver',
-        copy=True)
-    vehicle_client = fields.Char(string='Vehicle', track_visibility='onchange')
-    in_hour = fields.Float(string='Hour Entry', track_visibility='onchange')
-    out_hour = fields.Float(string='Hour Output', track_visibility='onchange')
+        'shipping.driver',
+        'stock_picking_id',
+        string='Shipping Driver',
+        copy=True, track_visibility='onchange')
+    vehicle_client = fields.Char(
+        string='Vehicle', track_visibility='onchange')
+    in_hour = fields.Float(
+        string='Hour Entry', track_visibility='onchange')
+    out_hour = fields.Float(
+        string='Hour Output', track_visibility='onchange')
     receipts_driver_ids = fields.One2many(
-        'shipping.driver', 'stock_picking_id', string='Shipping Driver',
+        'shipping.driver', 'stock_picking_id',
+        string='Shipping Driver',
         copy=True)
-    responsible = fields.Char(string='Responsible',
-                              track_visibility='onchange')
-    id_number = fields.Char(string='Person identification',
-                            track_visibility='onchange')
-    job_title = fields.Char(string='Job title', track_visibility='onchange')
-    carrier_tracking_ref = fields.Char(string='Tracking Reference',
-                                       compute='_carrier_tracking_ref')
-    cancel_reason = fields.Text(strin="Cancel Reason",
-                                track_visibility='onchange')
-    delivery_cost = fields.Many2many('sale.order.line', 'order_line_picking_rel',
-                                  'sale_order_line_id', 'picking_id',
-                                    string="Delivery Cost")
+    responsible = fields.Char(
+        string='Responsible',
+        track_visibility='onchange')
+    id_number = fields.Char(
+        string='Person identification',
+        track_visibility='onchange')
+    job_title = fields.Char(
+        string='Job title', track_visibility='onchange')
+    carrier_tracking_ref = fields.Char(
+        string='Tracking Reference',
+        compute='_carrier_tracking_ref')
+    cancel_reason = fields.Text(
+        strin="Cancel Reason",
+        track_visibility='onchange')
+    delivery_cost = fields.Many2many(
+        'sale.order.line',
+        'order_line_picking_rel',
+        'sale_order_line_id', 'picking_id',
+        string="Delivery Cost", track_visibility='onchange')
+
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
 
     @api.multi
     def _product_availibility_on_project(self, partner_id=False,
