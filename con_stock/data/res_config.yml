@@ -5,6 +5,7 @@
     {
       'group_stock_multi_locations': True,
       'group_uom': True,
+      'group_warning_stock': True,
     }
 -
   !python {model: res.config.settings}: |
