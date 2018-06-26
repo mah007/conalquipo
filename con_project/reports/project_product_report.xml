@@ -39,26 +39,26 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                        <tr>
-                                            <th align="left" bgcolor="#A9A9A9">Producto</th>
-                                            <th align="left" bgcolor="#A9A9A9">Disponibilidad</th>
-                                            <th align="left" bgcolor="#A9A9A9">Cantidad en obra</th>
-                                        </tr>
-                                        <tr>
-                                            <t t-foreach="picking.move_lines" t-as="moves">
-                                                <td>
-                                                    <span t-esc="moves.product_id.name"/>
-                                                </td>
-                                                <td>
-                                                    <span t-esc="moves.sale_line_id.real_available"/>
-                                                </td>
-                                                <td>
-                                                    <span t-esc="moves.product_count"/>
-                                                </td>
-                                                <td>
-                                                </td>
-                                            </t>
-                                        </tr>
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">Producto</th>
+                                        <th align="left" bgcolor="#A9A9A9">Disponibilidad</th>
+                                        <th align="left" bgcolor="#A9A9A9">Cantidad en obra</th>
+                                    </tr>
+                                    <tr>
+                                        <t t-foreach="picking.move_lines" t-as="moves">
+                                            <td>
+                                                <span t-esc="moves.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="moves.sale_line_id.real_available"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="moves.product_count"/>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </t>
+                                    </tr>
                                 </table>
                             </t>
                         </t>

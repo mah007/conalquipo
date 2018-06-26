@@ -17,6 +17,7 @@
         - Adds municipality_ids modifications to the delivery.carrier model
     """,
     'data': [
+        'security/ir.model.access.csv',
         'data/module_category.xml',
         'data/groups.xml',
         'views/delivery.xml'

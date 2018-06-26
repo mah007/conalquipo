@@ -37,6 +37,7 @@
          at specific times of the workflow.
     """,
     'data': [
+        'security/ir.model.access.csv',
         'views/product.xml',
         'views/product_states.xml',
         'data/product.states.csv',

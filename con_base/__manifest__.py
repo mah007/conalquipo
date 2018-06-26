@@ -31,6 +31,7 @@
         'data/res.country.municipality.csv',
         'data/sectors.xml',
         'data/messages.xml',
+        'data/res_users.xml',
     ],
     'qweb': [
     ],
