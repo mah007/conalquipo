@@ -174,5 +174,42 @@
         </field>
     </record>
 
+    <record id="res_partner_stock_warning_inherit" model="ir.ui.view">
+        <field name="name">res.partner.stock.warning.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="stock.view_partner_stock_warnings_form"/>
+        <field name="arch" type="xml">
+
+            <field name="picking_warn" position="after">
+                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="picking_warn_msg" position="replace">
+                <field name="picking_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="rpartner_view_buttons_inherit" model="ir.ui.view">
+        <field name="name">partner.view.buttons.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <field name="invoice_warn" position="after">
+                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="invoice_warn_msg" position="replace">
+                <field name="invoice_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
+        </field>
+    </record>
+
+
   </data>
 </odoo>
