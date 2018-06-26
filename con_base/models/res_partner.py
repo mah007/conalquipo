@@ -112,7 +112,17 @@ class ResPartnerCode(models.Model):
     ], string='Invoice Weekday', track_visibility='onchange')
     messages_id = fields.Many2many(
         'res.partner.messages',
-        string="Messages",
+        string="Sale Messages",
+        ondelete="restrict",
+        track_visibility='onchange')
+    messages_picking_id = fields.Many2many(
+        'res.partner.messages',
+        string="Picking Messages",
+        ondelete="restrict",
+        track_visibility='onchange')
+    messages_account_id = fields.Many2many(
+        'res.partner.messages',
+        string="Account Messages",
         ondelete="restrict",
         track_visibility='onchange')
     over_credit = fields.Boolean(
@@ -126,7 +136,7 @@ class ResPartnerCode(models.Model):
             self.contact_person = False
 
     @api.onchange('sale_warn', 'messages_id')
-    def onchange_messages(self):
+    def onchange_sale_messages(self):
         list_msg = []
         self.sale_warn_msg = ""
         if self.sale_warn in ['warning', 'block']:
@@ -138,6 +148,34 @@ class ResPartnerCode(models.Model):
         else:
             self.messages_id = False
             self.update({'sale_warn_msg': ""})
+
+    @api.onchange('picking_warn', 'messages_picking_id')
+    def onchange_picking_messages(self):
+        list_msg = []
+        self.picking_warn_msg = ""
+        if self.picking_warn in ['warning', 'block']:
+            self.picking_warn_msg = ""
+            if self.messages_picking_id:
+                for data in self.messages_picking_id:
+                    list_msg.append(data.name)
+            self.picking_warn_msg = ' - '.join(list_msg)
+        else:
+            self.messages_picking_id = False
+            self.update({'picking_warn_msg': ""})
+
+    @api.onchange('invoice_warn', 'messages_account_id')
+    def onchange_account_messages(self):
+        list_msg = []
+        self.invoice_warn_msg = ""
+        if self.invoice_warn in ['warning', 'block']:
+            self.invoice_warn_msg = ""
+            if self.messages_account_id:
+                for data in self.messages_account_id:
+                    list_msg.append(data.name)
+            self.invoice_warn_msg = ' - '.join(list_msg)
+        else:
+            self.messages_account_id = False
+            self.update({'invoice_warn_msg': ""})
 
     @api.onchange('start_day', 'end_day')
     def onchange_days(self):
