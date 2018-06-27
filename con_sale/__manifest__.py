@@ -40,6 +40,7 @@
              'views/res_config_settings.xml',
              'views/sale_quote_template.xml',
              'report/report_customer_portfolio.xml',
+             'security/ir.model.access.csv',
             ],
 
     'installable': True,
