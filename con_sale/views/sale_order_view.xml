@@ -273,7 +273,7 @@
                 <xpath expr="//label[@for='carrier_id']" position="replace" />
                 <xpath expr="//div[@name='carrier_selection']" position="replace" />
                 <xpath expr="//field[@name='payment_term_id']" position="after">
-                    <field name="carrier_id" context="{'order_id': id}"
+                    <field name="carrier_id" context="{'order_id': id, 'product_id.product_tmpl_id.for_shipping': True}"
                         attrs="{'readonly':[('state','in',('done'))],
                                 'invisible': [('carrier_type','!=', 'company')],
                                 'required': [('carrier_type','=', 'company')]}"/>

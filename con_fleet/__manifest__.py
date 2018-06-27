@@ -13,7 +13,10 @@
     """
         Conalquipo Fleet customizations
     """,
-    'data': ['views/fleet_vehicle.xml',],
+    'data': [
+        'views/fleet_vehicle.xml',
+        'security/ir.model.access.csv',
+    ],
     'qweb': [
     ],
     'demo': [

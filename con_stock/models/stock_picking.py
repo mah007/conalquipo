@@ -434,9 +434,12 @@ class StockPicking(Model):
                 [['name',
                   '=',
                   'Can receive stock notifications email diary']])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.email)
+        else:
+            return False
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",
@@ -471,29 +474,30 @@ class StockPicking(Model):
                 data.picking_id.location_id.usage \
                 == 'customer':
                 move_out.append(data)
-        # Mail template
-        template = self.env.ref(
-            'con_stock.stock_automatic_email_template')
-        mail_template = self.env['mail.template'].browse(template.id)
-        # Mail subject
-        date = time.strftime('%d-%m-%Y')
-        subject = "Notificación diaria de movimientos: " + str(date)
-        # Update the context
-        new_product_lst = sorted(list(set(products_lst)))
-        ctx = dict(self.env.context or {})
-        ctx.update({
-            'senders': user_id,
-            'recipients': formated,
-            'subject': subject,
-            'date': date,
-            'products_lst': new_product_lst,
-            'move_in': move_in,
-            'move_out': move_out
-        })
-        # Send mail
-        if mail_template and move_in and new_product_lst:
-            mail_template.with_context(ctx).send_mail(
-                self.id, force_send=True, raise_exception=True)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_stock.stock_automatic_email_template')
+            mail_template = self.env['mail.template'].browse(template.id)
+            # Mail subject
+            date = time.strftime('%d-%m-%Y')
+            subject = "Notificación diaria de movimientos: " + str(date)
+            # Update the context
+            new_product_lst = sorted(list(set(products_lst)))
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': subject,
+                'date': date,
+                'products_lst': new_product_lst,
+                'move_in': move_in,
+                'move_out': move_out
+            })
+            # Send mail
+            if mail_template and move_in and new_product_lst:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def send_mail_notification_biweekly(self):
@@ -511,9 +515,10 @@ class StockPicking(Model):
                 [['name',
                   '=',
                   'Can receive stock notifications email biweekly']])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.email)
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",
@@ -548,29 +553,30 @@ class StockPicking(Model):
                 data.picking_id.location_id.usage \
                 == 'customer':
                 move_out.append(data)
-        # Mail template
-        template = self.env.ref(
-            'con_stock.stock_automatic_email_template')
-        mail_template = self.env['mail.template'].browse(template.id)
-        # Mail subject
-        date = time.strftime('%d-%m-%Y')
-        subject = "Notificación quincenal de movimientos: " + str(date)
-        # Update the context
-        new_product_lst = sorted(list(set(products_lst)))
-        ctx = dict(self.env.context or {})
-        ctx.update({
-            'senders': user_id,
-            'recipients': formated,
-            'subject': subject,
-            'date': date,
-            'products_lst': new_product_lst,
-            'move_in': move_in,
-            'move_out': move_out
-        })
-        # Send mail
-        if mail_template and move_in and new_product_lst:
-            mail_template.with_context(ctx).send_mail(
-                self.id, force_send=True, raise_exception=True)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_stock.stock_automatic_email_template')
+            mail_template = self.env['mail.template'].browse(template.id)
+            # Mail subject
+            date = time.strftime('%d-%m-%Y')
+            subject = "Notificación quincenal de movimientos: " + str(date)
+            # Update the context
+            new_product_lst = sorted(list(set(products_lst)))
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': subject,
+                'date': date,
+                'products_lst': new_product_lst,
+                'move_in': move_in,
+                'move_out': move_out
+            })
+            # Send mail
+            if mail_template and move_in and new_product_lst:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def send_mail_notification_monthly(self):
@@ -588,9 +594,12 @@ class StockPicking(Model):
                 [['name',
                   '=',
                   'Can receive stock notifications email monthly']])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.email)
+        else:
+            return False
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",
@@ -625,29 +634,30 @@ class StockPicking(Model):
                 data.picking_id.location_id.usage \
                 == 'customer':
                 move_out.append(data)
-        # Mail template
-        template = self.env.ref(
-            'con_stock.stock_automatic_email_template')
-        mail_template = self.env['mail.template'].browse(template.id)
-        # Mail subject
-        date = time.strftime('%d-%m-%Y')
-        subject = "Notificación mensual de movimientos: " + str(date)
-        # Update the context
-        new_product_lst = sorted(list(set(products_lst)))
-        ctx = dict(self.env.context or {})
-        ctx.update({
-            'senders': user_id,
-            'recipients': formated,
-            'subject': subject,
-            'date': date,
-            'products_lst': new_product_lst,
-            'move_in': move_in,
-            'move_out': move_out
-        })
-        # Send mail
-        if mail_template and move_in and new_product_lst:
-            mail_template.with_context(ctx).send_mail(
-                self.id, force_send=True, raise_exception=True)
+        if recipients:
+            # Mail template
+            template = self.env.ref(
+                'con_stock.stock_automatic_email_template')
+            mail_template = self.env['mail.template'].browse(template.id)
+            # Mail subject
+            date = time.strftime('%d-%m-%Y')
+            subject = "Notificación mensual de movimientos: " + str(date)
+            # Update the context
+            new_product_lst = sorted(list(set(products_lst)))
+            ctx = dict(self.env.context or {})
+            ctx.update({
+                'senders': user_id,
+                'recipients': formated,
+                'subject': subject,
+                'date': date,
+                'products_lst': new_product_lst,
+                'move_in': move_in,
+                'move_out': move_out
+            })
+            # Send mail
+            if mail_template and move_in and new_product_lst:
+                mail_template.with_context(ctx).send_mail(
+                    self.id, force_send=True, raise_exception=True)
 
     @api.multi
     def do_print_picking2(self):

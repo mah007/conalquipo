@@ -304,15 +304,17 @@ class ProjectWorks(models.Model):
                     [['name',
                     '=',
                     'Administrative assistant']])
-            for data in groups:
-                for users in data.users:
-                    recipients.append(users.login)
-            body = _(
-                'Attention: The work %s are created by %s') % (
-                    res.name, res.create_uid.name)
-            res.send_followers(body, recipients)
-            res.send_to_channel(body, recipients)
-            res.send_mail(body)
+            if groups:
+                for data in groups:
+                    for users in data.users:
+                        recipients.append(users.email)
+            if recipients:
+                body = _(
+                    'Attention: The work %s are created by %s') % (
+                        res.name, res.create_uid.name)
+                res.send_followers(body, recipients)
+                res.send_to_channel(body, recipients)
+                res.send_mail(body)
         else:
             raise UserError(_("You need to select a client!"))
         return res
@@ -343,9 +345,10 @@ class ProjectWorks(models.Model):
                 [['name',
                   '=',
                   'Administrative assistant']])
-        for data in groups:
-            for users in data.users:
-                recipients.append(users.login)
+        if groups:
+            for data in groups:
+                for users in data.users:
+                    recipients.append(users.email)
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",

@@ -145,7 +145,6 @@ class SaleOrder(models.Model):
             for data in groups:
                 for users in data.users:
                     users_list.append(users.id)
-
         # Invoices
         today_dt = datetime.now().strftime('%Y-%m-%d')
         invoice_obj = self.env['account.invoice']
@@ -156,73 +155,73 @@ class SaleOrder(models.Model):
 
         self.due_invoice_ids = [(5,)]
         self.message_invoice = ''
+        if users_list:
+            if invoices:
+                for data in invoices:
+                    amount_residual += data.residual
+                    due = datetime.strptime(data.date_due, '%Y-%m-%d')
+                    today = datetime.strptime(today_dt, '%Y-%m-%d')
+                    amount = self.partner_id.credit_limit - (
+                        amount_residual + self.amount_total)
+                    invoices_list.append((4, data.id))
 
-        if invoices:
-            for data in invoices:
-                amount_residual += data.residual
-                due = datetime.strptime(data.date_due, '%Y-%m-%d')
-                today = datetime.strptime(today_dt, '%Y-%m-%d')
-                amount = self.partner_id.credit_limit - (
-                    amount_residual + self.amount_total)
-                invoices_list.append((4, data.id))
+                    if actual_user not in users_list and \
+                    not self.partner_id.over_credit:
+                        # Not credit define and due invoice
+                        if self.partner_id.credit_limit == 0.0 and \
+                        due < today:
+                            msg = _("Has an expired bill!")
+                            self.write({'message_invoice': msg,
+                                        'due_invoice_ids': invoices_list,
+                                        'can_confirm': False,
+                                        'available_amount': amount})
 
-                if actual_user not in users_list and \
-                not self.partner_id.over_credit:
-                    # Not credit define and due invoice
-                    if self.partner_id.credit_limit == 0.0 and \
-                    due < today:
-                        msg = _("Has an expired bill!")
+                        # Credit define and due invoice
+                        elif self.partner_id.credit_limit > 0.0 and \
+                        due < today and amount < -1:
+                            msg = _("Exceeds limit and has expired invoice!")
+                            self.write({'message_invoice': msg,
+                                        'due_invoice_ids': invoices_list,
+                                        'can_confirm': False,
+                                        'available_amount': amount})
+
+                        # Credit define and not due invoice but pending
+                        elif self.partner_id.credit_limit > 0.0 and \
+                        due > today and amount < -1:
+                            msg = _("Exceeds limit on outstanding invoices!")
+                            self.write({'message_invoice': msg,
+                                        'due_invoice_ids': invoices_list,
+                                        'can_confirm': False,
+                                        'available_amount': amount})
+                        # Invoice but pending and not exceeds
+                        elif self.partner_id.credit_limit > 0.0 and due < today:
+                            msg = _("Have outstanding invoices!")
+                            self.write({'message_invoice': msg,
+                                        'can_confirm': True,
+                                        'due_invoice_ids': invoices_list,
+                                        'available_amount': amount})
+            # Credit define and not invoice pending
+            else:
+                if self.partner_id.credit_limit != 0.0:
+                    amount = self.partner_id.credit_limit - (
+                        amount_residual + self.amount_total)
+                    if amount < -1 and \
+                    actual_user not in users_list and \
+                    not self.partner_id.over_credit:
+                        msg = _("Exceeds credit limit!")
                         self.write({'message_invoice': msg,
-                                    'due_invoice_ids': invoices_list,
                                     'can_confirm': False,
+                                    'due_invoice_ids': [(5,)],
                                     'available_amount': amount})
-
-                    # Credit define and due invoice
-                    elif self.partner_id.credit_limit > 0.0 and \
-                    due < today and amount < -1:
-                        msg = _("Exceeds limit and has expired invoice!")
-                        self.write({'message_invoice': msg,
-                                    'due_invoice_ids': invoices_list,
-                                    'can_confirm': False,
-                                    'available_amount': amount})
-
-                    # Credit define and not due invoice but pending
-                    elif self.partner_id.credit_limit > 0.0 and \
-                    due > today and amount < -1:
-                        msg = _("Exceeds limit on outstanding invoices!")
-                        self.write({'message_invoice': msg,
-                                    'due_invoice_ids': invoices_list,
-                                    'can_confirm': False,
-                                    'available_amount': amount})
-                    # Invoice but pending and not exceeds
-                    elif self.partner_id.credit_limit > 0.0 and due < today:
-                        msg = _("Have outstanding invoices!")
-                        self.write({'message_invoice': msg,
-                                    'can_confirm': True,
-                                    'due_invoice_ids': invoices_list,
-                                    'available_amount': amount})
-        # Credit define and not invoice pending
-        else:
-            if self.partner_id.credit_limit != 0.0:
-                amount = self.partner_id.credit_limit - (
-                    amount_residual + self.amount_total)
-                if amount < -1 and \
-                actual_user not in users_list and \
-                not self.partner_id.over_credit:
-                    msg = _("Exceeds credit limit!")
-                    self.write({'message_invoice': msg,
-                                'can_confirm': False,
-                                'due_invoice_ids': [(5,)],
-                                'available_amount': amount})
-        if self.partner_id.credit_limit == 0.0:
-            msg = _("Without credit limit define!")
-            self.write({
-                'can_confirm': True,
-                'available_amount': 0.0,
-                'message_invoice': msg})
-        if self.partner_id.over_credit:
-            self.write({'can_confirm': True})
-        return True
+            if self.partner_id.credit_limit == 0.0:
+                msg = _("Without credit limit define!")
+                self.write({
+                    'can_confirm': True,
+                    'available_amount': 0.0,
+                    'message_invoice': msg})
+            if self.partner_id.over_credit:
+                self.write({'can_confirm': True})
+            return True
 
     @api.depends('partner_id')
     def get_limit(self):
@@ -297,7 +296,8 @@ class SaleOrder(models.Model):
 
         """
         if self.order_line:
-            operators = self.order_line.filtered(lambda line: line.add_operator)
+            operators = self.order_line.filtered(
+                lambda line:line.add_operator)
             self.operators_services = len(operators)
 
     def _compute_sign_ids(self):
@@ -544,7 +544,7 @@ class SaleOrder(models.Model):
                 user_groups = groupdata.users
                 for datausers in user_groups:
                     users.append(datausers.id)
-                    mail_users.append(datausers.login)
+                    mail_users.append(datausers.email)
             new_users = list(set(users))
             new_mail_users = list(set(mail_users))
             self.send_followers(body, new_users)
@@ -554,6 +554,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def send_mail_wtemplate(self, body, recipients):
+        mail_template = None
         if recipients:
             html_escape_table = {
                 "&": "&amp;",
@@ -567,8 +568,9 @@ class SaleOrder(models.Model):
             # Mail template
             template = self.env.ref(
                 'con_sale.create_order_email_template')
-            mail_template = self.env[
-                'mail.template'].browse(template.id)
+            if template:
+                mail_template = self.env[
+                    'mail.template'].browse(template.id)
             # senders
             uid = SUPERUSER_ID
             user_id = self.env[
@@ -667,18 +669,19 @@ class SaleOrder(models.Model):
         if groups:
             for data in groups:
                 for users in data.users:
-                    recipients.append(users.login)
-        body = _(
-            'Attention: The order %s are created by %s') % (
-                res.name, res.create_uid.name)
-        res.send_followers(body, recipients)
-        res.send_to_channel(body, recipients)
-        res.send_mail(body)
-        if res.project_id:
-            return res
-        else:
-            raise UserError(_(
-                'You need specify a work in this sale order'))
+                    recipients.append(users.email)
+        if recipients:
+            body = _(
+                'Attention: The order %s are created by %s') % (
+                    res.name, res.create_uid.name)
+            res.send_followers(body, recipients)
+            res.send_to_channel(body, recipients)
+            res.send_mail(body)
+            if res.project_id:
+                return res
+            else:
+                raise UserError(_(
+                    'You need specify a work in this sale order'))
 
     def send_followers(self, body, recipients):
         if recipients:
@@ -710,7 +713,9 @@ class SaleOrder(models.Model):
         if groups:
             for data in groups:
                 for users in data.users:
-                    recipients.append(users.login)
+                    recipients.append(users.email)
+        else:
+            return False
         html_escape_table = {
             "&": "&amp;",
             '"': "&quot;",
@@ -1344,7 +1349,7 @@ class SaleOrderLine(models.Model):
         if product_muoms != True:
             line.price_unit = line.product_id.product_tmpl_id.list_price
             line.min_sale_qty = \
-                line.product_id.product_tmpl_id.min_qty_rental             
+                line.product_id.product_tmpl_id.min_qty_rental
         else:
             for uom_list in line.product_id.product_tmpl_id.uoms_ids:
                 if line.bill_uom.id == uom_list.uom_id.id:
