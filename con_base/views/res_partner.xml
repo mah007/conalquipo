@@ -88,7 +88,7 @@
         </field>
     </record>
 
-    <record id="view_partner_property_form_inherit" model="ir.ui.view">
+    <record id="view_partner_property_form_product_inherit" model="ir.ui.view">
         <field name="name">view.partner.property.form.pricelist</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="product.view_partner_property_form"/>
@@ -98,6 +98,15 @@
                 <field name="can_edit_pricelist" invisible="1"/>
                 <field name="property_product_pricelist" groups="product.group_sale_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)], 'readonly': [('can_edit_pricelist','=',False)]}"/>
             </field>
+
+        </field>
+    </record>
+
+    <record id="view_partner_property_form_account_inherit" model="ir.ui.view">
+        <field name="name">view.partner.property.form.pricelist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
 
             <group name="acc_sale" position="inside">
                 <field name="credit_limit"/>
