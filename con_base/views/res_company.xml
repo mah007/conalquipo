@@ -18,7 +18,12 @@
                             <field name="account_extra_perm" widget="many2many_tags"/>
                         </group>
                         <group>
-                            <field name="default_payment_term_id" widget="selection"/>
+                            <group>
+                                <field name="default_payment_term_id" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="default_uom_task_id" widget="many2many_tags"/>
+                            </group>
                         </group>
                     </page>
                 </xpath>
