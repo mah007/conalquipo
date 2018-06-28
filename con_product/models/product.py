@@ -238,8 +238,6 @@ class ProductTemplate(Model):
     sale_uom = fields.Many2one(
         'product.uom',
         string='Sale UoM')
-    generate_task = fields.Boolean(
-        string="Generate task?", default=False)
     for_shipping = fields.Boolean(
         string='Use for shipping?')
 
