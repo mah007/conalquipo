@@ -8,8 +8,8 @@ access_delivery_carrier_cost_stock_manager,delivery.carrier.cost,model_delivery_
 access_delivery_carrier_cost_it_manager,delivery.carrier.cost,model_delivery_carrier_cost,con_profile.group_it_manager,1,1,1,1
 access_shipping_driver_salesman,shipping.driver,model_shipping_driver,sales_team.group_sale_salesman,1,1,1,0
 access_shipping_driver_sale_manager,shipping.driver,model_shipping_driver,sales_team.group_sale_manager,1,1,1,1
+access_shipping_driver_account_user,shipping.driver,model_shipping_driver,account.group_account_user,1,1,1,0
+access_shipping_driver_account_manager,shipping.driver,model_shipping_driver,account.group_account_manager,1,1,1,1
+access_shipping_driver_it_manager,shipping.driver,model_shipping_driver,con_profile.group_it_manager,1,1,1,1
 access_shipping_driver_stock_user,shipping.driver,model_shipping_driver,stock.group_stock_user,1,1,1,0
 access_shipping_driver_stock_manager,shipping.driver,model_shipping_driver,stock.group_stock_manager,1,1,1,1
-access_shipping_driver_stock_user,shipping.driver,model_shipping_driver,account.group_account_user,1,1,1,0
-access_shipping_driver_stock_manager,shipping.driver,model_shipping_driver,account.group_account_manager,1,1,1,1
-access_shipping_driver_it_manager,shipping.driver,model_shipping_driver,con_profile.group_it_manager,1,1,1,1

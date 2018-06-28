@@ -16,7 +16,7 @@
             <field name="login">logistica@conalquipo.com</field>
             <field name="password">logistica</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_user'), ref('fleet.fleet_group_manager'), ref('sales_team.group_sale_manager'), ref('con_profile.group_logistic')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_user'), ref('fleet.fleet_group_manager'), ref('sales_team.group_sale_manager'), ref('con_profile.group_logistic'), ref('project.group_project_manager'), ref('hr.group_hr_user')])]"/>
         </record> 
 
         <record id="partner_dlogistica" model="res.partner">
@@ -32,7 +32,7 @@
             <field name="login">dlogistica@conalquipo.com</field>
             <field name="password">dlogistica</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_manager'), ref('sales_team.group_sale_manager'), ref('fleet.fleet_group_manager'), ref('con_profile.group_logistic_director')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('stock.group_stock_manager'), ref('sales_team.group_sale_manager'), ref('fleet.fleet_group_manager'), ref('con_profile.group_logistic_director'), ref('project.group_project_manager'), ref('con_profile.group_can_sign'), ref('hr.group_hr_user')])]"/>
         </record> 
 
         <!-- COMERCIAL -->
@@ -49,7 +49,7 @@
             <field name="login">comercial@conalquipo.com</field>
             <field name="password">comercial</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_salesman'), ref('project.group_project_manager'), ref('fleet.fleet_group_manager'), ref('base.group_partner_manager'), ref('stock.group_stock_user'), ref('purchase.group_purchase_user'), ref('con_profile.group_commercial'), ref('account.group_account_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_salesman'), ref('project.group_project_manager'), ref('fleet.fleet_group_manager'), ref('base.group_partner_manager'), ref('stock.group_stock_user'), ref('purchase.group_purchase_user'), ref('con_profile.group_commercial'), ref('account.group_account_user'), ref('con_profile.group_can_sign'), ref('hr.group_hr_user')])]"/>
         </record> 
 
         <record id="partner_dcomercial" model="res.partner">
@@ -65,11 +65,11 @@
             <field name="login">dcomercial@conalquipo.com</field>
             <field name="password">dcomercial</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager'), ref('project.group_project_manager'), ref('fleet.fleet_group_manager'), ref('base.group_partner_manager'), ref('stock.group_stock_user'), ref('purchase.group_purchase_user'), ref('con_profile.group_commercial_director')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager'), ref('project.group_project_manager'), ref('fleet.fleet_group_manager'), ref('base.group_partner_manager'), ref('stock.group_stock_user'), ref('purchase.group_purchase_user'), ref('con_profile.group_commercial_director'), ref('con_profile.group_commercial_purchases'), ref('con_profile.group_can_sign'), ref('hr.group_hr_user')])]"/>
         </record> 
 
 
-        <!-- MENU COMERCIAL -->
+        <!-- MENU VENTAS -->
         <record id="sale.sale_menu_root" model="ir.ui.menu">
             <field name="groups_id" eval="[(6,0,[ref('con_profile.group_commercial'), ref('con_profile.group_commercial_director'), ref('con_profile.group_logistic_director')])]"/>
         </record>
@@ -82,18 +82,39 @@
             <field name="groups_id" eval="[(6,0,[ref('con_profile.group_commercial'), ref('con_profile.group_commercial_director')])]"/>
         </record>
 
-        <!-- MENU LOGISTICA -->
+        <!-- MENU INVENTARIO -->
         <record id="stock.menu_stock_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_logistic'), ref('con_profile.group_logistic_director')])]"/>
-        </record>
-
-        <record id="mrp_repair.menu_repair_order" model="ir.ui.menu">
             <field name="groups_id" eval="[(6,0,[ref('con_profile.group_logistic'), ref('con_profile.group_logistic_director')])]"/>
         </record>
 
         <!-- MENU CONTABILIDAD -->
         <record id="account.menu_finance" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_administrative_assistant'), ref('con_profile.group_commercial_director')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_administrative_assistant')])]"/>
+        </record>
+
+        <!-- MENU FLOTAS -->
+        <record id="fleet.menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_fleet')])]"/>
+        </record>
+
+        <!-- MENU HR -->
+        <record id="hr.menu_hr_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_can_see_employees')])]"/>
+        </record>
+
+        <!-- MENU PURCHASES -->
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_commercial_purchases')])]"/>
+        </record>
+
+        <!-- MENU MRP REPAIR -->
+        <record id="mrp_repair.menu_repair_order" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_mrp_repair')])]"/>
+        </record>
+
+        <!-- MENU WEBSITE SIGN -->
+        <record id="website_sign.menu_document" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0,[ref('con_profile.group_can_sign')])]"/>
         </record>
 
     </data>
