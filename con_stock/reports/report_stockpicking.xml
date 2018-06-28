@@ -86,11 +86,11 @@
                             <span t-field="o.carrier_tracking_ref"/>
                             <br/>
                             <br/>
-                            <span>ANUNCIA: </span><span t-field="o.write_uid.name"/>
+                            <span>ANUNCIA: </span><span t-field="o.employee_id.name"/>
                             <span> / </span>
-                            <t t-if="o.write_uid.employee_ids.job_id.name">
-                                <span>Cargo: </span><span t-field="o.write_uid.employee_ids.job_id.name"/>
-                            </>
+                            <t t-if="o.employee_id.job_id.name">
+                                <span>Cargo: </span><span t-field="o.employee_id.job_id.name"/>
+                            </t>
                             <span> / </span>
                             <span>Fecha-hora de anuncio: </span><strong><span t-field="o.scheduled_date"/></strong>
                         </div>
