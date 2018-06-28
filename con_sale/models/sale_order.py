@@ -833,34 +833,6 @@ class SaleOrder(models.Model):
             })
         else:
             if self.partner_id:
-                lines = list()
-                order_line = self.env['sale.order.line']
-                del_ids = order_line.search(
-                    [('order_id', '=', self._origin.id),
-                     ('is_delivery', '=', True)])._ids
-                link_ids = order_line.search(
-                    [('order_id', '=', self._origin.id),
-                     ('is_delivery', '!=', True)])
-                # ~ Data Backup
-                for new in link_ids:
-                    lines.append({
-                        'order_id': self._origin.id,
-                        'name': new.name,
-                        'bill_uom_qty': new.product_uom_qty,
-                        'product_uom_qty': new.product_uom_qty,
-                        'product_uom': new.product_uom.id,
-                        'product_id': new.product_id.id,
-                        'price_unit': new.price_unit,
-                        'tax_id': new.tax_id,
-                        'is_delivery': False
-                    })
-                # ~ Deleted the records
-                self.update({
-                    'order_line': [(2, del_ids)],
-                })
-                # ~ link new records
-                for new in lines:
-                    self.update({'order_line': [(0, 0, new)]})
                 self.write({'carrier_id': None, 'vehicle': None})
 
     @api.onchange('carrier_id')
@@ -983,7 +955,7 @@ class SaleOrder(models.Model):
             if not receipt:
                 break
         return True
-  
+
     @api.onchange('template_id')
     def onchange_template_id(self):
         res = super(SaleOrder, self).onchange_template_id()
