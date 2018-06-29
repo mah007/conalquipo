@@ -150,7 +150,7 @@ class SaleOrder(models.Model):
         invoice_obj = self.env['account.invoice']
         invoices = invoice_obj.search(
             [('partner_id', '=', self.partner_id.id),
-             ('state', 'in', ['draft', 'open'])])
+             ('state', '=', 'open')])
         invoices_list = []
 
         self.due_invoice_ids = [(5,)]
