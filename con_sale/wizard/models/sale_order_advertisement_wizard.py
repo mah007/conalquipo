@@ -10,7 +10,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     @api.multi
     def _get_default_loc(self):
         location = self.env['stock.location'].search([
-                ('set_default_location', '=', True)], limit=1) or False
+            ('set_default_location', '=', True)], limit=1) or False
         return location
 
     project_id = fields.Many2one('project.project', string="Project")
@@ -69,7 +69,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         :param carrier_type: Carrier type of the Picking (Char).
         :return: A record with the picking ID's
         """
-
 
         stock_move = self.env['stock.move'].search(
             [('location_dest_id', '=', src_location),
@@ -194,7 +193,6 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 {'picking_ids': [(6, 0, [x.id for x in picking_ids if
                                          x.location_id.id ==
                                          self.location_id.id])
-                                 ]})
-
+                                ]})
         return {'type': 'ir.actions.act_window_close'}
-
+        
