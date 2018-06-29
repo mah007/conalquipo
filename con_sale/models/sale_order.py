@@ -118,9 +118,9 @@ class SaleOrder(models.Model):
         return [('id', 'in', employee_list)]
 
     @api.multi
-    def check_limit(self):
+    def check_partner(self):
         """
-        Checks the limits
+        Checks the partner and credit limits
         """
         # Init data
         actual_user = self.env.user.id
