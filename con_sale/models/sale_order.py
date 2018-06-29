@@ -159,9 +159,12 @@ class SaleOrder(models.Model):
             if invoices:
                 for data in invoices:
                     if not data.date_due:
+                        preffix = data.sequence_number_next_prefix
+                        pre_number = data.sequence_number_next
+                        document = preffix + pre_number
                         raise UserError(_(
                             "The invoice %s don't have due date, check please!"
-                        ) % data.name)
+                        ) % document)
                     amount_residual += data.residual
                     due = datetime.strptime(data.date_due, '%Y-%m-%d')
                     today = datetime.strptime(today_dt, '%Y-%m-%d')
