@@ -626,14 +626,16 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_invoice_create(self, grouped=False, final=False):
-        res = super(SaleOrder, self).action_invoice_create(grouped, final)
-
-        for inv in self.invoice_ids:
-            for inv_ids in inv.invoice_line_ids:
-                owner = self.function_product_subleased(inv_ids.product_id)
-                if owner:
-                    inv_ids.write({'owner_id': owner.id})
-                inv_ids.invoice_type = self.order_type
+        res = super(SaleOrder, self).action_invoice_create(
+            grouped, final)
+        for data in self:
+            for inv in data.invoice_ids:
+                for inv_ids in inv.invoice_line_ids:
+                    owner = data.function_product_subleased(
+                        inv_ids.product_id)
+                    if owner:
+                        inv_ids.write({'owner_id': owner.id})
+                    inv_ids.invoice_type = data.order_type
         return res
 
     @api.multi
