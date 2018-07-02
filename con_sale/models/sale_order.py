@@ -93,12 +93,13 @@ class SaleOrder(models.Model):
          ('Other', 'Other')],
         string='Cancel reason')
     limit = fields.Float(
-        'Credit limit', compute='get_limit', store=True)
+        'Credit limit', compute='_get_limit', store=True)
     available_amount = fields.Float(
         'Available amount', track_visibility='onchange')
     message_invoice = fields.Char(
         'Messages', track_visibility='onchange')
     can_confirm = fields.Boolean('Can confirm')
+    partner_inactive = fields.Boolean('Partner inactive')
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices',
         track_visibility='onchange')
@@ -135,22 +136,34 @@ class SaleOrder(models.Model):
 
         # Users can confirm sales overlimit
         users_list = []
-        groups = self.env[
+        users_list_active_partner = []
+        groups_overlimit = self.env[
             'res.groups'].search(
                 [['name',
                   '=',
                   self.env.ref(
                       'con_profile.group_sale_overlimit').name]])
-        if groups:
-            for data in groups:
+        if groups_overlimit:
+            for data in groups_overlimit:
                 for users in data.users:
                     users_list.append(users.id)
+        # users can active partners
+        groups_acp = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  self.env.ref(
+                      'con_profile.group_inactive_partners').name]])
+        if groups_acp:
+            for data in groups_acp:
+                for users in data.users:
+                    users_list_active_partner.append(users.id)
         # Invoices
         today_dt = datetime.now().strftime('%Y-%m-%d')
         invoice_obj = self.env['account.invoice']
         invoices = invoice_obj.search(
             [('partner_id', '=', self.partner_id.id),
-             ('state', 'in', ['draft', 'open'])])
+             ('state', '=', 'open')])
         invoices_list = []
 
         self.due_invoice_ids = [(5,)]
@@ -158,6 +171,13 @@ class SaleOrder(models.Model):
         if users_list:
             if invoices:
                 for data in invoices:
+                    if not data.date_due:
+                        preffix = data.sequence_number_next_prefix
+                        pre_number = data.sequence_number_next
+                        document = preffix + pre_number
+                        raise UserError(_(
+                            "The invoice %s don't have due date, check please!"
+                        ) % document)
                     amount_residual += data.residual
                     due = datetime.strptime(data.date_due, '%Y-%m-%d')
                     today = datetime.strptime(today_dt, '%Y-%m-%d')
@@ -221,12 +241,28 @@ class SaleOrder(models.Model):
                     'message_invoice': msg})
             if self.partner_id.over_credit:
                 self.write({'can_confirm': True})
+            # Check partner invoice activity
+            if self.partner_inactive:
+                if actual_user in users_list_active_partner:
+                    self.write({'can_confirm': True})
+                else:
+                    msg = _(
+                        "Client has not billed more than 1 year ago!")
+                    self.write({
+                        'can_confirm': False,
+                        'partner_inactive': True,
+                        'message_invoice': msg})
+            else:
+                self.write({
+                    'partner_inactive': False,
+                    'can_confirm': True})
             return True
 
     @api.depends('partner_id')
-    def get_limit(self):
+    def _get_limit_and_invoices(self):
         """
         Show in sale order form the limit amount
+        and get all invoices to check activity
         """
         for data in self:
             data.limit = data.partner_id.credit_limit
@@ -317,6 +353,23 @@ class SaleOrder(models.Model):
         super(SaleOrder, self).onchange_partner_id()
         if self.partner_id:
             self.project_id = False
+            # Check invoice activity
+            invoice_obj = self.env['account.invoice']
+            invoices = invoice_obj.search(
+                [('partner_id', '=', self.partner_id.id)],
+                order='id desc', limit=1)
+            if invoices:
+                for data in invoices:
+                    today_year = datetime.now()
+                    last_inv_date = datetime.strptime(
+                        data.date_invoice, '%Y-%m-%d')
+                    calc_days = today_year - last_inv_date
+                    if calc_days.days >= 365:
+                        self.partner_inactive = True
+                    else:
+                        self.partner_inactive = False
+            else:
+                self.partner_inactive = False
 
     @api.depends('project_id')
     def _get_merge_address(self):
