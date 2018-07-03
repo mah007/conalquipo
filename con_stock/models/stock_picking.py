@@ -173,8 +173,7 @@ class StockPicking(Model):
 
         wizard_id = self.env['stock.picking.equipment.change.wizard'].create(
             vals={'picking_id': self.id,
-                  'product_ids': line,
-                  })
+                  'product_ids': line})
         return {
             'name': 'Equipment Change Wizard',
             'view_type': 'form',
