@@ -94,7 +94,6 @@
                     </group>
                     <group string="Operator section" attrs="{'invisible': [('mess_operated', '=', False)]}">
                         <field name="add_operator" attrs="{'invisible': [('mess_operated', '=', False)]}"/>
-                        <!-- <field name="service_operator" attrs="{'invisible': [('add_operator','=',False)]}" widget='selection'/> -->
                         <field name="product_components" invisible="1"/>
                         <field name="product_uoms" invisible="1"/>
                     </group>
@@ -116,6 +115,10 @@
             <field name="payment_term_id" position="after">
                 <field name="carrier_type" widget="radio"
                     attrs="{'readonly':[('state','in',('done'))]}"/>
+            </field>
+
+            <field name="partner_id" position="replace">
+                <field name="partner_id" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}'/>
             </field>
 
             <field name="partner_id" position="after">
