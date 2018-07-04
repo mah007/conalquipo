@@ -12,7 +12,7 @@
                 <field name="contact_person" attrs="{'invisible': [('type','!=','contact')]}"/>
             </xpath>
 
-            <xpath expr="//div[@class='oe_kanban_details']" position="replace">
+            <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
                 <div class="oe_kanban_details">
                     <field name="name"/>
                     <div t-if="record.contact_person.raw_value === true" style="color:green;font-weight: bold;">
@@ -147,29 +147,15 @@
         </field>
     </record>
 
-    <record id="res_partner_view_buttons_inherit" model="ir.ui.view">
-        <field name="name">res.partner.view.buttons.inherit</field>
+    <record id="res_partner_view_sale_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.sale.buttons.inherit</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
         <field name="arch" type="xml">
 
-            <field name="sale_warn" position="after">
-                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
-            </field>
-
-            <field name="sale_warn_msg" position="replace">
-                <field name="sale_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
-            </field>
-
-        </field>
-    </record>
-
-    <record id="res_partner_view_buttons_inherit" model="ir.ui.view">
-        <field name="name">res.partner.view.buttons.inherit</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
-        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']/group[@groups='sale.group_warning_sale']" position="attributes">
+                <attribute name="groups">con_profile.group_message_warnings</attribute>
+            </xpath>
 
             <field name="sale_warn" position="after">
                 <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
@@ -189,23 +175,31 @@
         <field name="inherit_id" ref="stock.view_partner_stock_warnings_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//page[@name='internal_notes']/group[@groups='stock.group_warning_stock']" position="attributes">
+                <attribute name="groups">con_profile.group_message_warnings</attribute>
+            </xpath>
+
             <field name="picking_warn" position="after">
                 <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="picking_warn_msg" position="replace">
                 <field name="picking_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}" force_save="1"/>
+                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}"/>
             </field>
 
         </field>
     </record>
 
-    <record id="rpartner_view_buttons_inherit" model="ir.ui.view">
-        <field name="name">partner.view.buttons.inherit</field>
+    <record id="res_partner_view_account_buttons_inherit" model="ir.ui.view">
+        <field name="name">partner.view.account.buttons.inherit</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="account.partner_view_buttons"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']/group[@groups='account.group_warning_account']" position="attributes">
+                <attribute name="groups">con_profile.group_message_warnings</attribute>
+            </xpath>
 
             <field name="invoice_warn" position="after">
                 <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags"/>
