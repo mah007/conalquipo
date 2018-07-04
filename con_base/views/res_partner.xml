@@ -153,17 +153,31 @@
         <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
         <field name="arch" type="xml">
 
-            <field name="sale_warn" position="replace">
-                <field name="sale_warn" nolabel="1"  groups="con_profile.group_message_warnings"/>
-            </field>
-
             <field name="sale_warn" position="after">
-                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="sale_warn_msg" position="replace">
                 <field name="sale_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="res_partner_view_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.buttons.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <field name="sale_warn" position="after">
+                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="sale_warn_msg" position="replace">
+                <field name="sale_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
             </field>
 
         </field>
@@ -175,17 +189,13 @@
         <field name="inherit_id" ref="stock.view_partner_stock_warnings_form"/>
         <field name="arch" type="xml">
 
-            <field name="picking_warn" position="replace">
-                <field name="picking_warn" nolabel="1"  groups="con_profile.group_message_warnings"/>
-            </field>
-
             <field name="picking_warn" position="after">
-                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="picking_warn_msg" position="replace">
                 <field name="picking_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}" force_save="1"/>
             </field>
 
         </field>
@@ -197,17 +207,13 @@
         <field name="inherit_id" ref="account.partner_view_buttons"/>
         <field name="arch" type="xml">
 
-            <field name="invoice_warn" position="replace">
-                <field name="invoice_warn" nolabel="1"  groups="con_profile.group_message_warnings"/>
-            </field>
-
             <field name="invoice_warn" position="after">
-                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="invoice_warn_msg" position="replace">
                 <field name="invoice_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1"/>
             </field>
 
         </field>
