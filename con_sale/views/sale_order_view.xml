@@ -56,7 +56,6 @@
                         <field name="qty_delivered_updateable" invisible="1"/>
                         <field name="price_subtotal" invisible="1"/>
                         <label for="product_uom_qty" string="Ordered Quantity"/>
-
                         <div>
                             <field
                                 context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
