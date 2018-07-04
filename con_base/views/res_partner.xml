@@ -158,12 +158,12 @@
             </xpath>
 
             <field name="sale_warn" position="after">
-                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="sale_warn_msg" position="replace">
                 <field name="sale_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
             </field>
 
         </field>
@@ -180,12 +180,12 @@
             </xpath>
 
             <field name="picking_warn" position="after">
-                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="picking_warn_msg" position="replace">
                 <field name="picking_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}"/>
             </field>
 
         </field>
@@ -202,12 +202,12 @@
             </xpath>
 
             <field name="invoice_warn" position="after">
-                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags" groups="con_profile.group_message_warnings"/>
+                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags"/>
             </field>
 
             <field name="invoice_warn_msg" position="replace">
                 <field name="invoice_warn_msg" colspan="3" nolabel="1" 
-                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1" groups="con_profile.group_message_warnings"/>
+                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1"/>
             </field>
 
         </field>
