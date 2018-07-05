@@ -222,6 +222,9 @@ class ResPartnerCode(models.Model):
         pay_term = self.env.user.company_id.default_payment_term_id.id
         if pay_term:
             res.property_payment_term_id = pay_term
+        else:
+            raise exceptions.Warning(_(
+                'You have to define a payment term in company config!'))
         return res
 
 
