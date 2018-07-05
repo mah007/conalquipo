@@ -15,7 +15,12 @@
                     </page>
                     <page string="Extra permissions/Parameters">
                         <group>
-                            <field name="account_extra_perm" widget="many2many_tags"/>
+                            <group>
+                                <field name="account_extra_perm" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="default_validate_invoices" widget="many2many_tags"/>
+                            </group>
                         </group>
                         <group>
                             <group>
