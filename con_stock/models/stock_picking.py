@@ -663,3 +663,20 @@ class StockPicking(Model):
         self.write({'printed': True})
         return self.env.ref(
             'con_stock.action_report_delivery_con').report_action(self)
+
+    def button_scrap(self):
+        self.ensure_one()
+        products = self.env['product.product']
+        for move in self.move_lines:
+            if move.state not in ('done') and move.product_id.type in ('product', 'consu'):
+                products |= move.product_id
+        return {
+            'name': _('Scrap'),
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.scrap',
+            'view_id': self.env.ref('stock.stock_scrap_form_view2').id,
+            'type': 'ir.actions.act_window',
+            'context': {'default_picking_id': self.id, 'product_ids': products.ids},
+            'target': 'new',
+        }
