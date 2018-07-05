@@ -30,10 +30,6 @@ class StockScrap(models.Model):
     def action_validate(self):
         res = super(StockScrap, self).action_validate()
 
-        if not self.product_id.replenishment_charge:
-            raise UserError(_(
-                "The product doesn't have replacement service!"))
-
         if isinstance(res, dict):
             warn = res.get('res_model', '')
             if warn == 'stock.warn.insufficient.qty.scrap':
@@ -45,16 +41,20 @@ class StockScrap(models.Model):
         #     return res
 
         reple_id = self.product_id.replenishment_charge
-        self.picking_id.sale_id.order_line.create({
-            'order_id': self.picking_id.sale_id.id,
-            'product_id': reple_id.id,
-            'product_uom_qty': self.scrap_qty,
-            'price_unit': reple_id.lst_price,
-            'name': _('Replenishment %s') % (reple_id.name),
-            'product_uom': reple_id.uom_id.id,
-        })
-        return res
-
+        if reple_id:
+            self.picking_id.sale_id.order_line.create({
+                'order_id': self.picking_id.sale_id.id,
+                'product_id': reple_id.id,
+                'product_uom_qty': self.scrap_qty,
+                'price_unit': reple_id.lst_price,
+                'name': _('Replenishment %s') % (reple_id.name),
+                'product_uom': reple_id.uom_id.id,
+            })
+            return res
+        else:
+            raise UserError(_(
+                "The product doesn't have replacement service!"))            
+            
 
 class StockWarnInsufficientQtyScrap(models.TransientModel):
     _inherit = 'stock.warn.insufficient.qty.scrap'
@@ -63,22 +63,22 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
 
-        if not scrap_id.product_id.replenishment_charge:
-            raise UserError(_(
-                "The product doesn't have replacement service!"))
-
         # if any([not res, not scrap_id.picking_id.sale_id,
         #         not scrap_id.product_id.replenishment_charge,
         #         not scrap_id.scrap_location_id.is_charge_replacement]):
         #     return res
 
         reple_id = scrap_id.product_id.replenishment_charge
-        scrap_id.picking_id.sale_id.order_line.create({
-            'order_id': scrap_id.picking_id.sale_id.id,
-            'product_id': reple_id.id,
-            'product_uom_qty': scrap_id.scrap_qty,
-            'price_unit': reple_id.lst_price,
-            'name': _('Replenishment %s') % (reple_id.name),
-            'product_uom': reple_id.uom_id.id,
-        })
-        return res
+        if reple_id:
+            scrap_id.picking_id.sale_id.order_line.create({
+                'order_id': scrap_id.picking_id.sale_id.id,
+                'product_id': reple_id.id,
+                'product_uom_qty': scrap_id.scrap_qty,
+                'price_unit': reple_id.lst_price,
+                'name': _('Replenishment %s') % (reple_id.name),
+                'product_uom': reple_id.uom_id.id,
+            })
+            return res
+        else:
+            raise UserError(_(
+                "The product doesn't have replacement service!"))            
