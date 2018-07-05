@@ -133,6 +133,15 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if not self.order_line:
             raise UserError(_('You need to add products!'))
+        else:
+            if self.carrier_id and self.vehicle:
+                carrier_lst = []
+                for data in self.order_line:
+                    if data.product_id.product_tmpl_id.for_shipping:
+                        carrier_lst.append(data.id)
+                if len(carrier_lst) == 0:
+                    raise UserError(_(
+                        'You need to add delivery method!'))
 
         # Users can confirm sales overlimit
         users_list = []
