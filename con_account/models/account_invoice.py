@@ -181,3 +181,22 @@ class AccountInvoice(models.Model):
         if account:
             data['account_id'] = account.id
         return data
+
+    @api.multi
+    def action_invoice_open(self):
+        # Overwrite action_invoice_open
+        res = super(AccountInvoice, self).action_invoice_open()
+        # Account extra permissions
+        users_company = []
+        users_in_acc_validate_groups = []
+        actual_user = self.env.user.id
+        user_company = self.env['res.users'].browse([self._uid]).company_id
+        for acc_groups in user_company.default_validate_invoices:
+            users_company.append(acc_groups)
+        for data in users_company:
+            users_in_acc_validate_groups.append(data.id)
+        if actual_user in users_in_acc_validate_groups:
+            return res
+        else:
+            raise UserError(_(
+                "You can't validate invoces. Check your permissions!"))
