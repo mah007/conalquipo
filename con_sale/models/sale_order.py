@@ -360,14 +360,15 @@ class SaleOrder(models.Model):
                 order='id desc', limit=1)
             if invoices:
                 for data in invoices:
-                    today_year = datetime.now()
-                    last_inv_date = datetime.strptime(
-                        data.date_invoice, '%Y-%m-%d')
-                    calc_days = today_year - last_inv_date
-                    if calc_days.days >= 365:
-                        self.partner_inactive = True
-                    else:
-                        self.partner_inactive = False
+                    if data.date_invoice:
+                        today_year = datetime.now()
+                        last_inv_date = datetime.strptime(
+                            data.date_invoice, '%Y-%m-%d')
+                        calc_days = today_year - last_inv_date
+                        if calc_days.days >= 365:
+                            self.partner_inactive = True
+                        else:
+                            self.partner_inactive = False
             else:
                 self.partner_inactive = False
 
