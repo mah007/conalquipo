@@ -18,8 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import logging
+_logger = logging.getLogger(__name__)
 from odoo import models, _
+from odoo.exceptions import UserError
 
 
 class StockScrap(models.Model):
@@ -27,14 +29,21 @@ class StockScrap(models.Model):
 
     def action_validate(self):
         res = super(StockScrap, self).action_validate()
+
+        if not self.product_id.replenishment_charge:
+            raise UserError(_(
+                "The product doesn't have replacement service!"))
+
         if isinstance(res, dict):
             warn = res.get('res_model', '')
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
-        if any([not res, not self.picking_id.sale_id,
-                not self.product_id.replenishment_charge,
-                not self.scrap_location_id.is_charge_replacement]):
-            return res
+
+        # if any([not res, not self.picking_id.sale_id,
+        #         not self.product_id.replenishment_charge,
+        #         not self.scrap_location_id.is_charge_replacement]):
+        #     return res
+
         reple_id = self.product_id.replenishment_charge
         self.picking_id.sale_id.order_line.create({
             'order_id': self.picking_id.sale_id.id,
@@ -53,10 +62,15 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
     def action_done(self):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
-        if any([not res, not scrap_id.picking_id.sale_id,
-                not scrap_id.product_id.replenishment_charge,
-                not scrap_id.scrap_location_id.is_charge_replacement]):
-            return res
+
+        if not scrap_id.product_id.replenishment_charge:
+            raise UserError(_(
+                "The product doesn't have replacement service!"))
+
+        # if any([not res, not scrap_id.picking_id.sale_id,
+        #         not scrap_id.product_id.replenishment_charge,
+        #         not scrap_id.scrap_location_id.is_charge_replacement]):
+        #     return res
 
         reple_id = scrap_id.product_id.replenishment_charge
         scrap_id.picking_id.sale_id.order_line.create({
