@@ -668,7 +668,8 @@ class StockPicking(Model):
         self.ensure_one()
         products = self.env['product.product']
         for move in self.move_lines:
-            if move.state not in ('done') and move.product_id.type in ('product', 'consu'):
+            if move.state not in ('done') and \
+             move.product_id.type in ('product', 'consu'):
                 products |= move.product_id
         return {
             'name': _('Scrap'),
@@ -677,6 +678,8 @@ class StockPicking(Model):
             'res_model': 'stock.scrap',
             'view_id': self.env.ref('stock.stock_scrap_form_view2').id,
             'type': 'ir.actions.act_window',
-            'context': {'default_picking_id': self.id, 'product_ids': products.ids},
+            'context': {
+                'default_picking_id': self.id,
+                'product_ids': products.ids},
             'target': 'new',
         }
