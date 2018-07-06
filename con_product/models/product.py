@@ -123,10 +123,10 @@ class ProductTemplate(Model):
     @api.multi
     def _get_default_loc(self):
         """
-        This function get the default location configured on the stock 
-        location
-        models and return to the `product_template` model else return 
-        False
+        This function get the default location configured
+        on the stock location
+        models and return to the `product_template`
+        model else return False
 
         :return: Recordset or False
         """
@@ -240,6 +240,36 @@ class ProductTemplate(Model):
         string='Sale UoM')
     for_shipping = fields.Boolean(
         string='Use for shipping?')
+    non_mech = fields.Boolean(
+        string='Not mechanical?')
+    states_nonmech_ids = fields.One2many(
+        'product.states.nonmech', 'product_id', string='Location')
+
+    @api.onchange('non_mech')
+    def _compute_locations(self):
+        if self.non_mech:
+            line_ids = []
+            self.location_id = False
+            self.state_id = False
+            self.color = False
+            locations = self.env[
+                'stock.location'].search([('usage', '!=', 'view')])
+            if locations:
+                for data in locations:
+                    val = {
+                        'product_id': self.id,
+                        'location_id': data.id,
+                        'state_name': data.product_state.id,
+                        'color': data.color,
+                    }
+                    line_ids.append((0, 0, val))
+            self.states_nonmech_ids = [
+                i for n, i in enumerate(
+                    line_ids) if i not in line_ids[n + 1:]]
+        else:
+            self.states_nonmech_ids = [(5,)]
+            self.location_id = self._get_default_loc()
+
 
 class ProductProduct(Model):
     _inherit = "product.product"
@@ -313,7 +343,7 @@ class ProductProduct(Model):
 
         :return: None
         """
-        if self.location_id.product_state: 
+        if self.location_id.product_state:
             location_obj = self.env['stock.location']
             location = location_obj.search(
                 [('location_id', '=', self.location_id.location_id.id),
@@ -366,7 +396,45 @@ class ProductMultiplesUom(Model):
     _description = "A model for store multiples uoms"
     _rec_name = "uom_id"
 
-    product_id = fields.Many2one('product.template', string="Product parent")
-    uom_id = fields.Many2one('product.uom', string="Sale UOM")       
-    quantity = fields.Integer('Min quantity', default=1)
-    cost_byUom = fields.Float('Cost by UOM')
+    product_id = fields.Many2one(
+        'product.template', string="Product parent")
+    uom_id = fields.Many2one(
+        'product.uom', string="Sale UOM")
+    quantity = fields.Integer(
+        'Min quantity', default=1)
+    cost_byUom = fields.Float(
+        'Cost by UOM')
+
+
+class ProductStatesNonMech(Model):
+    _name = "product.states.nonmech"
+    _description = "A model for store non mech product states"
+    _rec_name = "state_name"
+
+    product_id = fields.Many2one(
+        'product.template', string="Product parent")
+    location_id = fields.Many2one(
+        'stock.location',
+        string="Location")
+    state_name = fields.Many2one(
+        'product.states', string="State")
+    color = fields.Char(string="Color")
+    qty = fields.Float(
+        string="Quantity", compute='_compute_product_count')
+
+    def _compute_product_count(self):
+        """
+        Method to count the products on locations
+        """
+        product_qty_in = 0.0
+        product_qty_out = 0.0
+        move = self.env[
+            'stock.move'].search([('state', '=', 'done')])
+        for record in self:
+            for data in move:
+                if record.product_id.id == data.product_id.product_tmpl_id.id:
+                    if data.location_id.id == record.location_id.id:
+                        product_qty_in += data.product_uom_qty
+                    if data.location_dest_id.id == record.location_id.id:
+                        product_qty_out += data.product_uom_qty
+            record.qty = product_qty_out - product_qty_in
