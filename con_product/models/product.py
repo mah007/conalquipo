@@ -130,8 +130,8 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        for a in self:
-            if a.type not in ['service', 'consu']:
+        for location in self:
+            if location.type not in ['service', 'consu']:
                 return self.env[
                     'stock.location'].search(
                         [('set_default_location', '=', True)],
@@ -243,26 +243,37 @@ class ProductTemplate(Model):
     non_mech = fields.Boolean(
         string='Not mechanical?')
     states_nonmech_ids = fields.One2many(
-        'product.states.nonmech', 'product_id', string='Location')
+        'product.states.nonmech', 'product_tmpl_id', string='Location')
 
     @api.onchange('non_mech')
     def _compute_locations(self):
         if self.non_mech:
             line_ids = []
+            self.states_nonmech_ids = [(5,)]
             self.location_id = False
             self.state_id = False
             self.color = False
-            locations = self.env[
-                'stock.location'].search([('usage', '!=', 'view')])
-            if locations:
-                for data in locations:
-                    val = {
-                        'product_id': self.id,
-                        'location_id': data.id,
-                        'state_name': data.product_state.id,
-                        'color': data.color,
-                    }
-                    line_ids.append((0, 0, val))
+            product = self.env[
+                'product.product'].search(
+                    [('product_tmpl_id', '=', self._origin.id)])
+            quants = self.env[
+                'stock.quant'].search(
+                    [('product_id', '=', product.id)])
+            if quants:
+                for data in quants:
+                    pro = data.product_id.product_tmpl_id.id
+                    loc = data.location_id
+                    state = data.location_id.product_state.id
+                    color = data.location_id.color
+                    if loc.usage not in ['view', 'inventory', 'transit']:
+                        val = {
+                            'product_id': pro,
+                            'location_id': loc.id,
+                            'state_name': state,
+                            'color': color,
+                            'qty': data.quantity
+                        }
+                        line_ids.append((0, 0, val))
             self.states_nonmech_ids = [
                 i for n, i in enumerate(
                     line_ids) if i not in line_ids[n + 1:]]
@@ -277,18 +288,19 @@ class ProductProduct(Model):
     @api.multi
     def _get_default_loc(self):
         """
-        This function get the default location configured on the stock 
+        This function get the default location configured on the stock
         location
-        models and return to the `product_template` model else return 
+        models and return to the `product_template` model else return
         False
 
         :return: Recordset or False
         """
-        for a in self:
-            if a.product_tmpl_id.type not in ['service', 'consu']:
+        for data in self:
+            if data.product_tmpl_id.type not in ['service', 'consu']:
                 return self.env[
                     'stock.location'].search(
-                        [('set_default_location', '=', True)], limit=1) or False
+                        [('set_default_location', '=', True)],
+                        limit=1) or False
 
     @api.multi
     def _get_default_state(self):
@@ -370,11 +382,11 @@ class ProductProduct(Model):
         if values.get('product_tmpl_id'):
             pro_tmpl = pro_tmpl_obj.search(
                 [('id', '=', values['product_tmpl_id'])])
-            for a in pro_tmpl:
-                if a.type != 'service':
-                    record.location_id = a.location_id.id
-                    record.state_id = a.state_id.id
-                    record.color = a.color
+            for pro in pro_tmpl:
+                if pro.type != 'service':
+                    record.location_id = pro.location_id.id
+                    record.state_id = pro.state_id.id
+                    record.color = pro.color
         return record
 
 
@@ -412,7 +424,10 @@ class ProductStatesNonMech(Model):
     _rec_name = "state_name"
 
     product_id = fields.Many2one(
-        'product.template', string="Product parent")
+        'product.product', string="Product parent")
+    product_tmpl_id = fields.Many2one(
+        'product.template', string='Product Template',
+        related='product_id.product_tmpl_id')
     location_id = fields.Many2one(
         'stock.location',
         string="Location")
@@ -420,21 +435,16 @@ class ProductStatesNonMech(Model):
         'product.states', string="State")
     color = fields.Char(string="Color")
     qty = fields.Float(
-        string="Quantity", compute='_compute_product_count')
+        string="Quantity", compute="_compute_product_count")
 
     def _compute_product_count(self):
         """
         Method to count the products on locations
         """
-        product_qty_in = 0.0
-        product_qty_out = 0.0
-        move = self.env[
-            'stock.move'].search([('state', '=', 'done')])
         for record in self:
-            for data in move:
-                if record.product_id.id == data.product_id.product_tmpl_id.id:
-                    if data.location_id.id == record.location_id.id:
-                        product_qty_in += data.product_uom_qty
-                    if data.location_dest_id.id == record.location_id.id:
-                        product_qty_out += data.product_uom_qty
-            record.qty = product_qty_out - product_qty_in
+            quants = self.env[
+                'stock.quant'].search(
+                    [('product_id', '=', record.product_id.id),
+                     ('location_id', '=', record.location_id.id)])
+            for data in quants:
+                record.qty = data.quantity
