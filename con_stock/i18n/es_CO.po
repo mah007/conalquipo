@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 21:16+0000\n"
-"PO-Revision-Date: 2018-07-09 16:19-0500\n"
+"POT-Creation-Date: 2018-07-09 21:27+0000\n"
+"PO-Revision-Date: 2018-07-09 16:29-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,12 @@ msgstr ""
 "    </table>\n"
 "% endif\n"
 "\n"
+
+#. module: con_stock
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:48
+#, python-format
+msgid " change by "
+msgstr " reemplazo de  "
 
 #. module: con_stock
 #: model:mail.template,subject:con_stock.stock_automatic_email_template
@@ -1056,7 +1062,7 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:52
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:53
 #, python-format
 msgid "You can't select the same product"
 msgstr "No puede seleccionar el mismo producto!"
@@ -1093,7 +1099,7 @@ msgid "returned"
 msgstr "Devuelto"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:54
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:55
 #, python-format
 msgid "selected product does not have quantity available in the inventory"
 msgstr "El producto seleccionado no tiene disponibilidad en el inventario"
