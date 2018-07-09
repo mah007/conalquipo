@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 20:44+0000\n"
-"PO-Revision-Date: 2018-06-20 15:46-0500\n"
+"POT-Creation-Date: 2018-07-09 21:58+0000\n"
+"PO-Revision-Date: 2018-07-09 17:02-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -111,13 +111,13 @@ msgid "Assigned Operator"
 msgstr "Operador asignado"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:656
+#: code:addons/con_sale/models/sale_order.py:750
 #, python-format
 msgid "Attention: The order %s are created by %s"
 msgstr "Atención: La orden %s ha  creada por %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:522
+#: code:addons/con_sale/models/sale_order.py:612
 #, python-format
 msgid "Attention: The order %s are created by %s with template: %s"
 msgstr "Atención: La orden %s ha sido creada por %s utilizando la plantilla: %s"
@@ -187,6 +187,12 @@ msgid "Client"
 msgstr "Cliente"
 
 #. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:267
+#, python-format
+msgid "Client has not billed more than 1 year ago!"
+msgstr "El cliente no ha facturado en mas de 1 año!"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_company_id
 #: selection:sale.order,carrier_type:0
 #: selection:sale.order.advertisement.wizard,carrier_type:0
@@ -235,7 +241,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_create_date
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_limit
@@ -286,7 +292,7 @@ msgid "Delivered Quantity"
 msgstr "Cantidad Entregada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:944
+#: code:addons/con_sale/models/sale_order.py:1012
 #, python-format
 msgid "Delivery"
 msgstr "Entrega"
@@ -319,7 +325,7 @@ msgstr "Desc.(%)"
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
 msgid "Discard"
-msgstr "Descartar"
+msgstr "Descartado"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_display_name
@@ -327,7 +333,7 @@ msgstr "Descartar"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_display_name
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre Público"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
@@ -338,6 +344,11 @@ msgstr "Facturas borrador"
 #: model:ir.ui.view,arch_db:con_sale.res_config_settings_view_form_con_sale
 msgid "Email days notifications for (draft, sent) orders"
 msgstr "Email days notifications for (draft, sent) orders"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_employee_id
+msgid "Employee"
+msgstr "Empleado"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_end_date
@@ -376,19 +387,19 @@ msgid "Esquinero para muros y fosos"
 msgstr "Esquinero para muros y fosos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:195
+#: code:addons/con_sale/models/sale_order.py:249
 #, python-format
 msgid "Exceeds credit limit!"
 msgstr "Excede el limite de crédito!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:166
+#: code:addons/con_sale/models/sale_order.py:220
 #, python-format
 msgid "Exceeds limit and has expired invoice!"
 msgstr "Excede el limite y tiene facturas vencidas!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:175
+#: code:addons/con_sale/models/sale_order.py:229
 #, python-format
 msgid "Exceeds limit on outstanding invoices!"
 msgstr "Excede el limite en facturas pendientes!"
@@ -439,7 +450,7 @@ msgid "Formaleteria para losa"
 msgstr "Formaleteria para losa"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:157
+#: code:addons/con_sale/models/sale_order.py:211
 #, python-format
 msgid "Has an expired bill!"
 msgstr "Tiene factura(s) vencida(s)"
@@ -450,7 +461,7 @@ msgid "Have components?"
 msgstr "Tiene componentes?"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:182
+#: code:addons/con_sale/models/sale_order.py:236
 #, python-format
 msgid "Have outstanding invoices!"
 msgstr "Tiene facturas pendientes!"
@@ -522,14 +533,14 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_write_uid
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_write_date
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_write_date
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Actualizado"
 
 #. module: con_sale
 #: model:ir.model.fields,help:con_sale.field_sale_order_line_picking_ids
@@ -567,7 +578,7 @@ msgid "Manual"
 msgstr "Manual"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:49
+#: code:addons/con_sale/models/sale_order.py:50
 #: model:ir.ui.view,arch_db:con_sale.sale_order_view_search_inherit_quotation
 #, python-format
 msgid "Merged"
@@ -604,8 +615,8 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: con_sale
-#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:111
-#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:155
+#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:110
+#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:154
 #, python-format
 msgid "New Move:"
 msgstr "Nuevo movimiento:"
@@ -674,6 +685,11 @@ msgstr "Linea padre"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_partner_id
 msgid "Partner"
 msgstr "Asociado"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_partner_inactive
+msgid "Partner inactive"
+msgstr "Partner inactive"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
@@ -767,7 +783,7 @@ msgid "Reason"
 msgstr "Motivo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:945
+#: code:addons/con_sale/models/sale_order.py:1013
 #, python-format
 msgid "Receive"
 msgstr "Recibo"
@@ -916,16 +932,16 @@ msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:443
+#: code:addons/con_sale/models/sale_order.py:531
 #, python-format
 msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1089
-#: code:addons/con_sale/models/sale_order.py:1106
-#: code:addons/con_sale/models/sale_order.py:1385
-#: code:addons/con_sale/models/sale_order.py:1462
+#: code:addons/con_sale/models/sale_order.py:1157
+#: code:addons/con_sale/models/sale_order.py:1174
+#: code:addons/con_sale/models/sale_order.py:1453
+#: code:addons/con_sale/models/sale_order.py:1528
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -934,6 +950,12 @@ msgstr "La fecha final no puede ser menor a la fecha inicial"
 #: selection:sale.order.advertisement.wizard,reason:0
 msgid "The equipment did not serve you"
 msgstr "El equipo no fue necesario"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:196
+#, python-format
+msgid "The invoice %s don't have due date, check please!"
+msgstr "La factura %s no tiene fecha de expiración, por favor chequear!"
 
 #. module: con_sale
 #: selection:sale.order,cancel_options:0
@@ -988,7 +1010,7 @@ msgid "Vehicle"
 msgstr "Vehículo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:201
+#: code:addons/con_sale/models/sale_order.py:255
 #, python-format
 msgid "Without credit limit define!"
 msgstr "Sin limite de crédito definido!"
@@ -1005,38 +1027,44 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:407
+#: code:addons/con_sale/models/sale_order.py:495
 #, python-format
 msgid "You can't confirm, the qty is smaller for: %s"
 msgstr "No puede confirmar orden con cantidad menor permitida de: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:412
+#: code:addons/con_sale/models/sale_order.py:500
 #, python-format
 msgid "You need define a sale uom for product: %s"
 msgstr "Ud. necesita definir la unidad de medida de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:416
+#: code:addons/con_sale/models/sale_order.py:504
 #, python-format
 msgid "You need specify a quantity for product: %s"
 msgstr "Ud. necesita especificar la cantidad de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:665
-#: code:addons/con_sale/models/sale_order.py:786
+#: code:addons/con_sale/models/sale_order.py:759
+#: code:addons/con_sale/models/sale_order.py:882
 #, python-format
 msgid "You need specify a work in this sale order"
 msgstr "Ud. necesita especificar una obra a esta orden."
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:117
+#: code:addons/con_sale/models/sale_order.py:152
+#, python-format
+msgid "You need to add delivery method!"
+msgstr "Ud. necesita agregar un método de envío!"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:144
 #, python-format
 msgid "You need to add products!"
 msgstr "Ud. necesita agregar productos a las lineas"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:440
+#: code:addons/con_sale/models/sale_order.py:528
 #, python-format
 msgid "You need to attach the client's validation documents"
 msgstr "Ud. necesita adjuntar los documentos para validar al cliente"
