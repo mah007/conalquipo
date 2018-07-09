@@ -41,8 +41,9 @@ class SaleOrder(models.Model):
                     ml.get_components_info()
         return True
 
-    order_type = fields.Selection([('rent', 'Rent'), ('sale', 'Sale')],
-                                  string="Type", default="rent")
+    order_type = fields.Selection(
+        [('rent', 'Rent'), ('sale', 'Sale')],
+        string="Type", default="rent", track_visibility='onchange')
     purchase_ids = fields.One2many('purchase.order', 'sale_order_id',
                                    string='Purchase Orders')
     state = fields.Selection(selection_add=[
@@ -51,12 +52,18 @@ class SaleOrder(models.Model):
     sale_order_id = fields.Many2one('sale.order', 'Merged In')
     sale_order_ids = fields.One2many('sale.order', 'sale_order_id',
                                      string='Sale Orders related')
-    project_id = fields.Many2one('project.project', string="Project")
+    project_id = fields.Many2one(
+        'project.project', string="Project",
+        track_visibility='onchange')
     # ~Fields for shipping and invoice address
-    shipping_address = fields.Text(string="Shipping",
-                                   compute="_get_merge_address")
-    invoice_address = fields.Text(string="Billing",
-                                  compute="_get_merge_address")
+    shipping_address = fields.Text(
+        string="Shipping",
+        compute="_get_merge_address",
+        track_visibility='onchange')
+    invoice_address = fields.Text(
+        string="Billing",
+        compute="_get_merge_address",
+        track_visibility='onchange')
     signs_ids = fields.Many2many(
         'signature.request',
         compute='_compute_sign_ids',
@@ -65,14 +72,16 @@ class SaleOrder(models.Model):
     # Fleet
     carrier_type = fields.Selection(
         [('client', 'Client'), ('company', 'Company')],
-        string='Carrier Responsible', default='client')
+        string='Carrier Responsible', default='client',
+        track_visibility='onchange')
     vehicle = fields.Many2one(comodel_name='fleet.vehicle',
                               string='Vehicle', ondelete='cascade',
                               index=True, copy=False,
                               track_visibility='onchange')
     delivery_price = fields.Float(
         string='Estimated Delivery Price',
-        readonly=False, copy=False)
+        readonly=False, copy=False,
+        track_visibility='onchange')
     task_id = fields.Many2one(comodel_name='project.task',
                               string='Task', ondelete='cascade',
                               index=True, copy=False,
