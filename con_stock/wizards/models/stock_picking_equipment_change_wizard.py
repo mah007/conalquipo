@@ -19,10 +19,10 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
             if new_p.new_product_id:
                 new_p.move_line.update({
                     'product_id': new_p.new_product_id.id,
-                    'description': new_p.new_product_id.name})
+                    'description': new_p.product_desc})
                 new_p.move_line.sale_line_id.update(
                     {'product_id': new_p.new_product_id.id,
-                     'name': new_p.new_product_id.name})
+                     'name': new_p.product_desc})
 
                 self.env['stock.move.line']._log_message(
                     new_p.move_line.picking_id, new_p.move_line.id,
@@ -40,10 +40,14 @@ class ProductChangeWizard(models.TransientModel):
                                       'equipment.change.wizard', )
     ant_product_id = fields.Many2one('product.product', string='product Ant')
     new_product_id = fields.Many2one('product.product', string='Product New')
+    product_desc = fields.Char(string='Description')
     move_line = fields.Many2one('stock.move', string="Stock move")
 
     @api.onchange('new_product_id')
     def _onchange_new_product(self):
+        self.product_desc = \
+         self.ant_product_id.default_code + \
+          ' change by ' + self.new_product_id.default_code
         if self.ant_product_id.id == self.new_product_id.id:
             raise UserError(_("You can't select the same product"))
         if self.move_line.product_uom_qty > self.new_product_id.qty_available:
