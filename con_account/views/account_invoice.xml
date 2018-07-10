@@ -3,6 +3,53 @@
 
     <!-- Invoice Modifications -->
 
+
+    <record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.search</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//search" position="inside">
+
+                <field name="days_delivery" widget="selection" context="{'days_delivery': self}"/>
+                <separator/>
+                <filter string="Days delivery" name="days_delivery" domain="[('days_delivery', '!=', False)]"/>
+                
+                <separator/>
+
+                <field name="project_id" widget="selection" context="{'project_id': self}"/>
+                <separator/>
+                <filter string="Work" name="project_id" domain="[('project_id', '!=', False)]"/>
+                
+                <separator/>
+                <field name="sector_id" widget="selection" context="{'sector_id': self}"/>
+                <separator/>
+                <field name="sector_id"
+                            string="Work Sector"
+                            filter_domain="['|',('sector_id','ilike',self),
+                                                ('secondary_sector_ids','ilike',self)]"/>
+                <separator/>
+                <filter name="sector"
+                            string="Work Sector"
+                            context="{'group_by': 'sector_id'}"/>
+
+
+                <separator/>
+                <field name="sector_id2" widget="selection" context="{'sector_id2': self}"/>
+                <separator/>
+                <field name="sector_id2"
+                            string="Invoice Sector"
+                            filter_domain="['|',('sector_id2','ilike',self),
+                                                ('secondary_sector_ids2','ilike',self)]"/>
+                <separator/>
+
+            </xpath>
+
+        </field>
+    </record>
+
     <record id="invoice_form" model="ir.ui.view">
         <field name="name">account.invoice.form</field>
         <field name="model">account.invoice</field>
@@ -14,8 +61,12 @@
             </field>
 
             <field name="partner_id" position="after">
-                <field name="project_id"/>
+                <field name="project_id" string="Works" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id, 'default_partner_id': partner_id}"/>
                 <field name="employee_id" required="1" readonly="0" options="{'no_create': True}"/>
+            </field>
+
+            <field name="user_id" position="after">
+                <field name="days_delivery"/>
             </field>
 
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
@@ -33,9 +84,15 @@
                     <group name="address_client_details" class="hidden-xs">
                         <group string="Shipping Address">
                             <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                            <field name="sector_id" placeholder="Sector"
+                                options='{"no_open": True}' domain="[('parent_id','=',False)]" readonly="1" force_save="1"/>
+                            <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector" readonly="1" force_save="1"/>
                         </group>
                         <group string="Invoice Address">
                             <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
+                            <field name="sector_id2" placeholder="Sector"
+                                options='{"no_open": True}' domain="[('parent_id','=',False)]" readonly="1" force_save="1"/>
+                            <field name="secondary_sector_ids2" widget="many2many_tags" placeholder="Secondary Sector" readonly="1" force_save="1"/>
                         </group>
                     </group>
                 </div>
@@ -51,6 +108,9 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="project_id" />
+                <field name="sector_id" />
+                <field name="sector_id2" />
+                <field name="days_delivery"/>
             </field>
         </field>
     </record>
