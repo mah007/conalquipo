@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-09 21:27+0000\n"
-"PO-Revision-Date: 2018-07-09 16:29-0500\n"
+"POT-Creation-Date: 2018-07-10 21:15+0000\n"
+"PO-Revision-Date: 2018-07-10 16:19-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -170,17 +170,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid ""
 "<br/>\n"
-"                            <br/>\n"
-"                            <span>ANUNCIA: </span>"
-msgstr ""
-"<br/>\n"
-"                            <br/>\n"
-"                            <span>ANUNCIA: </span>"
-
-#. module: con_stock
-#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid ""
-"<br/>\n"
 "                            <span>ACARREO: </span>\n"
 "\n"
 "                            <span> / </span>\n"
@@ -223,6 +212,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "<span> NIT. </span>"
 msgstr "<span> NIT. </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>ANUNCIA: </span>"
+msgstr "<span>ANUNCIA: </span>"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
@@ -308,6 +302,11 @@ msgstr "<strong>Razón: </strong>"
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "<strong>Verificación interna</strong>"
 msgstr "<strong>Verificación interna</strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Applicant details"
+msgstr "Detalle de anuncio"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_line_assigned_operator
@@ -654,6 +653,7 @@ msgstr "Parece muy costos"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_job_title
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_request_job_title
 msgid "Job title"
 msgstr "Cargo"
 
@@ -889,6 +889,11 @@ msgid "Replenishment %s"
 msgstr "Reposición %s"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_request_responsible
+msgid "Request responsible"
+msgstr "Responsable anuncio"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_responsible
 msgid "Responsible"
 msgstr "Responsable"
@@ -904,7 +909,7 @@ msgid "SALDO OBRA"
 msgstr "SALDO OBRA"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:675
+#: code:addons/con_stock/models/stock_picking.py:681
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
 #, python-format
 msgid "Scrap"
@@ -916,7 +921,7 @@ msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:222
+#: code:addons/con_stock/models/stock_picking.py:228
 #, python-format
 msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
 msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
@@ -1045,7 +1050,7 @@ msgid "View"
 msgstr "Vista"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:222
+#: code:addons/con_stock/models/stock_picking.py:228
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
@@ -1068,7 +1073,7 @@ msgid "You can't select the same product"
 msgstr "No puede seleccionar el mismo producto!"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:406
+#: code:addons/con_stock/models/stock_picking.py:412
 #, python-format
 msgid "You need specify a operator for: %s"
 msgstr "Necesita especificar un operado para: %s"

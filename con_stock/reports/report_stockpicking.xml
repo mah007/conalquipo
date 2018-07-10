@@ -86,10 +86,12 @@
                             <span t-field="o.carrier_tracking_ref"/>
                             <br/>
                             <br/>
-                            <span>ANUNCIA: </span><span t-field="o.employee_id.name"/>
+                            <t t-if="o.request_responsible">
+                                <span>ANUNCIA: </span><span t-field="o.request_responsible"/>
+                            </t>
                             <span> / </span>
-                            <t t-if="o.employee_id.job_id.name">
-                                <span>Cargo: </span><span t-field="o.employee_id.job_id.name"/>
+                            <t t-if="o.request_job_title">
+                                <span>Cargo: </span><span t-field="o.request_job_title"/>
                             </t>
                             <span> / </span>
                             <span>Fecha-hora de anuncio: </span><strong><span t-field="o.scheduled_date"/></strong>
@@ -249,7 +251,9 @@
                                        <td style="padding-top:5px; padding-bottom:5px; padding-left:5px;"><span>Recibe:</span></td>
                                         <td style="padding-top:5px; padding-bottom:5px;"></td>
                                         <td style="padding-top:5px; padding-bottom:5px;"></td>
-                                        <td style="border-left:1 px solid; padding-top:5px; padding-bottom:5px;"></td>
+                                        <td style="border-left:1 px solid; padding-top:5px; padding-bottom:5px; text-align: center;">
+                                        <span t-field="o.employee_id.name"/>
+                                        </td>
                                         <td style="border-left: 1px solid; padding-top:5px; padding-bottom:5px; padding-left:5px;">
                                             <span t-if="o.picking_type_id.code == 'incoming'">Hora Salida:</span>
                                             <span t-if="o.picking_type_id.code == 'outgoing'">Operador:</span>
