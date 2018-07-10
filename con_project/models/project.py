@@ -176,14 +176,38 @@ class ProjectWorks(models.Model):
         string="Secondary invoice sectors",
         domain="[('parent_id', '=', sector_id2)]",
         track_visibility='onchange')
-    is_administrative_assistant = fields.Boolean(
-        compute='_compute_is_administrative_assistant',
+    is_comercial = fields.Boolean(
+        compute='_compute_is_comercial',
+        default=True)
+    is_director_comercial = fields.Boolean(
+        compute='_compute_is_director_comercial',
+        default=True)
+    is_logistic = fields.Boolean(
+        compute='_compute_is_logistic',
+        default=True)
+    is_director_logistic = fields.Boolean(
+        compute='_compute_is_director_logistic',
         default=True)
 
-    def _compute_is_administrative_assistant(self):
+    def _compute_is_comercial(self):
         for data in self:
-            data.is_administrative_assistant = self.env.user.has_group(
-                'con_profile.group_administrative_assistant')
+            data.is_comercial = self.env.user.has_group(
+                'con_profile.group_commercial')
+
+    def _compute_is_director_comercial(self):
+        for data in self:
+            data.is_director_comercial = self.env.user.has_group(
+                'con_profile.group_commercial_director')
+
+    def _compute_is_logistic(self):
+        for data in self:
+            data.is_logistic = self.env.user.has_group(
+                'con_profile.group_logistic')
+
+    def _compute_is_director_logistic(self):
+        for data in self:
+            data.is_director_logistic = self.env.user.has_group(
+                'con_profile.group_logistic_director')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):
