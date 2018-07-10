@@ -151,9 +151,9 @@
                       class="o_address_street" required="0"/>
                     <field name="zip" placeholder="ZIP"     class="o_address_country"
                            required="0"/>
-                    <field name="sector_id" placeholder="Work Sector"
+                    <field name="sector_id" class="o_address_country" placeholder="Work Sector"
                         options='{"no_open": True}' domain="[('parent_id','=',False)]"/>
-                    <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector"/>
+                    <field name="secondary_sector_ids" class="o_address_country" placeholder="Secondary Sector"/>
                   </div>
                 </group>
                 <group string="Invoice Address">
@@ -173,9 +173,9 @@
                     <field name="street2_2" placeholder="Street 2..."
                       class="o_address_street" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
                     <field name="zip2" placeholder="ZIP" class="o_address_country" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    <field name="sector_id2" placeholder="Invoice Sector"
+                    <field name="sector_id2" class="o_address_country" placeholder="Invoice Sector"
                         options='{"no_open": True}' domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    <field name="secondary_sector_ids2" widget="many2many_tags" placeholder="Secondary Sector" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                    <field name="secondary_sector_ids2" class="o_address_country" placeholder="Secondary Sector" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
                   </div>
                 </group>
               </group>
@@ -261,7 +261,7 @@
         </field>
 
         <field name="name" position="after">
-          <field name="partner_id"/>
+          <field name="partner_id" domain="[('customer', '=', True)]"/>
         </field>
 
       </field>

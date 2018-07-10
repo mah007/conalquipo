@@ -86,13 +86,13 @@
                             <field name="shipping_address" nolabel="1" readonly="1" style="display: inline-block;"/>
                             <field name="sector_id" placeholder="Sector"
                                 options='{"no_open": True}' domain="[('parent_id','=',False)]" readonly="1" force_save="1"/>
-                            <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector" readonly="1" force_save="1"/>
+                            <field name="secondary_sector_ids" placeholder="Secondary Sector" readonly="1" force_save="1"/>
                         </group>
                         <group string="Invoice Address">
                             <field name="invoice_address" nolabel="1" readonly="1" style="display: inline-block;"/>
                             <field name="sector_id2" placeholder="Sector"
                                 options='{"no_open": True}' domain="[('parent_id','=',False)]" readonly="1" force_save="1"/>
-                            <field name="secondary_sector_ids2" widget="many2many_tags" placeholder="Secondary Sector" readonly="1" force_save="1"/>
+                            <field name="secondary_sector_ids2" placeholder="Secondary Sector" readonly="1" force_save="1"/>
                         </group>
                     </group>
                 </div>
