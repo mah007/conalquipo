@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 17:18+0000\n"
-"PO-Revision-Date: 2018-06-13 12:18-0500\n"
+"POT-Creation-Date: 2018-07-10 22:19+0000\n"
+"PO-Revision-Date: 2018-07-10 17:21-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,11 @@ msgid "Administrative assistant"
 msgstr "Asistente administrativo"
 
 #. module: con_profile
+#: model:res.groups,name:con_profile.group_inactive_partners
+msgid "Can confirm inactive partners"
+msgstr "Puede confirmar ordenes de clientes inactivos"
+
+#. module: con_profile
 #: model:res.groups,name:con_profile.group_sale_overlimit
 msgid "Can confirm sales with overlimit"
 msgstr "Puede confirmar ventas que pasen el limite"
@@ -30,7 +35,32 @@ msgstr "Puede confirmar ventas que pasen el limite"
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_sale_small_qty
 msgid "Can confirm smaller quantities"
-msgstr "Confirmar ordenes con cantidades mínimas"
+msgstr "Puede confirmar ordenes con cantidades mínimas a las permitidas del producto"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_can_see_employees
+msgid "Can see menu employees"
+msgstr "Puede ver menú empleados"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_commercial_purchases
+msgid "Can see purchases"
+msgstr "Puede ver menú de compras"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_message_warnings
+msgid "Can set messages and warnings"
+msgstr "Puede asignar mensajes, avisos y bloqueos en clientes"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_can_sign
+msgid "Can sign documents"
+msgstr "Puede firmar documentos"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_commercial
+msgid "Commercial"
+msgstr "Comercial"
 
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_commercial_director
@@ -38,6 +68,31 @@ msgid "Commercial director"
 msgstr "Director comercial"
 
 #. module: con_profile
+#: model:res.groups,name:con_profile.group_fleet
+msgid "Fleet management"
+msgstr "Gestión de flotas"
+
+#. module: con_profile
 #: model:res.groups,name:con_profile.group_it_manager
 msgid "IT Manager"
 msgstr "Jefe de sistemas"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_logistic
+msgid "Logistic"
+msgstr "Logistica"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_logistic_director
+msgid "Logistic Director"
+msgstr "Director logistica"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_mrp_repair
+msgid "MRP Repair management"
+msgstr "Gestión de reparación"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_work
+msgid "Works management"
+msgstr "Gestión de obras"

@@ -104,23 +104,26 @@
         </xpath>
 
         <xpath expr="//div[@class='oe_title']/h1/field[@name='name']" position="replace">
-          <field name="is_administrative_assistant" invisible="0"/>
-          <field name="name" placeholder="Project Name" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+          <field name="is_comercial" invisible="1"/>
+          <field name="is_director_comercial" invisible="1"/>
+          <field name="is_logistic" invisible="1"/>
+          <field name="is_director_logistic" invisible="1"/>
+          <field name="name" placeholder="Project Name" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
         </xpath>
 
         <xpath expr="//div[@class='oe_title']" position="after">
           <group>
             <group>
               <field name="work_code" required="0" attrs="{'invisible':[('work_code','=',False)], 'readonly':[('work_code','!=',False)]}"/>
-              <field name="email" widget="email" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+              <field name="email" widget="email" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
               <field name="work_date_creation" required="0"/>
-              <field name="invoice_limit_date" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+              <field name="invoice_limit_date" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
             </group>
             <group>
               <field name="user_id" string="Project Manager"
                 attrs="{'readonly':[('active','=',False)]}" required="0"/>
               <field name="partner_id" string="Customer" required="0" domain="[('parent_id', '=', False)]"/>
-              <field name="business_name" string="Business name" required="0" domain="[('parent_id', '=', partner_id)]" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+              <field name="business_name" string="Business name" required="0" domain="[('parent_id', '=', partner_id)]" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit':True}" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
               <field name="partner_code" string="Partner Code" readonly="1"/>
             </group>
           </group>
@@ -135,47 +138,47 @@
                     <field name="country_id" placeholder="Country"
                       class="o_address_country"
                       options='{"no_open": True, "no_create": True}'
-                           required="0"/>
+                           required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="state_id" class="o_address_country"
                       placeholder="State" options='{"no_open": True}'
-                           required="0" domain="[('country_id', '=', country_id)]"/>
+                           required="0" domain="[('country_id', '=', country_id)]" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="municipality_id" class="o_address_country"
                       placeholder="Municipality" options='{"no_open": True}'
-                           required="0" domain="[('state_id', '=', state_id)]"/>
+                           required="0" domain="[('state_id', '=', state_id)]" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="city" placeholder="City"
-                      class="o_address_country" required="0"/>
-                    <field name="phone1" placeholder="Phone..." required="0"/>
+                      class="o_address_country" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
+                    <field name="phone1" placeholder="Phone..." required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="street1" placeholder="Street..."
-                      class="o_address_street" required="0"/>
+                      class="o_address_street" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="street1_2" placeholder="Street 2..."
-                      class="o_address_street" required="0"/>
+                      class="o_address_street" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="zip" placeholder="ZIP"     class="o_address_country"
-                           required="0"/>
+                           required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                     <field name="sector_id" class="o_address_country" placeholder="Work Sector"
-                        options='{"no_open": True}' domain="[('parent_id','=',False)]"/>
-                    <field name="secondary_sector_ids" class="o_address_country" placeholder="Secondary Sector"/>
+                        options='{"no_open": True}' domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
+                    <field name="secondary_sector_ids" class="o_address_country" placeholder="Secondary Sector" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                   </div>
                 </group>
                 <group string="Invoice Address">
                   <div class="o_address_format">
                     <field name="country2_id" placeholder="Country"
                       class="o_address_country"
-                      options='{"no_open": True, "no_create": True}' required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      options='{"no_open": True, "no_create": True}' required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="state2_id" class="o_address_country" domain="[('country_id', '=', country2_id)]"
-                      placeholder="State" options='{"no_open": True}' required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      placeholder="State" options='{"no_open": True}' required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="municipality2_id" class="o_address_country"
-                      placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state2_id)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state2_id)]" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="city2" placeholder="City"
-                      class="o_address_country" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    <field name="phone2" placeholder="Phone..." required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      class="o_address_country" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
+                    <field name="phone2" placeholder="Phone..." required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="street2_1" placeholder="Street..."
-                      class="o_address_street" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      class="o_address_street" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="street2_2" placeholder="Street 2..."
-                      class="o_address_street" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    <field name="zip2" placeholder="ZIP" class="o_address_country" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                      class="o_address_street" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
+                    <field name="zip2" placeholder="ZIP" class="o_address_country" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                     <field name="sector_id2" class="o_address_country" placeholder="Invoice Sector"
-                        options='{"no_open": True}' domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    <field name="secondary_sector_ids2" class="o_address_country" placeholder="Secondary Sector" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                        options='{"no_open": True}' domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
+                    <field name="secondary_sector_ids2" class="o_address_country" placeholder="Secondary Sector" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
                   </div>
                 </group>
               </group>
@@ -184,7 +187,7 @@
               <group>
                 <group string="contact" required="0">
                   <field name="legal_cont_responsible" required="0"/>
-                  <field name="contact_number" required="0"/>
+                  <field name="contact_number" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
                   <field name="work_phone" required="0"/>
                 </group>
                 <group string="Responsibles">
@@ -204,7 +207,7 @@
               </group>
             </page>
             <page name="observations" string="Observations">
-              <field name="observations" type="html" required="0" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+              <field name="observations" type="html" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False), ('is_logistic','=',False), ('is_director_logistic','=',False)]}"/>
               <div class="oe_clear"/>
             </page>
             <page string="Settings">

@@ -200,6 +200,10 @@
                                       <field name="shipping_weight"/>
                                       <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
                                   </group>
+                                  <group col="2" name="applicant_work" string="Applicant details">
+                                        <field name="request_responsible" required="1"/>
+                                        <field name="request_job_title" required="1"/>
+                                  </group>
                                   <group col="2" name="construction_receives" string="Info Remission On Site">
                                         <field name="in_hour" widget='float_time'/>
                                         <field name="out_hour" widget='float_time'/>
