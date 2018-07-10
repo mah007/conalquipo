@@ -111,6 +111,12 @@ class StockPicking(Model):
         'order_line_picking_rel',
         'sale_order_line_id', 'picking_id',
         string="Delivery Cost", track_visibility='onchange')
+    applicant_responsible = fields.Char(
+        string='Applicant responsible',
+        track_visibility='onchange')
+    applicant_job_title = fields.Char(
+        string='Applicant Job title',
+        track_visibility='onchange')
 
     @api.model
     def _getemployee(self):
