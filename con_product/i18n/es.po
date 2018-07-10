@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-19 19:34+0000\n"
-"PO-Revision-Date: 2018-06-19 14:36-0500\n"
+"POT-Creation-Date: 2018-07-10 17:47+0000\n"
+"PO-Revision-Date: 2018-07-10 12:51-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,11 @@ msgstr "Modelo para almacenar y gestionar los estados de los productos"
 #: model:ir.model,name:con_product.model_product_multiples_uom
 msgid "A model for store multiples uoms"
 msgstr "Modelo para almacenar múltiples unidades de medida"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_states_nonmech
+msgid "A model for store non mech product states"
+msgstr "A model for store non mech product states"
 
 #. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
@@ -84,6 +89,7 @@ msgstr "Click para crear un nuevo estado"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_color
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_color
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 msgid "Color"
 msgstr "Color"
@@ -121,6 +127,7 @@ msgstr "Costo por unidad"
 #: model:ir.model.fields,field_description:con_product.field_product_components_create_uid
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_uid
 #: model:ir.model.fields,field_description:con_product.field_product_states_create_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
@@ -128,8 +135,9 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_product.field_product_components_create_date
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_create_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #. module: con_product
 #: model:ir.ui.view,arch_db:con_product.product_states_tree_view
@@ -155,8 +163,9 @@ msgstr "Destaquiadores de tuberías y ductos"
 #: model:ir.model.fields,field_description:con_product.field_product_components_display_name
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_display_name
 #: model:ir.model.fields,field_description:con_product.field_product_states_display_name
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre Público"
 
 #. module: con_product
 #: model:ir.actions.act_window,help:con_product.product_states_action
@@ -220,12 +229,6 @@ msgid "Formaletería para losa"
 msgstr "Formaletería para losa"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_product_product_generate_task
-#: model:ir.model.fields,field_description:con_product.field_product_template_generate_task
-msgid "Generate task?"
-msgstr "Genera tareas?"
-
-#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_components
 #: model:ir.model.fields,field_description:con_product.field_product_template_components
 msgid "Has components?"
@@ -241,6 +244,7 @@ msgstr "Tiene múltiples unidades?"
 #: model:ir.model.fields,field_description:con_product.field_product_components_id
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_id
 #: model:ir.model.fields,field_description:con_product.field_product_states_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_id
 msgid "ID"
 msgstr "ID"
 
@@ -257,27 +261,38 @@ msgid "Is Operated"
 msgstr "Es operado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_is_product_variant
+msgid "Is a product variant"
+msgstr "Is a product variant"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components___last_update
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom___last_update
 #: model:ir.model.fields,field_description:con_product.field_product_states___last_update
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_write_uid
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_write_uid
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_write_date
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_write_date
 #: model:ir.model.fields,field_description:con_product.field_product_states_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Actualizado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_states_nonmech_ids
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_location_id
+#: model:ir.model.fields,field_description:con_product.field_product_template_states_nonmech_ids
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_search
 msgid "Location"
@@ -294,6 +309,11 @@ msgstr "Ubicación origen"
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
 msgid "Location:"
 msgstr "Ubicación actual:"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Locations, quantity and states"
+msgstr "Locations, quantity and states"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_unavailable
@@ -339,6 +359,12 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_non_mech
+#: model:ir.model.fields,field_description:con_product.field_product_template_non_mech
+msgid "Not mechanical?"
+msgstr "No mecánicos?"
+
+#. module: con_product
 #: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
 msgid "Operated"
 msgstr "Operado"
@@ -380,7 +406,13 @@ msgid "Product States"
 msgstr "Estados del producto"
 
 #. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Product States Non mech"
+msgstr "Estado productos no mecánicos"
+
+#. module: con_product
 #: model:ir.model,name:con_product.model_product_template
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_product_tmpl_id
 msgid "Product Template"
 msgstr "Plantilla del Producto"
 
@@ -397,6 +429,7 @@ msgstr "Producto componente"
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_product_id
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_product_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_product_id
 msgid "Product parent"
 msgstr "Producto padre"
 
@@ -414,6 +447,11 @@ msgstr "Estados de productos"
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 msgid "Products components"
 msgstr "Componentes"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_qty
+msgid "Quantity"
+msgstr "Cantidad"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_replenishment_charge
@@ -454,6 +492,7 @@ msgstr "Sistema dalmine"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_state_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_state_name
 #: model:ir.model.fields,field_description:con_product.field_product_template_state_id
 #: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
 msgid "State"
@@ -473,8 +512,8 @@ msgstr "Estados"
 #. module: con_product
 #: code:addons/con_product/models/product.py:156
 #: code:addons/con_product/models/product.py:176
-#: code:addons/con_product/models/product.py:306
-#: code:addons/con_product/models/product.py:326
+#: code:addons/con_product/models/product.py:346
+#: code:addons/con_product/models/product.py:366
 #, python-format
 msgid "The following location don't have a state asigned"
 msgstr "La ubicación no tiene un estado definido, debe asignarla"
