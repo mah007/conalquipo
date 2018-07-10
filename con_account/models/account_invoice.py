@@ -58,6 +58,27 @@ class AccountInvoice(models.Model):
         "hr.employee", string='Employee',
         track_visibility='onchange',
         domain=lambda self:self._getemployee())
+    sector_id = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string='Work Sector',
+        track_visibility='onchange')
+    secondary_sector_ids = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string="Secondary work sectors",
+        domain="[('parent_id', '=', sector_id)]",
+        track_visibility='onchange')
+    sector_id2 = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string='Invoice Sector',
+        track_visibility='onchange')
+    secondary_sector_ids2 = fields.Many2one(
+        comodel_name='res.partner.sector',
+        string="Secondary invoice sectors",
+        domain="[('parent_id', '=', sector_id2)]",
+        track_visibility='onchange')
+    days_delivery = fields.Char(
+        string='Days delivery',
+        track_visibility='onchange')
 
     @api.model
     def _getemployee(self):
@@ -110,6 +131,10 @@ class AccountInvoice(models.Model):
                     p.municipality2_id.name or '', p.state2_id.name or '',
                     p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
                     p.email or '')
+            acc.sector_id = acc.project_id.sector_id
+            acc.secondary_sector_ids = acc.project_id.secondary_sector_ids
+            acc.sector_id2 = acc.project_id.sector_id2
+            acc.secondary_sector_ids2 = acc.project_id.secondary_sector_ids2
 
     @staticmethod
     def merge_address(

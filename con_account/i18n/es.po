@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 17:07+0000\n"
-"PO-Revision-Date: 2018-06-13 12:09-0500\n"
+"POT-Creation-Date: 2018-07-10 16:29+0000\n"
+"PO-Revision-Date: 2018-07-10 11:31-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,17 @@ msgid "DRAFT INVOICE"
 msgstr "FACTURA EN BORRADOR"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_days_delivery
+#: model:ir.ui.view,arch_db:con_account.view_account_invoice_filter_inherit
+msgid "Days delivery"
+msgstr "Días entrega"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_employee_id
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_account
 #: model:ir.model,name:con_account.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
@@ -41,6 +52,12 @@ msgstr "Dirección facturación"
 #: model:ir.model,name:con_account.model_account_invoice_line
 msgid "Invoice Line"
 msgstr "Línea de Factura"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_sector_id2
+#: model:ir.ui.view,arch_db:con_account.view_account_invoice_filter_inherit
+msgid "Invoice Sector"
+msgstr "Sector facturación"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_owner_id
@@ -68,6 +85,26 @@ msgid "Sale"
 msgstr "Venta"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Secondary Sector"
+msgstr "Sector secundario"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_secondary_sector_ids2
+msgid "Secondary invoice sectors"
+msgstr "Subsector facturación"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_secondary_sector_ids
+msgid "Secondary work sectors"
+msgstr "Subsector obra"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Sector"
+msgstr "Sector"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_shipping_address
 msgid "Shipping"
 msgstr "Transporte"
@@ -89,11 +126,29 @@ msgstr "Unidad de medida de la venta"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_project_id
+#: model:ir.ui.view,arch_db:con_account.view_account_invoice_filter_inherit
 msgid "Work"
 msgstr "Obra"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:71
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_sector_id
+#: model:ir.ui.view,arch_db:con_account.view_account_invoice_filter_inherit
+msgid "Work Sector"
+msgstr "Sector Obra"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Works"
+msgstr "Obras"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:226
+#, python-format
+msgid "You can't validate invoces. Check your permissions!"
+msgstr "No puede validar facturas. Por favor, chequea tus permisos!"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:110
 #, python-format
 msgid "You don't have permission to edit the record!"
 msgstr "No tiene permisos para editar el registro! Consulte al administrador!"

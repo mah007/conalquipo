@@ -162,7 +162,7 @@ class ProjectWorks(models.Model):
         comodel_name='res.partner.sector',
         string='Work Sector',
         track_visibility='onchange')
-    secondary_sector_ids = fields.Many2many(
+    secondary_sector_ids = fields.Many2one(
         comodel_name='res.partner.sector',
         string="Secondary work sectors",
         domain="[('parent_id', '=', sector_id)]",
@@ -171,7 +171,7 @@ class ProjectWorks(models.Model):
         comodel_name='res.partner.sector',
         string='Invoice Sector',
         track_visibility='onchange')
-    secondary_sector_ids2 = fields.Many2many(
+    secondary_sector_ids2 = fields.Many2one(
         comodel_name='res.partner.sector',
         string="Secondary invoice sectors",
         domain="[('parent_id', '=', sector_id2)]",
@@ -302,8 +302,8 @@ class ProjectWorks(models.Model):
             groups = self.env[
                 'res.groups'].search(
                     [['name',
-                    '=',
-                    'Administrative assistant']])
+                      '=',
+                      'Administrative assistant']])
             if groups:
                 for data in groups:
                     for users in data.users:
