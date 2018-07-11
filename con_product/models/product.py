@@ -255,7 +255,7 @@ class ProductTemplate(Model):
             self.color = False
             product = self.env[
                 'product.product'].search(
-                    [('product_tmpl_id', '=', self._origin.id)])
+                    [('product_tmpl_id', '=', self.id)])
             quants = self.env[
                 'stock.quant'].search(
                     [('product_id', '=', product.id)])
