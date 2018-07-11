@@ -1,7 +1,7 @@
 "id","color","description","default_value","unavailable","name","sequence"
 "__export__.product_states_1","#33FF00","","True","False","Existencias","0"
 "__export__.product_states_2","#FFFE00","","False","False","Mantenimiento","1"
-"__export__.product_states_3","#FF0000","","False","False","Dañado","2"
+"__export__.product_states_3","#000000","","False","False","Dañado","2"
 "__export__.product_states_4","#FF1E00","","False","False","Reparación","3"
 "__export__.product_states_5","#006DFF","","False","False","Chatarra","4"
 "__export__.product_states_6","#C000FF","","False","False","Reserva","5"
