@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-10 21:15+0000\n"
-"PO-Revision-Date: 2018-07-10 16:19-0500\n"
+"POT-Creation-Date: 2018-07-11 22:48+0000\n"
+"PO-Revision-Date: 2018-07-11 17:49-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -587,6 +587,11 @@ msgid "Hora Salida:"
 msgstr "Hora Salida:"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_agreed_hour
+msgid "Hour Agreed"
+msgstr "Hora acordada"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_in_hour
 msgid "Hour Entry"
 msgstr "Hora de entrada"
@@ -844,6 +849,11 @@ msgid "Project"
 msgstr "Obra"
 
 #. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_quant
+msgid "Quants"
+msgstr "Cants"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_reason
 #: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
 msgid "Reason"
@@ -909,7 +919,7 @@ msgid "SALDO OBRA"
 msgstr "SALDO OBRA"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:681
+#: code:addons/con_stock/models/stock_picking.py:683
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
 #, python-format
 msgid "Scrap"
@@ -921,7 +931,7 @@ msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:228
+#: code:addons/con_stock/models/stock_picking.py:230
 #, python-format
 msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
 msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
@@ -1050,7 +1060,7 @@ msgid "View"
 msgstr "Vista"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:228
+#: code:addons/con_stock/models/stock_picking.py:230
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
@@ -1073,7 +1083,7 @@ msgid "You can't select the same product"
 msgstr "No puede seleccionar el mismo producto!"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:412
+#: code:addons/con_stock/models/stock_picking.py:414
 #, python-format
 msgid "You need specify a operator for: %s"
 msgstr "Necesita especificar un operado para: %s"

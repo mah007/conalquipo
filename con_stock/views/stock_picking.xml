@@ -205,6 +205,7 @@
                                         <field name="request_job_title" required="1"/>
                                   </group>
                                   <group col="2" name="construction_receives" string="Info Remission On Site">
+                                        <field name="agreed_hour" widget='float_time'/>
                                         <field name="in_hour" widget='float_time'/>
                                         <field name="out_hour" widget='float_time'/>
                                         <field name="responsible"/>
