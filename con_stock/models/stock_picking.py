@@ -88,6 +88,8 @@ class StockPicking(Model):
         string='Hour Entry', track_visibility='onchange')
     out_hour = fields.Float(
         string='Hour Output', track_visibility='onchange')
+    agreed_hour = fields.Float(
+        string='Hour Agreed', track_visibility='onchange')
     receipts_driver_ids = fields.One2many(
         'shipping.driver', 'stock_picking_id',
         string='Shipping Driver',
