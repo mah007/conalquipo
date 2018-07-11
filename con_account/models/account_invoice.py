@@ -90,6 +90,35 @@ class AccountInvoice(models.Model):
             employee_list.append(data.id)
         return [('id', 'in', employee_list)]
 
+    @api.model
+    def create(self, values):
+        # Overwrite invoice create
+        res = super(AccountInvoice, self).create(values)
+        if res.refund_invoice_id:
+            # Propagate parent data to refund invoices
+            parent_invoice = self.search
+            inv_ob = self.env['account.invoice']
+            parent_invoice = inv_ob.search(
+                [('number', '=', res.origin)])
+            res.project_id = parent_invoice.project_id.id
+            res.payment_term_id = \
+             parent_invoice.partner_id.property_payment_term_id.id
+            res.sector_id = parent_invoice.sector_id.id
+            res.secondary_sector_ids = \
+             parent_invoice.secondary_sector_ids.id
+            res.sector_id2 = parent_invoice.sector_id2.id
+            res.secondary_sector_ids2 = \
+             parent_invoice.secondary_sector_ids2.id
+        if res.project_id:
+            # Update sectors on invoices
+            res.sector_id = res.project_id.sector_id.id
+            res.secondary_sector_ids = \
+             res.project_id.secondary_sector_ids.id
+            res.sector_id2 = res.project_id.sector_id2.id
+            res.secondary_sector_ids2 = \
+             res.project_id.secondary_sector_ids2.id           
+        return res
+
     @api.multi
     def write(self, values):
         # Overwrite account invoice write
