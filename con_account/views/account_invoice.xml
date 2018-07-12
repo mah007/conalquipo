@@ -56,6 +56,14 @@
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
 
+            <xpath expr="//page[@name='other_info']/group/group[2]" position="replace">
+                <group>
+                    <field name="move_id" groups="account.group_account_user" attrs="{'invisible': [('move_id', '=', False)]}"/>
+                    <field name="origin" groups="base.group_user" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                </group>
+            </xpath>
+
             <field name="date_due" position="after">
                 <field name="invoice_type" widget="radio" invisible="1"/>
             </field>
@@ -65,8 +73,13 @@
                 <field name="employee_id" required="1" readonly="0" options="{'no_create': True}"/>
             </field>
 
+            <field name="payment_term_id" position="after">
+                <field name="name"/>
+            </field>
+
             <field name="user_id" position="after">
                 <field name="days_delivery"/>
+                <field name="origin" groups="base.group_user" attrs="{'invisible': [('origin', '=', False)]}"/>
             </field>
 
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">

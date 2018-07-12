@@ -7,6 +7,7 @@
 import json
 import odoo.http as http
 from odoo.http import request
+from odoo import exceptions
 from odoo.addons.web.controllers.main import ExcelExport
 
 

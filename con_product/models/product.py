@@ -244,6 +244,8 @@ class ProductTemplate(Model):
         string='Not mechanical?')
     states_nonmech_ids = fields.One2many(
         'product.states.nonmech', 'product_tmpl_id', string='Location')
+    more_information = fields.Text(
+        'More information', translate=True)
 
     @api.onchange('non_mech')
     def _compute_locations(self):

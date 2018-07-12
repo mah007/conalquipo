@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 17:16+0000\n"
-"PO-Revision-Date: 2018-06-13 12:17-0500\n"
+"POT-Creation-Date: 2018-07-12 20:38+0000\n"
+"PO-Revision-Date: 2018-07-12 15:42-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "(edit)"
 msgstr "(editar)"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_account_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_messages_account_id
+msgid "Account Messages"
+msgstr "Mensajes de contabilidad"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_account_extra_perm
@@ -198,7 +204,17 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_create_date
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_default_uom_task_id
+msgid "Default UOMs for products to generate tasks"
+msgstr "Unidades de medida de los productos que generan tareas."
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_default_payment_term_id
+msgid "Default customer payment terms"
+msgstr "Plazo de pago de los clientes por defecto"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_delivery_carrier_id
@@ -215,7 +231,7 @@ msgstr "Determinar el orden de visualización"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_display_name
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre Público"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
@@ -256,8 +272,8 @@ msgstr "Estrella"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.view_company_form
-msgid "Extra permissions"
-msgstr "Permisos extras"
+msgid "Extra permissions/Parameters"
+msgstr "Parámetros/Permisos extras"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector102
@@ -291,8 +307,8 @@ msgstr "Guayabal"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_id
-#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id_7452
-#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7416
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id_7167
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7179
 msgid "ID"
 msgstr "ID"
 
@@ -335,21 +351,21 @@ msgstr "Itaguí"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages___last_update
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector___last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última Modificación el"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_write_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_write_date
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_write_date
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Actualizado"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector81
@@ -371,12 +387,6 @@ msgstr "Sector"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_name
 msgid "Message"
 msgstr "Mensaje"
-
-#. module: con_base
-#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id
-#: model:ir.model.fields,field_description:con_base.field_res_users_messages_id
-msgid "Messages"
-msgstr "Mensajes"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector62
@@ -472,6 +482,12 @@ msgid "Phone:"
 msgstr "Teléfono:"
 
 #. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_picking_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_messages_picking_id
+msgid "Picking Messages"
+msgstr "Mensajes de movimientos"
+
+#. module: con_base
 #: model:res.partner.sector,name:con_base.sector31
 msgid "Poblado"
 msgstr "Poblado"
@@ -492,6 +508,11 @@ msgid "Previa autorización de gerencia"
 msgstr "Previa autorización de gerencia"
 
 #. module: con_base
+#: model:ir.ui.view,arch_db:con_base.view_users_form_inherit
+msgid "Related employees"
+msgstr "Empleados relacionados"
+
+#. module: con_base
 #: model:res.partner.messages,name:con_base.msg2
 msgid "Revisión de solicitud para segunda obra"
 msgstr "Revisión de solicitud para segunda obra"
@@ -505,6 +526,12 @@ msgstr "Robledo"
 #: model:res.partner.sector,name:con_base.sector171
 msgid "Sabaneta"
 msgstr "Sabaneta"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id
+#: model:ir.model.fields,field_description:con_base.field_res_users_messages_id
+msgid "Sale Messages"
+msgstr "Sale Messages"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector93
@@ -668,19 +695,19 @@ msgid "Tags..."
 msgstr "Etiquetas..."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:148
+#: code:addons/con_base/models/res_partner.py:186
 #, python-format
 msgid "The days can not be greater than 31."
 msgstr "Los días no pueden ser mayores a 31."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:145
+#: code:addons/con_base/models/res_partner.py:183
 #, python-format
 msgid "The end day can not be less than start day."
 msgstr "El día final no puede ser menor al día inicial."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:159
+#: code:addons/con_base/models/res_partner.py:197
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
 msgstr "El sector principal debe ser diferente al sector secundario."
@@ -701,6 +728,16 @@ msgid "Tuesday"
 msgstr "Martes"
 
 #. module: con_base
+#: model:ir.model,name:con_base.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_default_validate_invoices
+msgid "Users can validate invoices"
+msgstr "Usuarios que pueden validar facturas"
+
+#. module: con_base
 #: model:res.partner.messages,name:con_base.msg7
 msgid "Ver carta empleados retirados"
 msgstr "Ver carta empleados retirados"
@@ -714,6 +751,12 @@ msgstr "Villa Hermosa"
 #: selection:res.partner,week_list:0
 msgid "Wednesday"
 msgstr "Miercoles"
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner.py:226
+#, python-format
+msgid "You have to define a payment term in company config!"
+msgstr "Ud. debe definir el plazo de pago por defecto!"
 
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
