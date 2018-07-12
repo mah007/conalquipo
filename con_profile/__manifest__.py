@@ -46,7 +46,7 @@
                 'con_product', 'con_project', 'con_project_translates',
                 'con_purchase_translates', 'con_sale','con_stock',
                 'con_web', 'con_website_sign',
-                'con_account', 'con_purchase', 
+                'con_account', 'con_purchase', 'con_account_translates',
     ],
     'data': [
         'data/res_lang_data.xml',
