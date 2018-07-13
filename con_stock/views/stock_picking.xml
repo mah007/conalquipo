@@ -204,6 +204,12 @@
                                         <field name="request_responsible" required="1"/>
                                         <field name="request_job_title" required="1"/>
                                   </group>
+                                  <group col="2" name="delivery_details" string="Delivery details">
+                                        <field name="timely_delivery" attr="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+                                        <field name="delivery_instructions" attr="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+                                        <field name="check_good_conditions" attr="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+                                        <field name="work_operator" attr="{'invisible': [('picking_type_code', '=', 'outgoing')]}"/>
+                                  </group>
                                   <group col="2" name="construction_receives" string="Info Remission On Site">
                                         <field name="agreed_hour" widget='float_time'/>
                                         <field name="in_hour" widget='float_time'/>

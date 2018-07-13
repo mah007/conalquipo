@@ -212,7 +212,10 @@
                                         <td style="text-align:center; padding-top:5px; padding-bottom:5px;" ><span>FIRMA REVISADO</span></td>
                                         <td style="border-left: 1px solid; border-top:none; padding-top:5px; padding-bottom:5px; padding-left:5px;">
                                             <span t-if="o.picking_type_id.code == 'incoming'">Entregó en: Obra ( ) Conalquipo ( )</span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega oportuna: Si ( ) No ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega oportuna: 
+                                                <t t-if="o.timely_delivery"> Si (X) No ( )</t>
+                                                <t t-if="not o.timely_delivery"> Si ( ) No (X)</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -252,7 +255,10 @@
                                             <span t-if="o.picking_type_id.code == 'incoming'">Hora Llegada:
                                             <span t-field="o.in_hour"  t-field-options='{"widget": "float_time"}'/>
                                             </span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega instrucciones: Si ( ) No ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega instrucciones: 
+                                                <t t-if="o.delivery_instructions"> Si (X) NO ( )</t>
+                                                <t t-if="not o.delivery_instructions"> Si ( ) No (X)</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -266,7 +272,9 @@
                                             <span t-if="o.picking_type_id.code == 'incoming'">Hora Salida:
                                             <span t-field="o.out_hour"  t-field-options='{"widget": "float_time"}'/>
                                             </span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Operador:</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Operador:
+                                                <span t-field="o.work_operator"/>
+                                            </span>
                                         </td>
                                     </tr>
                                 </table>
@@ -284,7 +292,11 @@
                                     <tr>
                                         <td style="padding:5px;">
                                             <span t-if="o.picking_type_id.code == 'incoming'">Inmediatamente ( ) avisan después ( )</span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">En obra ( ) En bodega Conalquipo ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">
+                                                <t t-if="o.check_good_conditions == 'on_work'">En obra (X) En bodega Conalquipo ( )</t>
+                                                <t t-if="o.check_good_conditions == 'on_company'">En obra ( ) En bodega Conalquipo (X)</t>
+                                                <t t-if="not o.check_good_conditions">En obra ( ) En bodega Conalquipo ( )</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>

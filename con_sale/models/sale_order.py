@@ -107,6 +107,8 @@ class SaleOrder(models.Model):
         'Available amount', track_visibility='onchange')
     message_invoice = fields.Char(
         'Messages', track_visibility='onchange')
+    message_invoice_inactive = fields.Boolean(
+        'Message partner inactive')
     can_confirm = fields.Boolean('Can confirm')
     partner_inactive = fields.Boolean('Partner inactive')
     due_invoice_ids = fields.Many2many(
@@ -269,11 +271,12 @@ class SaleOrder(models.Model):
                     self.write({
                         'can_confirm': False,
                         'partner_inactive': True,
-                        'message_invoice': msg})
+                        'message_invoice_inactive': True})
             else:
                 self.write({
                     'partner_inactive': False,
-                    'can_confirm': True})
+                    'can_confirm': True,
+                    'message_invoice_inactive': False})
             return True
 
     @api.depends('partner_id')
