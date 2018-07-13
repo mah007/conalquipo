@@ -49,10 +49,10 @@ class AccountInvoice(models.Model):
         string="Type", default="sale", track_visibility='onchange')
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(
-        string="Shipping",
+        string="Shipping address",
         compute="_get_merge_address")
     invoice_address = fields.Text(
-        string="Billing",
+        string="Billing address",
         compute="_get_merge_address")
     employee_id = fields.Many2one(
         "hr.employee", string='Employee',

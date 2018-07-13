@@ -121,6 +121,7 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="project_id" />
+                <field name="invoice_address" />
                 <field name="sector_id" />
                 <field name="sector_id2" />
                 <field name="days_delivery"/>
