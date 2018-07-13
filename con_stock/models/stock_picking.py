@@ -133,6 +133,17 @@ class StockPicking(Model):
     work_operator = fields.Char(
         string='Operator on work',
         track_visibility='onchange')
+    timely_collection = fields.Boolean(
+        string='Timely collection',
+        track_visibility='onchange')
+    collect_more_equipment = fields.Boolean(
+        string='Collect more equipment',
+        track_visibility='onchange')
+    collect_notification = fields.Selection(
+        [('immediately', 'Immediately'),
+         ('they_warn_later', 'They warn later')],
+        string='Collect notification',
+        track_visibility='onchange')
 
     @api.model
     def _getemployee(self):
