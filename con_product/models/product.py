@@ -251,6 +251,7 @@ class ProductTemplate(Model):
     def _compute_locations(self):
         if self.non_mech:
             line_ids = []
+            reserved_qty = []
             self.states_nonmech_ids = [(5,)]
             self.location_id = False
             self.state_id = False
@@ -267,7 +268,7 @@ class ProductTemplate(Model):
                     loc = data.location_id
                     state = data.location_id.product_state.id
                     color = data.location_id.color
-                    if loc.usage not in ['view', 'inventory', 'transit']:
+                    if loc.usage not in ['view', 'inventory', 'virtual']:
                         val = {
                             'product_id': pro,
                             'location_id': loc.id,
@@ -276,6 +277,23 @@ class ProductTemplate(Model):
                             'qty': data.quantity
                         }
                         line_ids.append((0, 0, val))
+
+                        if data.location_id.product_state.name \
+                         == 'Existencias':
+                            reserved_qty.append(data.reserved_quantity)
+            # Just for reserved location
+            reserved_location = self.env[
+                'stock.location'].search(
+                    [('product_state.name', '=', 'Reserva')])
+            for data in reserved_location:
+                val = {
+                    'product_id': product.id,
+                    'location_id': data.id,
+                    'state_name': data.product_state.id,
+                    'color': data.color,
+                    'qty': sum(reserved_qty)
+                }
+                line_ids.append((0, 0, val))
             self.states_nonmech_ids = [
                 i for n, i in enumerate(
                     line_ids) if i not in line_ids[n + 1:]]
@@ -443,10 +461,15 @@ class ProductStatesNonMech(Model):
         """
         Method to count the products on locations
         """
+        reserved_qty = []
         for record in self:
             quants = self.env[
                 'stock.quant'].search(
                     [('product_id', '=', record.product_id.id),
                      ('location_id', '=', record.location_id.id)])
             for data in quants:
+                if record.state_name.name == 'Existencias':
+                    reserved_qty.append(data.reserved_quantity)
                 record.qty = data.quantity
+            if record.state_name.name == 'Reserva':
+                record.qty = sum(reserved_qty)
