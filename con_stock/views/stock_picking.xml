@@ -28,7 +28,7 @@
                 </button>
 
                 <xpath expr="//button[@name='do_print_picking']" position="replace">
-                    <button name="do_print_picking2" string="Print" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'partially_available')), ('is_locked', '=', False)]}"/>
+                    <button name="do_print_picking2" string="Print" groups="stock.group_stock_user" type="object" attrs="{'invisible': ['|', ('state', 'not in', ('assigned', 'partially_available', 'draft')), ('is_locked', '=', False)]}"/>
                 </xpath>
 
                 <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
