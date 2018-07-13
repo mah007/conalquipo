@@ -205,13 +205,13 @@
                                         <field name="request_job_title" required="1"/>
                                   </group>
                                   <group col="2" name="delivery_details" string="Delivery details">
-                                        <field name="timely_delivery" attr="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
-                                        <field name="delivery_instructions" attr="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                                        <field name="timely_delivery" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                                        <field name="delivery_instructions" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
                                         <field name="check_good_conditions"/>
-                                        <field name="work_operator" attr="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
-                                        <field name="timely_collection"/>
-                                        <field name="collect_more_equipment"/>
-                                        <field name="collect_notification"/>
+                                        <field name="work_operator" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                                        <field name="timely_collection" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                                        <field name="collect_more_equipment" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+                                        <field name="collect_notification" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
                                   </group>
                                   <group col="2" name="construction_receives" string="Info Remission On Site">
                                         <field name="agreed_hour" widget='float_time'/>
