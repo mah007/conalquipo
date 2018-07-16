@@ -461,7 +461,6 @@ class ProductStatesNonMech(Model):
         """
         Method to count the products on locations
         """
-        reserved_qty = []
         for record in self:
             quants = self.env[
                 'stock.quant'].search(
