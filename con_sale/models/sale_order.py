@@ -214,6 +214,7 @@ class SaleOrder(models.Model):
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'can_confirm': False,
+                                        'message_invoice_inactive': False,
                                         'available_amount': amount})
 
                         # Credit define and due invoice
@@ -223,6 +224,7 @@ class SaleOrder(models.Model):
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'can_confirm': False,
+                                        'message_invoice_inactive': False,
                                         'available_amount': amount})
 
                         # Credit define and not due invoice but pending
@@ -232,12 +234,14 @@ class SaleOrder(models.Model):
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
                                         'can_confirm': False,
+                                        'message_invoice_inactive': False,
                                         'available_amount': amount})
                         # Invoice but pending and not exceeds
                         elif self.partner_id.credit_limit > 0.0 and due < today:
                             msg = _("Have outstanding invoices!")
                             self.write({'message_invoice': msg,
                                         'can_confirm': True,
+                                        'message_invoice_inactive': False,
                                         'due_invoice_ids': invoices_list,
                                         'available_amount': amount})
             # Credit define and not invoice pending
@@ -251,6 +255,7 @@ class SaleOrder(models.Model):
                         msg = _("Exceeds credit limit!")
                         self.write({'message_invoice': msg,
                                     'can_confirm': False,
+                                    'message_invoice_inactive': False,
                                     'due_invoice_ids': [(5,)],
                                     'available_amount': amount})
             if self.partner_id.credit_limit == 0.0:
@@ -258,6 +263,7 @@ class SaleOrder(models.Model):
                 self.write({
                     'can_confirm': True,
                     'available_amount': 0.0,
+                    'message_invoice_inactive': False,
                     'message_invoice': msg})
             if self.partner_id.over_credit:
                 self.write({'can_confirm': True})
@@ -266,8 +272,7 @@ class SaleOrder(models.Model):
                 if actual_user in users_list_active_partner:
                     self.write({'can_confirm': True})
                 else:
-                    msg = _(
-                        "Client has not billed more than 1 year ago!")
+
                     self.write({
                         'can_confirm': False,
                         'partner_inactive': True,

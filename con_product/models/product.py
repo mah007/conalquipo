@@ -277,23 +277,23 @@ class ProductTemplate(Model):
                             'qty': data.quantity
                         }
                         line_ids.append((0, 0, val))
-
                         if data.location_id.product_state.name \
                          == 'Existencias':
                             reserved_qty.append(data.reserved_quantity)
             # Just for reserved location
-            reserved_location = self.env[
-                'stock.location'].search(
-                    [('product_state.name', '=', 'Reserva')])
-            for data in reserved_location:
-                val = {
-                    'product_id': product.id,
-                    'location_id': data.id,
-                    'state_name': data.product_state.id,
-                    'color': data.color,
-                    'qty': sum(reserved_qty)
-                }
-                line_ids.append((0, 0, val))
+            if reserved_qty:
+                reserved_location = self.env[
+                    'stock.location'].search(
+                        [('product_state.name', '=', 'Reserva')])
+                for data_reserved in reserved_location:
+                    val = {
+                        'product_id': product.id,
+                        'location_id': data_reserved.id,
+                        'state_name': data_reserved.product_state.id,
+                        'color': data_reserved.color,
+                        'qty': sum(reserved_qty)
+                    }
+                    line_ids.append((0, 0, val))
             self.states_nonmech_ids = [
                 i for n, i in enumerate(
                     line_ids) if i not in line_ids[n + 1:]]
@@ -468,8 +468,7 @@ class ProductStatesNonMech(Model):
                     [('product_id', '=', record.product_id.id),
                      ('location_id', '=', record.location_id.id)])
             for data in quants:
-                if record.state_name.name == 'Existencias':
-                    reserved_qty.append(data.reserved_quantity)
                 record.qty = data.quantity
-            if record.state_name.name == 'Reserva':
-                record.qty = sum(reserved_qty)
+            if record.state_name.name == "Reserva":
+                record.qty = record.product_tmpl_id.outgoing_qty
+
