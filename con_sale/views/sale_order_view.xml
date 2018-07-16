@@ -7,6 +7,14 @@
          <field name="model">sale.order</field>
          <field name="arch" type="xml">
 
+            <xpath expr="//header" position="before">
+                <field name="message_invoice_inactive" invisible="1"/>
+                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;"
+                        attrs="{'invisible': [('message_invoice_inactive','=',False)]}">
+                    ATTENTION! Client has not billed more than 1 year ago! This client is inactive! Contact the administrator!
+                </div>
+            </xpath>
+
             <header position="replace">
 
                 <header>

@@ -35,6 +35,14 @@ class StockLocation(Model):
         for a in self:
             if a.product_state:
                 a.color = a.product_state.color
+                if a.product_state.name == 'Mantenimiento':
+                    a.return_location = True
+                else:
+                    a.return_location = False
+                if a.product_state.name == 'Chatarra':
+                    a.scrap_location = True
+                else:
+                    a.scrap_location = False
 
     set_default_location = fields.Boolean(
         string="Default location for products")

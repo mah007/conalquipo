@@ -119,6 +119,31 @@ class StockPicking(Model):
     request_job_title = fields.Char(
         string='Job title',
         track_visibility='onchange')
+    timely_delivery = fields.Boolean(
+        string='Timely delivery',
+        track_visibility='onchange')
+    delivery_instructions = fields.Boolean(
+        string='Delivery instructions',
+        track_visibility='onchange')
+    check_good_conditions = fields.Selection(
+        [('on_work', 'On work'),
+         ('on_company', 'On company')],
+        string='Check and receive the equipment in good conditions',
+        track_visibility='onchange')
+    work_operator = fields.Char(
+        string='Operator on work',
+        track_visibility='onchange')
+    timely_collection = fields.Boolean(
+        string='Timely collection',
+        track_visibility='onchange')
+    collect_more_equipment = fields.Boolean(
+        string='Collect more equipment',
+        track_visibility='onchange')
+    collect_notification = fields.Selection(
+        [('immediately', 'Immediately'),
+         ('they_warn_later', 'They warn later')],
+        string='Collect notification',
+        track_visibility='onchange')
 
     @api.model
     def _getemployee(self):

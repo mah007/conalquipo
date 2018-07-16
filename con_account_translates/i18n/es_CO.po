@@ -4190,7 +4190,7 @@ msgstr "Factura borrador"
 #: model:ir.ui.view,arch_db:account.invoice_form
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Draft Credit Note"
-msgstr "Borrador de rectificativa"
+msgstr "Borrador de nota de crédito"
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:439

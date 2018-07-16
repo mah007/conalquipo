@@ -211,8 +211,15 @@
                                         <td style="border: 1px solid; border-top:none; text-align:center; padding-top:5px; padding-bottom:5px;"><strong>NC</strong></td>
                                         <td style="text-align:center; padding-top:5px; padding-bottom:5px;" ><span>FIRMA REVISADO</span></td>
                                         <td style="border-left: 1px solid; border-top:none; padding-top:5px; padding-bottom:5px; padding-left:5px;">
-                                            <span t-if="o.picking_type_id.code == 'incoming'">Entregó en: Obra ( ) Conalquipo ( )</span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega oportuna: Si ( ) No ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'incoming'">Entregó en: 
+                                                <t t-if="o.check_good_conditions == 'on_work'">Obra (X) Conalquipo ( )</t>
+                                                <t t-if="o.check_good_conditions == 'on_company'">Obra ( ) Conalquipo (X)</t>
+                                                <t t-if="not o.check_good_conditions">Obra ( ) Conalquipo ( )</t>
+                                            </span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega oportuna: 
+                                                <t t-if="o.timely_delivery"> Si (X) No ( )</t>
+                                                <t t-if="not o.timely_delivery"> Si ( ) No (X)</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -221,7 +228,10 @@
                                         <td style="border: 1px solid; padding-top:5px; padding-bottom:5px;"></td>
                                         <td style="padding-top:5px; padding-bottom:5px;"></td>
                                         <td  style="padding-top:5px; padding-bottom:5px; border-left: 1px solid; padding-left:5px;">
-                                           <span t-if="o.picking_type_id.code == 'incoming'">Recogida oportuna: Si ( ) No ( )</span>
+                                           <span t-if="o.picking_type_id.code == 'incoming'">Recogida oportuna: 
+                                                <t t-if="o.timely_collection"> Si (X) No ( )</t>
+                                                <t t-if="not o.timely_collection"> Si ( ) No (X)</t>
+                                           </span>
                                             <span t-if="o.picking_type_id.code == 'outgoing'">Hora Acordada:
                                             <span t-field="o.agreed_hour"  t-field-options='{"widget": "float_time"}'/>
                                             </span>
@@ -252,7 +262,10 @@
                                             <span t-if="o.picking_type_id.code == 'incoming'">Hora Llegada:
                                             <span t-field="o.in_hour"  t-field-options='{"widget": "float_time"}'/>
                                             </span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega instrucciones: Si ( ) No ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Entrega instrucciones: 
+                                                <t t-if="o.delivery_instructions"> Si (X) NO ( )</t>
+                                                <t t-if="not o.delivery_instructions"> Si ( ) No (X)</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -266,7 +279,9 @@
                                             <span t-if="o.picking_type_id.code == 'incoming'">Hora Salida:
                                             <span t-field="o.out_hour"  t-field-options='{"widget": "float_time"}'/>
                                             </span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">Operador:</span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">Operador:
+                                                <span t-field="o.work_operator"/>
+                                            </span>
                                         </td>
                                     </tr>
                                 </table>
@@ -276,15 +291,26 @@
                                 <table>
                                     <tr>
                                         <td style="padding:5px;">
-                                            <span t-if="o.picking_type_id.code == 'incoming'">Recoger más equipo: Si ( ) No ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'incoming'">Recoger más equipo: 
+                                                <t t-if="o.collect_more_equipment"> Si (X) No ( )</t>
+                                                <t t-if="not o.collect_more_equipment"> Si ( ) No (X)</t>
+                                            </span>
                                             <strong t-if="o.picking_type_id.code == 'outgoing'">Revisa y recibe el equipo en buenas condiciones</strong>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td style="padding:5px;">
-                                            <span t-if="o.picking_type_id.code == 'incoming'">Inmediatamente ( ) avisan después ( )</span>
-                                            <span t-if="o.picking_type_id.code == 'outgoing'">En obra ( ) En bodega Conalquipo ( )</span>
+                                            <span t-if="o.picking_type_id.code == 'incoming'">
+                                                <t t-if="o.collect_notification == 'immediately'">Inmediatamente (X) avisan después ( )</t>
+                                                <t t-if="o.collect_notification == 'they_warn_later'">Inmediatamente ( ) avisan después (X)</t>
+                                                <t t-if="not o.collect_notification">Inmediatamente ( ) avisan después ( )</t>
+                                            </span>
+                                            <span t-if="o.picking_type_id.code == 'outgoing'">
+                                                <t t-if="o.check_good_conditions == 'on_work'">En obra (X) En bodega Conalquipo ( )</t>
+                                                <t t-if="o.check_good_conditions == 'on_company'">En obra ( ) En bodega Conalquipo (X)</t>
+                                                <t t-if="not o.check_good_conditions">En obra ( ) En bodega Conalquipo ( )</t>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>

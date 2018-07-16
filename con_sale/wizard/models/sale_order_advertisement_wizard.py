@@ -10,7 +10,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
     @api.multi
     def _get_default_loc(self):
         location = self.env['stock.location'].search([
-            ('set_default_location', '=', True)], limit=1) or False
+            ('return_location', '=', True)], limit=1) or False
         return location
 
     project_id = fields.Many2one('project.project', string="Project")

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 22:48+0000\n"
-"PO-Revision-Date: 2018-07-11 17:49-0500\n"
+"POT-Creation-Date: 2018-07-13 21:57+0000\n"
+"PO-Revision-Date: 2018-07-13 16:58-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -405,6 +405,11 @@ msgid "Charge for Replacement?"
 msgstr "Cargo por reemplazo?"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_check_good_conditions
+msgid "Check and receive the equipment in good conditions"
+msgstr "Revisa y recibe el equipo en buenas condiciones"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_child_product
 msgid "Child product"
 msgstr "Producto hijo"
@@ -413,6 +418,16 @@ msgstr "Producto hijo"
 #: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
 msgid "Choose your combination"
 msgstr "Seleccione su combinación"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_collect_more_equipment
+msgid "Collect more equipment"
+msgstr "Recoger más equipo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_collect_notification
+msgid "Collect notification"
+msgstr "Notificación de recogida"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_color
@@ -463,6 +478,16 @@ msgstr "Ubicación por defecto para los productos"
 #: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
 msgid "Delivery Cost"
 msgstr "Costo de envío"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Delivery details"
+msgstr "Detalles de entrega"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_delivery_instructions
+msgid "Delivery instructions"
+msgstr "Entrega instrucciones"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_product_desc
@@ -521,24 +546,34 @@ msgid "En obra ( ) En bodega Conalquipo ( )"
 msgstr "En obra ( ) En bodega Conalquipo ( )"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "En obra ( ) En bodega Conalquipo (X)"
+msgstr "En obra ( ) En bodega Conalquipo (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "En obra (X) En bodega Conalquipo ( )"
+msgstr "En obra (X) En bodega Conalquipo ( )"
+
+#. module: con_stock
 #: selection:stock.picking,reason:0
 msgid "End project-work"
 msgstr "Finalización de la obra"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "Entrega instrucciones: Si ( ) No ( )"
-msgstr "Entrega instrucciones: Si ( ) No ( )"
+msgid "Entrega instrucciones:"
+msgstr "Entrega instrucciones:"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "Entrega oportuna: Si ( ) No ( )"
-msgstr "Entrega oportuna: Si ( ) No ( )"
+msgid "Entrega oportuna:"
+msgstr "Entrega oportuna:"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "Entregó en: Obra ( ) Conalquipo ( )"
-msgstr "Entregó en: Obra ( ) Conalquipo ( )"
+msgid "Entregó en:"
+msgstr "Entregó en:"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
@@ -617,6 +652,11 @@ msgid "Identification No Driver"
 msgstr "Num. ident. conductor"
 
 #. module: con_stock
+#: selection:stock.picking,collect_notification:0
+msgid "Immediately"
+msgstr "Inmediatamente"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
 msgid "Info Remission On Site"
 msgstr "Información de remisión en sitio"
@@ -630,6 +670,16 @@ msgstr "Información de envío"
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "Inmediatamente ( ) avisan después ( )"
 msgstr "Inmediatamente ( ) avisan después ( )"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Inmediatamente ( ) avisan después (X)"
+msgstr "Inmediatamente ( ) avisan después (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Inmediatamente (X) avisan después ( )"
+msgstr "Inmediatamente (X) avisan después ( )"
 
 #. module: con_stock
 #: selection:set.inv.locations,get_locations:0
@@ -755,7 +805,28 @@ msgid "Nombre:"
 msgstr "Nombre:"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra ( ) Conalquipo ( )"
+msgstr "Obra ( ) Conalquipo ( )"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra ( ) Conalquipo (X)"
+msgstr "Obra ( ) Conalquipo (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra (X) Conalquipo ( )"
+msgstr "Obra (X) Conalquipo ( )"
+
+#. module: con_stock
+#: selection:stock.picking,check_good_conditions:0
+msgid "On company"
+msgstr "En compañoa"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_product_count
+#: selection:stock.picking,check_good_conditions:0
 msgid "On work"
 msgstr "En obra"
 
@@ -770,6 +841,11 @@ msgstr "Operador:"
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
 msgid "Operator"
 msgstr "Operador"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_work_operator
+msgid "Operator on work"
+msgstr "Operador en obra"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_employee_ids
@@ -867,13 +943,13 @@ msgstr "Razones de cancelación"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "Recoger más equipo: Si ( ) No ( )"
-msgstr "Recoger más equipo: Si ( ) No ( )"
+msgid "Recoger más equipo:"
+msgstr "Recoger más equipo:"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
-msgid "Recogida oportuna: Si ( ) No ( )"
-msgstr "Recogida oportuna: Si ( ) No ( )"
+msgid "Recogida oportuna:"
+msgstr "Recogida oportuna:"
 
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
@@ -904,6 +980,11 @@ msgid "Request responsible"
 msgstr "Responsable anuncio"
 
 #. module: con_stock
+#: model:stock.location,name:con_stock.stock_location_reserved
+msgid "Reserved"
+msgstr "Reservado"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_responsible
 msgid "Responsible"
 msgstr "Responsable"
@@ -919,7 +1000,7 @@ msgid "SALDO OBRA"
 msgstr "SALDO OBRA"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:683
+#: code:addons/con_stock/models/stock_picking.py:708
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
 #, python-format
 msgid "Scrap"
@@ -931,7 +1012,7 @@ msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:230
+#: code:addons/con_stock/models/stock_picking.py:255
 #, python-format
 msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
 msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
@@ -996,6 +1077,21 @@ msgid "Shipping Driver"
 msgstr "Conductor de flete"
 
 #. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si ( ) No (X)"
+msgstr "Si ( ) No (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si (X) NO ( )"
+msgstr "Si (X) NO ( )"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si (X) No ( )"
+msgstr "Si (X) No ( )"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_states_id
 #: model:ir.ui.view,arch_db:con_stock.view_product_availability_stock_location_tree
 msgid "State"
@@ -1039,6 +1135,21 @@ msgid "There is product in the dispatch order that requires operator, please sel
 msgstr "Hay un producto en la orden de despacho que requiere operador, seleccione el operador del equipo."
 
 #. module: con_stock
+#: selection:stock.picking,collect_notification:0
+msgid "They warn later"
+msgstr "Advierten más tarde"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_timely_collection
+msgid "Timely collection"
+msgstr "Recogida oportuna"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_timely_delivery
+msgid "Timely delivery"
+msgstr "Entrega oportuna"
+
+#. module: con_stock
 #: model:ir.model,name:con_stock.model_stock_picking
 msgid "Transfer"
 msgstr "Transferir"
@@ -1060,7 +1171,7 @@ msgid "View"
 msgstr "Vista"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:230
+#: code:addons/con_stock/models/stock_picking.py:255
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
@@ -1083,7 +1194,7 @@ msgid "You can't select the same product"
 msgstr "No puede seleccionar el mismo producto!"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:414
+#: code:addons/con_stock/models/stock_picking.py:439
 #, python-format
 msgid "You need specify a operator for: %s"
 msgstr "Necesita especificar un operado para: %s"
