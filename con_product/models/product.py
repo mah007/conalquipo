@@ -470,4 +470,3 @@ class ProductStatesNonMech(Model):
                 record.qty = data.quantity
             if record.state_name.name == "Reserva":
                 record.qty = record.product_tmpl_id.outgoing_qty
-
