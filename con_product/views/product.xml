@@ -131,13 +131,13 @@
                             </field>
                         </page>
                         <page string="Product States Non mech" attrs="{'invisible':[('non_mech', '=', False)]}">
-                            <field name="states_nonmech_ids" options="{'no_create_edit':True}">
-                                <tree string="Locations, quantity and states">
-                                    <field name="product_id" invisible="1"/>
-                                    <field name="location_id"/>
-                                    <field name="state_name"/>
-                                    <field name="color" widget="color" />
-                                    <field name="qty"/>
+                            <field name="states_nonmech_ids" mode="tree">
+                                <tree string="Locations, quantity and states" default_order='qty' editable="bottom" delete="false" create="false">
+                                    <field name="product_id" invisible="1" readonly="1"/>
+                                    <field name="location_id" readonly="1"/>
+                                    <field name="state_name" readonly="1"/>
+                                    <field name="color" widget="color" readonly="1"/>
+                                    <field name="qty" readonly="1"/>
                                 </tree>
                             </field>
                         </page>

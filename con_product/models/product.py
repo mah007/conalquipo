@@ -442,7 +442,8 @@ class ProductStatesNonMech(Model):
     _name = "product.states.nonmech"
     _description = "A model for store non mech product states"
     _rec_name = "state_name"
-
+    _order = "qty"
+    
     product_id = fields.Many2one(
         'product.product', string="Product parent")
     product_tmpl_id = fields.Many2one(
