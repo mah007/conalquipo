@@ -47,8 +47,8 @@ class ProductChangeWizard(models.TransientModel):
     def _onchange_new_product(self):
         text = _(" change by ")
         self.product_desc = \
-         self.new_product_id.default_code + \
-          text + self.ant_product_id.default_code
+         str(self.new_product_id.default_code) + \
+          text + str(self.ant_product_id.default_code)
         if self.ant_product_id.id == self.new_product_id.id:
             raise UserError(_("You can't select the same product"))
         if self.move_line.product_uom_qty > self.new_product_id.qty_available:

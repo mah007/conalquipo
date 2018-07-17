@@ -1548,10 +1548,11 @@ class SaleOrderLine(models.Model):
                     'bill_uom_qty': 1,
                     'product_uom_qty': 1
                 })
-            price = line.price_unit * (
+            price = line.price_unit
+            price_discount = line.price_unit * (
                 1 - (line.discount or 0.0) / 100.0)
             taxes = line.tax_id.compute_all(
-                price, line.order_id.currency_id, quantity,
+                price_discount, line.order_id.currency_id, quantity,
                 product=line.product_id,
                 partner=line.order_id.partner_shipping_id)
             line.update({
