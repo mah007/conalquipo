@@ -30,12 +30,13 @@
               <data>
 
                 <ul position="inside">
-                  <div t-if="record.location_id.value">
-                    <li t-if="record.state_id.value">State: <field name="state_id"></field></li>
-                    <li t-if="record.color.value">Color: <field name="color" widget="color" ></field></li>
-                    <li t-if="record.location_id.value">Location: <field name="location_id"></field></li>
-                    <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
-                  </div>
+                    <b><li t-if="record.outgoing_qty.value">Reserved: <field  name="outgoing_qty"></field></li></b>
+                    <div t-if="record.location_id.value">
+                        <li t-if="record.state_id.value">State: <field name="state_id"></field></li>
+                        <li t-if="record.color.value">Color: <field name="color" widget="color" ></field></li>
+                        <li t-if="record.location_id.value">Location: <field name="location_id"></field></li>
+                        <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
+                    </div>
                 </ul>
 
               </data>
