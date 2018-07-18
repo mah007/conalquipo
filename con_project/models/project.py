@@ -188,6 +188,20 @@ class ProjectWorks(models.Model):
     is_director_logistic = fields.Boolean(
         compute='_compute_is_director_logistic',
         default=True)
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
+
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
 
     def _compute_is_comercial(self):
         for data in self:

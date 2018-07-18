@@ -129,6 +129,20 @@ class ResPartnerCode(models.Model):
         'Allow Over Credit?', track_visibility='onchange')
     contact_person = fields.Boolean(
         'Contact person?', track_visibility='onchange')
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
+
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
 
     @api.onchange('type')
     def onchange_type_contact(self):

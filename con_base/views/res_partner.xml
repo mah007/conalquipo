@@ -40,6 +40,7 @@
                     <field name="is_administrative_assistant" invisible="1"/>
                     <field name="documents_delivered" attrs="{'readonly': [('can_edit_doc_delivered','=',False)]}"/>
                     <field name="partner_code" readonly="1"/>
+                    <field name="employee_id" required="1" readonly="0" options="{'no_create': True}"/>
                     <field name="l10n_co_document_type"/>
                     <field name="l10n_co_verification_code" invisible="1"/>
                     <field name="vat" string="Document number" placeholder="e.g. BE0477472701"/>
