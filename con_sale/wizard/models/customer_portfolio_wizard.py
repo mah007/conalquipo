@@ -44,17 +44,20 @@ class CustomerPortfolio(models.TransientModel):
         if partners:
             invoices = self.env['account.invoice'].search(
                 [('partner_id', 'in', partners),
-                 ('state', 'in', ['draft', 'open'])]) or False
+                 ('state', 'in', ['draft', 'open'])])
+            _logger.warning(invoices)
             if invoices:
-                for data in invoices:
-                    project_lst.append(data.project_id.id)
                 invoices_lst = invoices._ids
-                for info in self:
-                    info.partner_ids = partners
-                    info.invoice_ids = invoices_lst
-                    info.project_ids = project_lst
-                    if info.invoice_ids:
-                        info.can_print = True
+                for data in invoices:
+                    if data.project_id.id:
+                        project_lst.append(data.project_id.id)
+        self.partner_ids = partners
+        self.invoice_ids = invoices_lst
+        self.project_ids = project_lst
+        if invoices_lst:
+            self.can_print = True
+        else:
+            self.can_print = False
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -86,5 +89,6 @@ class CustomerPortfolio(models.TransientModel):
         res = res and res[0] or {}
         datas['form'] = res
         return self.env.ref(
-            'con_sale.action_report_customer_portfolio'
-        ).with_context(landscape=True).report_action([], data=datas)
+            'con_sale.action_report_customer_portfolio',
+            raise_if_not_found=False).with_context(
+                landscape=True).report_action([], data=datas)

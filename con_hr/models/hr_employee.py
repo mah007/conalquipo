@@ -28,6 +28,7 @@ _logger = logging.getLogger(__name__)
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
+    employee_code = fields.Char('Employee code')
     is_operator = fields.Boolean('Is Operator')
     product_ids = fields.Many2many(comodel_name='product.template',
                                    string='Product', search='hr_products',

@@ -116,6 +116,8 @@
             <group>
               <field name="work_code" required="0" attrs="{'invisible':[('work_code','=',False)], 'readonly':[('work_code','!=',False)]}"/>
               <field name="email" widget="email" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
+              <field name="employee_id" required="1" readonly="1" options="{'no_create': True}" force_save="1"/>
+              <field name="employee_code" required="1"/>
               <field name="work_date_creation" required="0"/>
               <field name="invoice_limit_date" required="0" attrs="{'readonly': [('is_director_comercial','=',False), ('is_comercial','=',False)]}"/>
             </group>

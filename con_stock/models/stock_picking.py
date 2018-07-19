@@ -144,6 +144,34 @@ class StockPicking(Model):
          ('they_warn_later', 'They warn later')],
         string='Collect notification',
         track_visibility='onchange')
+    employee_code = fields.Char('Employee code')
+
+    @api.onchange('employee_code')
+    def onchange_employe_code(self):
+        if self.employee_code:
+            employee_list = []
+            actual_user = self.env.user
+            other = actual_user.employee_ids
+            for data in other:
+                employee_list.append(data.id)
+            code = self.env[
+                'hr.employee'].search(
+                    [('employee_code', '=', self.employee_code)], limit=1)
+            if code.id in employee_list:
+                self.employee_id = code.id
+            else:
+                raise UserError(_(
+                    'This employee code in not member of '
+                    'this group.'))
+        else:
+            self.employee_id = False
+
+    @api.multi
+    def write(self, values):
+        # Overwrite stock picking write
+        values['employee_code'] = False
+        res = super(StockPicking, self).write(values)
+        return res
 
     @api.model
     def _getemployee(self):

@@ -54,10 +54,6 @@ class AccountInvoice(models.Model):
     invoice_address = fields.Text(
         string="Billing address",
         compute="_get_merge_address")
-    employee_id = fields.Many2one(
-        "hr.employee", string='Employee',
-        track_visibility='onchange',
-        domain=lambda self:self._getemployee())
     sector_id = fields.Many2one(
         comodel_name='res.partner.sector',
         string='Work Sector',
@@ -79,6 +75,31 @@ class AccountInvoice(models.Model):
     days_delivery = fields.Char(
         string='Days delivery',
         track_visibility='onchange')
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self: self._getemployee())
+    employee_code = fields.Char('Employee code')
+
+    @api.onchange('employee_code')
+    def onchange_employe_code(self):
+        if self.employee_code:
+            employee_list = []
+            actual_user = self.env.user
+            other = actual_user.employee_ids
+            for data in other:
+                employee_list.append(data.id)
+            code = self.env[
+                'hr.employee'].search(
+                    [('employee_code', '=', self.employee_code)], limit=1)
+            if code.id in employee_list:
+                self.employee_id = code.id
+            else:
+                raise UserError(_(
+                    'This employee code in not member of '
+                    'this group.'))
+        else:
+            self.employee_id = False
 
     @api.model
     def _getemployee(self):
@@ -121,6 +142,7 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def write(self, values):
+        values['employee_code'] = False
         # Overwrite account invoice write
         res = super(AccountInvoice, self).write(values)
         # Account extra permissions
