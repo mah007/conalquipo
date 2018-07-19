@@ -143,7 +143,7 @@ class StockPicking(Model):
     employee_id = fields.Many2one(
         "hr.employee", string='Employee',
         track_visibility='onchange',
-        domain=lambda self:self._getemployee())
+        domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
 
     @api.onchange('employee_code')
