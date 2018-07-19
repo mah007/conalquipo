@@ -132,7 +132,28 @@ class ResPartnerCode(models.Model):
     employee_id = fields.Many2one(
         "hr.employee", string='Employee',
         track_visibility='onchange',
-        domain=lambda self:self._getemployee())
+        domain=lambda self: self._getemployee())
+    employee_code = fields.Char('Employee code')
+
+    @api.onchange('employee_code')
+    def onchange_employe_code(self):
+        if self.employee_code:
+            employee_list = []
+            actual_user = self.env.user
+            other = actual_user.employee_ids
+            for data in other:
+                employee_list.append(data.id)
+            code = self.env[
+                'hr.employee'].search(
+                    [('employee_code', '=', self.employee_code)], limit=1)
+            if code.id in employee_list:
+                self.employee_id = code.id
+            else:
+                raise exceptions.Warning(_(
+                    'This employee code in not member of '
+                    'this group.'))
+        else:
+            self.employee_id = False
 
     @api.model
     def _getemployee(self):
@@ -245,12 +266,8 @@ class ResPartnerCode(models.Model):
     @api.multi
     def write(self, values):
         # Overwrite sale order write
-        values['employee_id'] = False
+        values['employee_code'] = False
         res = super(ResPartnerCode, self).write(values)
-        _logger.warning(values)
-        values['employee_id'] = False
-        _logger.warning(res)
-        _logger.warning(self)
         return res
 
 
