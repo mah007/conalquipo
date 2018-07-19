@@ -226,7 +226,8 @@ class ResPartnerCode(models.Model):
     def _compute_product_pricelist(self):
         for p in self:
             if not isinstance(p.id, models.NewId):  # if not onchange
-                p.property_product_pricelist = self.env['product.pricelist']._get_partner_pricelist(p.id)
+                p.property_product_pricelist = self.env[
+                    'product.pricelist']._get_partner_pricelist(p.id)
 
     @api.model
     def create(self, values):
@@ -239,6 +240,17 @@ class ResPartnerCode(models.Model):
         else:
             raise exceptions.Warning(_(
                 'You have to define a payment term in company config!'))
+        return res
+
+    @api.multi
+    def write(self, values):
+        # Overwrite sale order write
+        values['employee_id'] = False
+        res = super(ResPartnerCode, self).write(values)
+        _logger.warning(values)
+        values['employee_id'] = False
+        _logger.warning(res)
+        _logger.warning(self)
         return res
 
 
