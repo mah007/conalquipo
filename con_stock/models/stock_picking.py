@@ -32,6 +32,10 @@ class StockPicking(Model):
 
     project_id = fields.Many2one(
         'project.project', string="Project", track_visibility='onchange')
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self:self._getemployee())
     attachment_ids = fields.Many2many(
         'ir.attachment',
         compute='_compute_attachment_ids',
@@ -140,10 +144,6 @@ class StockPicking(Model):
          ('they_warn_later', 'They warn later')],
         string='Collect notification',
         track_visibility='onchange')
-    employee_id = fields.Many2one(
-        "hr.employee", string='Employee',
-        track_visibility='onchange',
-        domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
 
     @api.onchange('employee_code')
@@ -160,7 +160,7 @@ class StockPicking(Model):
             if code.id in employee_list:
                 self.employee_id = code.id
             else:
-                raise exceptions.Warning(_(
+                raise UserError(_(
                     'This employee code in not member of '
                     'this group.'))
         else:

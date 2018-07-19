@@ -95,7 +95,7 @@ class AccountInvoice(models.Model):
             if code.id in employee_list:
                 self.employee_id = code.id
             else:
-                raise exceptions.Warning(_(
+                raise UserError(_(
                     'This employee code in not member of '
                     'this group.'))
         else:
