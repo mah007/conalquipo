@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 19:00+0000\n"
-"PO-Revision-Date: 2018-07-12 14:01-0500\n"
+"POT-Creation-Date: 2018-07-19 20:55+0000\n"
+"PO-Revision-Date: 2018-07-19 15:57-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.0.9\n"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
@@ -29,8 +29,14 @@ msgstr "<strong>Obra:</strong>"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_invoice_address
-msgid "Billing"
-msgstr "Facturación"
+#: model:ir.ui.view,arch_db:con_account.con_sale_invoice_tree
+msgid "Billing address"
+msgstr "Dirección de facturación"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_account_invoice_confirm
+msgid "Confirm the selected invoices"
+msgstr "Confirmar las facturas seleccionadas"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
@@ -47,6 +53,11 @@ msgstr "Días entrega"
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_employee_id
 msgid "Employee"
 msgstr "Empleado"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_employee_code
+msgid "Employee code"
+msgstr "Código empleado"
 
 #. module: con_account
 #: model:ir.model,name:con_account.model_account_invoice
@@ -68,6 +79,16 @@ msgstr "Línea de Factura"
 #: model:ir.ui.view,arch_db:con_account.view_account_invoice_filter_inherit
 msgid "Invoice Sector"
 msgstr "Sector facturación"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_confirm_new_date_invoice
+msgid "New Invoice Date"
+msgstr "Nueva fecha"
+
+#. module: con_account
+#: model:ir.model.fields,help:con_account.field_account_invoice_confirm_new_date_invoice
+msgid "New date for invoices"
+msgstr "Nueva fecha"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_owner_id
@@ -115,14 +136,41 @@ msgid "Sector"
 msgstr "Sector"
 
 #. module: con_account
-#: model:ir.model.fields,field_description:con_account.field_account_invoice_shipping_address
-msgid "Shipping"
-msgstr "Transporte"
+#: code:addons/con_account/wizards/models/account_invoice_state.py:22
+#, python-format
+msgid "Selected invoice(s) cannot be confirmed as they are not in 'Draft' state."
+msgstr "Las facturas seleccionadas no pueden ser confirmadas, ya que no están en estado borrador."
+
+#. module: con_account
+#: model:ir.model.fields,help:con_account.field_account_invoice_confirm_custom_date
+msgid "Set a custom dates for invoices."
+msgstr "Seleccionar nueva fecha para las facturas"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_invoice_confirm_view_inherit
+msgid "Set custom dates"
+msgstr "Seleccionar fecha?"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_confirm_custom_date
+msgid "Set custom dates?"
+msgstr "Seleccionar otra fecha?"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.invoice_form
 msgid "Shipping Address"
 msgstr "Dirección de obra"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_shipping_address
+msgid "Shipping address"
+msgstr "Dirección de obra"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:98
+#, python-format
+msgid "This employee code in not member of this group."
+msgstr "This employee code in not member of this group."
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_invoice_type
@@ -152,13 +200,13 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:255
+#: code:addons/con_account/models/account_invoice.py:277
 #, python-format
 msgid "You can't validate invoces. Check your permissions!"
 msgstr "No puede validar facturas. Por favor, chequea tus permisos!"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:139
+#: code:addons/con_account/models/account_invoice.py:161
 #, python-format
 msgid "You don't have permission to edit the record!"
 msgstr "No tiene permisos para editar el registro! Consulte al administrador!"
