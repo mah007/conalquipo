@@ -20,6 +20,7 @@
     'data': [
         'views/account_invoice.xml',
         'report/report_invoice_inherit.xml',
+        'wizards/views/account_invoice_state.xml',
     ],
     'qweb': [
     ],

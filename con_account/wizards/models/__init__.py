@@ -19,5 +19,4 @@
 #
 ##############################################################################
 
-from . import models
-from . import wizards
+from . import account_invoice_state
