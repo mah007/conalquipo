@@ -33,3 +33,9 @@ class HrEmployee(models.Model):
     product_ids = fields.Many2many(comodel_name='product.template',
                                    string='Product', search='hr_products',
                                    track_visibility='onchange')
+
+    _sql_constraints = [
+        ('employee_code_unique',
+         'UNIQUE(employee_code)',
+         "The emplode code must be unique"),
+    ]
