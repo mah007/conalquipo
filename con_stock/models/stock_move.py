@@ -49,6 +49,20 @@ class StockMove(Model):
         compute='_compute_product_count',
         string="On work",
         track_visibility='onchange')
+    parent_sale_line = fields.Many2one(
+        'sale.order.line',
+        string='Parent sale line',
+        compute='_get_parent_sale_line',
+        store=True)
+
+    def _get_parent_sale_line(self):
+        """
+        Method to get sale parent line
+        """
+        for record in self:
+            parent = record.sale_line_id.parent_line
+            _logger.warning(parent)
+            record.parent_sale_line = parent
 
     def _compute_product_count(self):
         """
