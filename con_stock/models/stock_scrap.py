@@ -20,7 +20,7 @@
 ##############################################################################
 import logging
 _logger = logging.getLogger(__name__)
-from odoo import models, _
+from odoo import models, _, api
 from odoo.exceptions import UserError
 
 
@@ -34,12 +34,6 @@ class StockScrap(models.Model):
             warn = res.get('res_model', '')
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
-
-        # if any([not res, not self.picking_id.sale_id,
-        #         not self.product_id.replenishment_charge,
-        #         not self.scrap_location_id.is_charge_replacement]):
-        #     return res
-
         reple_id = self.product_id.replenishment_charge
         if reple_id:
             self.picking_id.sale_id.order_line.create({
@@ -53,8 +47,18 @@ class StockScrap(models.Model):
             return res
         else:
             raise UserError(_(
-                "The product doesn't have replacement service!"))            
-            
+                "The product doesn't have replacement service!"))
+
+    @api.multi
+    def do_scrap(self):
+        res = super(StockScrap, self).do_scrap()
+        for scrap in self:
+            reple_id = scrap.product_id.replenishment_charge
+            if not reple_id:
+                raise UserError(_(
+                    "The product doesn't have replacement service!"))
+        return res
+
 
 class StockWarnInsufficientQtyScrap(models.TransientModel):
     _inherit = 'stock.warn.insufficient.qty.scrap'
@@ -62,12 +66,6 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
     def action_done(self):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
-
-        # if any([not res, not scrap_id.picking_id.sale_id,
-        #         not scrap_id.product_id.replenishment_charge,
-        #         not scrap_id.scrap_location_id.is_charge_replacement]):
-        #     return res
-
         reple_id = scrap_id.product_id.replenishment_charge
         if reple_id:
             scrap_id.picking_id.sale_id.order_line.create({
@@ -78,7 +76,10 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
                 'name': _('Replenishment %s') % (reple_id.name),
                 'product_uom': reple_id.uom_id.id,
             })
+            scrap_id.move_id.write({'description': _(
+                'Replenishment %s') % (reple_id.name)})
             return res
         else:
             raise UserError(_(
-                "The product doesn't have replacement service!"))            
+                "The product doesn't have replacement service!"))
+         
