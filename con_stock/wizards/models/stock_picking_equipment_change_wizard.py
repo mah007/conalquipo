@@ -23,7 +23,22 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
                 new_p.move_line.sale_line_id.update(
                     {'product_id': new_p.new_product_id.id,
                      'name': new_p.product_desc})
-
+                # Update description on sale order line
+                new_sale_data = self.env['sale.order.line'].search(
+                    [['parent_line', '=', new_p.move_line.sale_line_id.id]])
+                if new_sale_data:
+                    for data in new_sale_data:
+                        new_name = 'Comp ' + new_p.new_product_id.default_code
+                        data.update({'name': new_name})
+                # Update description on stock move
+                new_stock_m_data = self.env['stock.move'].search(
+                    [['parent_sale_line',
+                      '=',
+                      new_p.move_line.sale_line_id.id]])
+                if new_stock_m_data:
+                    for data in new_stock_m_data:
+                        new_name = 'Comp ' + new_p.new_product_id.default_code
+                        data.update({'description': new_name})
                 self.env['stock.move.line']._log_message(
                     new_p.move_line.picking_id, new_p.move_line.id,
                     'con_shipping.equipment_change_template',
