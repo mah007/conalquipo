@@ -206,7 +206,6 @@ class SaleOrder(models.Model):
             [('partner_id', '=', self.partner_id.id),
              ('state', '=', 'open')])
         invoices_list = []
-
         self.due_invoice_ids = [(5,)]
         self.message_invoice = ''
         if users_list:
@@ -285,6 +284,7 @@ class SaleOrder(models.Model):
                     'can_confirm': True,
                     'available_amount': 0.0,
                     'message_invoice_inactive': False,
+                    'due_invoice_ids': invoices_list,
                     'message_invoice': msg})
             if self.partner_id.over_credit:
                 self.write({'can_confirm': True})

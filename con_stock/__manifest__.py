@@ -35,7 +35,7 @@
     'website': "http://www.ias.com.co",
     'category': 'stock',
     'version': '0.1',
-    'depends': ['base', 'project', 'stock', 'project',
+    'depends': ['base', 'project', 'stock', 'project', 'sale_stock',
                 'base', 'delivery', 'mrp_repair', 'product',
                 'con_project', 'con_delivery', 'hr'],
     'data': [
