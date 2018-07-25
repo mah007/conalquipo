@@ -21,6 +21,7 @@
 import logging
 _logger = logging.getLogger(__name__)
 from odoo import models, _, api
+from odoo.tools import float_compare
 from odoo.exceptions import UserError
 
 
@@ -29,11 +30,48 @@ class StockScrap(models.Model):
 
     def action_validate(self):
         res = super(StockScrap, self).action_validate()
+        qtys = []
+        precision = self.env[
+            'decimal.precision'].precision_get(
+                'Product Unit of Measure')
+        available_qty = self.env[
+            'stock.move'].search(
+                [('product_id', '=', self.product_id.id),
+                 ('location_id', '=', self.location_id.id),
+                 ('picking_id', '=', self.picking_id.id)
+                ])
+        for products_qty in available_qty:
+            qtys.append(products_qty.product_qty)
+        if float_compare(sum(qtys), \
+         self.scrap_qty, precision_digits=precision) >= 0:
+            return self.do_scrap()
+        else:
+            return {
+                'name': _('Insufficient Quantity'),
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'stock.warn.insufficient.qty.scrap',
+                'view_id': self.env.ref(
+                    'stock.stock_warn_insufficient_qty_scrap_form_view').id,
+                'type': 'ir.actions.act_window',
+                'context': {
+                    'default_product_id': self.product_id.id,
+                    'default_location_id': self.location_id.id,
+                    'default_scrap_id': self.id
+                },
+                'target': 'new'
+            }
 
         if isinstance(res, dict):
             warn = res.get('res_model', '')
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
+
+        if any([not res, not self.picking_id.sale_id,
+                not self.product_id.replenishment_charge,
+                not self.scrap_location_id.is_charge_replacement]):
+            return res
+
         reple_id = self.product_id.replenishment_charge
         if reple_id:
             self.picking_id.sale_id.order_line.create({
@@ -66,6 +104,12 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
     def action_done(self):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
+
+        if any([not res, not scrap_id.picking_id.sale_id,
+                not scrap_id.product_id.replenishment_charge,
+                not scrap_id.scrap_location_id.is_charge_replacement]):
+            return res
+
         reple_id = scrap_id.product_id.replenishment_charge
         if reple_id:
             scrap_id.picking_id.sale_id.order_line.create({
@@ -82,4 +126,3 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
         else:
             raise UserError(_(
                 "The product doesn't have replacement service!"))
-         
