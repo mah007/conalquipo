@@ -31,17 +31,14 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
                         new_name = 'Comp ' + new_p.new_product_id.default_code
                         data.update({'name': new_name})
                 # Update description on stock move
-                new_stock_m_data = self.env['stock.move'].search(
-                    [['parent_sale_line',
-                      '=',
-                      new_p.move_line.sale_line_id.id]])
-                if new_stock_m_data:
-                    for data in new_stock_m_data:
-                        if new_p.move_line.sale_line_id.id \
-                         == data.parent_sale_line:
-                            new_name = 'Comp ' + \
-                             new_p.new_product_id.default_code
-                            data.update({'description': new_name})
+                for desc in self.picking_id.move_lines:
+                    new_name = 'Comp ' + \
+                     new_p.new_product_id.default_code
+                    if desc.sale_line_id.parent_line.id:
+                        desc.update({
+                            'parent_sale_line': \
+                             desc.sale_line_id.parent_line.id,
+                            'description': new_name})
                 self.env['stock.move.line']._log_message(
                     new_p.move_line.picking_id, new_p.move_line.id,
                     'con_shipping.equipment_change_template',
