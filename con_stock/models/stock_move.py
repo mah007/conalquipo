@@ -49,17 +49,18 @@ class StockMove(Model):
         compute='_compute_product_count',
         string="On work",
         track_visibility='onchange')
-    parent_sale_line = fields.Integer(
-        string='Parent sale line',
-        compute='_compute_get_parent_sale_line')
+    parent_sale_line = fields.Many2one(
+        'sale.order.line',
+        string='Parent sale line')
 
-    def _compute_get_parent_sale_line(self):
-        """
-        Method to get sale parent line
-        """
-        for record in self:
-            if record.sale_line_id.parent_line.id:
-                record.parent_sale_line = record.sale_line_id.parent_line.id
+    @api.model
+    def create(self, vals):
+        res = super(StockMove, self).create(vals)
+        # Update parent_sale_line
+        if res.sale_line_id.parent_line:
+            res.update({
+                'parent_sale_line': res.sale_line_id.parent_line.id})
+        return res
 
     def _compute_product_count(self):
         """
