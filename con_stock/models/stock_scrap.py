@@ -67,10 +67,10 @@ class StockScrap(models.Model):
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
 
-        if any([not res, not self.picking_id.sale_id,
-                not self.product_id.replenishment_charge,
-                not self.scrap_location_id.is_charge_replacement]):
-            return res
+        # if any([not res, not self.picking_id.sale_id,
+        #         not self.product_id.replenishment_charge,
+        #         not self.scrap_location_id.is_charge_replacement]):
+        #     return res
 
         reple_id = self.product_id.replenishment_charge
         if reple_id:
@@ -105,10 +105,10 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
 
-        if any([not res, not scrap_id.picking_id.sale_id,
-                not scrap_id.product_id.replenishment_charge,
-                not scrap_id.scrap_location_id.is_charge_replacement]):
-            return res
+        # if any([not res, not scrap_id.picking_id.sale_id,
+        #         not scrap_id.product_id.replenishment_charge,
+        #         not scrap_id.scrap_location_id.is_charge_replacement]):
+        #     return res
 
         reple_id = scrap_id.product_id.replenishment_charge
         if reple_id:
