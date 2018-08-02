@@ -1,0 +1,244 @@
+Producto|Tipo de producto|Referencia interna|Categoria|Precio de venta por unidad de medida|Coste|Unidad de medida de compra|Unidad de medida|Puede ser vendido|Puede ser comprado
+REPO. BOMBA DE CONCRETO|Servicio|REPO-001|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. ABRAZADERA CUNA C DN 10029332|Servicio|REPO-002|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. ABRAZADERA CUNA C DN 125 100|Servicio|REPO-003|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. ABRAZADERA FLANCHE PLANO|Servicio|REPO-004|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. BOLA GOMA BLANDA C DN-125 10002832|Servicio|REPO-005|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. BOLA GOMA DURA C DN-125 10002838|Servicio|REPO-006|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 45 M/H C RADIO 500|Servicio|REPO-007|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 45 M/H RADIO 1000 R1004581|Servicio|REPO-008|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 90 M/H  RADIO500|Servicio|REPO-009|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 90 M/H RADIO 1 M 10214938|Servicio|REPO-010|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 90 M/H REF.10004588|Servicio|REPO-011|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CODO 95 M/H RADIO 500MM 10214936|Servicio|REPO-012|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CON. CODOS GRANDES|Servicio|REPO-013|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CONCRETO GUILLOTINA|Servicio|REPO-014|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CONTROL DE EMERGENCIA|Servicio|REPO-015|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CONTROL DE MANO|Servicio|REPO-016|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. CONVERTIDOR H/PL|Servicio|REPO-017|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. DIVERTER C F / P 04|Servicio|REPO-018|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. EMPAQUE C TUBO AUTOBOMBA 10002526|Servicio|REPO-019|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. EMPAQUE DN 125 100006251|Servicio|REPO-020|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. EMPAQUE DN PLANO|Servicio|REPO-021|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. JUNTA C 150/125 010006251|Servicio|REPO-022|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. MANGUERA FINAL DN 125MM|Servicio|REPO-023|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. MANGUERA FINAL HEMBRA|Servicio|REPO-024|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. MANGUERA FINAL HEMBRA C 6M 10131017|Servicio|REPO-025|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO CONVERTIDOR C HEMBRA / PLANO 10004492|Servicio|REPO-026|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO CONVERTIDOR C MACHO / PLANO 10004493|Servicio|REPO-027|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO MACHO/HEMBRA C 1M 1004520|Servicio|REPO-028|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO MACHO/HEMBRA C 2M 100|Servicio|REPO-029|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO MACHO/HEMBRA C 3M 10004289|Servicio|REPO-030|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. TUBO MACHO/HEMBRA DN 125MM X 1 MTR 10004520|Servicio|REPO-031|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.PZ. DIVERTER C F /P 04|Servicio|REPO-032|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BARRAS|Servicio|REPO-033|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. ABRAZADERA /ACOPLE125|Servicio|REPO-034|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 15 GRADOS 125X500|Servicio|REPO-035|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 30 GRADOS 125X500|Servicio|REPO-036|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 45 GRADOS 125X500|Servicio|REPO-037|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 70 GRADOS 125X500|Servicio|REPO-038|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 90 GRADOS 125X1000|Servicio|REPO-039|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 90 GRADOS 125X350|Servicio|REPO-040|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO 90 GRADOS 125X500|Servicio|REPO-041|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. CODO EN TUBO BOMBA CONCRETO|Servicio|REPO-042|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. MANGUERA|Servicio|REPO-043|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. MANGUERA 125C3000|Servicio|REPO-044|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. MANGUERA 125X6000|Servicio|REPO-045|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. O-RING PARA ABRAZADERA|Servicio|REPO-046|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. PISTOLA|Servicio|REPO-047|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. SEMICODO DE 30|Servicio|REPO-048|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. SEMICODO DE 45|Servicio|REPO-049|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. SEMICODO DE 90|Servicio|REPO-050|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. TUBO CONICO DE180 A 125|Servicio|REPO-051|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. TUBO RECTO 125X1000|Servicio|REPO-052|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. TUBO RECTO 125X3000|Servicio|REPO-053|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BC.ZL. TUBO RECTO125X2000|Servicio|REPO-054|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RODILLO COMPACTADOR DD14|Servicio|REPO-055|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RODILLO COMPACTADOR DD24|Servicio|REPO-056|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. COMPRESOR|Servicio|REPO-057|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BOTELLA LUBRICACION COMPRESOR|Servicio|REPO-058|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MANGUERA COMPRESOR|Servicio|REPO-059|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PALA PARA COMPRESOR|Servicio|REPO-060|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PUNTA PARA MARTILLO|Servicio|REPO-061|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CONCRETADORA HIDRAULICA|Servicio|REPO-062|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MOTOR ELECTRICO 15HP|Servicio|REPO-063|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PLANTA DOSIFICADORA|Servicio|REPO-064|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. IMPRESORA PLANTA DOSIFICADORA|Servicio|REPO-065|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. DUMPER|Servicio|REPO-066|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MINICARGADOR BOBCAT|Servicio|REPO-067|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MINICARGADOR NEWHOLLAND|Servicio|REPO-068|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MINIRETROEXCAVADORA|Servicio|REPO-069|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MINIEXCAVADORA|Servicio|REPO-070|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RETROCARGADOR|Servicio|REPO-071|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. MONTACARGA|Servicio|REPO-072|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PLANTA GENER.ENERGIA|Servicio|REPO-073|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. TABLERO ELECTRICO PARA PLANTAS|Servicio|REPO-074|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. LLAVE SUICHE|Servicio|REPO-075|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PULMON COMPRESOR|Servicio|REPO-076|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. TORRE DE ILUMINACION|Servicio|REPO-077|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CU?A HIDRAULICA|Servicio|REPO-078|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. UNIDAD DE POTENCIA PARTIDOR HIDRAULICO|Servicio|REPO-079|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ABRAZADERA DALMINE EMPALME 48MM|Servicio|REPO-080|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ACOPLE PARA BARANDA|Servicio|REPO-081|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ACOPLE PARA BARANDA INTERNA|Servicio|REPO-082|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ACOPLE PLATAFORMA 80 CM|Servicio|REPO-083|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M AJUSTE MEDIO 0.24 X 0.25|Servicio|REPO-084|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M AJUSTE MEDIO 59 X 26|Servicio|REPO-085|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M BARANDA DIAGONAL DE 1.40  M|Servicio|REPO-086|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M BARANDA INTERNA|Servicio|REPO-087|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M BARANDA PARA ESCALERA 1.34M|Servicio|REPO-088|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M BASE COLLAR|Servicio|REPO-089|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL 0.7M/2M ALTURA GALVANI|Servicio|REPO-090|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL 1.4M/2M ALTURA GALVANI|Servicio|REPO-091|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL 2.10M/2M GALVANIZADO|Servicio|REPO-092|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL 3M/2M ALTURA GALVANIZA|Servicio|REPO-093|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL CORTA 1.91M|Servicio|REPO-094|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M DIAGONAL LARGA 3.27M|Servicio|REPO-095|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESCALERA 1.40X0.59M GALVANIZADA|Servicio|REPO-096|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESCALERA 1.40X0.59M GALVANIZADA BIPARTI|Servicio|REPO-097|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESCALERA DE ACCESO|Servicio|REPO-098|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESCALERA VERTICAL DE 2.0 MTS|Servicio|REPO-099|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESCALERA VERTICAL DE 2.8 MTS GALVANIZ|Servicio|REPO-100|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M ESPIGO VERTICAL|Servicio|REPO-101|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M GANCHO HORIZONTAL|Servicio|REPO-102|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HERRAMIENTA PARA BARANDA|Servicio|REPO-103|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 0.7M GALVANIZADA|Servicio|REPO-104|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 1.40M GALVANIZADA|Servicio|REPO-105|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 1.40M REFORZADA GALVAN|Servicio|REPO-106|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 2.10 M GALVANIZADO|Servicio|REPO-107|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 2.3M GALVANIZADA|Servicio|REPO-108|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 3M GALVANIZADA|Servicio|REPO-109|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL 3M REFORZADAS|Servicio|REPO-110|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M HORIZONTAL DE RETAQUE|Servicio|REPO-111|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M MELLIZA|Servicio|REPO-112|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M MENSULA|Servicio|REPO-113|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M MENSULA PARA POLEA|Servicio|REPO-114|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 0.5M CON ESPIGO|Servicio|REPO-115|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 0.5M SIN ESPIGO|Servicio|REPO-116|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 1.5M CON ESPIGO GALVANIZADO|Servicio|REPO-117|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 1.5M SIN ESPIGO|Servicio|REPO-118|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 1M CON ESPIGO|Servicio|REPO-119|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 1M SIN ESPIGO GALVANIZADO|Servicio|REPO-120|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 2M CON ESPIGO GALVANIZADO|Servicio|REPO-121|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PARAL 2M SIN ESPIGO GALVANIZADO|Servicio|REPO-122|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PASADOR DE SEGURIDAD|Servicio|REPO-123|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PIVOTE PARA BARANDA|Servicio|REPO-124|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PIVOTE PARA PARAL HIBRIDO|Servicio|REPO-125|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 0.7 X 0.6 GALVANIZADA|Servicio|REPO-126|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.34 X 0.24|Servicio|REPO-127|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.34 X 0.25|Servicio|REPO-128|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.34 X 30|Servicio|REPO-129|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.38 X 0.30 GALVANIZADO|Servicio|REPO-130|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.40 (3X0.30M)|Servicio|REPO-131|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.40 (3X0.30M) ESCOTILLA|Servicio|REPO-132|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.40 X 0.59 CON ESCOTILLA|Servicio|REPO-133|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 1.40 X 0.59 SIN ESCOTILLA|Servicio|REPO-134|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 3X0.21M GALVANIZADO|Servicio|REPO-135|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 3X0.24M GALVANIZADO|Servicio|REPO-136|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 3X0.30M GALVANIZADO|Servicio|REPO-137|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 3X0.59M ESCOTILLA GALVANI|Servicio|REPO-138|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA 3X0.59M GALVANIZADO|Servicio|REPO-139|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PLATAFORMA AND. TIJERA|Servicio|REPO-140|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M POLEA|Servicio|REPO-141|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PUERTA ABATIBLE|Servicio|REPO-142|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M PUERTA ABATIBLE 0.7 M|Servicio|REPO-143|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M RODAPIE DE 1.20 / 1.50M|Servicio|REPO-144|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M RODAPIE DE 1.50 / 1.50M|Servicio|REPO-145|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+"REPO. A.M RUEDA ANDAMIO DE 10"""|Servicio|REPO-146|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M RUEDA GIRATORIA|Servicio|REPO-147|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M RUEDA PARA ANDAMIO CON TORNILLO NIVELADOR|Servicio|REPO-148|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M TORNILLO CHAP.|Servicio|REPO-149|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M TORNILLO NIVELADOR BASE PLANA|Servicio|REPO-150|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M TORNILLO NIVELADOR CERCHA|Servicio|REPO-151|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M TORNILLO NIVELADOR EN U 0.60|Servicio|REPO-152|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. A.M UNION BARANDAS|Servicio|REPO-153|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERA DALMINE US&E-GIRATORIA|Servicio|REPO-154|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERA FIJA DALMINE|Servicio|REPO-155|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERA FIJA MALACATE|Servicio|REPO-156|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERA GIRATORIA DALMINE|Servicio|REPO-157|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERA GIRATORIA MALACATE|Servicio|REPO-158|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ABRAZADERAS|Servicio|REPO-159|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ALLANADORA|Servicio|REPO-160|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PALANCA SOPORTE ALLANADORA|Servicio|REPO-161|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. ALMADANA|Servicio|REPO-162|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA BASE|Servicio|REPO-163|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA BASE HEMBRA|Servicio|REPO-164|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA BASE MACHO|Servicio|REPO-165|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA DIAGONALES|Servicio|REPO-166|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA HIBRIDOS|Servicio|REPO-167|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA RIOSTRA INFERIOR|Servicio|REPO-168|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA RIOSTRA SUPERIOR|Servicio|REPO-169|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TELA 1.50 X 0.35|Servicio|REPO-170|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TELA 1.50 X 0.50|Servicio|REPO-171|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TELA 1.50 X 1.00|Servicio|REPO-172|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TORNILLO NIVEL INFERIOR|Servicio|REPO-173|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TORNILLO NIVEL SUPERIOR|Servicio|REPO-174|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA VIGA IPE X 12 MTS|Servicio|REPO-175|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA VIGA TUBULAR 2 M.|Servicio|REPO-176|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA VIGA TUBULAR 3 M.|Servicio|REPO-177|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA VIGA TUBULAR 4 M.|Servicio|REPO-178|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA VIGA TUBULAR 6 M.|Servicio|REPO-179|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND. CARGA TUBO 5 CM PARA HIBRIDO|Servicio|REPO-180|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MODULAR PLATAFORMA|Servicio|REPO-181|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.SOPORTES|Servicio|REPO-182|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.PASAMANOS|Servicio|REPO-183|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.LIRA|Servicio|REPO-184|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.BARANDA|Servicio|REPO-185|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.COLGANTE|Servicio|REPO-186|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. AND.COLG.MOD.PLATAFORMA|Servicio|REPO-187|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BASCULA|Servicio|REPO-188|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PESA BASCULA 100KG|Servicio|REPO-189|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PESA BASCULA 200KG|Servicio|REPO-190|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PESA BASCULA 50KG|Servicio|REPO-191|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. SOPORTE PESA BASCULA|Servicio|REPO-192|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BOMBA HIDROSTATICA|Servicio|REPO-193|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BOMBA PARA COMBUSTIBLE|Servicio|REPO-194|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BRILLADORA INDUSTRIAL |Servicio|REPO-195|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CEPILLOS BRILLADORA|Servicio|REPO-196|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABEZAS ELLIS|Servicio|REPO-197|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE 1/2 ALMA DE FIBRA|Servicio|REPO-198|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE 1/4 ALMA DE ACERO|Servicio|REPO-199|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE 3/4 ALMA DE ACERO|Servicio|REPO-200|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE 3/8 ALMA DE ACERO|Servicio|REPO-201|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE 3/8 ALMA DE FIBRA|Servicio|REPO-202|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CABLE ENCAUCHETADO|Servicio|REPO-203|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CALADORA|Servicio|REPO-204|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CAMARA PARA INSPECCION CON PC|Servicio|REPO-205|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CAMILLAS DE 70|Servicio|REPO-206|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CANES MADERA KATIVO ZUNCHADOS|Servicio|REPO-207|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CANES MALLA METALICO|Servicio|REPO-208|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CARGUERA 6 VARAS 4 X 8|Servicio|REPO-209|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CARPA 12 X 6|Servicio|REPO-210|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CARPA 6 X 6|Servicio|REPO-211|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CARPA TIPO VINILO 6X2 CON VENTANAS|Servicio|REPO-212|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. PARALES DE CARPA|Servicio|REPO-213|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. TRAVESANOS DE CARPA|Servicio|REPO-214|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CEPILLO PARA MADERA. ELECTRICO|Servicio|REPO-215|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHA METALICA 1.50|Servicio|REPO-216|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS CORTAS|Servicio|REPO-217|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS EXTENSIBLES 3.05 MTS.|Servicio|REPO-218|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS METALICAS 0.70|Servicio|REPO-219|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS METALICAS 1.40|Servicio|REPO-220|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS METALICAS 2.80 MTS.|Servicio|REPO-221|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS METALICAS PLATINA BAJA|Servicio|REPO-222|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CERCHAS METALICAS PLATINA ALTA|Servicio|REPO-223|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CHAPETA TENSORA CIRCULAR|Servicio|REPO-224|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CHAPETA TENSORA DE TORNILLO|Servicio|REPO-225|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CHAPETAS DE CUNA|Servicio|REPO-226|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CINCEL PLANO|Servicio|REPO-227|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CINCEL PUNTERO|Servicio|REPO-228|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RODILLO COMPACT.DX70|Servicio|REPO-229|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RODILLO COMPACT.DX700|Servicio|REPO-230|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. RODILLO COMPACT. SX170|Servicio|REPO-231|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CIZALLA DE PALANCA|Servicio|REPO-232|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CIZALLA DE TIJERA DE 30 RIDGID|Servicio|REPO-233|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CIZALLA DE TIJERA DE 36 RIDGID|Servicio|REPO-234|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. COMPACTADOR CANGURO|Servicio|REPO-235|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CONCRETADORA 1 1/2 SACO|Servicio|REPO-236|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CONCRETADORA 1 SACO|Servicio|REPO-237|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CONCRETADORA 1/2 SACO|Servicio|REPO-238|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. CONCRETADORA 2 SACOS|Servicio|REPO-239|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. GUARDA DE CONCRETADORA|Servicio|REPO-240|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. TIRO CONCRETADORA|Servicio|REPO-241|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+REPO. BREAKER 40 AMP|Servicio|REPO-242|Reposiciones|0||Unit(s)|Unit(s)|SI|SI
+SUMI. ASPAS ALLANADORA|Servicio|SUMI-001|Suministros|0||Unit(s)|Unit(s)|SI|SI

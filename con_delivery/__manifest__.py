@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Delivery',
     'depends': [
-        'delivery', 'con_base', 'stock'
+        'delivery', 'stock',
     ],
     'description':
     """
@@ -17,10 +17,10 @@
         - Adds municipality_ids modifications to the delivery.carrier model
     """,
     'data': [
-        'security/ir.model.access.csv',
         'data/module_category.xml',
         'data/groups.xml',
-        'views/delivery.xml'
+        'views/delivery.xml',
+        'security/ir.model.access.csv',
     ],
     'qweb': [
     ],

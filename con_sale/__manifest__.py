@@ -27,7 +27,6 @@
     sale order.""",
     'depends': ['base', 'sales_team', 'sale', 'website_quote', 'stock',
                 'delivery', 'product', 'con_account',
-                'con_project', 'con_website_sign', 'con_fleet',
                 'website_quote'],
     'data': ['views/sale_order_view.xml',
              'views/sale_report_inherit.xml',

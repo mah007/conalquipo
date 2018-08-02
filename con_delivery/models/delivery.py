@@ -75,11 +75,6 @@ class DeliveryCarrierCost(models.Model):
             raise UserError(_("The cost can't be negative"))
         return record
 
-    @api.onchange('free_over')
-    def onchange_free_over(self):
-        if not self.free_over:
-            self.amount = 0.0
-
 
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
@@ -104,6 +99,11 @@ class DeliveryCarrier(models.Model):
         [('fixed_price', 'Fixed price'),
          ('multiple_prices', 'Multiple prices')],
         string="Price Type", default="fixed_price")
+
+    @api.onchange('free_over')
+    def onchange_free_over(self):
+        if not self.free_over:
+            self.amount = 0.0
 
     @api.onchange('state_ids')
     def onchange_states(self):
