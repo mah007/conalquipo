@@ -8,7 +8,7 @@
     'category': 'Fleet',
     'sequence': 10,
     'summary': 'Fleet',
-    'depends': ['fleet'],
+    'depends': ['fleet', 'stock'],
     'description':
     """
         Conalquipo Fleet customizations

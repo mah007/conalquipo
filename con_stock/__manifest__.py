@@ -37,7 +37,7 @@
     'version': '0.1',
     'depends': ['base', 'project', 'stock', 'project', 'sale_stock',
                 'base', 'delivery', 'mrp_repair', 'product',
-                'con_project', 'con_delivery', 'hr'],
+                'hr'],
     'data': [
         'views/email_template.xml',
         'reports/report_stockpicking.xml',

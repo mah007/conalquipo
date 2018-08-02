@@ -67,10 +67,10 @@ class StockScrap(models.Model):
             if warn == 'stock.warn.insufficient.qty.scrap':
                 return res
 
-        # if any([not res, not self.picking_id.sale_id,
-        #         not self.product_id.replenishment_charge,
-        #         not self.scrap_location_id.is_charge_replacement]):
-        #     return res
+        if any([not res, not self.picking_id.sale_id,
+                not self.product_id.replenishment_charge,
+                not self.scrap_location_id.is_charge_replacement]):
+            return res
 
         reple_id = self.product_id.replenishment_charge
         if reple_id:
@@ -79,7 +79,7 @@ class StockScrap(models.Model):
                 'product_id': reple_id.id,
                 'product_uom_qty': self.scrap_qty,
                 'price_unit': reple_id.lst_price,
-                'name': _('Replenishment %s') % (reple_id.name),
+                'name': _('Replenishment %s') % (reple_id.default_code),
                 'product_uom': reple_id.uom_id.id,
             })
             return res
@@ -95,6 +95,8 @@ class StockScrap(models.Model):
             if not reple_id:
                 raise UserError(_(
                     "The product doesn't have replacement service!"))
+            scrap.move_id.update({'description': _(
+                'Replenishment %s') % (reple_id.default_code)})
         return res
 
 
@@ -105,10 +107,10 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
         res = super(StockWarnInsufficientQtyScrap, self).action_done()
         scrap_id = self.scrap_id
 
-        # if any([not res, not scrap_id.picking_id.sale_id,
-        #         not scrap_id.product_id.replenishment_charge,
-        #         not scrap_id.scrap_location_id.is_charge_replacement]):
-        #     return res
+        if any([not res, not scrap_id.picking_id.sale_id,
+                not scrap_id.product_id.replenishment_charge,
+                not scrap_id.scrap_location_id.is_charge_replacement]):
+            return res
 
         reple_id = scrap_id.product_id.replenishment_charge
         if reple_id:
@@ -117,11 +119,9 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
                 'product_id': reple_id.id,
                 'product_uom_qty': scrap_id.scrap_qty,
                 'price_unit': reple_id.lst_price,
-                'name': _('Replenishment %s') % (reple_id.name),
+                'name': _('Replenishment %s') % (reple_id.default_code),
                 'product_uom': reple_id.uom_id.id,
             })
-            scrap_id.move_id.write({'description': _(
-                'Replenishment %s') % (reple_id.name)})
             return res
         else:
             raise UserError(_(

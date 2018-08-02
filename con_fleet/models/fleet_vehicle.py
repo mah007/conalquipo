@@ -15,8 +15,9 @@ class VehicleType(models.Model):
     _description = "Vehicle Type"
     _order = 'sequence, id'
 
-    sequence = fields.Integer(help="Determine the display order", default=10,
-                              invisible=True)
+    sequence = fields.Integer(
+        help="Determine the display order", default=10,
+        invisible=True)
     code = fields.Char(string="Code")
     name = fields.Char(string="Name")
 
@@ -33,8 +34,9 @@ class LicenseCategory(models.Model):
     _description = "license category"
     _order = 'sequence, id'
 
-    sequence = fields.Integer(help="Determine the display order", default=10,
-                              invisible=True)
+    sequence = fields.Integer(
+        help="Determine the display order", default=10,
+        invisible=True)
     name = fields.Char(string="Name")
     description = fields.Text(string="Description")
 

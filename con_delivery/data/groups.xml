@@ -2,6 +2,11 @@
 <odoo>
     <data>
 
+        <record model="res.groups" id="group_shipping_driver">
+            <field name="name">Shipping carrier/driver admin</field>
+            <field name="category_id" ref="con_delivery.module_extra_shipping_access"/>
+        </record>
+
         <record model="res.groups" id="group_shipping_order">
             <field name="name">Can cancel shipping order</field>
             <field name="category_id" ref="con_delivery.module_extra_shipping_access"/>
@@ -12,6 +17,10 @@
             <field name="category_id" ref="base.module_category_warehouse_management"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
             <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="base.user_root" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_shipping_driver')), (4, ref('group_shipping_order'))]"/>
         </record>
 
     </data>

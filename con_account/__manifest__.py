@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Account',
     'depends': [
-        'account', 'project', 'con_base',
+        'account', 'project',
     ],
     'description':
     """

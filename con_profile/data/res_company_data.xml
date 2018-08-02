@@ -26,6 +26,7 @@
         <field name="currency_id" ref="base.COP"/>
         <field name="anglo_saxon_accounting" eval="1"/>
         <field name="logo" type="base64" file="con_profile/static/src/img/logo.png"/>
+        <field name="default_payment_term_id" eval="ref('account.account_payment_term_net')"/>
     </record>
 
 </odoo>

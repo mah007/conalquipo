@@ -7,7 +7,7 @@
     'category': 'Project Management',
     'sequence': 10,
     'summary': 'Projects, Works',
-    'depends': ['con_base', 'con_delivery', 'project', 'sale',
+    'depends': ['con_base', 'project', 'sale',
                 'delivery', 'hr_timesheet', 'stock'],
     'description':
     """
