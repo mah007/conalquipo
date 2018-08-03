@@ -25,14 +25,10 @@ c = 1
 for row in Productos:
     c += 1
 
+    # Product category ##############################################
     categ_id = sock.execute_kw(
         db, uid, password, 'product.category', 'search_read', [
             [['name', '=', row['Categoria'].strip()]]], {'fields': ['id']})
-
-    uom_id = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
-            [['name',
-              '=', row['Unidad de medida'].strip()]]], {'fields': ['id']})
 
     if not categ_id:
         categ_id = sock.execute_kw(
@@ -41,7 +37,12 @@ for row in Productos:
             'create', [{'name': row['Categoria'].strip()}])
     else:
         categ_id = categ_id[0]['id']
+    #################################################################
 
+    uom_id = sock.execute_kw(
+        db, uid, password, 'product.uom', 'search_read', [
+            [['name',
+              '=', row['Unidad de medida'].strip()]]], {'fields': ['id']})
 
     origin_location_id = sock.execute_kw(
         db, uid, password, 'stock.location', 'search_read', [
@@ -53,7 +54,6 @@ for row in Productos:
             [['complete_name',
               '=', row[
                   'Ubicacion del producto'].strip()]]], {'fields': ['id']})
-
 
     producto_id = sock.execute_kw(
         db, uid, password, 'product.template', 'search_read', [
@@ -95,8 +95,55 @@ for row in Productos:
             'replenishment_charge': rep_producto_id[0]['id'],
         }
 
-        sock.execute_kw(
+        product_id = sock.execute_kw(
             db, uid, password, 'product.template', 'create', [vals])
+
+        if row['prov-vendedor']:
+
+            # Create suppliers ##############################################
+            supplier_id = sock.execute_kw(
+                db, uid, password, 'res.partner', 'search_read', [
+                    [['name', '=', row['prov-vendedor'].strip()]]],
+                {'fields': ['id']})
+
+            if not supplier_id:
+                vals_supplier = {
+                    'name': row['prov-vendedor'].strip(),
+                    'supplier': True,
+                    'customer': False,
+                    'company_type': 'company'
+                }
+                supplier_id = sock.execute_kw(
+                    db, uid, password,
+                    'res.partner',
+                    'create', [vals_supplier])
+            else:
+                supplier_id = supplier_id[0]['id']
+            #################################################################
+
+            sock.execute_kw(
+                db, uid, password, 'product.supplierinfo', 'create', [
+                    {'name': supplier_id,
+                     'product_name': row['Producto'].strip(),
+                     'product_code': row['Referencia interna'].strip(),
+                     'product_tmpl_id': product_id}])
+
+        if row['mum-unidad']:
+
+            uoms_id = sock.execute_kw(
+                db, uid, password, 'product.uom', 'search_read', [
+                    [['name',
+                      '=', row['mum-unidad'].strip()]]],
+                {'fields': ['id']})
+
+            sock.execute_kw(
+                db, uid, password, 'product.multiples.uom', 'create', [
+                    {'uom_id': uoms_id[0]['id'],
+                     'cost_byUom': row['mum-costo por unidad'].strip(),
+                     'quantity': row['mum-cant.min'].strip(),
+                     'product_id': product_id}])
+        else:
+            product_id
 
     else:
 
