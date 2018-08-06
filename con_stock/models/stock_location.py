@@ -34,7 +34,7 @@ class StockLocation(Model):
     def _get_color(self):
         for a in self:
             if a.product_state:
-                if a.color:
+                if a.product_state.color:
                     a.color = a.product_state.color
                 if a.product_state.name == 'Mantenimiento':
                     a.return_location = True
