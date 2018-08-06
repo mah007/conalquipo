@@ -4,7 +4,7 @@ import xmlrpc.client
 import csv
 
 host = 'http://localhost:9001'
-db = 'prueba_piloto'
+db = 'prueba_piloto_productos'
 user = 'admin'
 password = 'admin'
 
@@ -98,9 +98,27 @@ for row in Productos:
         product_id = sock.execute_kw(
             db, uid, password, 'product.template', 'create', [vals])
 
+
+        # Add to public pricelist ###################################
+
+        pricelist_id = sock.execute_kw(
+            db, uid, password, 'product.pricelist', 'search_read', [
+                [['sequence', '=', 1]]],
+            {'fields': ['id']})
+
+        sock.execute_kw(
+            db, uid, password, 'product.pricelist.item', 'create', [
+                {'product_tmpl_id': product_id,
+                 'applied_on': '1_product',
+                 'compute_price': 'percentage',
+                 'percent_price': 0.0,
+                 'pricelist_id': pricelist_id[0]['id']}])
+
+        #############################################################
+
         if row['prov-vendedor']:
 
-            # Create suppliers ##############################################
+            # Create suppliers ######################################
             supplier_id = sock.execute_kw(
                 db, uid, password, 'res.partner', 'search_read', [
                     [['name', '=', row['prov-vendedor'].strip()]]],

@@ -4,7 +4,7 @@ import xmlrpc.client
 import csv
 
 host = 'http://localhost:9001'
-db = 'prueba_piloto'
+db = 'prueba_piloto_productos'
 user = 'admin'
 password = 'admin'
 

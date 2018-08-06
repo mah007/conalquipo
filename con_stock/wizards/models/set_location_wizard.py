@@ -43,7 +43,7 @@ class set_data_locations(models.TransientModel):
                         'set_default_location': False,
                         'set_product_state': True
                     }
-                    l.update(values)
+                    l.write(values)
                 else:
                     values = {
                         'product_state': data.states_id.id,
@@ -51,7 +51,7 @@ class set_data_locations(models.TransientModel):
                         'set_default_location': True,
                         'set_product_state': True
                     }
-                    l.update(values)
+                    l.write(values)
 
 
 class set_data_locations_lines(models.TransientModel):
