@@ -94,7 +94,6 @@ class ProductStates(Model):
 class ProductTemplate(Model):
     _inherit = "product.template"
 
-    @api.multi
     @api.onchange('type')
     def get_type(self):
         if self.type in ['service', 'consu']:
@@ -106,7 +105,7 @@ class ProductTemplate(Model):
                 'stock.location'].search(
                     [('set_default_location', '=', True)], limit=1) or False
 
-    @api.multi
+    @api.one
     def _get_default_state(self):
         """
         This function get the default state configured on the product states
@@ -120,7 +119,7 @@ class ProductTemplate(Model):
         else:
             self.state_id = False
 
-    @api.multi
+    @api.one
     def _get_default_loc(self):
         """
         This function get the default location configured
@@ -137,7 +136,6 @@ class ProductTemplate(Model):
                         [('set_default_location', '=', True)],
                         limit=1) or False
 
-    @api.multi
     @api.onchange('location_id')
     def get_default_values(self):
         """
@@ -156,7 +154,6 @@ class ProductTemplate(Model):
                 raise UserError(_(
                     "The following location don't have a state asigned"))
 
-    @api.multi
     @api.onchange('state_id')
     def get_default_location(self):
         """
@@ -176,7 +173,6 @@ class ProductTemplate(Model):
                 raise UserError(_(
                     "The following location don't have a state asigned"))
 
-    @api.multi
     def _get_default_color(self):
         """
         This function get the default state configured on the product states
@@ -184,10 +180,10 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service' and self.location_id:
-            return self.location_id.color
+        for data in self:
+            if data.type != 'service' and data.location_id:
+                data.color = data.location_id.color
 
-    @api.multi
     @api.onchange('replenishment_charge')
     def replenishment_charge_validation(self):
         """
@@ -204,7 +200,7 @@ class ProductTemplate(Model):
     color = fields.Char(
         string="Color",
         help="Select the color of the state",
-        default=_get_default_color)
+        compute="_get_default_color")
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
         default=_get_default_loc)
@@ -305,7 +301,7 @@ class ProductTemplate(Model):
 class ProductProduct(Model):
     _inherit = "product.product"
 
-    @api.multi
+    @api.one
     def _get_default_loc(self):
         """
         This function get the default location configured on the stock
@@ -322,7 +318,7 @@ class ProductProduct(Model):
                         [('set_default_location', '=', True)],
                         limit=1) or False
 
-    @api.multi
+    @api.one
     def _get_default_state(self):
         """
         This function get the default state configured on the product states
@@ -336,7 +332,6 @@ class ProductProduct(Model):
         else:
             self.state_id = False
 
-    @api.multi
     def _get_default_color(self):
         """
         This function get the default state configured on the product states
@@ -344,10 +339,10 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service' and self.location_id:
-            return self.location_id.color
+        for data in self:
+            if data.type != 'service' and data.location_id:
+                data.color = data.location_id.color
 
-    @api.multi
     @api.onchange('location_id')
     def get_default_values(self):
         """
@@ -366,7 +361,6 @@ class ProductProduct(Model):
                 raise UserError(_(
                     "The following location don't have a state asigned"))
 
-    @api.multi
     @api.onchange('state_id')
     def get_default_location(self):
         """
@@ -390,7 +384,7 @@ class ProductProduct(Model):
                                default=_get_default_state)
     color = fields.Char(string="Color",
                         help="Select the color of the state",
-                        default=_get_default_color)
+                        compute="_get_default_color")
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
         default=_get_default_loc)
