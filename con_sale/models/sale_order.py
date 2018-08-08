@@ -122,6 +122,9 @@ class SaleOrder(models.Model):
     approved_min_prices = fields.Boolean(
         'Approve min and prices for products',
         default=True)
+    approved_special_quotations = fields.Boolean(
+        'Approve special quotations',
+        default=True)
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
@@ -160,7 +163,7 @@ class SaleOrder(models.Model):
         """
         Approve quotation
         """
-        # Small qty of products or prices
+        # Approve Small qty of products or prices
         actual_user = self.env.uid
         users_list = []
         groups = self.env[
@@ -181,6 +184,26 @@ class SaleOrder(models.Model):
                 ))
         else:
             self.approved_min_prices = True
+        # Approve special quotations
+        users_list_sp_q = []
+        groups_sp_q = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  self.env.ref(
+                      'con_profile.group_sale_special_quotations').name]])
+        if groups_sp_q:
+            for data in groups_sp_q:
+                for users in data.users:
+                    users_list_sp_q.append(users.id)
+        if not self.approved_special_quotations \
+         and actual_user not in users_list_sp_q:
+            if self.order_line:
+                raise UserError(_(
+                    "You can't approve special quotations!"
+                ))
+        else:
+            self.approved_special_quotations = True
 
     @api.multi
     def check_limit(self):
@@ -410,6 +433,8 @@ class SaleOrder(models.Model):
               fields on sale order.
 
         """
+        cat_lists = []
+        product_eval = []
         if self.order_line:
             operators = self.order_line.filtered(
                 lambda line:line.add_operator)
@@ -419,25 +444,32 @@ class SaleOrder(models.Model):
                 product_muoms = data.product_id.product_tmpl_id.multiples_uom
                 if product_muoms != True:
                     if data.price_unit < data.product_id.product_tmpl_id.list_price:
-                        data.order_id.approved_min_prices = False
-                    else:
-                        data.order_id.approved_min_prices = True
+                        product_eval.append(data.product_id.id)
                     if data.min_sale_qty < \
                     data.product_id.product_tmpl_id.min_qty_rental:
-                        data.order_id.approved_min_prices = False
-                    else:
-                        data.order_id.approved_min_prices = True
+                        product_eval.append(data.product_id.id)
                 else:
                     for uom_list in data.product_id.product_tmpl_id.uoms_ids:
                         if data.bill_uom.id == uom_list.uom_id.id:
                             if data.price_unit < uom_list.cost_byUom:
-                                data.order_id.approved_min_prices = False
-                            else:
-                                data.order_id.approved_min_prices = True
+                                product_eval.append(data.product_id.id)
                             if data.min_sale_qty < uom_list.quantity:
-                                data.order_id.approved_min_prices = False
-                            else:
-                                data.order_id.approved_min_prices = True
+                                product_eval.append(data.product_id.id)
+                # Get categories for special quotations
+                cats = self.env.user.company_id.special_quotations_categories
+                cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
+                a = list(cats._ids)
+                b = cat_lists
+                inter = bool(set(a).intersection(b))
+                if inter:
+                    data.order_id.approved_special_quotations = False
+                else:
+                    data.order_id.approved_special_quotations = True
+                # Min for qty and prices
+                if product_eval:
+                    data.order_id.approved_min_prices = False
+                else:
+                    data.order_id.approved_min_prices = True
 
     def _compute_sign_ids(self):
         """
@@ -1459,29 +1491,6 @@ class SaleOrderLine(models.Model):
         # Check owner
         if line.owner_id:
             self.function_management_buy(line)
-        # Get min qty and uom of product
-        product_muoms = line.product_id.product_tmpl_id.multiples_uom
-        if product_muoms != True:
-            if line.price_unit < line.product_id.product_tmpl_id.list_price:
-                line.order_id.approved_min_prices = False
-            else:
-                line.order_id.approved_min_prices = True
-            if line.min_sale_qty < \
-             line.product_id.product_tmpl_id.min_qty_rental:
-                line.order_id.approved_min_prices = False
-            else:
-                line.order_id.approved_min_prices = True
-        else:
-            for uom_list in line.product_id.product_tmpl_id.uoms_ids:
-                if line.bill_uom.id == uom_list.uom_id.id:
-                    if line.price_unit < uom_list.cost_byUom:
-                        line.order_id.approved_min_prices = False
-                    else:
-                        line.order_id.approved_min_prices = True
-                    if line.min_sale_qty < uom_list.quantity:
-                        line.order_id.approved_min_prices = False
-                    else:
-                        line.order_id.approved_min_prices = True
         # Create in lines extra products for components
         if line.components_ids:
             for data in line.components_ids:
@@ -1543,30 +1552,6 @@ class SaleOrderLine(models.Model):
     def write(self, values):
         res = super(SaleOrderLine, self).write(values)
         for rec in self:
-            # Get min qty and uom of product
-            product_muoms = rec.product_id.product_tmpl_id.multiples_uom
-            if product_muoms != True:
-                if rec.price_unit < rec.product_id.product_tmpl_id.list_price:
-                    rec.order_id.approved_min_prices = False
-                else:
-                    rec.order_id.approved_min_prices = True
-                if rec.min_sale_qty < \
-                rec.product_id.product_tmpl_id.min_qty_rental:
-                    rec.order_id.approved_min_prices = False
-                else:
-                    rec.order_id.approved_min_prices = True
-            else:
-                for uom_list in rec.product_id.product_tmpl_id.uoms_ids:
-                    if rec.bill_uom.id == uom_list.uom_id.id:
-                        if rec.price_unit < uom_list.cost_byUom:
-                            rec.order_id.approved_min_prices = False
-                        else:
-                            rec.order_id.approved_min_prices = True
-                        if rec.min_sale_qty < uom_list.quantity:
-                            rec.order_id.approved_min_prices = False
-                        else:
-                            rec.order_id.approved_min_prices = True
-            ####
             if values.get('owner_id') and not rec.purchase_order_line:
                 rec.function_management_buy(rec)
             if rec.purchase_order_line and values.get('product_uom_qty'):

@@ -38,3 +38,6 @@ class ResCompany(models.Model):
     default_validate_invoices = fields.Many2many(
         'res.users',
         string="Users can validate invoices")
+    special_quotations_categories = fields.Many2many(
+        'product.category',
+        string="Product categories for special quotations")
