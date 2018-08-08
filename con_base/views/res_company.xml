@@ -30,6 +30,11 @@
                                 <field name="default_uom_task_id" widget="many2many_tags"/>
                             </group>
                         </group>
+                        <group>
+                            <group>
+                                <field name="special_quotations_categories" widget="many2many_tags"/>
+                            </group>
+                        </group>
                     </page>
                 </xpath>
            </data>
