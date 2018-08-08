@@ -103,7 +103,7 @@ for row in Productos:
 
         pricelist_id = sock.execute_kw(
             db, uid, password, 'product.pricelist', 'search_read', [
-                [['sequence', '=', 1]]],
+                [['sequence', '=', 2]]],
             {'fields': ['id']})
 
         sock.execute_kw(
