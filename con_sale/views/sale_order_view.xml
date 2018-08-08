@@ -141,8 +141,8 @@
                 <field name="employee_code" required="0"/>
                 <field name="can_confirm" invisible="1"/>
                 <field name="partner_inactive" invisible="1"/>
-                <field name="approved_min_prices" invisible="0"/>
-                <field name="approved_special_quotations" invisible="0"/>
+                <field name="approved_min_prices" invisible="1"/>
+                <field name="approved_special_quotations" invisible="1"/>
             </field>
 
             <xpath expr="//sheet/notebook" position="before">
