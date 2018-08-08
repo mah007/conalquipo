@@ -35,7 +35,10 @@
                         attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('can_confirm', '=', False)]}"/>
                     <button name="check_limit"
                         string="Check limit" type="object"
-                        attrs="{'invisible': ['|', ('can_confirm', '=', True), '|',('state', 'in', ['sale', 'done', 'cancel', 'merged'])]}"/>
+                        attrs="{'invisible': ['|', ('can_confirm', '=', True), '|', ('state', 'in', ['sale', 'done', 'cancel', 'merged']), '|', ('approved_min_prices', '=', False)]}"/>
+                    <button name="approve_quotation"
+                        string="Wait for approval" type="object"
+                        attrs="{'invisible': [('approved_min_prices', '=', True)]}"/>
                     <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice" groups="sale.group_proforma_sales" attrs="{'invisible': ['|', ('state', '=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True}"/>
                     <button name="print_quotation" string="Print" type="object" states="sent,sale" class="o_sale_print"/>
                     <button name="action_quotation_send" string="Send by Email" type="object" states="sent,sale"/>
@@ -138,6 +141,7 @@
                 <field name="employee_code" required="0"/>
                 <field name="can_confirm" invisible="1"/>
                 <field name="partner_inactive" invisible="1"/>
+                <field name="approved_min_prices" invisible="1"/>
             </field>
 
             <xpath expr="//sheet/notebook" position="before">
