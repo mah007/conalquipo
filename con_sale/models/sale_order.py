@@ -137,7 +137,9 @@ class SaleOrder(models.Model):
                 raise UserError(_(
                     'This employee code in not member of '
                     'this group.'))
+            self.check_limit()
         else:
+            self.check_limit()
             self.employee_id = False
 
     @api.model
@@ -551,7 +553,7 @@ class SaleOrder(models.Model):
             # If partner have documents
             attachment_ids = self.env[
                 'ir.attachment'].search([
-                    ('res_id', '=',self.partner_id.id),
+                    ('res_id', '=', self.partner_id.id),
                     ('res_model', '=', 'res.partner')])
             if not attachment_ids:
                 raise UserError(_(
