@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-10 22:19+0000\n"
-"PO-Revision-Date: 2018-07-10 17:21-0500\n"
+"POT-Creation-Date: 2018-08-08 16:33+0000\n"
+"PO-Revision-Date: 2018-08-08 11:34-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_administrative_assistant
@@ -35,7 +35,7 @@ msgstr "Puede confirmar ventas que pasen el limite"
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_sale_small_qty
 msgid "Can confirm smaller quantities"
-msgstr "Puede confirmar ordenes con cantidades mínimas a las permitidas del producto"
+msgstr "Puede confirmar ordenes con cantidades/precios mín a las permitidas del producto"
 
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_can_see_employees
