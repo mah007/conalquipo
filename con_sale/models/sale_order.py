@@ -125,6 +125,25 @@ class SaleOrder(models.Model):
     approved_special_quotations = fields.Boolean(
         'Approve special quotations',
         default=True)
+    amount_total_discount = fields.Monetary(
+        string='Total discount',
+        store=True, readonly=True, compute='_amount_all_discount',track_visibility='onchange')
+
+    @api.depends('order_line.price_total')
+    def _amount_all_discount(self):
+        """
+        Compute the total discounts of the SO.
+        """
+        for order in self:
+            amount_untaxed = amount_tax = 0.0
+            # for line in order.order_line:
+            #     amount_untaxed += line.price_subtotal
+            #     amount_tax += line.price_tax
+            # order.update({
+            #     'amount_untaxed': order.pricelist_id.currency_id.round(amount_untaxed),
+            #     'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
+            #     'amount_total': amount_untaxed + amount_tax,
+            # })
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
