@@ -57,6 +57,7 @@
         'con_account_translates',
         'con_delivery',
         'con_fleet',
+        'con_mrp_repair',
     ],
     'data': [
         'data/res_lang_data.xml',
