@@ -467,6 +467,10 @@ class StockPicking(Model):
                     raise UserError(
                         _('You need specify a operator for: %s'
                          ) % move.sale_line_id.product_id.name)
+                if move.product_id.product_tmpl_id.type == 'product' \
+                 and not move.product_id.product_tmpl_id.non_mech and \
+                  picking.location_id.usage == 'customer':
+                    picking.generate_repair_requests()
         return result
 
     @api.model
