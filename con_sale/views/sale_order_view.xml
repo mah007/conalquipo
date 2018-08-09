@@ -238,7 +238,7 @@
                 <field name="mess_operated" invisible="1"/>
             </xpath>
 
-            <xpath expr="//group[@name='sale_total']/field[@name='amount_tax']" position="before">
+            <xpath expr="//group[@name='sale_total']/field[@name='amount_untaxed']" position="before">
                 <field name="amount_total_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
             </xpath>
 
