@@ -182,10 +182,10 @@ class AccountInvoice(models.Model):
                     p.municipality2_id.name or '', p.state2_id.name or '',
                     p.zip2 or '', p.country2_id.name or '', p.phone2 or '',
                     p.email or '')
-            acc.sector_id = acc.project_id.sector_id
-            acc.secondary_sector_ids = acc.project_id.secondary_sector_ids
-            acc.sector_id2 = acc.project_id.sector_id2
-            acc.secondary_sector_ids2 = acc.project_id.secondary_sector_ids2
+            acc.sector_id = acc.project_id.sector_id.id
+            acc.secondary_sector_ids = acc.project_id.secondary_sector_ids.id
+            acc.sector_id2 = acc.project_id.sector_id2.id
+            acc.secondary_sector_ids2 = acc.project_id.secondary_sector_ids2.id
 
     @staticmethod
     def merge_address(

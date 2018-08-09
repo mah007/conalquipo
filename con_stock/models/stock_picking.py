@@ -366,6 +366,7 @@ class StockPicking(Model):
             vals = {
                 'product_id': l.product_id.id,
                 'partner_id': self.partner_id.id,
+                'project_id': self.project_id.id,
                 'picking_id': self.id,
                 'product_uom_qty': l.product_qty,
                 'product_uom': l.product_uom.id,

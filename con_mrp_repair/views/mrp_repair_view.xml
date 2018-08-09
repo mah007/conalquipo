@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mrp_repair_form_inherit_cont" model="ir.ui.view">
+        <field name="name">mrp.repair.form.inherit.cont</field>
+        <field name="model">mrp.repair</field>
+        <field name="inherit_id" ref="mrp_repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+
+            <field name="partner_id" position="after">
+                <field name="project_id" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}"/>
+            </field>
+
+        </field>
+    </record>
+    
+</odoo>
