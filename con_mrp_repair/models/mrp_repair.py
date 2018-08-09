@@ -35,10 +35,12 @@ class MRPRepair(models.Model):
     def write(self, values):
         # Overwrite mrp repair write
         res = super(MRPRepair, self).write(values)
-        _logger.warning(self)
-        _logger.warning(values)
-        _logger.warning(res)
         if self.invoice_id and self.project_id:
+            mrp_name = self.name
+            code = '[' + self.product_id.default_code + ']'
+            name = self.product_id.product_tmpl_id.name
+            total_desc = mrp_name + ' - ' + code + ' ' + name
             self.invoice_id.write({
-                'project_id': self.project_id.id})
+                'project_id': self.project_id.id,
+                'name': total_desc})
         return res
