@@ -52,6 +52,10 @@
 
             </header>
 
+            <field name="payment_term_id" position="replace">
+                <field name="payment_term_id" options="{'no_create': True}" readonly="1" force_save="1"/>
+            </field>
+
             <xpath expr="//field[@name='order_line']/form/group[1]" position="replace">
                 <group>
                     <group string="Logistic section">
@@ -241,6 +245,10 @@
             <xpath expr="//group[@name='sale_total']/field[@name='amount_untaxed']" position="before">
                 <field name="amount_total_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
             </xpath>
+
+            <field name="pricelist_id" position="replace">
+                <field name="pricelist_id" groups="product.group_sale_pricelist" readonly="1" force_save="1"/>
+            </field>
 
         </field>
     </record>

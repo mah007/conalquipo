@@ -4,30 +4,40 @@
 
         <record id="list_commercial" model="product.pricelist">
             <field name="name">Pricelist - Commercial</field>
-            <field name="sequence">2</field>
+            <field name="discount_policy">without_discount</field>
         </record>
 
-        <record id="list_financial" model="product.pricelist">
-            <field name="name">Pricelist - Financial</field>
-            <field name="sequence">3</field>
+        <record id="list_financial_10" model="product.pricelist">
+            <field name="name">Pricelist - Financial 10%</field>
+            <field name="discount_policy">without_discount</field>
         </record>
-
-        <record id="pricelist_rio_negro" model="product.pricelist.item">
-            <field name="pricelist_id" ref="list_financial"/>
+        <record id="pricelist_financial_10" model="product.pricelist.item">
+            <field name="pricelist_id" ref="list_financial_10"/>
             <field name="applied_on">3_global</field>
             <field name="compute_price">percentage</field>
+            <field name="percent_price">10</field>
+        </record>
+
+        <record id="list_financial_20" model="product.pricelist">
+            <field name="name">Pricelist - Financial 20%</field>
+            <field name="discount_policy">without_discount</field>
+        </record>
+        <record id="pricelist_financial_20" model="product.pricelist.item">
+            <field name="pricelist_id" ref="list_financial_20"/>
+            <field name="applied_on">3_global</field>
+            <field name="compute_price">percentage</field>
+            <field name="percent_price">20</field>
         </record>
 
         <record id="list_rio_negro" model="product.pricelist">
             <field name="name">Pricelist - Rio Negro</field>
-            <field name="sequence">4</field>
+            <field name="discount_policy">without_discount</field>
         </record>
-
         <record id="pricelist_rio_negro" model="product.pricelist.item">
             <field name="pricelist_id" ref="list_rio_negro"/>
             <field name="applied_on">2_product_category</field>
             <field name="compute_price">percentage</field>
-            <field name="categ_id" ref="con_product.product_category_7"/>
+            <field name="categ_id" ref="con_product.category_7"/>
         </record>
 
     </data>
