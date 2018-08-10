@@ -137,16 +137,25 @@ class SaleOrder(models.Model):
         Compute the total discounts of the SO.
         """
         for order in self:
-            price_discount = 0.0
-            price_unit = 0.0
-            total_discounts = 0.0
-            for line in order.order_line:
-                quantity = line.bill_uom_qty * line.product_uom_qty
-                price_unit += line.price_unit * quantity
-                price_discount += line.price_subtotal
-            total_discounts = price_unit - price_discount
-            order.update({
-                'amount_total_discount': total_discounts})
+            cond = order.pricelist_id.item_ids
+            for data in cond:
+                if data.compute_price == 'on_total':
+                    price_discount = (
+                        order.amount_total * data.percent_price_total) / 100.0
+                    amount_total = order.amount_total - price_discount
+                    order.update({
+                        'amount_total_discount': price_discount})
+                else:
+                    price_discount = 0.0
+                    price_unit = 0.0
+                    total_discounts = 0.0
+                    for line in order.order_line:
+                        quantity = line.bill_uom_qty * line.product_uom_qty
+                        price_unit += line.price_unit * quantity
+                        price_discount += line.price_subtotal
+                    total_discounts = price_unit - price_discount
+                    order.update({
+                        'amount_total_discount': total_discounts})
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
