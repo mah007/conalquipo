@@ -243,7 +243,7 @@
             </xpath>
 
             <xpath expr="//group[@name='sale_total']/field[@name='amount_untaxed']" position="before">
-                <field name="amount_total_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_total_discount" widget='monetary' options="{'currency_field': 'currency_id'}" force_save="1"/>
             </xpath>
 
             <field name="pricelist_id" position="replace">

@@ -140,9 +140,15 @@ class SaleOrder(models.Model):
             cond = order.pricelist_id.item_ids
             for data in cond:
                 if data.compute_price == 'on_total':
+                    amount_total = 0.0
+                    price_discount = 0.0
+                    for line in order.order_line:
+                        if line.product_id.product_tmpl_id.categ_id \
+                         == data.categ_id:
+                            quantity = line.bill_uom_qty * line.product_uom_qty
+                            amount_total += line.price_unit * quantity
                     price_discount = (
-                        order.amount_total * data.percent_price_total) / 100.0
-                    amount_total = order.amount_total - price_discount
+                        amount_total * data.percent_price_total) / 100
                     order.update({
                         'amount_total_discount': price_discount})
                 else:

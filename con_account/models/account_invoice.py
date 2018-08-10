@@ -80,6 +80,66 @@ class AccountInvoice(models.Model):
         track_visibility='onchange',
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
+    pricelist_id = fields.Many2one(
+        'product.pricelist',
+        string='Pricelist',
+        compute="_get_sale_pricelist",
+        help="Pricelist for current sales order.")
+    amount_total_discount = fields.Monetary(
+        string='Total discount',
+        store=True, readonly=True,
+        compute='_amount_all_discount',
+        track_visibility='onchange')
+
+    def _get_sale_pricelist(self):
+        """
+        This function get the default state configured on the product states
+        models and return to the `product_template` model else return False
+
+        :return: Recordset or False
+        """
+        for data in self:
+            sale_ob = self.env['sale.order']
+            sale_origin = sale_ob.search(
+                [('name', '=', data.origin),
+                 ('state', '=', 'sale')])
+            data.pricelist_id = sale_origin.pricelist_id.id
+
+    @api.depends('invoice_line_ids.price_subtotal')
+    def _amount_all_discount(self):
+        """
+        Compute the total discounts of the SO.
+        """
+        for inv in self:
+            sale_ob = self.env['sale.order']
+            sale_origin = sale_ob.search(
+                [('name', '=', inv.origin),
+                 ('state', '=', 'sale')])
+            cond = sale_origin.pricelist_id.item_ids
+            for data in cond:
+                if data.compute_price == 'on_total':
+                    amount_total = 0.0
+                    price_discount = 0.0
+                    for line in inv.invoice_line_ids:
+                        if line.product_id.product_tmpl_id.categ_id \
+                         == data.categ_id:
+                            quantity = line.quantity
+                            amount_total += line.price_unit * quantity
+                    price_discount = (
+                        amount_total * data.percent_price_total) / 100
+                    inv.update({
+                        'amount_total_discount': price_discount})
+                else:
+                    price_discount = 0.0
+                    price_unit = 0.0
+                    total_discounts = 0.0
+                    for line in inv.invoice_line_ids:
+                        quantity = line.quantity
+                        price_unit += line.price_unit * quantity
+                        price_discount += line.price_subtotal
+                    total_discounts = price_unit - price_discount
+                    inv.update({
+                        'amount_total_discount': total_discounts})
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
@@ -137,7 +197,7 @@ class AccountInvoice(models.Model):
              res.project_id.secondary_sector_ids.id
             res.sector_id2 = res.project_id.sector_id2.id
             res.secondary_sector_ids2 = \
-             res.project_id.secondary_sector_ids2.id           
+             res.project_id.secondary_sector_ids2.id
         return res
 
     @api.multi
