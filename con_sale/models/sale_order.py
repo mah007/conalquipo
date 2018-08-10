@@ -165,9 +165,7 @@ class SaleOrder(models.Model):
                 raise UserError(_(
                     'This employee code in not member of '
                     'this group.'))
-            self.check_limit()
         else:
-            self.check_limit()
             self.employee_id = False
 
     @api.model
