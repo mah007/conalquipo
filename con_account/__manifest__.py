@@ -21,6 +21,7 @@
         'views/account_invoice.xml',
         'report/report_invoice_inherit.xml',
         'wizards/views/account_invoice_state.xml',
+        'report/report_account_document_inherit.xml',
     ],
     'qweb': [
     ],
