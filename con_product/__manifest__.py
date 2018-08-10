@@ -40,6 +40,7 @@
         'security/ir.model.access.csv',
         'views/product.xml',
         'views/product_states.xml',
+        'views/product_pricelist_item.xml',
         'data/product.states.csv',
         'data/product_category.xml',
         'data/product_uom.xml',

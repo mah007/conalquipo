@@ -14,8 +14,8 @@
         <record id="pricelist_financial_10" model="product.pricelist.item">
             <field name="pricelist_id" ref="list_financial_10"/>
             <field name="applied_on">3_global</field>
-            <field name="compute_price">percentage</field>
-            <field name="percent_price">10</field>
+            <field name="compute_price">on_total</field>
+            <field name="percent_price_total">10</field>
         </record>
 
         <record id="list_financial_20" model="product.pricelist">
@@ -25,8 +25,8 @@
         <record id="pricelist_financial_20" model="product.pricelist.item">
             <field name="pricelist_id" ref="list_financial_20"/>
             <field name="applied_on">3_global</field>
-            <field name="compute_price">percentage</field>
-            <field name="percent_price">20</field>
+            <field name="compute_price">on_total</field>
+            <field name="percent_price_total">20</field>
         </record>
 
         <record id="list_rio_negro" model="product.pricelist">
