@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="account_reconcile_model_discount" model="account.reconcile.model">
+            <field name="name">Cash Discount</field>
+            <field name="label">Cash Discount</field>
+            <field name="amount_type">percentage</field>
+            <field name="amount">100</field>
+            <field name="account_id" ref="l10n_co.1_co_puc_421040"/>
+        </record>
+
+    </data>
+</odoo>

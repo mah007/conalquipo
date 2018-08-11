@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_sale_document_inherit_report" model="ir.ui.view">
+            <field name="name">Report Sale Document</field>
+            <field name="inherit_id" ref="sale.report_saleorder_document"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='total']" position="replace">
+
+                    <div class="row" name="total">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed" style="min-width: 200px;max-width: 350px;">
+                                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <td><strong>Total discounts</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total_discount"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <td><strong>Subtotal</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_untaxed"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
+                                    <tr style="border-bottom:1px solid #dddddd;">
+                                        <t t-if="amount_by_group[3] == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                            <td>
+                                                <span t-esc="amount_by_group[0]"/>
+                                                <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="amount_by_group[1]"
+                                                    t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                            </td>
+                                        </t>
+                                        <t t-else ="">
+                                            <td>
+                                                <span t-esc="amount_by_group[0]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="amount_by_group[1]"
+                                                    t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="border-black">
+                                    <td><strong>Total</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -38,20 +38,34 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <th align="left" bgcolor="#A9A9A9">Draft invoices</th>
-                                        <th align="left" bgcolor="#A9A9A9">Open invoices</th>
+                                        <th align="left" bgcolor="#A9A9A9">Invoices</th>
+                                        <th align="left" bgcolor="#A9A9A9">Amounts</th>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <t t-set="total_di" t-value="0.0"/>
-                                            <t t-foreach="data['invoice_ids']" t-as="inv">
+
+                                    <t t-foreach="data['invoice_ids']" t-as="inv">
+                                        <tr>
+                                            <td>
                                                 <t t-if="inv.project_id.id==project.id">
-                                                    <t t-if="inv.state=='draft'">
-                                                        <t t-set="total_di" t-value="total_di+inv.amount_total"/>
+                                                    <t t-if="inv.state=='open'">
+                                                        <span t-esc="inv.number"/>
                                                     </t>
                                                 </t>
-                                            </t>
-                                            <span t-esc="total_di"/>
+
+                                            </td>
+                                            <td>
+                                                <t t-if="inv.project_id.id==project.id">
+                                                    <t t-if="inv.state=='open'">
+                                                        <span t-esc="inv.amount_total"/>
+                                                    </t>
+                                                </t>
+
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <tr>
+                                        <td>
+                                            <b>TOTAL</b>
                                         </td>
                                         <td>
                                             <t t-set="total_di" t-value="0.0"/>

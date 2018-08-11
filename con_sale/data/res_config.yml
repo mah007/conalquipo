@@ -12,6 +12,8 @@
       'multi_sales_price_method': 'formula',
       'sale_pricelist_setting': 'formula',
       'group_warning_account': True,
+      'group_sale_layout': True,
+      'use_sale_note': True,
     }
 -
   !python {model: res.config.settings}: |

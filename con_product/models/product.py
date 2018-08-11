@@ -105,7 +105,6 @@ class ProductTemplate(Model):
                 'stock.location'].search(
                     [('set_default_location', '=', True)], limit=1) or False
 
-    @api.one
     def _get_default_state(self):
         """
         This function get the default state configured on the product states
@@ -113,11 +112,12 @@ class ProductTemplate(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service':
-            return self.env['product.states'].search([
-                ('default_value', '=', True)], limit=1) or False
-        else:
-            self.state_id = False
+        for data in self:
+            if data.type != 'service':
+                data.state_id = self.env['product.states'].search([
+                    ('default_value', '=', True)], limit=1) or False
+            else:
+                data.state_id = False
 
     @api.one
     def _get_default_loc(self):
@@ -196,7 +196,7 @@ class ProductTemplate(Model):
 
     state_id = fields.Many2one(
         'product.states', string="State",
-        default=_get_default_state)
+        compute="_get_default_state")
     color = fields.Char(
         string="Color",
         help="Select the color of the state",
@@ -318,7 +318,6 @@ class ProductProduct(Model):
                         [('set_default_location', '=', True)],
                         limit=1) or False
 
-    @api.one
     def _get_default_state(self):
         """
         This function get the default state configured on the product states
@@ -326,11 +325,12 @@ class ProductProduct(Model):
 
         :return: Recordset or False
         """
-        if self.type != 'service':
-            return self.env['product.states'].search([
-                ('default_value', '=', True)], limit=1) or False
-        else:
-            self.state_id = False
+        for data in self:
+            if data.type != 'service':
+                data.state_id = self.env['product.states'].search([
+                    ('default_value', '=', True)], limit=1) or False
+            else:
+                data.state_id = False
 
     def _get_default_color(self):
         """
@@ -381,7 +381,7 @@ class ProductProduct(Model):
                     "The following location don't have a state asigned"))
 
     state_id = fields.Many2one('product.states', string="State",
-                               default=_get_default_state)
+                               compute="_get_default_state")
     color = fields.Char(string="Color",
                         help="Select the color of the state",
                         compute="_get_default_color")
