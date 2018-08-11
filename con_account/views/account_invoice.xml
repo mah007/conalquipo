@@ -112,14 +112,6 @@
                 </div>
             </xpath>
 
-            <field name="amount_untaxed" position="before">
-                <field name="amount_total_discount" widget='monetary' options="{'currency_field': 'currency_id'}" force_save="1"/>
-            </field>
-
-            <field name="origin" position="before">
-                <field name="pricelist_id" readonly="1" force_save="1"/>
-            </field>
-
         </field>
     </record>
 

@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Account',
     'depends': [
-        'account', 'project', 'sale',
+        'account', 'account_accountant', 'account_asset', 'project', 'sale',
     ],
     'description':
     """
@@ -21,7 +21,8 @@
         'views/account_invoice.xml',
         'report/report_invoice_inherit.xml',
         'wizards/views/account_invoice_state.xml',
-        'report/report_account_document_inherit.xml',
+        'data/account_payment_term.xml',
+        'data/account_reconcile_model.xml',
     ],
     'qweb': [
     ],
