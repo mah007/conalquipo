@@ -42,3 +42,8 @@ class ResCompany(models.Model):
         'product.category',
         relation="special_quotations_company",
         string="Product categories for special quotations")
+    billing_resolution = fields.Char(string='Billing Resolution')
+    from_res = fields.Char(string='From')
+    to_res = fields.Char(string='To')
+    authorization_date = fields.Date('Date Authorization')
+    invoice_note = fields.Text(string='Default Terms and Conditions Invoice')
