@@ -17,6 +17,7 @@
         - Adds sale_id field to signature.request model
     """,
     'data': [
+        'data/signature_request_template_data.xml',
         'views/signature_request.xml'
     ],
     'qweb': [
