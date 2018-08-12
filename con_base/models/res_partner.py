@@ -144,7 +144,7 @@ class ResPartnerCode(models.Model):
                      ('state', 'in', ['draft', 'open'])], limit=1)
             if invoices:
                 raise exceptions.Warning(_(
-                    'This employee has a invoices on '
+                    'This customer has a invoices on '
                     'draft or open state. You can not change '
                     'pricelist'))
 
@@ -157,7 +157,7 @@ class ResPartnerCode(models.Model):
                      ('state', 'in', ['draft', 'open'])], limit=1)
             if invoices:
                 raise exceptions.Warning(_(
-                    'This employee has a invoices on '
+                    'This customer has a invoices on '
                     'draft or open state. You can not change '
                     'payment term'))
 
