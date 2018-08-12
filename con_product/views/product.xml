@@ -96,6 +96,7 @@
                     </field>
 
                     <field name="categ_id" position="after">
+                        <field name="layout_sec_id"/>
                         <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}"/>
                         <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}"/>
                         <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}" readonly="1" force_save="1"/>
