@@ -247,6 +247,8 @@ class ProductTemplate(Model):
     tip_load_capacity = fields.Char('Tip load capacity')
     maximum_load_capacity = fields.Char('Maximum load capacity')
     useful_arm = fields.Char('Useful arm')
+    layout_sec_id = fields.Many2one(
+        'sale.layout_category', string="Section")
 
     @api.onchange('non_mech')
     def _compute_locations(self):

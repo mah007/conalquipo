@@ -394,7 +394,7 @@ class SaleOrder(models.Model):
             return True
 
     @api.depends('partner_id')
-    def _get_limit_and_invoices(self):
+    def _get_limit(self):
         """
         Show in sale order form the limit amount
         and get all invoices to check activity
