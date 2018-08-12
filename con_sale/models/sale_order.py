@@ -654,53 +654,58 @@ class SaleOrder(models.Model):
                                    ], limit=1)
             if order_id:
                 cats = \
-                 self.env.user.company_id.cant_merge_quotations_categories
+                 self.env.user.company_id.special_quotations_categories
                 cat_lists = []
-
+                inter = True
                 for line in self.order_line:
+                    # Quotations cant merge
                     cat_lists.append(
-                        data.product_id.product_tmpl_id.categ_id.id)
-
+                        line.product_id.product_tmpl_id.categ_id.id)
                     a = list(cats._ids)
                     b = cat_lists
                     inter = bool(set(a).intersection(b))
-
-                    line_copy = line.copy({'order_id': order_id.id})
-                    order_id.write({'order_line': [(4, line_copy.id)]})
-                self.update({'state': 'merged',
-                             'sale_order_id': order_id.id,
-                             'confirmation_date': fields.Datetime.now()
-                            })
-                # Create task for product
-                for data in order_id.order_line:
-                    if data.bill_uom.id in \
-                     self.env.user.company_id.default_uom_task_id._ids \
-                      and not \
-                       data.is_delivery:
-                        task_values = {
-                            'name': "Task for: " \
-                             + str(self.project_id.name) \
-                             + " - " \
-                             + str(data.product_id.name) \
-                             + " - " + \
-                             str(data.bill_uom.name),
-                            'project_id': self.project_id.id,
-                            'sale_line_id': data.id,
-                            'so_line': data.id,
-                            'product_id': data.product_id.id,
-                            'partner_id': self.partner_id.id,
-                            'company_id': self.company_id.id,
-                            'email_from': self.partner_id.email,
-                            'user_id': False,
-                            'uom_id': data.bill_uom.id,
-                            'planned_hours': data.bill_uom_qty,
-                            'remaining_hours': data.bill_uom_qty,
-                        }
-                        task = self.env[
-                            'project.task'].create(task_values)
-                        data.write({'task_id': task.id})
-                if self.env.context.get('send_email'):
-                    self.force_quotation_send()
+                    if not inter:
+                        line_copy = line.copy({'order_id': order_id.id})
+                        order_id.write({'order_line': [(4, line_copy.id)]})
+                if not inter:
+                    self.update({'state': 'merged',
+                                 'sale_order_id': order_id.id,
+                                 'confirmation_date': fields.Datetime.now()
+                                })
+                else:
+                    self.update({
+                        'state': 'sale',
+                        'confirmation_date': fields.Datetime.now()})
+                # # Create task for product
+                # for data in order_id.order_line:
+                #     if data.bill_uom.id in \
+                #      self.env.user.company_id.default_uom_task_id._ids \
+                #       and not \
+                #        data.is_delivery:
+                #         task_values = {
+                #             'name': "Task for: " \
+                #              + str(self.project_id.name) \
+                #              + " - " \
+                #              + str(data.product_id.name) \
+                #              + " - " + \
+                #              str(data.bill_uom.name),
+                #             'project_id': self.project_id.id,
+                #             'sale_line_id': data.id,
+                #             'so_line': data.id,
+                #             'product_id': data.product_id.id,
+                #             'partner_id': self.partner_id.id,
+                #             'company_id': self.company_id.id,
+                #             'email_from': self.partner_id.email,
+                #             'user_id': False,
+                #             'uom_id': data.bill_uom.id,
+                #             'planned_hours': data.bill_uom_qty,
+                #             'remaining_hours': data.bill_uom_qty,
+                #         }
+                #         task = self.env[
+                #             'project.task'].create(task_values)
+                #         data.write({'task_id': task.id})
+                # if self.env.context.get('send_email'):
+                #     self.force_quotation_send()
                 res = True
             else:
                 # Create task for product

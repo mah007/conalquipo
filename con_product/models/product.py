@@ -242,6 +242,11 @@ class ProductTemplate(Model):
         'product.states.nonmech', 'product_tmpl_id', string='Location')
     more_information = fields.Text(
         'More information', translate=True)
+    emptying_per_month = fields.Char('Emptying per month')
+    maximum_value_of_pipe = fields.Char('Maximun value of pipe')
+    tip_load_capacity = fields.Char('Tip load capacity')
+    maximum_load_capacity = fields.Char('Maximum load capacity')
+    useful_arm = fields.Char('Useful arm')
 
     @api.onchange('non_mech')
     def _compute_locations(self):
@@ -388,6 +393,11 @@ class ProductProduct(Model):
     location_id = fields.Many2one(
         'stock.location', string="Actual location",
         default=_get_default_loc)
+    emptying_per_month = fields.Char('Emptying per month')
+    maximum_value_of_pipe = fields.Char('Maximun value of pipe')
+    tip_load_capacity = fields.Char('Tip load capacity')
+    maximum_load_capacity = fields.Char('Maximum load capacity')
+    useful_arm = fields.Char('Useful arm')
 
     @api.model
     def create(self, values):

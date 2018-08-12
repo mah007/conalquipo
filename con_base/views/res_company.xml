@@ -34,9 +34,6 @@
                             <group>
                                 <field name="special_quotations_categories" widget="many2many_tags"/>
                             </group>
-                            <group>
-                                <field name="cant_merge_quotations_categories" widget="many2many_tags"/>
-                            </group>
                         </group>
                     </page>
                 </xpath>
