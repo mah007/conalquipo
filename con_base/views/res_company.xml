@@ -37,6 +37,19 @@
                         </group>
                     </page>
                 </xpath>
+
+
+                <field name="company_registry" position="after">
+                    <field name="billing_resolution"/>
+                    <field name="from_res"/>
+                    <field name="to_res"/>
+                    <field name="authorization_date"/>
+                </field>
+
+                <field name="report_footer" position="after">
+                    <field name="invoice_note"/>
+                </field>
+
            </data>
         </field>
     </record>
