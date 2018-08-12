@@ -42,7 +42,3 @@ class ResCompany(models.Model):
         'product.category',
         relation="special_quotations_company",
         string="Product categories for special quotations")
-    cant_merge_quotations_categories = fields.Many2many(
-        'product.category',
-        relation="cant_merge_quotations_company",
-        string="Product categories than can not merge in sale")
