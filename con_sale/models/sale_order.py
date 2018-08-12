@@ -1411,6 +1411,8 @@ class SaleOrderLine(models.Model):
             self.add_operator = False
             self.service_operator = None
         self.components_ids = products_ids
+        self.layout_category_id = \
+         self.product_id.product_tmpl_id.layout_sec_id.id
         return result
 
     def _compute_move_status(self):
