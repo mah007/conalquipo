@@ -135,6 +135,32 @@ class ResPartnerCode(models.Model):
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
 
+    @api.onchange('property_product_pricelist')
+    def onchange_pricelist(self):
+        if self.property_product_pricelist and self.customer:
+            invoices = self.env[
+                'account.invoice'].search(
+                    [('partner_id', '=', self._origin.id),
+                     ('state', 'in', ['draft', 'open'])], limit=1)
+            if invoices:
+                raise exceptions.Warning(_(
+                    'This employee has a invoices on '
+                    'draft or open state. You can not change '
+                    'pricelist'))
+
+    @api.onchange('property_payment_term_id')
+    def onchange_payment_term(self):
+        if self.property_payment_term_id and self.customer:
+            invoices = self.env[
+                'account.invoice'].search(
+                    [('partner_id', '=', self._origin.id),
+                     ('state', 'in', ['draft', 'open'])], limit=1)
+            if invoices:
+                raise exceptions.Warning(_(
+                    'This employee has a invoices on '
+                    'draft or open state. You can not change '
+                    'payment term'))
+
     @api.onchange('employee_code')
     def onchange_employe_code(self):
         if self.employee_code:
