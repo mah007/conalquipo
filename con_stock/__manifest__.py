@@ -43,6 +43,7 @@
         'reports/report_stockpicking.xml',
         'data/module_category.xml',
         'data/groups.xml',
+        'data/warehouse.xml',
         'data/locations.xml',
         'data/res_config.yml',
         'views/cron_template.xml',

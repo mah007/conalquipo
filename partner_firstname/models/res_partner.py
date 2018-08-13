@@ -194,16 +194,17 @@ class ResPartner(models.Model):
             record.lastname = parts['lastname']
             record.firstname = parts['firstname']
 
-    # @api.multi
-    # @api.constrains("firstname", "lastname")
-    # def _check_name(self):
-    #     """Ensure at least one name is set."""
-    #     for record in self:
-    #         if all((
-    #             record.type == 'contact' or record.is_company,
-    #             not (record.firstname or record.lastname)
-    #         )):
-    #             raise exceptions.EmptyNamesError(record)
+    @api.multi
+    @api.constrains("firstname", "lastname")
+    def _check_name(self):
+        """Ensure at least one name is set."""
+        for record in self:
+            if all(
+                    (record.type == 'contact' or \
+                     record.is_company, \
+                     not (record.firstname or record.lastname)
+                    )):
+                raise exceptions.EmptyNamesError(record)
 
     @api.onchange("firstname", "lastname")
     def _onchange_subnames(self):
