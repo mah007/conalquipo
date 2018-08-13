@@ -49,6 +49,7 @@ class AccountInvoiceYearPeriod(models.Model):
 
     @api.multi
     def button_create_periods(self):
+        # FIXME: Please fix the biweekly formula incorrect results
         period_obj = self.env['account.invoice.period.period']
         for rec in self:
             ds = datetime.strptime(rec.start_date, '%Y-%m-%d')

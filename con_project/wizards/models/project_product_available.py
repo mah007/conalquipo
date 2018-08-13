@@ -34,18 +34,12 @@ class ProjectProductAvailable(models.TransientModel):
             [('state', 'in', ['open']),
              ('company_id', '=', self.company_id.id)])
 
-        _logger.info("Periodos de facturacion: {}".format(bill_periods))
-
         #searching the period of the query date
         for period in bill_periods.periods_ids:
             if self.query_date >= period.start_date and self.query_date <= \
                     period.end_date:
-                _logger.info("Entre a la condición")
                 start = period.start_date
                 end = period.end_date
-
-        _logger.info("Start Date {}".format(start))
-        _logger.info("End Date {}".format(end))
 
         # Selections
         if self.typeselection == 'all' and self.selectionby == 'partner':
@@ -78,8 +72,6 @@ class ProjectProductAvailable(models.TransientModel):
         move_ids = move_ids.search(
             [('picking_id.scheduled_date','<=', end),
              ('picking_id.scheduled_date','>=', start)])
-
-        _logger.info("Movimientos {}".format(move_ids))
 
         for info in self:
             info.products_ids = products_lst
