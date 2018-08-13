@@ -15,14 +15,18 @@
                             <field name="number_of_days" class="oe_inline"/> days
                         </div>
                     </group>
-
                     <group>
                         <field name="groups_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="special_category"/>
                     </group>
                 </group>
             </xpath>
 
         </field>
     </record>
-     
+
 </odoo>

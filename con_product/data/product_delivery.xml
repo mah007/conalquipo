@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="delivery.product_product_delivery_product_template" model="product.template">
+            <field name="name">Fletes</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="con_product.category_7"/>
+            <field name="default_code">FLT</field>
+            <field name="for_shipping">True</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="rental">True</field>
+            <field name="sale_uom" ref="product.product_uom_categ_unit"/>
+            <field name="layout_sec_id" ref="sale.sale_layout_cat_1"/>
+        </record>
+
+    </data>
+</odoo>

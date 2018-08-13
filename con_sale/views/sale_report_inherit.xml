@@ -7,6 +7,147 @@
             <field name="name">Report Sale Document</field>
             <field name="inherit_id" ref="sale.report_saleorder_document"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//div[@id='informations']" position="replace">
+                    <div class="row mt32 mb32" id="informations">
+                        <div t-if="doc.client_order_ref" class="col-xs-3">
+                            <strong>Your Reference:</strong>
+                            <p t-field="doc.client_order_ref"/>
+                        </div>
+                        <div t-if="doc.confirmation_date and doc.state not in ['draft','sent']" class="col-xs-3">
+                            <strong>Date Ordered:</strong>
+                            <p t-field="doc.confirmation_date"/>
+                        </div>
+                        <div t-if="doc.date_order and doc.state in ['draft','sent']" class="col-xs-3">
+                            <strong>Quotation Date:</strong>
+                            <p t-field="doc.date_order"/>
+                        </div>
+                        <div t-if="doc.user_id.name" class="col-xs-3">
+                            <strong>Salesperson:</strong>
+                            <p t-field="doc.user_id"/>
+                        </div>
+                        <div name="payment_term" t-if="doc.payment_term_id" class="col-xs-3">
+                            <strong>Payment Terms:</strong>
+                            <p t-field="doc.payment_term_id"/>
+                        </div>
+                    </div>
+                    <div t-if="doc.special_category.name == 'Torre grúa'" class="row mt32 mb32" id="quotations_specials_tg">
+                        <div class="col-xs-3">
+                            <strong>Height:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Useful arm:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Tip load capacity:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Maximum load capacity:</strong>
+                        </div>
+                    </div>
+                    <div t-if="doc.special_category.name == 'Dosificadora'" class="row mt32 mb32" id="quotations_specials_dos">
+                        <div class="col-xs-3">
+                            <strong>Cap. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Max. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Min. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Maximun value of pipe:</strong>
+                        </div>
+                    </div>
+                    <div t-if="doc.special_category.name == 'Bomba de concreto'" class="row mt32 mb32" id="quotations_specials_bc">
+                        <div class="col-xs-3">
+                            <strong>Cap. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Max. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Min. Emptying:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Maximun value of pipe:</strong>
+                        </div>
+                    </div>
+                    <div t-if="doc.special_category.name == 'Malacates'" class="row mt32 mb32" id="quotations_specials_mal">
+                        <div class="col-xs-3">
+                            <strong>Vel.(m/min):</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Basket:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Maximum load capacity:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Height:</strong>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Towers:</strong>
+                        </div>
+                    </div>
+                </xpath>
+
+                <xpath expr="//div[@name='total']" position="replace">
+
+                    <div class="row" name="total">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed" style="min-width: 200px;max-width: 350px;">
+                                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <td><strong>Total discounts</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total_discount"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <td><strong>Subtotal</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_untaxed"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
+                                    <tr style="border-bottom:1px solid #dddddd;">
+                                        <t t-if="amount_by_group[3] == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                            <td>
+                                                <span t-esc="amount_by_group[0]"/>
+                                                <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="amount_by_group[1]"
+                                                    t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                            </td>
+                                        </t>
+                                        <t t-else ="">
+                                            <td>
+                                                <span t-esc="amount_by_group[0]"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="amount_by_group[1]"
+                                                    t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="border-black">
+                                    <td><strong>Total</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.amount_total"
+                                            t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </xpath>
+
+
                 <xpath expr="//div[@class='page']/t/table[@class='table table-condensed']" position="replace">
 
                     <table class="table table-condensed">
