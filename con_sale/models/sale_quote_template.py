@@ -28,6 +28,18 @@ class SaleQuoteTemplate(models.Model):
 
     groups_ids = fields.Many2many(
         "res.groups", string='Notifications to groups')
+    special_category = fields.Many2one(
+        'product.category', 'Special category',
+        domain=lambda self: self.getcategory())
+
+    @api.model
+    def getcategory(self):
+        # Domain for the categories
+        cat_list = []
+        cats = self.env.user.company_id.special_quotations_categories
+        for data in cats:
+            cat_list.append(data.id)
+        return [('id', 'in', cat_list)]
 
     @api.model
     def create(self, values):

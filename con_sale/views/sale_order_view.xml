@@ -143,6 +143,8 @@
                 <field name="message_invoice" readonly="1" force_save="1"/>
                 <field name="employee_id" required="0" readonly="1" options="{'no_create': True}" force_save="1"/>
                 <field name="employee_code" required="0"/>
+                <field name="type_quotation" required="1"/>
+                <field name="special_category"  attrs="{'invisible': [('type_quotation','=','no_special')], 'required': [('type_quotation','=','special')]}"/>
                 <field name="can_confirm" invisible="1"/>
                 <field name="partner_inactive" invisible="1"/>
                 <field name="approved_min_prices" invisible="1"/>

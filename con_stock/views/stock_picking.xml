@@ -32,7 +32,7 @@
                 </xpath>
 
                 <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
-                    <button name="%(con_stock.action_report_delivery_con)d" string="Print" attrs="{'invisible': [('is_locked', '=', False)]}" type="action" groups="base.group_user"/>
+                    <button name="%(con_stock.action_report_delivery_con)d" string="Print" invisible="1" type="action" groups="base.group_user"/>
                 </xpath>
 
                 <xpath expr="//header" position="before">

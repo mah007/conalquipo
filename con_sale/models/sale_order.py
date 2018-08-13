@@ -41,6 +41,12 @@ class SaleOrder(models.Model):
                     ml.get_components_info()
         return True
 
+    def _get_default_template(self):
+        template = self.env.ref(
+            'website_quote.website_quote_template_default',
+            raise_if_not_found=False)
+        return template and template.active and template or False
+
     order_type = fields.Selection(
         [('rent', 'Rent'), ('sale', 'Sale')],
         string="Type", default="rent", track_visibility='onchange')
@@ -68,24 +74,28 @@ class SaleOrder(models.Model):
         'signature.request',
         compute='_compute_sign_ids',
         string="Main signs")
-    operators_services = fields.Integer(string="Operator Services")
-    # Fleet
+    operators_services = fields.Integer(
+        string="Operator Services")
     carrier_type = fields.Selection(
-        [('client', 'Client'), ('company', 'Company')],
-        string='Carrier Responsible', default='client',
+        [('client', 'Client'),
+         ('company', 'Company')],
+        string='Carrier Responsible',
+        default='client',
         track_visibility='onchange')
-    vehicle = fields.Many2one(comodel_name='fleet.vehicle',
-                              string='Vehicle', ondelete='cascade',
-                              index=True, copy=False,
-                              track_visibility='onchange')
+    vehicle = fields.Many2one(
+        comodel_name='fleet.vehicle',
+        string='Vehicle', ondelete='cascade',
+        index=True, copy=False,
+        track_visibility='onchange')
     delivery_price = fields.Float(
         string='Estimated Delivery Price',
         readonly=False, copy=False,
         track_visibility='onchange')
-    task_id = fields.Many2one(comodel_name='project.task',
-                              string='Task', ondelete='cascade',
-                              index=True, copy=False,
-                              track_visibility='onchange')
+    task_id = fields.Many2one(
+        comodel_name='project.task',
+        string='Task', ondelete='cascade',
+        index=True, copy=False,
+        track_visibility='onchange')
     product_count = fields.Integer(
         compute='_compute_product_count',
         string="Number of products on work",
@@ -117,7 +127,7 @@ class SaleOrder(models.Model):
     employee_id = fields.Many2one(
         "hr.employee", string='Employee',
         track_visibility='onchange',
-        domain=lambda self:self.getemployee())
+        domain=lambda self: self.getemployee())
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
         'Approve min and prices for products',
@@ -130,6 +140,44 @@ class SaleOrder(models.Model):
         store=True, readonly=True,
         compute='_amount_all_discount',
         track_visibility='onchange')
+    type_quotation = fields.Selection(
+        [('special', 'Special'),
+         ('no_special', 'No special')],
+        string='Type of quotation')
+    special_category = fields.Many2one(
+        'product.category', 'Special category')
+    template_id = fields.Many2one(
+        'sale.quote.template', 'Quotation Template',
+        readonly=True,
+        states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
+        default=_get_default_template)
+
+    @api.onchange('type_quotation')
+    def onchange_type_quotation(self):
+        # Domain for the templates
+        if self.type_quotation:
+            self.special_category = False
+            self.template_id = False
+            cat_list = []
+            cats = self.env.user.company_id.special_quotations_categories
+            for data in cats:
+                cat_list.append(data.id)
+            return {'domain':{'special_category':[('id', 'in', cat_list)]}}
+
+    @api.onchange('special_category')
+    def get_templates(self):
+        # Domain for the templates
+        self.template_id = []
+        cat_list = []
+        cats = self.env.user.company_id.special_quotations_categories
+        for data in cats:
+            cat_list.append(data.id)
+        if self.special_category:
+            cat_list.remove(self.special_category.id)
+        template = self.env[
+            'sale.quote.template'].search(
+                [('special_category', 'not in', cat_list)])
+        return {'domain':{'template_id':[('id', 'in', template._ids)]}}
 
     @api.depends('order_line')
     def onchange_term_messages(self):
@@ -1373,7 +1421,6 @@ class SaleOrderLine(models.Model):
 
         """
         result = super(SaleOrderLine, self).product_id_change()
-
         self.product_components = False
         self.product_uoms = False
         self.components_ids = [(5,)]
@@ -1411,6 +1458,8 @@ class SaleOrderLine(models.Model):
             self.add_operator = False
             self.service_operator = None
         self.components_ids = products_ids
+        self.layout_category_id = \
+        self.product_id.product_tmpl_id.layout_sec_id.id
         return result
 
     def _compute_move_status(self):
