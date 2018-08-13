@@ -52,6 +52,9 @@ class StockMove(Model):
     parent_sale_line = fields.Many2one(
         'sale.order.line',
         string='Parent sale line')
+    qty_history = fields.Float(compute='_compute_product_history',
+        string="History on work",
+        track_visibility='onchange', store=True)
 
     @api.model
     def create(self, vals):
@@ -101,6 +104,20 @@ class StockMove(Model):
                             product_qty_out += p.product_uom_qty
             record.product_count = product_qty_in - product_qty_out
 
+    @api.depends('quantity_done')
+    def _compute_product_history(self):
+        for rec in self:
+            if rec.picking_id.picking_type_id.code == 'outgoing':
+                current_qty = (rec.product_count - rec.quantity_done)
+                _logger.info("Outgoing")
+                _logger.info("Current Qty: {}".format(current_qty))
+                rec.qty_history = current_qty if current_qty > 0 else 0
+            elif rec.picking_id.picking_type_id.code == 'incoming':
+                current_qty = ((rec.quantity_done * 2) - rec.product_count)
+                _logger.info("Incoming")
+                _logger.info("Current Qty: {}".format(current_qty))
+                rec.qty_history = current_qty if current_qty > 0 else 0
+
     @api.onchange('employee_id')
     def employee_id_change_task(self):
         if self.employee_id:
@@ -121,6 +138,28 @@ class StockMove(Model):
 
     def _action_done(self, merge=True):
         res = super(StockMove, self)._action_done()
+        # This block create a history entry
+        history = self.env['stock.move.history']
+        for order in res:
+            for op in ['internal', order.picking_id.picking_type_id.code]:
+                vals = {
+                    'picking_id': order.picking_id.id,
+                    'partner_id': order.picking_id.partner_id.id,
+                    'project_id': order.picking_id.project_id.id,
+                    'product_id': order.product_id.id,
+                    'code': op,
+                    'product_count': order.qty_history if op == 'internal'
+                    else order.product_count,
+                    'quantity_done': order.quantity_done if op != 'internal'
+                           else 0,
+                    'sale_line_id': order.sale_line_id.id,
+                    'move_id': order.id,
+                }
+                _logger.info(
+                    "Creating history entry on table stock.move.history")
+                history.create(vals)
+                _logger.info("History entry creation successful")
+        # end of history entry
         for order in self:
             if order.state == 'done' and order.returned:
                 move = order.env['stock.move'].search(
@@ -182,3 +221,22 @@ class StockMoveLine(Model):
                 if not line.assigned_operator:
                     mess_operated = True
             self.move.picking_id.write({'mess_operated': mess_operated})
+
+
+class StockMoveHistory(Model):
+    _name = "stock.move.history"
+
+    picking_id = fields.Many2one("stock.picking", string="Picking")
+    partner_id = fields.Many2one("res.partner", string="Partner")
+    project_id = fields.Many2one("project.project", string="Project")
+    product_id = fields.Many2one("product.product", string="Product")
+    code = fields.Selection(
+        [('incoming', 'DEV'), ('outgoing', 'REM'),
+         ('internal', 'INI')], 'Type of Operation',required=True,
+        default='internal')
+    product_count = fields.Float(string="On work")
+    quantity_done = fields.Float(string="Qty done")
+    sale_line_id = fields.Many2one('sale.order.line', 'Sale Line')
+    move_id = fields.Many2one('stock.move', string="Move")
+    company_id = fields.Many2one('res.company', string='Company', readonly=True,
+                                 default=lambda self: self.env.user.company_id)

@@ -43,6 +43,7 @@
         'web_widget_color', 'partner_firstname',
         # Conalquipo's addons
         'con_base',
+        'con_account',
         'con_hr',
         'con_hr_timesheet',
         'con_product',
@@ -53,7 +54,6 @@
         'con_stock',
         'con_web',
         'con_website_sign',
-        'con_account',
         'con_purchase',
         'con_account_translates',
         'con_delivery',

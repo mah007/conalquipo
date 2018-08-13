@@ -12,6 +12,7 @@
                         <group>
                             <field name="selectionby" required="1"/>
                             <field name="company_id" invisible="1"/>
+                            <field name="query_date"/>
                         </group>
                         <group>
                             <field name="typeselection" required="1"/>
@@ -20,21 +21,12 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Products" invisible="1">
-                            <field name="products_ids"/>
-                        </page>
-                        <page string="Pickings" invisible="1">
-                            <field name="picking_ids"/>
-                        </page>
-                        <page string="Moves in" invisible="1">
-                            <field name="in_move_ids"/>
-                        </page>
-                        <page string="Moves out" invisible="1">
-                            <field name="out_move_ids"/>
+                        <page string="Moves" invisible="1">
+                            <field name="move_ids"/>
                         </page>
                     </notebook>
                     <footer>
-                        <button name="print_report" type="object" class="oe_highlight" string="Proceed" attrs="{'readonly': [('products_ids', '=', False)]}"/>
+                        <button name="print_report" type="object" class="oe_highlight" string="Proceed" attrs="{'readonly': [('move_ids', '=', False)]}"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
