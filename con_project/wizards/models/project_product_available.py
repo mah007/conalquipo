@@ -14,16 +14,38 @@ class ProjectProductAvailable(models.TransientModel):
         return company
 
     @api.onchange(
-        'selectionby', 'typeselection', 'products_ids',
-        'in_move_ids', 'out_move_ids', 'partner_ids', 'project_ids')
+        'selectionby', 'typeselection', 'partner_ids', 'project_ids',
+        'query_date')
     def _get_data_report(self):
         # Data
         products_lst = []
         partners = []
         projects = []
         pickings = []
-        all_partners = self.env['res.partner'].search([])
-        all_projects = self.env['project.project'].search([])
+        all_partners = self.env['res.partner'].search(
+            [('company_id', '=', self.company_id.id)])
+        all_projects = self.env['project.project'].search(
+            [('company_id', '=', self.company_id.id)])
+        start = ''
+        end = ''
+
+        #Enviroments
+        bill_periods = self.env['account.invoice.year.period'].search(
+            [('state', 'in', ['open']),
+             ('company_id', '=', self.company_id.id)])
+
+        _logger.info("Periodos de facturacion: {}".format(bill_periods))
+
+        #searching the period of the query date
+        for period in bill_periods.periods_ids:
+            if self.query_date >= period.start_date and self.query_date <= \
+                    period.end_date:
+                _logger.info("Entre a la condición")
+                start = period.start_date
+                end = period.end_date
+
+        _logger.info("Start Date {}".format(start))
+        _logger.info("End Date {}".format(end))
 
         # Selections
         if self.typeselection == 'all' and self.selectionby == 'partner':
@@ -40,47 +62,30 @@ class ProjectProductAvailable(models.TransientModel):
             partners = list(all_partners._ids)
 
         # Pickings
-        if partners or projects:
-            out_pickings = self.env['stock.picking'].search(
+        if partners:
+            # Historical Ids
+            move_ids = self.env['stock.move.history'].search(
                 [('partner_id', 'in', partners),
-                 ('project_id', 'in', projects),
-                 ('state', '=', 'done'),
-                 ('location_dest_id', '=', self.env.ref(
-                     'stock.stock_location_customers').id)])
-            in_pickings = self.env['stock.picking'].search(
-                [('partner_id', 'in', partners),
-                 ('project_id', 'in', projects),
-                 ('state', '=', 'done'),
-                 ('location_id', '=', self.env.ref(
-                     'stock.stock_location_customers').id)])
-            pickings = out_pickings + in_pickings
+                 ('company_id', '=', self.company_id.id)]
+            )
+        else:
+            move_ids = self.env['stock.move.history'].search(
+                [('project_id', 'in', projects),
+                 ('company_id', '=', self.company_id.id)]
+            )
 
-            # Moves
-            out_moves = self.env['stock.move'].search(
-                [('state', '=', 'done'),
-                 ('location_dest_id', '=', self.env.ref(
-                     'stock.stock_location_customers').id),
-                 ('picking_id', 'in', out_pickings._ids)]) or False
-            if out_moves:
-                for data in out_moves:
-                    if data.sale_line_id:
-                        products_lst.append(data.product_id.id)
-            in_moves = self.env['stock.move'].search(
-                [('state', '=', 'done'),
-                 ('location_id', '=', self.env.ref(
-                     'stock.stock_location_customers').id),
-                 ('picking_id', 'in', in_pickings._ids)]) or False
-            if in_moves:
-                for data in in_moves:
-                    if data.sale_line_id:
-                        products_lst.append(data.product_id.id)
-            for info in self:
-                info.products_ids = products_lst
-                info.in_move_ids = in_moves
-                info.out_move_ids = out_moves
-                info.project_ids = projects
-                info.partner_ids = partners
-                info.picking_ids = pickings
+        # Filtering by period range
+        move_ids = move_ids.search(
+            [('picking_id.scheduled_date','<=', end),
+             ('picking_id.scheduled_date','>=', start)])
+
+        _logger.info("Movimientos {}".format(move_ids))
+
+        for info in self:
+            info.products_ids = products_lst
+            info.project_ids = projects
+            info.partner_ids = partners
+            info.move_ids = move_ids
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -93,19 +98,13 @@ class ProjectProductAvailable(models.TransientModel):
         selection=[('all', 'All'),
                    ('manual', 'Manual')],
         string="Selection type", default="all")
+    query_date = fields.Date(string="Date", default=fields.Date.today())
     partner_ids = fields.Many2many(
         'res.partner', string="Partners")
     project_ids = fields.Many2many(
         'project.project',
         string="Projects")
-    products_ids = fields.Many2many(
-        'product.product', string="Products")
-    picking_ids = fields.Many2many(
-        'stock.picking', string="All pickings")
-    in_move_ids = fields.Many2many(
-        'stock.move', string="Moves in")
-    out_move_ids = fields.Many2many(
-        'stock.move', string="Moves out")
+    move_ids = fields.Many2many('stock.move.history', string="History")
 
     @api.multi
     def print_report(self):
@@ -115,9 +114,8 @@ class ProjectProductAvailable(models.TransientModel):
         """
         datas = {'ids': self.env.context.get('active_ids', [])}
         res = self.read(
-            ['company_id', 'selectionby', 'picking_ids',
-             'typeselection', 'partner_ids', 'project_ids',
-             'products_ids', 'in_move_ids', 'out_move_ids'])
+            ['company_id', 'selectionby', 'typeselection', 'partner_ids',
+             'project_ids', 'move_ids'])
         res = res and res[0] or {}
         datas['form'] = res
         _logger.warning(res)

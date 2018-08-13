@@ -19,6 +19,7 @@
     """,
     'data': [
         'views/account_invoice.xml',
+        'views/account_invoice_period.xml',
         'report/report_invoice_inherit.xml',
         'wizards/views/account_invoice_state.xml',
         'data/account_payment_term.xml',
