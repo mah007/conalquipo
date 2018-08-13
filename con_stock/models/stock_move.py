@@ -232,7 +232,7 @@ class StockMoveHistory(Model):
     product_id = fields.Many2one("product.product", string="Product")
     code = fields.Selection(
         [('incoming', 'DEV'), ('outgoing', 'REM'),
-         ('internal', 'INI')], 'Type of Operation',required=True,
+         ('internal', 'INI')], 'Type of Operation',
         default='internal')
     product_count = fields.Float(string="On work")
     quantity_done = fields.Float(string="Qty done")
