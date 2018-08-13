@@ -157,7 +157,6 @@ class ResPartnerCode(models.Model):
                     'draft or open state. You can not change '
                     'pricelist'))
 
-
     @api.onchange('property_payment_term_id')
     def onchange_payment_term(self):
         if self.property_payment_term_id and self.customer:
