@@ -142,11 +142,21 @@ class ResPartnerCode(models.Model):
                 'account.invoice'].search(
                     [('partner_id', '=', self._origin.id),
                      ('state', 'in', ['draft', 'open'])], limit=1)
+            sale_order = self.env[
+                'sale.order'].search(
+                    [('partner_id', '=', self._origin.id),
+                     ('state', '!=', 'done')], limit=1)
             if invoices:
                 raise exceptions.Warning(_(
                     'This customer has a invoices on '
                     'draft or open state. You can not change '
                     'pricelist'))
+            if sale_order:
+                raise exceptions.Warning(_(
+                    'This customer has a sale orders/quotations on '
+                    'draft or open state. You can not change '
+                    'pricelist'))
+
 
     @api.onchange('property_payment_term_id')
     def onchange_payment_term(self):
@@ -155,11 +165,20 @@ class ResPartnerCode(models.Model):
                 'account.invoice'].search(
                     [('partner_id', '=', self._origin.id),
                      ('state', 'in', ['draft', 'open'])], limit=1)
+            sale_order = self.env[
+                'sale.order'].search(
+                    [('partner_id', '=', self._origin.id),
+                     ('state', '!=', 'done')], limit=1)
             if invoices:
                 raise exceptions.Warning(_(
                     'This customer has a invoices on '
                     'draft or open state. You can not change '
                     'payment term'))
+            if sale_order:
+                raise exceptions.Warning(_(
+                    'This customer has a sale orders/quotations on '
+                    'draft or open state. You can not change '
+                    'pricelist'))
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
