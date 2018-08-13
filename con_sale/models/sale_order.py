@@ -152,6 +152,11 @@ class SaleOrder(models.Model):
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         default=_get_default_template)
 
+    @api.multi
+    def print_quotation2(self):
+        self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
+        return self.env.ref('con_sale.action_report_sale_con').report_action(self)
+
     @api.onchange('type_quotation')
     def onchange_type_quotation(self):
         # Domain for the templates
