@@ -27,6 +27,9 @@
         <field name="anglo_saxon_accounting" eval="1"/>
         <field name="logo" type="base64" file="con_profile/static/src/img/logo.png"/>
         <field name="default_payment_term_id" eval="ref('account.account_payment_term_net')"/>
+        <field name="special_quotations_categories" eval="[(4, ref('con_product.category_30')), (4, ref('con_product.category_31')), (4, ref('con_product.category_22')), (4, ref('con_product.category_24'))]"/>
+        <field name="default_validate_invoices" ref="base.user_root"/>
+        <field name="account_extra_perm" eval="[(4, ref('con_profile.group_it_manager'))]"/>
     </record>
 
 </odoo>
