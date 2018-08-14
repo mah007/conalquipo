@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 01:36+0000\n"
-"PO-Revision-Date: 2018-08-09 20:40-0500\n"
+"POT-Creation-Date: 2018-08-14 17:01+0000\n"
+"PO-Revision-Date: 2018-08-14 12:04-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,24 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 "Language: es_CO\n"
 "X-Generator: Poedit 2.1.1\n"
-
-#. module: con_product
-#: code:addons/con_product/models/product_pricelist_item.py:61
-#, python-format
-msgid "%s %% discount"
-msgstr "%s %% descuento"
-
-#. module: con_product
-#: code:addons/con_product/models/product_pricelist_item.py:66
-#, python-format
-msgid "%s %% discount and %s surcharge"
-msgstr "%s %% descuento y %s recargo"
-
-#. module: con_product
-#: code:addons/con_product/models/product_pricelist_item.py:63
-#, python-format
-msgid "%s %% discount on total"
-msgstr "%s %% descuento en totales"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_description
@@ -71,12 +53,6 @@ msgid "Acarreos"
 msgstr "Acarreos"
 
 #. module: con_product
-#: code:addons/con_product/models/product_pricelist_item.py:54
-#, python-format
-msgid "All Products"
-msgstr "Todos los productos"
-
-#. module: con_product
 #: model:product.category,name:con_product.category_9
 msgid "Allanadoras-Reglas vibratorias"
 msgstr "Allanadoras-Reglas vibratorias"
@@ -112,6 +88,12 @@ msgid "Basculas"
 msgstr "Basculas"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_basket
+#: model:ir.model.fields,field_description:con_product.field_product_template_basket
+msgid "Basket"
+msgstr "Canasta"
+
+#. module: con_product
 #: model:product.category,name:con_product.category_30
 msgid "Bombas de concreto"
 msgstr "Bombas de concreto"
@@ -127,10 +109,10 @@ msgid "Brocas"
 msgstr "Brocas"
 
 #. module: con_product
-#: code:addons/con_product/models/product_pricelist_item.py:47
-#, python-format
-msgid "Category: %s"
-msgstr "Categoría: %s"
+#: model:ir.model.fields,field_description:con_product.field_product_product_cap_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_cap_emptying
+msgid "Cap. Emptying"
+msgstr "Cap. vaciado"
 
 #. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_components_child
@@ -279,6 +261,11 @@ msgid "Employee"
 msgstr "Empleado"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_emptying_per_month
+msgid "Emptying per month"
+msgstr "Vaciado por mes"
+
+#. module: con_product
 #: model:product.uom.categ,name:con_product.product_uom_categ_energy
 msgid "Energy"
 msgstr "Energia"
@@ -349,6 +336,12 @@ msgstr "Tiene componentes?"
 #: model:ir.model.fields,field_description:con_product.field_product_template_multiples_uom
 msgid "Has multiples uom?"
 msgstr "Tiene múltiples unidades?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_height
+#: model:ir.model.fields,field_description:con_product.field_product_template_height
+msgid "Height"
+msgstr "Altura"
 
 #. module: con_product
 #: model:product.category,name:con_product.category_37
@@ -437,6 +430,24 @@ msgid "Malacates"
 msgstr "Malacates"
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_max_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_max_emptying
+msgid "Max. Emptying"
+msgstr "Max. vaciado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_maximum_load_capacity
+#: model:ir.model.fields,field_description:con_product.field_product_template_maximum_load_capacity
+msgid "Maximum load capacity"
+msgstr "Capacidad de carga máxima"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_maximum_value_of_pipe
+#: model:ir.model.fields,field_description:con_product.field_product_template_maximum_value_of_pipe
+msgid "Maximun value of pipe"
+msgstr "Valor máximo de tubería"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_product_min_qty_rental
 #: model:ir.model.fields,field_description:con_product.field_product_template_min_qty_rental
 msgid "Min Qty rental"
@@ -446,6 +457,12 @@ msgstr "Cant. Min. Renta"
 #: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_quantity
 msgid "Min quantity"
 msgstr "Cant. Min"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_min_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_min_emptying
+msgid "Min. Emptying"
+msgstr "Min. vaciado"
 
 #. module: con_product
 #: model:product.category,name:con_product.category_46
@@ -557,6 +574,11 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: con_product
+#: model:ir.model,name:con_product.model_product_category
+msgid "Product Category"
+msgstr "Categoría del Producto"
+
+#. module: con_product
 #: model:ir.actions.act_window,name:con_product.product_states_action
 #: model:ir.ui.menu,name:con_product.menu_product_states_form
 msgid "Product States"
@@ -611,6 +633,11 @@ msgid "Pulidoras"
 msgstr "Pulidoras"
 
 #. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Qty reserved:"
+msgstr "Cantidad reservada:"
+
+#. module: con_product
 #: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_qty
 msgid "Quantity"
 msgstr "Cantidad"
@@ -632,11 +659,6 @@ msgid "Repuestos"
 msgstr "Repuestos"
 
 #. module: con_product
-#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
-msgid "Reserved:"
-msgstr "Reservado:"
-
-#. module: con_product
 #: model:product.category,name:con_product.category_47
 msgid "Retroexcavadoras"
 msgstr "Retroexcavadoras"
@@ -651,6 +673,12 @@ msgstr "Unidad de medida de venta"
 #: model:ir.model.fields,field_description:con_product.field_product_template_sale_uom
 msgid "Sale UoM"
 msgstr "Unidad de medida de venta"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_layout_sec_id
+#: model:ir.model.fields,field_description:con_product.field_product_template_layout_sec_id
+msgid "Section"
+msgstr "Sección"
 
 #. module: con_product
 #: model:ir.model.fields,help:con_product.field_product_states_color
@@ -714,8 +742,8 @@ msgstr "Taladros"
 #. module: con_product
 #: code:addons/con_product/models/product.py:154
 #: code:addons/con_product/models/product.py:173
-#: code:addons/con_product/models/product.py:361
-#: code:addons/con_product/models/product.py:380
+#: code:addons/con_product/models/product.py:374
+#: code:addons/con_product/models/product.py:393
 #, python-format
 msgid "The following location don't have a state asigned"
 msgstr "La ubicación no tiene un estado definido, debe asignarla"
@@ -755,6 +783,12 @@ msgid "This product needs to be a service type"
 msgstr "Este producto necesita ser del tipo servicio."
 
 #. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_tip_load_capacity
+#: model:ir.model.fields,field_description:con_product.field_product_template_tip_load_capacity
+msgid "Tip load capacity"
+msgstr "Capacidad de carga punta"
+
+#. module: con_product
 #: model:product.category,name:con_product.category_42
 msgid "Topografía"
 msgstr "Topografía"
@@ -770,9 +804,10 @@ msgid "Torre grúa"
 msgstr "Torre grúa"
 
 #. module: con_product
-#: model:ir.model.fields,field_description:con_product.field_product_pricelist_item_percent_price_total
-msgid "Total percentage Price"
-msgstr "Porcentaje de precio total"
+#: model:ir.model.fields,field_description:con_product.field_product_product_towers
+#: model:ir.model.fields,field_description:con_product.field_product_template_towers
+msgid "Towers"
+msgstr "Torres"
 
 #. module: con_product
 #: model:product.category,name:con_product.category_8
@@ -789,6 +824,18 @@ msgstr "Unidades de medida para productos"
 #: model:ir.model.fields,field_description:con_product.field_product_template_for_shipping
 msgid "Use for shipping?"
 msgstr "Usado para acarreo?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_useful_arm
+#: model:ir.model.fields,field_description:con_product.field_product_template_useful_arm
+msgid "Useful arm"
+msgstr "Brazo util"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_speed
+#: model:ir.model.fields,field_description:con_product.field_product_template_speed
+msgid "Vel.(m/min)"
+msgstr "Vel.(m/min)"
 
 #. module: con_product
 #: model:product.category,name:con_product.category_32
