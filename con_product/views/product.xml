@@ -30,14 +30,12 @@
               <data>
 
                 <ul position="inside">
-                    <t t-if="record.type.value == 'product'">
-                        <b><li t-if="record.outgoing_qty.value">Reserved: <field  name="outgoing_qty"></field></li></b>
-                    </t>
                     <div t-if="record.location_id.value">
                         <li t-if="record.state_id.value">State: <field name="state_id"></field></li>
                         <li t-if="record.color.value">Color: <field name="color" widget="color" ></field></li>
                         <li t-if="record.location_id.value">Location: <field name="location_id"></field></li>
                         <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
+                        <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b>
                     </div>
                 </ul>
 
