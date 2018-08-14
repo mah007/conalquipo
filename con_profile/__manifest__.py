@@ -61,6 +61,7 @@
         'con_mrp_repair',
     ],
     'data': [
+        'data/groups.xml',
         'data/res_lang_data.xml',
         'data/res_company_data.xml',
         'data/groups.xml',
