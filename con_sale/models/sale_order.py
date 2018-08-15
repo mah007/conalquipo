@@ -131,13 +131,13 @@ class SaleOrder(models.Model):
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
         'Approve min and prices for products',
-        default=True)
+        default=True, track_visibility='onchange')
     approved_special_quotations = fields.Boolean(
         'Approve special quotations',
-        default=True)
+        default=True, track_visibility='onchange')
     approved_discount_modifications = fields.Boolean(
         'Approve discount modifications',
-        default=True)
+        default=True, track_visibility='onchange')
     amount_total_discount = fields.Monetary(
         string='Total discount',
         store=True, readonly=True,
@@ -146,19 +146,21 @@ class SaleOrder(models.Model):
     type_quotation = fields.Selection(
         [('special', 'Special'),
          ('no_special', 'No special')],
-        string='Type of quotation')
+        string='Type of quotation', 
+        track_visibility='onchange')
     special_category = fields.Many2one(
-        'product.category', 'Special category')
+        'product.category', 'Special category',
+        track_visibility='onchange')
     template_id = fields.Many2one(
         'sale.quote.template', 'Quotation Template',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
-        default=_get_default_template)
+        default=_get_default_template,
+        track_visibility='onchange')
     user_id = fields.Many2one(
         'hr.employee', string='Salesperson',
         index=True, track_visibility='onchange',
         default=lambda self: self.employee_id.id)
-
 
     @api.multi
     def print_quotation2(self):
