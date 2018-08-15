@@ -161,11 +161,19 @@ class SaleOrder(models.Model):
         'hr.employee', string='Salesperson',
         index=True, track_visibility='onchange',
         default=lambda self: self.employee_id.id)
+    payment_term_note = fields.Text(
+        'Payment Terms and conditions')
 
     @api.multi
     def print_quotation2(self):
         self.filtered(lambda s: s.state == 'draft').write({'state': 'sent'})
-        return self.env.ref('con_sale.action_report_sale_con').report_action(self)
+        return self.env.ref(
+            'con_sale.action_report_sale_con').report_action(self)
+
+    @api.onchange('payment_term_id')
+    def onchange_payment_term(self):
+        if self.payment_term_id:
+            self.payment_term_note = self.payment_term_id.note
 
     @api.onchange('type_quotation')
     def onchange_type_quotation(self):
@@ -193,19 +201,6 @@ class SaleOrder(models.Model):
             'sale.quote.template'].search(
                 [('special_category', 'not in', cat_list)])
         return {'domain':{'template_id':[('id', 'in', template._ids)]}}
-
-    @api.depends('order_line')
-    def onchange_term_messages(self):
-        for data in self:
-            list_note = []
-            data.note = ""
-            if data.order_line:
-                for sline in data.order_line:
-                    list_note.append(
-                        sline.product_id.product_tmpl_id.more_information)
-                data.note = '\n \n '.join(list_note)
-            else:
-                data.update({'note': ""})
 
     @api.depends('order_line.price_total')
     def _amount_all_discount(self):
@@ -552,6 +547,7 @@ class SaleOrder(models.Model):
         cat_lists = []
         product_eval = []
         discount_eval = []
+        list_note = []
         if self.order_line:
             operators = self.order_line.filtered(
                 lambda line: line.add_operator)
@@ -583,6 +579,10 @@ class SaleOrder(models.Model):
                                 discount_eval.append(data.product_id.id)
                 # Get categories for special quotations
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
+                # Get more information from products
+                list_note.append(
+                    data.product_id.product_tmpl_id.more_information)
+        self.note = '\n \n '.join(list_note)
         cats = self.env.user.company_id.special_quotations_categories
         a = list(cats._ids)
         b = cat_lists

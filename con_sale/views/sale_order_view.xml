@@ -174,7 +174,11 @@
                     <field name="signs_ids"/>
                 </page>
                 <page string="Terms and conditions">
-                    <field name="note" class="oe_inline" placeholder="Setup default terms and conditions in your sales settings ..."/>
+                    <label for="note"/>
+                    <field name="note" placeholder="Setup default terms and conditions in your sales settings ..."/>
+                    <separator/>
+                    <label for="payment_term_note"/>
+                    <field name="payment_term_note" />
                 </page>
 
             </notebook>
