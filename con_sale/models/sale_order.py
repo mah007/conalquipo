@@ -154,6 +154,11 @@ class SaleOrder(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         default=_get_default_template)
+    user_id = fields.Many2one(
+        'hr.employee', string='Salesperson',
+        index=True, track_visibility='onchange',
+        default=lambda self: self.employee_id.id)
+
 
     @api.multi
     def print_quotation2(self):
@@ -1363,6 +1368,11 @@ class SaleOrderLine(models.Model):
     vehicle_id = fields.Many2one(
         'fleet.vehicle', string="Vehicle",
         help="Linked vehicle to the delivery cost")
+    salesman_id = fields.Many2one(
+        related='order_id.user_id',
+        store=True,
+        string='Salesperson',
+        readonly=True)
 
     @api.multi
     def name_get(self):
