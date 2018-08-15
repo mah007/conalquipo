@@ -131,10 +131,13 @@ class SaleOrder(models.Model):
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
         'Approve min and prices for products',
-        default=True)
+        default=True, track_visibility='onchange')
     approved_special_quotations = fields.Boolean(
         'Approve special quotations',
-        default=True)
+        default=True, track_visibility='onchange')
+    approved_discount_modifications = fields.Boolean(
+        'Approve discount modifications',
+        default=True, track_visibility='onchange')
     amount_total_discount = fields.Monetary(
         string='Total discount',
         store=True, readonly=True,
@@ -143,14 +146,21 @@ class SaleOrder(models.Model):
     type_quotation = fields.Selection(
         [('special', 'Special'),
          ('no_special', 'No special')],
-        string='Type of quotation')
+        string='Type of quotation', 
+        track_visibility='onchange')
     special_category = fields.Many2one(
-        'product.category', 'Special category')
+        'product.category', 'Special category',
+        track_visibility='onchange')
     template_id = fields.Many2one(
         'sale.quote.template', 'Quotation Template',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
-        default=_get_default_template)
+        default=_get_default_template,
+        track_visibility='onchange')
+    user_id = fields.Many2one(
+        'hr.employee', string='Salesperson',
+        index=True, track_visibility='onchange',
+        default=lambda self: self.employee_id.id)
 
     @api.multi
     def print_quotation2(self):
@@ -290,6 +300,26 @@ class SaleOrder(models.Model):
                 ))
         else:
             self.approved_special_quotations = True
+        # Approve discount modifications
+        users_list_dm = []
+        groups_dm = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  self.env.ref(
+                      'con_profile.group_sale_discount_modifications').name]])
+        if groups_dm:
+            for data in groups_dm:
+                for users in data.users:
+                    users_list_dm.append(users.id)
+        if not self.approved_discount_modifications \
+         and actual_user not in users_list_dm:
+            if self.order_line:
+                raise UserError(_(
+                    "You can't modify products discounts!"
+                ))
+        else:
+            self.approved_discount_modifications = True
 
     @api.multi
     def check_limit(self):
@@ -521,18 +551,20 @@ class SaleOrder(models.Model):
         """
         cat_lists = []
         product_eval = []
+        discount_eval = []
         if self.order_line:
             operators = self.order_line.filtered(
-                lambda line:line.add_operator)
+                lambda line: line.add_operator)
             self.operators_services = len(operators)
             for data in self.order_line:
-                # Get min qty and uom of product
+                # Get min qty and price of product
                 product_muoms = data.product_id.product_tmpl_id.multiples_uom
                 if product_muoms != True:
-                    if data.price_unit < data.product_id.product_tmpl_id.list_price:
+                    if data.price_unit < \
+                     data.product_id.product_tmpl_id.list_price:
                         product_eval.append(data.product_id.id)
                     if data.min_sale_qty < \
-                    data.product_id.product_tmpl_id.min_qty_rental:
+                     data.product_id.product_tmpl_id.min_qty_rental:
                         product_eval.append(data.product_id.id)
                 else:
                     for uom_list in data.product_id.product_tmpl_id.uoms_ids:
@@ -541,21 +573,34 @@ class SaleOrder(models.Model):
                                 product_eval.append(data.product_id.id)
                             if data.min_sale_qty < uom_list.quantity:
                                 product_eval.append(data.product_id.id)
+                # Approve to change discount
+                if self.pricelist_id:
+                    for datadisc in self.pricelist_id.item_ids:
+                        if data.product_id.product_tmpl_id.id \
+                        == datadisc.product_tmpl_id.id:
+                            if data.discount < datadisc.percent_price or \
+                            data.discount > datadisc.percent_price:
+                                discount_eval.append(data.product_id.id)
                 # Get categories for special quotations
-                cats = self.env.user.company_id.special_quotations_categories
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
-                a = list(cats._ids)
-                b = cat_lists
-                inter = bool(set(a).intersection(b))
-                if inter:
-                    data.order_id.approved_special_quotations = False
-                else:
-                    data.order_id.approved_special_quotations = True
-                # Min for qty and prices
-                if product_eval:
-                    data.order_id.approved_min_prices = False
-                else:
-                    data.order_id.approved_min_prices = True
+        cats = self.env.user.company_id.special_quotations_categories
+        a = list(cats._ids)
+        b = cat_lists
+        inter = bool(set(a).intersection(b))
+        if inter:
+            self.approved_special_quotations = False
+        else:
+            self.approved_special_quotations = True
+        # Min for qty and prices
+        if product_eval:
+            self.approved_min_prices = False
+        else:
+            self.approved_min_prices = True
+        # Change discount
+        if discount_eval:
+            self.approved_discount_modifications = False
+        else:
+            self.approved_discount_modifications = True
 
     def _compute_sign_ids(self):
         """
@@ -1325,6 +1370,11 @@ class SaleOrderLine(models.Model):
     vehicle_id = fields.Many2one(
         'fleet.vehicle', string="Vehicle",
         help="Linked vehicle to the delivery cost")
+    salesman_id = fields.Many2one(
+        related='order_id.user_id',
+        store=True,
+        string='Salesperson',
+        readonly=True)
 
     @api.multi
     def name_get(self):
