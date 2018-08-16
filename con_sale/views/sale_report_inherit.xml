@@ -276,6 +276,19 @@
                             <strong>Fiscal Position Remark:</strong>
                             <span t-field="o.fiscal_position_id.note"/>
                         </p>
+                        
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style="float:left; width:40%; margin-left:50px; font-size:10px;">
+                            <hr height ="60%" style="border-top: 1px solid #000000;"/>
+                            <span style="margin-left:70px; color:#000000; text-align:">GERENTE</span>
+                        </div>
+                        <div style="float:right; width:40%; font-size:10px; margin-right:50px;">
+                            <hr height="60%" style="border-top: 1px solid #000000;"/>
+                            <span style="text-align:center; margin-left:70px; color:#000000;">CARGO: </span>
+                        </div>
+
                         <div class="oe_structure"/>
 
                         <div class="footer">

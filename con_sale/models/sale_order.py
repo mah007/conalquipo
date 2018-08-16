@@ -559,7 +559,7 @@ class SaleOrder(models.Model):
                     if data.price_unit < \
                      data.product_id.product_tmpl_id.list_price:
                         product_eval.append(data.product_id.id)
-                    if data.min_sale_qty < \
+                    if data.bill_uom_qty < \
                      data.product_id.product_tmpl_id.min_qty_rental:
                         product_eval.append(data.product_id.id)
                 else:
@@ -567,7 +567,7 @@ class SaleOrder(models.Model):
                         if data.bill_uom.id == uom_list.uom_id.id:
                             if data.price_unit < uom_list.cost_byUom:
                                 product_eval.append(data.product_id.id)
-                            if data.min_sale_qty < uom_list.quantity:
+                            if data.bill_uom_qty < uom_list.quantity:
                                 product_eval.append(data.product_id.id)
                 # Approve to change discount
                 if self.pricelist_id:
@@ -1989,11 +1989,14 @@ class SaleOrderLine(models.Model):
             self.price_unit = self.product_id.product_tmpl_id.list_price
             self.min_sale_qty = \
                 self.product_id.product_tmpl_id.min_qty_rental
+            self.bill_uom_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental
         else:
             for uom_list in self.product_id.product_tmpl_id.uoms_ids:
                 if self.bill_uom.id == uom_list.uom_id.id:
                     self.price_unit = uom_list.cost_byUom
                     self.min_sale_qty = uom_list.quantity
+                    self.bill_uom_qty = uom_list.quantity
 
     @api.multi
     def _action_launch_procurement_rule(self):
