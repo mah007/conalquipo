@@ -577,6 +577,9 @@ class SaleOrder(models.Model):
                             if data.discount < datadisc.percent_price or \
                             data.discount > datadisc.percent_price:
                                 discount_eval.append(data.product_id.id)
+                        else:
+                            if data.discount > 0.0:
+                                discount_eval.append(data.product_id.id)
                 # Get categories for special quotations
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
                 # Get more information from products
