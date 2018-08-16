@@ -19,6 +19,7 @@
 
         <record id="stock.stock_location_scrapped" model="stock.location">
             <field name="is_charge_replacement">True</field>
+            <field name="product_state" ref="__export__.product_states_5"/>
         </record>
 
     </data>

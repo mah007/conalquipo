@@ -580,9 +580,11 @@ class SaleOrder(models.Model):
                 # Get categories for special quotations
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
                 # Get more information from products
-                list_note.append(
-                    data.product_id.product_tmpl_id.more_information)
-        self.note = '\n \n '.join(list_note)
+                if not data.product_id.product_tmpl_id.type == 'service':
+                    list_note.append(
+                        data.product_id.product_tmpl_id.more_information)
+        if list_note:
+            self.note = '\n \n '.join(list_note)
         cats = self.env.user.company_id.special_quotations_categories
         a = list(cats._ids)
         b = cat_lists
