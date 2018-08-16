@@ -580,7 +580,8 @@ class SaleOrder(models.Model):
                 # Get categories for special quotations
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
                 # Get more information from products
-                if not data.product_id.product_tmpl_id.type == 'service':
+                if not data.product_id.product_tmpl_id.type == 'service' and\
+                 data.product_id.product_tmpl_id.more_information:
                     list_note.append(
                         data.product_id.product_tmpl_id.more_information)
         if list_note:
