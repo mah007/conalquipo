@@ -99,11 +99,12 @@ class AccountInvoicePeriodPeriod(models.Model):
     year_id = fields.Many2one('account.invoice.year.period', string="Year")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
-    state = fields.Selection([('draft', _('Draft')),('open',_('Open')),
+    state = fields.Selection([('draft', _('Draft')), ('open', _('Open')),
                               ('closet', _('Closet'))], default="draft")
     active = fields.Boolean(string="Active", default=True)
-    company_id = fields.Many2one('res.company', string='Company', readonly=True,
-                                 default=lambda self: self.env.user.company_id)
+    company_id = fields.Many2one(
+        'res.company', string='Company', readonly=True,
+        default=lambda self: self.env.user.company_id)
 
     def button_activate(self):
         return True
