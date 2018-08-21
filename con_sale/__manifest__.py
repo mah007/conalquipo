@@ -27,7 +27,7 @@
     sale order.""",
     'depends': ['base', 'sales_team', 'sale', 'website_quote', 'stock',
                 'delivery', 'product', 'con_account',
-                'website_quote'],
+                'website_quote', 'report_qweb_element_page_visibility'],
     'data': ['views/sale_order_view.xml',
              'views/sale_report_inherit.xml',
              'wizard/views/sale_order_advertisement_wizard.xml',

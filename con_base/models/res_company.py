@@ -27,6 +27,7 @@ class ResCompany(models.Model):
 
     iso_logo = fields.Binary(string='Iso Logo')
     footer_logo = fields.Binary(string="Footer Logo")
+    cover_page_logo = fields.Binary(string="Cover page Logo")
     account_extra_perm = fields.Many2many(
         'res.groups', string="Account extra permissions")
     default_payment_term_id = fields.Many2one(

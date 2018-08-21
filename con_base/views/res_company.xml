@@ -12,6 +12,9 @@
                             <field name="iso_logo" widget="image"/>
                             <field name="footer_logo" widget="image"/>
                         </group>
+                        <group>
+                            <field name="cover_page_logo" widget="image"/>
+                        </group>
                     </page>
                     <page string="Extra permissions/Parameters">
                         <group>

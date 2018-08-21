@@ -9,10 +9,10 @@
             <t>
                 <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
 
-                    <img src='/con_sale/static/img/IntroConalquipopng' style="max-height: 45px;"/>
+                    <div class="header not-first-page">
 
-                    <div class="header">
                         <div class="row" style="width:100%;">
+
                             <div class="col-xs-3" style="width:40%;">
                                 <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="border:auto; max-height: 100px; max-width: 288px;" />
                             </div>
@@ -55,31 +55,52 @@
                     </div>
                     <div class="article o_report_layout_standard">
                         <div class="page">
+
+                            <div class="first-page" style="page-break-after:always;margin-top:-15%;">
+                                <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.cover_page_logo)" style="border:auto;" />
+                            </div>
+
                             <div class="oe_structure"/>
                             <div style="width:100%; text-align:right;">
                                 <strong>
-                                    <span t-if="o.state not in ['draft','sent']" style="color:#C65A00;">Orden # </span>
-                                    <span t-if="o.state in ['draft','sent']" style="color:#C65A00;">Cotización # </span>
+                                    <span t-if="o.state not in ['draft','sent']" style="color:#C65A00;font-size: 20px">Orden </span>
+                                    <span t-if="o.state in ['draft','sent']" style="color:#C65A00;font-size: 20px;">Cotización </span>
                                 </strong>
                                 <br/>
-                                <span># </span><span t-field="o.name"/>
+                                <span style="font-size: 20px;"># </span><span style="font-size: 20px;" t-field="o.name"/>
                             </div>
                         </div>
 
                         <div style="width:100%;">
-                            <strong><span t-field="o.partner_id.name"/>
-                            <span> NIT. </span><span t-field="o.partner_id.vat"/>
-                            <span>NIT.</span><span t-field="o.partner_id.vat"/>
-                            <span> / </span><span t-field="o.project_id.name"/></strong>
-                            <span> / </span><span t-field="o.project_id.work_code"/>
-                            <br/>
-                            <span t-field="o.project_id.street1"/> <span> / </span>
-                            <span t-field="o.project_id.street1_2"/><span> / </span>
-                            <span t-field="o.project_id.city"/>
+                            <strong>
+                                <span>Customer: </span>
+                            </strong>
+                            <span t-field="o.partner_id.name"/><br/>
+                            <strong>
+                                <span>NIT. </span>
+                            </strong>
+                            <span t-field="o.partner_id.vat"/><br/>
+                            <strong>
+                                <span>Work. </span>
+                            </strong>
+                            <span t-field="o.project_id.name"/><br/>
+                            <span t-field="o.project_id.work_code"/><br/>
+                            <span t-field="o.project_id.street1"/><span> / </span><span t-field="o.project_id.street1_2"/><br/>
+                            <span t-field="o.project_id.city"/><br/>
+                            <span t-field="o.project_id.municipality_id.name"/><br/>
+                            <span t-field="o.project_id.state_id.name"/><br/>
+                            <span t-field="o.project_id.phone1"/><br/>
                             <br/>
                         </div>
                         <br/>
+                        <br/>
 
+                        <p style="font-size:20px;text-align:justify;">Cordial Saludo,</p><br/>
+                        <p style="font-size:20px;text-align:justify;">
+                        Nos permitimos poner a su consideración y estudio la siguiente propuesta <t t-if="o.special_category">de <span t-field="o.special_category.name"/></t>, según las siguientes especificaciones:
+                        </p>
+                        <br/>
+                        <br/>
 
                         <div t-if="o.special_category.name == 'Torre grúa'" class="row mt32 mb32" id="quotations_specials_tg">
                             <div class="col-xs-3">
@@ -268,8 +289,21 @@
                             </div>
                         </div>
 
-                        <p t-field="o.note" />
+                        <br/>
+                        <br/>
+                        <p t-if="o.note">
+                            <strong>NOTES:</strong>
+                            <br/>
+                            <br/>
+                            <p style="font-size:15px;text-align:justify;">
+                                <span t-field="o.note"/>
+                            </p>
+                        </p>
+                        <br/>
+                        <br/>
+
                         <p t-if="o.payment_term_id.note">
+                            <strong>Payment terms:</strong>
                             <span t-field="o.payment_term_id.note"/>
                         </p>
                         <p id="fiscal_position_remark" t-if="o.fiscal_position_id and o.fiscal_position_id.note">
@@ -279,19 +313,22 @@
                         
                         <br/>
                         <br/>
+                        <p>A la espera de sus comentarios.</p><br/>
+                        <p>Atentamente,</p><br/>
+                        <br/>
                         <br/>
                         <div style="float:left; width:40%; margin-left:50px; font-size:10px;">
                             <hr height ="60%" style="border-top: 1px solid #000000;"/>
-                            <span style="margin-left:70px; color:#000000; text-align:">GERENTE</span>
+                            <span style="margin-left:200px; color:#000000; text-align:center;">GERENTE</span>
                         </div>
                         <div style="float:right; width:40%; font-size:10px; margin-right:50px;">
                             <hr height="60%" style="border-top: 1px solid #000000;"/>
-                            <span style="text-align:center; margin-left:70px; color:#000000;">CARGO: </span>
+                            <span style="text-align:center; margin-left:200px; color:#000000;">CARGO: </span>
                         </div>
 
                         <div class="oe_structure"/>
 
-                        <div class="footer">
+                        <div class="footer not-first-page">
                             <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.footer_logo)" style="border:auto; max-height: 100px; max-width: 288px;" />
                             <div class="text-center">
                                 <div>

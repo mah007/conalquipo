@@ -148,10 +148,12 @@ class StockMove(Model):
                     'project_id': order.picking_id.project_id.id,
                     'product_id': order.product_id.id,
                     'code': op,
-                    'product_count': order.qty_history if op == 'internal'
-                    else order.product_count,
-                    'quantity_done': order.quantity_done if op != 'internal'
-                           else 0,
+                    'product_count': order.qty_history \
+                     if op == 'internal'
+                                     else order.product_count,
+                    'quantity_done': order.quantity_done \
+                     if op != 'internal'
+                                     else 0,
                     'sale_line_id': order.sale_line_id.id,
                     'move_id': order.id,
                 }
@@ -238,5 +240,6 @@ class StockMoveHistory(Model):
     quantity_done = fields.Float(string="Qty done")
     sale_line_id = fields.Many2one('sale.order.line', 'Sale Line')
     move_id = fields.Many2one('stock.move', string="Move")
-    company_id = fields.Many2one('res.company', string='Company', readonly=True,
-                                 default=lambda self: self.env.user.company_id)
+    company_id = fields.Many2one(
+        'res.company', string='Company', readonly=True,
+        default=lambda self: self.env.user.company_id)
