@@ -9,11 +9,7 @@
             <t>
                 <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
 
-                    <div class="header">
-
-                        <!-- <div class="first-page" style="margin-bottom: 50%;">
-                                <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.iso_logo)" style="border:auto; max-height: 4000px; max-width: 2500px;" />
-                        </div> -->
+                    <div class="header not-first-page">
 
                         <div class="row" style="width:100%;">
 
@@ -59,6 +55,11 @@
                     </div>
                     <div class="article o_report_layout_standard">
                         <div class="page">
+
+                            <div class="first-page" style="page-break-after:always;margin-top:-15%;">
+                                <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.cover_page_logo)" style="border:auto;" />
+                            </div>
+
                             <div class="oe_structure"/>
                             <div style="width:100%; text-align:right;">
                                 <strong>
@@ -295,7 +296,7 @@
 
                         <div class="oe_structure"/>
 
-                        <div class="footer">
+                        <div class="footer not-first-page">
                             <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.footer_logo)" style="border:auto; max-height: 100px; max-width: 288px;" />
                             <div class="text-center">
                                 <div>
