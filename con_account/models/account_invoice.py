@@ -35,6 +35,22 @@ class AccountInvoiceLine(models.Model):
     qty_shipped = fields.Float(
         'Quantity to be shipped',
         digits=dp.get_precision('Product Unit of Measure'))
+    document = fields.Char(
+        string='Doc.')
+    date_move = fields.Date(
+        string='Date')
+    date_init = fields.Integer(
+        string='Date init')
+    date_end = fields.Integer(
+        string='Date end')
+    num_days = fields.Float(
+        string='Number days')
+    qty_remmisions = fields.Float(
+        string='Qty remmisions')
+    qty_returned = fields.Float(
+        string='Qty returned')
+    products_on_work = fields.Float(
+        string='Products on work')
 
 
 class AccountInvoice(models.Model):
