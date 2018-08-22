@@ -26,6 +26,9 @@
         <field name="currency_id" ref="base.COP"/>
         <field name="anglo_saxon_accounting" eval="1"/>
         <field name="logo" type="base64" file="con_profile/static/src/img/logo.png"/>
+        <field name="iso_logo" type="base64" file="con_profile/static/src/img/ISO-9001.jpg"/>
+        <field name="footer_logo" type="base64" file="con_profile/static/src/img/footer.png"/>
+        <field name="cover_page_logo" type="base64" file="con_profile/static/src/img/cover_page.png"/>
         <field name="default_payment_term_id" eval="ref('account.account_payment_term_net')"/>
         <field name="special_quotations_categories" eval="[(4, ref('con_product.category_30')), (4, ref('con_product.category_31')), (4, ref('con_product.category_22')), (4, ref('con_product.category_24'))]"/>
         <field name="default_validate_invoices" eval="[(4, ref('base.user_root'))]"/>
