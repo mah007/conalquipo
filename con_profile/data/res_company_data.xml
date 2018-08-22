@@ -8,15 +8,15 @@
     <record id="base.main_partner" model="res.partner">
         <field name="name">Conalquipo S.A.S</field>
         <field name="company_type">company</field>
-        <field name="street"></field>
-        <field name="street2"></field>
-        <field name="city"></field>
+        <field name="street">Cl. 72</field>
+        <field name="street2">#64C , Bodega 110</field>
+        <field name="city">Medellín</field>
         <field name="state_id" eval="ref('base.state_co_01')"/>
         <field name="zip"></field>
         <field name="country_id" eval="ref('base.co')"/>
-        <field name="phone"></field>
-        <field name="email"></field>
-        <field name="website"></field>
+        <field name="phone">Tel: (57 4) 441 0341</field>
+        <field name="email">conalquipo@conalquipo.com</field>
+        <field name="website">https://www.conalquipo.com</field>
         <field name="lang">es_CO</field>
         <field name="vat"></field>
     </record>
