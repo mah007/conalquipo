@@ -9,6 +9,7 @@
     'summary': 'Account',
     'depends': [
         'account', 'account_accountant', 'account_asset', 'project', 'sale',
+        'account_cancel',
     ],
     'description':
     """
