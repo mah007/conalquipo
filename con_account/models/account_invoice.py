@@ -36,7 +36,7 @@ class AccountInvoiceLine(models.Model):
         'Quantity to be shipped',
         digits=dp.get_precision('Product Unit of Measure'))
     document = fields.Char(
-        string='Doc.')
+        string='Document')
     date_move = fields.Date(
         string='Date')
     date_init = fields.Integer(
@@ -96,25 +96,6 @@ class AccountInvoice(models.Model):
         track_visibility='onchange',
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
-    pricelist_id = fields.Many2one(
-        'product.pricelist',
-        string='Pricelist',
-        compute="_get_sale_pricelist",
-        help="Pricelist for current sales order.")
-
-    def _get_sale_pricelist(self):
-        """
-        This function get the default state configured on the product states
-        models and return to the `product_template` model else return False
-
-        :return: Recordset or False
-        """
-        for data in self:
-            sale_ob = self.env['sale.order']
-            sale_origin = sale_ob.search(
-                [('name', '=', data.origin),
-                 ('state', '=', 'sale')])
-            data.pricelist_id = sale_origin.pricelist_id.id
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
