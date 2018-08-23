@@ -96,6 +96,8 @@ class AccountInvoice(models.Model):
         track_visibility='onchange',
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
+    pre_invoice = fields.Boolean(
+        string='Pre-Invoice?')
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):

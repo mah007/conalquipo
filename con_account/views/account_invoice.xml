@@ -72,6 +72,7 @@
                 <field name="project_id" string="Works" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id, 'default_partner_id': partner_id}"/>
                 <field name="employee_id" required="1" readonly="1" options="{'no_create': True}" force_save="1"/>
                 <field name="employee_code" required="1"/>
+                <field name="pre_invoice"/>
             </field>
 
             <field name="payment_term_id" position="after">
