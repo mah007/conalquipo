@@ -299,3 +299,26 @@ class AccountInvoice(models.Model):
                 ))
             raise UserError(_(
                 "You can't validate invoces. Check your permissions!"))
+
+    @api.multi
+    def _get_printed_report_name(self):
+        self.ensure_one()
+        return  \
+            self.type == 'out_invoice' and not self.pre_invoice \
+             and self.state == 'draft' and _('Draft Invoice') or \
+            self.type == 'out_invoice' and self.pre_invoice and \
+             self.state == 'draft' and _('Pre Invoice') or \
+            self.type == 'out_invoice' and self.state in ('open', 'paid') \
+             and _('Invoice - %s') % (self.number) or \
+            self.type == 'out_refund' and self.state == 'draft' \
+             and _('Credit Note') or \
+            self.type == 'out_refund' and _('Credit Note - %s') % (
+                self.number) or \
+            self.type == 'in_invoice' and self.state == 'draft' \
+             and _('Vendor Bill') or \
+            self.type == 'in_invoice' and self.state in ('open', 'paid') \
+             and _('Vendor Bill - %s') % (self.number) or \
+            self.type == 'in_refund' and self.state == 'draft' \
+             and _('Vendor Credit Note') or \
+            self.type == 'in_refund' and _(
+                'Vendor Credit Note - %s') % (self.number)
