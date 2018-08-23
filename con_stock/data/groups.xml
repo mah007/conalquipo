@@ -17,8 +17,13 @@
             <field name="category_id" ref="con_stock.module_stock_notifications"/>
         </record>
 
+        <record model="res.groups" id="group_change_stock_dates">
+            <field name="name">Can change stock dates</field>
+            <field name="category_id" ref="base.module_category_warehouse_management"/>
+        </record>
+
         <record id="base.user_root" model="res.users">
-            <field name="groups_id" eval="[(4, ref('group_notifications_diary')), (4, ref('group_notifications_biweekly')), (4, ref('group_notifications_monthly'))]"/>
+            <field name="groups_id" eval="[(4, ref('group_notifications_diary')), (4, ref('group_notifications_biweekly')), (4, ref('group_notifications_monthly')), (4, ref('group_change_stock_dates'))]"/>
         </record>
 
     </data>
