@@ -290,5 +290,10 @@ class AccountInvoice(models.Model):
         if actual_user in users_in_acc_validate_groups:
             return res
         else:
+            # Can not validate zero amount invoices
+            if self.amount_total == 0.0:
+                raise UserError(_(
+                    "You can't validate zero invoces. Check your permissions!"
+                ))
             raise UserError(_(
                 "You can't validate invoces. Check your permissions!"))
