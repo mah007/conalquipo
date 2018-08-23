@@ -8,6 +8,10 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
 
+                <field name='scheduled_date' position="replace">
+                    <field name="scheduled_date" attrs="{'readonly': [('id', '=', False)], 'required': [('id', '!=', False)]}" groups="con_stock.group_change_stock_dates"/>
+                </field>
+
                 <xpath expr="//button[@name='button_scrap']" position="replace">
                     <button name="button_scrap" type="object" string="Scrap"
                         attrs="{'invisible': ['|', '|', ('picking_type_code', '!=', 'incoming'), ('state', '=', 'done'), ('is_locked', '=', False)]}"/>
