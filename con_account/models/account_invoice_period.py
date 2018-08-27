@@ -41,11 +41,14 @@ class AccountInvoiceYearPeriod(models.Model):
     interval = fields.Selection([('biweekly', 'Biweekly'),
                                  ('monthly', 'Monthly')])
     state = fields.Selection(
-        [('draft', _('Draft')),('open',_('Open')),('closet', _('Closet'))],
+        [('draft', _('Draft')),
+         ('open', _('Open')),
+         ('closet', _('Closet'))],
         default="draft")
     active = fields.Boolean(string="Active", default=True)
-    company_id = fields.Many2one('res.company', string='Company', readonly=True,
-                                 default=lambda self: self.env.user.company_id)
+    company_id = fields.Many2one(
+        'res.company', string='Company', readonly=True,
+        default=lambda self: self.env.user.company_id)
 
     @api.multi
     def button_create_periods(self):

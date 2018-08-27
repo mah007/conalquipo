@@ -146,7 +146,7 @@ class SaleOrder(models.Model):
     type_quotation = fields.Selection(
         [('special', 'Special'),
          ('no_special', 'No special')],
-        string='Type of quotation', 
+        string='Type of quotation',
         track_visibility='onchange')
     special_category = fields.Many2one(
         'product.category', 'Special category',
@@ -262,7 +262,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                  'con_profile.group_sale_small_qty').name]])
+                    'con_profile.group_sale_small_qty').name]])
         if groups:
             for data in groups:
                 for users in data.users:
@@ -423,7 +423,8 @@ class SaleOrder(models.Model):
                                         'message_invoice_inactive': False,
                                         'available_amount': amount})
                         # Invoice but pending and not exceeds
-                        elif self.partner_id.credit_limit > 0.0 and due < today:
+                        elif self.partner_id.credit_limit > 0.0 \
+                         and due < today:
                             msg = _("Have outstanding invoices!")
                             self.write({'message_invoice': msg,
                                         'can_confirm': True,
@@ -489,7 +490,7 @@ class SaleOrder(models.Model):
                     'due_invoice_ids': [],
                     'message_invoice': '',
                     'available_amount': 0.0})
-        
+       
     def _compute_product_count(self):
         """
         Method to count the products on works
@@ -699,8 +700,8 @@ class SaleOrder(models.Model):
         """
         Prepare the dict of values to create the new invoice for a sales
         order.
-        This method may be overridden to implement custom invoice 
-        generation (making sure to call super() to establish 
+        This method may be overridden to implement custom invoice
+        generation (making sure to call super() to establish
         a clean extension chain).
         """
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
@@ -1344,7 +1345,7 @@ class SaleOrderLine(models.Model):
         store=True)
     # Components
     product_components = fields.Boolean('Have components?')
-    product_uoms  = fields.Boolean('Multiple uoms?')
+    product_uoms = fields.Boolean('Multiple uoms?')
     is_component = fields.Boolean('Component')
     is_extra = fields.Boolean('Extra')
     parent_component = fields.Many2one(
