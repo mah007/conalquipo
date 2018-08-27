@@ -5,7 +5,7 @@ import csv
 
 host = 'http://localhost:9001'
 db = 'prueba_piloto_productos'
-user = 'guadarramaangel@gmail.com'
+user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
 sock_common = xmlrpc.client.ServerProxy('{0}/xmlrpc/common'.format(host))
