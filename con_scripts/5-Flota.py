@@ -35,7 +35,19 @@ for row in Flota:
             [['name', '=', row['MODELO'].strip()]]],
         {'fields': ['id']})
 
+    if not brand_id:
+        vals = {
+            'name': row['MARCA'].strip(),
+        }
+        sock.execute_kw(
+            db, uid, password, 'fleet.vehicle.model.brand', 'create', [vals])
+
     if not model_id:
+
+        brand_id = sock.execute_kw(
+            db, uid, password, 'fleet.vehicle.model.brand', 'search_read', [
+                [['name', '=', row['MARCA'].strip()]]],
+            {'fields': ['id']})
 
         # Crear modelo nuevo
         message = "Linea {0} --> Creando modelo: {1}".format(
