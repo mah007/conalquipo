@@ -58,8 +58,8 @@ class DeliveryCarrierCost(models.Model):
         record = super(DeliveryCarrierCost, self).create(values)
         if not record.vehicle:
             raise UserError(_("The vehicle is required on the line"))
-        if not record.cost:
-            raise UserError(_("The cost is required on the line"))
+        # if not record.cost:
+        #     raise UserError(_("The cost is required on the line"))
         if record.cost < 0:
             raise UserError(_("The cost can't be negative"))
         return record
@@ -69,8 +69,8 @@ class DeliveryCarrierCost(models.Model):
         record = super(DeliveryCarrierCost, self).write(values)
         if not self.vehicle:
             raise UserError(_("The vehicle is required on the line"))
-        if not self.cost:
-            raise UserError(_("The cost is required on the line"))
+        # if not self.cost:
+        #     raise UserError(_("The cost is required on the line"))
         if self.cost < 0:
             raise UserError(_("The cost can't be negative"))
         return record

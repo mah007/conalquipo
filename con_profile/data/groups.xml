@@ -111,6 +111,7 @@
         </record>
 
         <record id="base.user_root" model="res.users">
+            <field name="login">dmpineda@conalquipo.com</field>
             <field name="groups_id" eval="[(4, ref('group_it_manager')), (4, ref('group_administrative_assistant')), (4, ref('group_commercial')), (4, ref('group_commercial_purchases')), (4, ref('group_work')), (4, ref('group_can_sign')), (4, ref('group_logistic_director')), (4, ref('group_logistic')), (4, ref('group_fleet')), (4, ref('group_mrp_repair')), (4, ref('group_sale_overlimit')), (4, ref('group_message_warnings')), (4, ref('group_sale_small_qty')), (4, ref('group_inactive_partners')), (4, ref('group_can_see_employees')), (4, ref('group_sale_special_quotations')), (4, ref('group_commercial_director')), (4, ref('group_sale_discount_modifications'))]"/>
         </record>
 
