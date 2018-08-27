@@ -52,7 +52,8 @@ class StockMove(Model):
     parent_sale_line = fields.Many2one(
         'sale.order.line',
         string='Parent sale line')
-    qty_history = fields.Float(compute='_compute_product_history',
+    qty_history = fields.Float(
+        compute='_compute_product_history',
         string="History on work",
         track_visibility='onchange', store=True)
 
