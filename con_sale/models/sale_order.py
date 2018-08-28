@@ -570,7 +570,8 @@ class SaleOrder(models.Model):
                 else:
                     if not data.product_id.product_tmpl_id.uoms_ids:
                         raise UserError(_(
-                            "You need to define the product units values"))
+                            """You need to define product units, quantities """
+                            """and prices values (Multiple values)"""))
                     for uom_list in data.product_id.product_tmpl_id.uoms_ids:
                         if data.bill_uom.id == uom_list.uom_id.id:
                             if data.price_unit < uom_list.cost_byUom:
