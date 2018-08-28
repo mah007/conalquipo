@@ -889,7 +889,7 @@ class SaleOrder(models.Model):
             self.send_followers(body, new_users)
             self.send_to_channel(body, new_users)
             # Test smtp connection
-            server = self.env['ir.mail_server'].search([])
+            server = self.env['ir.mail_server'].sudo().search([])
             for data in server:
                 smtp = False
                 try:
@@ -935,7 +935,7 @@ class SaleOrder(models.Model):
             # Send mail
             if mail_template:
                 # Test smtp connection
-                server = self.env['ir.mail_server'].search([])
+                server = self.env['ir.mail_server'].sudo().search([])
                 for data in server:
                     smtp = False
                     try:
@@ -1044,7 +1044,7 @@ class SaleOrder(models.Model):
             res.send_followers(body, recipients)
             res.send_to_channel(body, recipients)
             # Test smtp connection
-            server = self.env['ir.mail_server'].search([])
+            server = self.env['ir.mail_server'].sudo().search([])
             for data in server:
                 smtp = False
                 try:
@@ -1124,7 +1124,7 @@ class SaleOrder(models.Model):
             # Send mail
             if mail_template:
                 # Test smtp connection
-                server = self.env['ir.mail_server'].search([])
+                server = self.env['ir.mail_server'].sudo().search([])
                 for data in server:
                     smtp = False
                     try:
@@ -1184,7 +1184,7 @@ class SaleOrder(models.Model):
                 # Send email notifications
                 if now >= end_date_email:
                     # Test smtp connection
-                    server = self.env['ir.mail_server'].search([])
+                    server = self.env['ir.mail_server'].sudo().search([])
                     for data in server:
                         smtp = False
                         try:
