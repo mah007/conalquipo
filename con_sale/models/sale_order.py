@@ -130,7 +130,10 @@ class SaleOrder(models.Model):
         domain=lambda self: self.getemployee())
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
-        'Approve min and prices for products',
+        'Approve min prices for products',
+        default=True, track_visibility='onchange')
+    approved_min_qty = fields.Boolean(
+        'Approve min qty for products',
         default=True, track_visibility='onchange')
     approved_special_quotations = fields.Boolean(
         'Approve special quotations',
@@ -546,7 +549,8 @@ class SaleOrder(models.Model):
 
         """
         cat_lists = []
-        product_eval = []
+        product_eval_price = []
+        product_eval_qty = []
         discount_eval = []
         list_note = []
         if self.order_line:
@@ -559,17 +563,20 @@ class SaleOrder(models.Model):
                 if product_muoms != True:
                     if data.price_unit < \
                      data.product_id.product_tmpl_id.list_price:
-                        product_eval.append(data.product_id.id)
+                        product_eval_price.append(data.product_id.id)
                     if data.bill_uom_qty < \
                      data.product_id.product_tmpl_id.min_qty_rental:
-                        product_eval.append(data.product_id.id)
+                        product_eval_qty.append(data.product_id.id)
                 else:
+                    if not data.product_id.product_tmpl_id.uoms_ids:
+                        raise UserError(_(
+                            "You need to define the product units values"))
                     for uom_list in data.product_id.product_tmpl_id.uoms_ids:
                         if data.bill_uom.id == uom_list.uom_id.id:
                             if data.price_unit < uom_list.cost_byUom:
-                                product_eval.append(data.product_id.id)
+                                product_eval_price.append(data.product_id.id)
                             if data.bill_uom_qty < uom_list.quantity:
-                                product_eval.append(data.product_id.id)
+                                product_eval_qty.append(data.product_id.id)
                 # Approve to change discount
                 if self.pricelist_id:
                     for datadisc in self.pricelist_id.item_ids:
@@ -599,10 +606,15 @@ class SaleOrder(models.Model):
         else:
             self.approved_special_quotations = True
         # Min for qty and prices
-        if product_eval:
+        if product_eval_price:
             self.approved_min_prices = False
         else:
             self.approved_min_prices = True
+        # Min for qty and prices
+        if product_eval_qty:
+            self.approved_min_qty = False
+        else:
+            self.approved_min_qty = True
         # Change discount
         if discount_eval:
             self.approved_discount_modifications = False
