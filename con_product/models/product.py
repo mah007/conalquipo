@@ -233,7 +233,8 @@ class ProductTemplate(Model):
         string='Is Operated')
     sale_uom = fields.Many2one(
         'product.uom',
-        string='Sale UoM')
+        string='Sale UoM',
+        domain="[('name',' !=', 'Unidad(es)')]")
     for_shipping = fields.Boolean(
         string='Use for shipping?')
     non_mech = fields.Boolean(
