@@ -130,7 +130,10 @@ class SaleOrder(models.Model):
         domain=lambda self: self.getemployee())
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
-        'Approve min and prices for products',
+        'Approve min prices for products',
+        default=True, track_visibility='onchange')
+    approved_min_qty = fields.Boolean(
+        'Approve min qty for products',
         default=True, track_visibility='onchange')
     approved_special_quotations = fields.Boolean(
         'Approve special quotations',
@@ -546,7 +549,8 @@ class SaleOrder(models.Model):
 
         """
         cat_lists = []
-        product_eval = []
+        product_eval_price = []
+        product_eval_qty = []
         discount_eval = []
         list_note = []
         if self.order_line:
@@ -559,17 +563,21 @@ class SaleOrder(models.Model):
                 if product_muoms != True:
                     if data.price_unit < \
                      data.product_id.product_tmpl_id.list_price:
-                        product_eval.append(data.product_id.id)
+                        product_eval_price.append(data.product_id.id)
                     if data.bill_uom_qty < \
                      data.product_id.product_tmpl_id.min_qty_rental:
-                        product_eval.append(data.product_id.id)
+                        product_eval_qty.append(data.product_id.id)
                 else:
+                    if not data.product_id.product_tmpl_id.uoms_ids:
+                        raise UserError(_(
+                            """You need to define product units, quantities """
+                            """and prices values (Multiple values)"""))
                     for uom_list in data.product_id.product_tmpl_id.uoms_ids:
                         if data.bill_uom.id == uom_list.uom_id.id:
                             if data.price_unit < uom_list.cost_byUom:
-                                product_eval.append(data.product_id.id)
+                                product_eval_price.append(data.product_id.id)
                             if data.bill_uom_qty < uom_list.quantity:
-                                product_eval.append(data.product_id.id)
+                                product_eval_qty.append(data.product_id.id)
                 # Approve to change discount
                 if self.pricelist_id:
                     for datadisc in self.pricelist_id.item_ids:
@@ -599,10 +607,15 @@ class SaleOrder(models.Model):
         else:
             self.approved_special_quotations = True
         # Min for qty and prices
-        if product_eval:
+        if product_eval_price:
             self.approved_min_prices = False
         else:
             self.approved_min_prices = True
+        # Min for qty and prices
+        if product_eval_qty:
+            self.approved_min_qty = False
+        else:
+            self.approved_min_qty = True
         # Change discount
         if discount_eval:
             self.approved_discount_modifications = False
@@ -796,10 +809,10 @@ class SaleOrder(models.Model):
                         'confirmation_date': fields.Datetime.now()})
                     # Create task for product
                     for data in self.order_line:
-                        if data.bill_uom.id in \
+                        if data.bill_uom.id not in \
                         self.env.user.company_id.default_uom_task_id._ids \
                         and not \
-                        data.is_delivery:
+                        data.is_delivery and not data.is_component:
                             task_values = {
                                 'name': "Task for: " \
                                 + str(self.project_id.name) \
@@ -828,10 +841,10 @@ class SaleOrder(models.Model):
             else:
                 # Create task for product
                 for data in self.order_line:
-                    if data.bill_uom.id in \
+                    if data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
                      and not \
-                       data.is_delivery:
+                       data.is_delivery and not data.is_component:
                         task_values = {
                             'name': "Task for: " \
                              + str(self.project_id.name) \
@@ -875,7 +888,17 @@ class SaleOrder(models.Model):
             new_mail_users = list(set(mail_users))
             self.send_followers(body, new_users)
             self.send_to_channel(body, new_users)
-            self.send_mail_wtemplate(body, new_mail_users)
+            # Test smtp connection
+            server = self.env['ir.mail_server'].search([])
+            for data in server:
+                smtp = False
+                try:
+                    smtp = data.connect(mail_server_id=data.id)
+                except Exception as e:
+                    pass
+                else:
+                    self.send_mail_wtemplate(body, new_mail_users)
+            ###########################
         return res
 
     @api.multi
@@ -911,8 +934,18 @@ class SaleOrder(models.Model):
             })
             # Send mail
             if mail_template:
-                mail_template.with_context(ctx).send_mail(
-                    self.id, force_send=True, raise_exception=True)
+                # Test smtp connection
+                server = self.env['ir.mail_server'].search([])
+                for data in server:
+                    smtp = False
+                    try:
+                        smtp = data.connect(mail_server_id=data.id)
+                    except Exception as e:
+                        pass
+                    else:
+                        mail_template.with_context(ctx).send_mail(
+                            self.id, force_send=True, raise_exception=True)
+                ###########################
 
     @api.multi
     def _propagate_picking_project(self):
@@ -985,7 +1018,13 @@ class SaleOrder(models.Model):
     @api.model
     def create(self, values):
         # Overwrite sale order create
-        res = super(SaleOrder, self).create(values)
+        res = super(SaleOrder, self).create(values)               
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         # Send notification to users when works is created
         recipients = []
         groups = self.env[
@@ -1004,7 +1043,17 @@ class SaleOrder(models.Model):
                     res.name, res.create_uid.name)
             res.send_followers(body, recipients)
             res.send_to_channel(body, recipients)
-            res.send_mail(body)
+            # Test smtp connection
+            server = self.env['ir.mail_server'].search([])
+            for data in server:
+                smtp = False
+                try:
+                    smtp = data.connect(mail_server_id=data.id)
+                except Exception as e:
+                    pass
+                else:
+                    res.send_mail(body)
+            ###########################
             if res.project_id:
                 return res
             else:
@@ -1074,8 +1123,18 @@ class SaleOrder(models.Model):
             })
             # Send mail
             if mail_template:
-                mail_template.with_context(ctx).send_mail(
-                    self.id, force_send=True, raise_exception=True)
+                # Test smtp connection
+                server = self.env['ir.mail_server'].search([])
+                for data in server:
+                    smtp = False
+                    try:
+                        smtp = data.connect(mail_server_id=data.id)
+                    except Exception as e:
+                        pass
+                    else:
+                        mail_template.with_context(ctx).send_mail(
+                            self.id, force_send=True, raise_exception=True)
+                ###########################
 
     @api.multi
     def send_mail_sale_order_check(self):
@@ -1124,7 +1183,17 @@ class SaleOrder(models.Model):
                     activity_obj.create(activity_info)
                 # Send email notifications
                 if now >= end_date_email:
-                    self.send_mail(body)
+                    # Test smtp connection
+                    server = self.env['ir.mail_server'].search([])
+                    for data in server:
+                        smtp = False
+                        try:
+                            smtp = data.connect(mail_server_id=data.id)
+                        except Exception as e:
+                            pass
+                        else:
+                            self.send_mail(body)
+                    ###########################
 
     @api.multi
     def write(self, values):

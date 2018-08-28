@@ -223,8 +223,8 @@ msgstr "Términos y condiciones para la Factura"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_default_uom_task_id
-msgid "Default UOMs for products to generate tasks"
-msgstr "Unidades de medida de los productos que generan tareas."
+msgid "Default UOMs for products that don't generate tasks"
+msgstr "Unidades de medida de los productos que no generan tareas."
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_default_payment_term_id
