@@ -233,7 +233,8 @@ class ProductTemplate(Model):
         string='Is Operated')
     sale_uom = fields.Many2one(
         'product.uom',
-        string='Sale UoM')
+        string='Sale UoM',
+        domain="[('name',' !=', 'Unidad(es)')]")
     for_shipping = fields.Boolean(
         string='Use for shipping?')
     non_mech = fields.Boolean(
@@ -255,6 +256,11 @@ class ProductTemplate(Model):
     towers = fields.Char('Towers')
     layout_sec_id = fields.Many2one(
         'sale.layout_category', string="Section")
+
+    @api.onchange('multiples_uom')
+    def _compute_multiples_uom(self):
+        if self.multiples_uom:
+            self.sale_uom = False
 
     @api.onchange('non_mech')
     def _compute_locations(self):
