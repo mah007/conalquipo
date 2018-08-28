@@ -875,7 +875,17 @@ class SaleOrder(models.Model):
             new_mail_users = list(set(mail_users))
             self.send_followers(body, new_users)
             self.send_to_channel(body, new_users)
-            self.send_mail_wtemplate(body, new_mail_users)
+            # Test smtp connection
+            server = self.env['ir.mail_server'].search([])
+            for data in server:
+                smtp = False
+                try:
+                    smtp = data.connect(mail_server_id=data.id)
+                except Exception as e:
+                    pass
+                else:
+                    self.send_mail_wtemplate(body, new_mail_users)
+            ###########################
         return res
 
     @api.multi
@@ -911,8 +921,18 @@ class SaleOrder(models.Model):
             })
             # Send mail
             if mail_template:
-                mail_template.with_context(ctx).send_mail(
-                    self.id, force_send=True, raise_exception=True)
+                # Test smtp connection
+                server = self.env['ir.mail_server'].search([])
+                for data in server:
+                    smtp = False
+                    try:
+                        smtp = data.connect(mail_server_id=data.id)
+                    except Exception as e:
+                        pass
+                    else:
+                        mail_template.with_context(ctx).send_mail(
+                            self.id, force_send=True, raise_exception=True)
+                ###########################
 
     @api.multi
     def _propagate_picking_project(self):
@@ -985,7 +1005,13 @@ class SaleOrder(models.Model):
     @api.model
     def create(self, values):
         # Overwrite sale order create
-        res = super(SaleOrder, self).create(values)
+        res = super(SaleOrder, self).create(values)               
+        groups = self.env[
+            'res.groups'].search(
+                [['name',
+                  '=',
+                  self.env.ref(
+                      'con_profile.group_commercial_director').name]])
         # Send notification to users when works is created
         recipients = []
         groups = self.env[
@@ -1004,7 +1030,17 @@ class SaleOrder(models.Model):
                     res.name, res.create_uid.name)
             res.send_followers(body, recipients)
             res.send_to_channel(body, recipients)
-            res.send_mail(body)
+            # Test smtp connection
+            server = self.env['ir.mail_server'].search([])
+            for data in server:
+                smtp = False
+                try:
+                    smtp = data.connect(mail_server_id=data.id)
+                except Exception as e:
+                    pass
+                else:
+                    res.send_mail(body)
+            ###########################
             if res.project_id:
                 return res
             else:
@@ -1074,8 +1110,18 @@ class SaleOrder(models.Model):
             })
             # Send mail
             if mail_template:
-                mail_template.with_context(ctx).send_mail(
-                    self.id, force_send=True, raise_exception=True)
+                # Test smtp connection
+                server = self.env['ir.mail_server'].search([])
+                for data in server:
+                    smtp = False
+                    try:
+                        smtp = data.connect(mail_server_id=data.id)
+                    except Exception as e:
+                        pass
+                    else:
+                        mail_template.with_context(ctx).send_mail(
+                            self.id, force_send=True, raise_exception=True)
+                ###########################
 
     @api.multi
     def send_mail_sale_order_check(self):
@@ -1124,7 +1170,17 @@ class SaleOrder(models.Model):
                     activity_obj.create(activity_info)
                 # Send email notifications
                 if now >= end_date_email:
-                    self.send_mail(body)
+                    # Test smtp connection
+                    server = self.env['ir.mail_server'].search([])
+                    for data in server:
+                        smtp = False
+                        try:
+                            smtp = data.connect(mail_server_id=data.id)
+                        except Exception as e:
+                            pass
+                        else:
+                            self.send_mail(body)
+                    ###########################
 
     @api.multi
     def write(self, values):
