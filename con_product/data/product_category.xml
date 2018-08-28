@@ -2,6 +2,11 @@
 <odoo>
     <data noupdate="1">
 
+        <record id="category_intereses" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Intereses</field>
+        </record>
+
         <record id="category_repuestos" model="product.category">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Repuestos</field>
@@ -295,6 +300,11 @@
         <record id="category_55" model="product.category">
             <field name="parent_id" ref="category_equipos"/>
             <field name="name">Torre de iluminación</field>
+        </record> 
+
+        <record id="category_56" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Complementos</field>
         </record> 
 
     </data>

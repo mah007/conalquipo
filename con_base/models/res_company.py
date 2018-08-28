@@ -35,7 +35,7 @@ class ResCompany(models.Model):
         string="Default customer payment terms")
     default_uom_task_id = fields.Many2many(
         'product.uom',
-        string="Default UOMs for products to generate tasks")
+        string="Default UOMs for products that don't generate tasks")
     default_validate_invoices = fields.Many2many(
         'res.users',
         string="Users can validate invoices")

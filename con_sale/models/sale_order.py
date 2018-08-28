@@ -796,10 +796,10 @@ class SaleOrder(models.Model):
                         'confirmation_date': fields.Datetime.now()})
                     # Create task for product
                     for data in self.order_line:
-                        if data.bill_uom.id in \
+                        if data.bill_uom.id not in \
                         self.env.user.company_id.default_uom_task_id._ids \
                         and not \
-                        data.is_delivery:
+                        data.is_delivery and not data.is_component:
                             task_values = {
                                 'name': "Task for: " \
                                 + str(self.project_id.name) \
@@ -828,10 +828,10 @@ class SaleOrder(models.Model):
             else:
                 # Create task for product
                 for data in self.order_line:
-                    if data.bill_uom.id in \
+                    if data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
                      and not \
-                       data.is_delivery:
+                       data.is_delivery and not data.is_component:
                         task_values = {
                             'name': "Task for: " \
                              + str(self.project_id.name) \
