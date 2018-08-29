@@ -28,6 +28,7 @@ from odoo.exceptions import UserError
 from odoo.addons import decimal_precision as dp
 from odoo.tools import float_is_zero, float_compare, \
     DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.osv import expression
 
 
 class SaleOrder(models.Model):
@@ -2090,6 +2091,36 @@ class SaleOrderLine(models.Model):
             for picking in order.picking_ids:
                 picking.write({'project_id': order.project_id.id})
         return True
+
+    ###########################################
+    ### Analytic : auto recompute delivered quantity
+    ###########################################
+
+    def _timesheet_compute_delivered_quantity_domain(self):
+        """
+        TODO JEM: avoid increment delivered for all AAL or
+        just timesheet ? See nim commit
+        https://github.com/odoo/odoo/commit/21fbb9776a5fbd1838b189f1f7cf8c5d40663e14
+        """
+        so_line_ids = self.filtered(
+            lambda sol: sol.product_id.type).ids
+        return [
+            '&', ('so_line', 'in', so_line_ids), ('project_id', '!=', False)]
+
+    @api.multi
+    def _analytic_compute_delivered_quantity_domain(self):
+        domain = super(
+            SaleOrderLine, self)._analytic_compute_delivered_quantity_domain()
+        timesheet_domain = self._timesheet_compute_delivered_quantity_domain()
+        return expression.OR([domain, timesheet_domain])
+
+    @api.depends('product_id.type')
+    def _compute_product_updatable(self):
+        for line in self:
+            if line.state == 'sale':
+                line.product_updatable = False
+            else:
+                super(SaleOrderLine, line)._compute_product_updatable()
 
 
 class SaleProductComponents(models.Model):
