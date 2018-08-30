@@ -222,7 +222,6 @@
 
             <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
                 <field name="create_date" invisible="1"/>
-                <field name="min_sale_qty" readonly="1" force_save="1"/>
                 <field name="bill_uom_qty"
                     attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
                 <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
