@@ -1394,7 +1394,7 @@ class SaleOrderLine(models.Model):
                                   string="Type Order")
     bill_uom = fields.Many2one(
         'product.uom',
-        string='Unit of Measure to Sale')
+        string='UMS')
     compute_uoms = fields.Many2many(
         'product.uom',
         compute='_compute_uoms',
@@ -1403,9 +1403,10 @@ class SaleOrderLine(models.Model):
                                states=READONLY_STATES_OWNER,
                                change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
-    bill_uom_qty = fields.Float('Quantity to Sale',
-                                digits=dp.get_precision('Product Unit'
-                                                        ' of Measure'))
+    bill_uom_qty = fields.Float(
+        'EQS',
+        digits=dp.get_precision('Product Unit'
+                                ' of Measure'))
     purchase_order_line = fields.One2many('purchase.order.line',
                                           'sale_order_line_id',
                                           string="Purchase Order Line",
@@ -1434,7 +1435,7 @@ class SaleOrderLine(models.Model):
         'res.users', string="Assigned Operator")
     parent_line = fields.Many2one(
         'sale.order.line', 'Parent line')
-    min_sale_qty = fields.Float('Min QTY')
+    min_sale_qty = fields.Float('MQty')
     # Fleet
     delivery_direction = fields.Selection([('in', 'collection'),
                                            ('out', 'delivery')],
@@ -1683,8 +1684,10 @@ class SaleOrderLine(models.Model):
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         quantity = 0.0
-        if self.bill_uom_qty > 0:
-            quantity = self.bill_uom_qty
+        if self.qty_delivered > 0 and self.qty_invoiced == 0:
+            quantity = self.qty_delivered
+        elif self.qty_delivered > 0 and self.qty_invoiced > 0:
+            quantity = self.qty_delivered - self.qty_invoiced
         else:
             quantity = res['quantity']
 
@@ -1847,7 +1850,9 @@ class SaleOrderLine(models.Model):
                         _("The end date can't be less than start date"))
         return res
 
-    @api.depends('discount', 'price_unit', 'tax_id')
+    @api.depends(
+        'discount', 'price_unit',
+        'tax_id')
     def _compute_amount(self):
         """
         Compute the amounts of the SO line.
@@ -2091,36 +2096,6 @@ class SaleOrderLine(models.Model):
             for picking in order.picking_ids:
                 picking.write({'project_id': order.project_id.id})
         return True
-
-    ###########################################
-    ### Analytic : auto recompute delivered quantity
-    ###########################################
-
-    def _timesheet_compute_delivered_quantity_domain(self):
-        """
-        TODO JEM: avoid increment delivered for all AAL or
-        just timesheet ? See nim commit
-        https://github.com/odoo/odoo/commit/21fbb9776a5fbd1838b189f1f7cf8c5d40663e14
-        """
-        so_line_ids = self.filtered(
-            lambda sol: sol.product_id.type).ids
-        return [
-            '&', ('so_line', 'in', so_line_ids), ('project_id', '!=', False)]
-
-    @api.multi
-    def _analytic_compute_delivered_quantity_domain(self):
-        domain = super(
-            SaleOrderLine, self)._analytic_compute_delivered_quantity_domain()
-        timesheet_domain = self._timesheet_compute_delivered_quantity_domain()
-        return expression.OR([domain, timesheet_domain])
-
-    @api.depends('product_id.type')
-    def _compute_product_updatable(self):
-        for line in self:
-            if line.state == 'sale':
-                line.product_updatable = False
-            else:
-                super(SaleOrderLine, line)._compute_product_updatable()
 
 
 class SaleProductComponents(models.Model):

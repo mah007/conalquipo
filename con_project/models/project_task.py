@@ -109,4 +109,10 @@ class ProjectTask(models.Model):
                 'assigned_operator': res.user_id.id})
         return res
 
-    
+class AccountAnalyticLine(models.Model):
+    _inherit = "account.analytic.line"
+
+    @api.onchange('unit_amount')
+    def compute_qty_rem(self):
+        self.task_id.sale_line_id.write({
+            'qty_delivered': self.task_id.effective_hours})
