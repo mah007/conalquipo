@@ -402,7 +402,7 @@ class AccountInvoice(models.Model):
                                  ('move_id', '=', mv.id),
                                  ('code', '=', 'incoming')])
                             # Create returned product invoice
-                            self.env['account.invoice.line'].create(
+                            inv_line = self.env['account.invoice.line'].create(
                                 {"date_move": mv.date,
                                  "invoice_id": data.invoice_id.id,
                                  "name": data.name,
@@ -423,10 +423,13 @@ class AccountInvoice(models.Model):
                                      self.end_date_invoice, date_format
                                  ).strftime('%d'),
                                  "num_days": delta.days + 1,
-                                 "invoice_line_tax_ids": list(
-                                     data.invoice_line_tax_ids._ids),
                                  "quantity": qty,
-                                 "products_on_work": history.product_count})
+                                 "products_on_work": history.product_count,
+                                 "invoice_line_tax_ids": \
+                                  [(6, 0, list(
+                                      data.invoice_line_tax_ids._ids))]})
+                            sale_lines.write({
+                                'invoice_lines': [( 4, inv_line.id)]})
                         else:
                             if date_end and mv.location_dest_id.usage \
                              == 'customer':
@@ -451,30 +454,35 @@ class AccountInvoice(models.Model):
                                          ('move_id', '=', mv.id),
                                          ('code', '=', 'outgoing')])
                                 # Create product on work invoice
-                                self.env['account.invoice.line'].create(
-                                    {"date_move": mv.date,
-                                     "invoice_id": data.invoice_id.id,
-                                     "name": data.name,
-                                     "account_id": data.account_id.id,
-                                     "price_unit": data.price_unit,
-                                     "document": "REM" + '-' + \
-                                      mv.picking_id.name,
-                                     "origin": data.origin,
-                                     "uom_id": data.uom_id.id,
-                                     "product_id": data.product_id.id,
-                                     "bill_uom": data.bill_uom.id,
-                                     "discount": data.discount,
-                                     "qty_remmisions": mv.product_uom_qty,
-                                     "date_init": datetime.strptime(
-                                         mv.date, date_format
-                                     ).strftime('%d'),
-                                     "date_end": date_end.strftime('%d'),
-                                     "num_days": delta.days + 1,
-                                     "invoice_line_tax_ids": list(
-                                         data.invoice_line_tax_ids._ids),
-                                     "quantity": qty,
-                                     "products_on_work": \
-                                      history.product_count})
+                                inv_line =self.env[
+                                    'account.invoice.line'].create(
+                                        {"date_move": mv.date,
+                                         "invoice_id": data.invoice_id.id,
+                                         "name": data.name,
+                                         "account_id": data.account_id.id,
+                                         "price_unit": data.price_unit,
+                                         "document": "REM" + '-' + \
+                                          mv.picking_id.name,
+                                         "origin": data.origin,
+                                         "uom_id": data.uom_id.id,
+                                         "product_id": data.product_id.id,
+                                         "bill_uom": data.bill_uom.id,
+                                         "discount": data.discount,
+                                         "qty_remmisions": mv.product_uom_qty,
+                                         "date_init": datetime.strptime(
+                                             mv.date, date_format
+                                         ).strftime('%d'),
+                                         "date_end": date_end.strftime('%d'),
+                                         "num_days": delta.days + 1,
+                                         "quantity": qty,
+                                         "products_on_work": \
+                                           history.product_count,
+                                         "invoice_line_tax_ids": \
+                                          [(6, 0, list(
+                                              data.invoice_line_tax_ids._ids))]
+                                        })
+                                sale_lines.write({
+                                    'invoice_lines': [( 4, inv_line.id)]})
                 # Unlink old invoices lines
-                data.unlink()
+                #data.unlink()
         return res
