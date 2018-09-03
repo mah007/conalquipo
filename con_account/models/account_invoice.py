@@ -365,7 +365,7 @@ class AccountInvoice(models.Model):
         date_end = None
         qty = 0.0
         date_format = "%Y-%m-%d %H:%M:%S"
-        if 'init_date_invoice' in values:
+        if 'init_date_invoice' in values and self.invoice_type == "rent":
             for data in self.invoice_line_ids:
                 for sale_lines in data.sale_line_ids:
                     move = self.env['stock.move'].search(
@@ -375,8 +375,6 @@ class AccountInvoice(models.Model):
                          ('date_expected', '>=', self.init_date_invoice),
                          ('date_expected', '<=', self.end_date_invoice),
                          ('sale_line_id', '=', sale_lines.id)])
-                    _logger.warning("Impuestos")
-                    _logger.warning(sale_lines.tax_id)
                     for mv in move:
                         date_end = datetime.strptime(
                             mv.date, date_format
