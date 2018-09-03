@@ -363,6 +363,7 @@ class AccountInvoice(models.Model):
     def write(self, values):
         res = super(AccountInvoice, self).write(values)
         date_end = None
+        qty = 0.0
         date_format = "%Y-%m-%d %H:%M:%S"
         if 'init_date_invoice' in values:
             for data in self.invoice_line_ids:
@@ -380,22 +381,26 @@ class AccountInvoice(models.Model):
                         date_end = datetime.strptime(
                             mv.date, date_format
                         )
-                        if mv.returned and mv.location_dest_id.return_location:
-                            qty = 0.0
+                        if mv.returned and \
+                         mv.location_dest_id.return_location \
+                          and mv.picking_id.state == 'done':
                             # Get delta days
                             a = datetime.strptime(mv.date, date_format)
                             b = datetime.strptime(
                                 self.end_date_invoice, date_format)
                             delta = b - a
                             # Get tasks values
-                            task = self.env['project.task'].search(
-                                [('sale_line_id', '=', sale_lines.id)])
-                            for timesheet in task.timesheet_ids:
-                                if timesheet.create_date >= \
-                                 self.init_date_invoice and \
-                                  timesheet.create_date <= \
-                                   self.end_date_invoice:
-                                    qty += timesheet.unit_amount
+                            if not sale_lines.is_extra:
+                                task = self.env['project.task'].search(
+                                    [('sale_line_id', '=', sale_lines.id)])
+                                for timesheet in task.timesheet_ids:
+                                    if timesheet.create_date >= \
+                                    self.init_date_invoice and \
+                                    timesheet.create_date <= \
+                                    self.end_date_invoice:
+                                        qty += timesheet.unit_amount
+                            else:
+                                qty = mv.product_uom_qty
                             # Get product count history
                             history = self.env['stock.move.history'].search(
                                 [('sale_line_id', '=', sale_lines.id),
@@ -425,28 +430,33 @@ class AccountInvoice(models.Model):
                                  "num_days": delta.days + 1,
                                  "quantity": qty,
                                  "products_on_work": history.product_count,
+                                 "qty_shipped": \
+                                  sale_lines.qty_delivered,
                                  "invoice_line_tax_ids": \
                                   [(6, 0, list(
                                       data.invoice_line_tax_ids._ids))]})
                             sale_lines.write({
-                                'invoice_lines': [( 4, inv_line.id)]})
+                                'invoice_lines': [(4, inv_line.id)]})
                         else:
                             if date_end and mv.location_dest_id.usage \
-                             == 'customer':
-                                qty = 0.0
+                             == 'customer' and mv.picking_id.state \
+                              == 'done':
                                 # Get delta days
                                 a = datetime.strptime(mv.date, date_format)
                                 b = date_end
                                 delta = b - a
                                 # Get tasks values
-                                task = self.env['project.task'].search(
-                                    [('sale_line_id', '=', sale_lines.id)])
-                                for timesheet in task.timesheet_ids:
-                                    if timesheet.create_date >= \
-                                     self.init_date_invoice and \
-                                      timesheet.create_date <= \
-                                       self.end_date_invoice:
-                                        qty += timesheet.unit_amount
+                                if not sale_lines.is_extra:
+                                    task = self.env['project.task'].search(
+                                        [('sale_line_id', '=', sale_lines.id)])
+                                    for timesheet in task.timesheet_ids:
+                                        if timesheet.create_date >= \
+                                        self.init_date_invoice and \
+                                        timesheet.create_date <= \
+                                        self.end_date_invoice:
+                                            qty += timesheet.unit_amount
+                                else:
+                                    qty = mv.product_uom_qty
                                 # Get product count history
                                 history = self.env[
                                     'stock.move.history'].search(
@@ -477,12 +487,14 @@ class AccountInvoice(models.Model):
                                          "quantity": qty,
                                          "products_on_work": \
                                            history.product_count,
+                                         "qty_shipped": \
+                                          sale_lines.qty_delivered,
                                          "invoice_line_tax_ids": \
                                           [(6, 0, list(
                                               data.invoice_line_tax_ids._ids))]
                                         })
                                 sale_lines.write({
-                                    'invoice_lines': [( 4, inv_line.id)]})
+                                    'invoice_lines': [(4, inv_line.id)]})
                 # Unlink old invoices lines
-                #data.unlink()
+                data.unlink()
         return res
