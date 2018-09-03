@@ -14,6 +14,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         return location
 
     project_id = fields.Many2one('project.project', string="Project")
+    date = fields.Date(string="Advertisement date")
     sale_order_id = fields.Many2one('sale.order', 'Sale Order')
     partner_id = fields.Many2one('res.partner', 'Partner')
     location_id = fields.Many2one('stock.location', "Source Location")
