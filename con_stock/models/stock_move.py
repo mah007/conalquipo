@@ -30,7 +30,8 @@ class StockMove(Model):
     _inherit = "stock.move"
 
     project_id = fields.Many2one(
-        'project.project', string='Works')
+        'project.project', 'Works',
+        related='picking_id.project_id')
     partner_id = fields.Many2one(
         'res.partner', string='Partner')
     child_product = fields.Boolean(

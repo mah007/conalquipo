@@ -720,7 +720,8 @@ class SaleOrder(models.Model):
         """
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals.update({
-            'project_id': self.project_id.id
+            'project_id': self.project_id.id,
+            'invoice_type': self.order_type
         })
         return invoice_vals
 
@@ -1404,7 +1405,11 @@ class SaleOrderLine(models.Model):
                                change_default=True, track_visibility='always')
     product_subleased = fields.Boolean(string="Subleased", default=False)
     bill_uom_qty = fields.Float(
-        'EQS',
+        'Sale Unit',
+        digits=dp.get_precision('Product Unit'
+                                ' of Measure'))
+    bill_uom_qty_executed = fields.Float(
+        'Executed',
         digits=dp.get_precision('Product Unit'
                                 ' of Measure'))
     purchase_order_line = fields.One2many('purchase.order.line',
@@ -1683,17 +1688,19 @@ class SaleOrderLine(models.Model):
         :param qty: float quantity to invoice
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
-        quantity = 0.0
-        if self.qty_delivered > 0 and self.qty_invoiced == 0:
-            quantity = self.qty_delivered
-        elif self.qty_delivered > 0 and self.qty_invoiced > 0:
-            quantity = self.qty_delivered - self.qty_invoiced
-        else:
-            quantity = res['quantity']
-
         res['bill_uom'] = self.bill_uom.id
         res['qty_shipped'] = self.product_uom_qty
-        res['quantity'] = quantity
+        return res
+
+    @api.multi
+    def invoice_line_create(self, invoice_id, qty):
+        """ Create an invoice line. The quantity to invoice can be 
+        positive (invoice) or negative (refund).
+            :param invoice_id: integer
+            :param qty: float quantity to invoice
+            :returns recordset of account.invoice.line created
+        """
+        res = super(SaleOrderLine, self).invoice_line_create(invoice_id, qty)
         return res
 
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')

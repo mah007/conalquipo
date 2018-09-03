@@ -224,6 +224,8 @@
                 <field name="create_date" invisible="1"/>
                 <field name="bill_uom_qty"
                     attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
+                <field name="bill_uom_qty_executed"
+                    attrs="{'column_invisible': [('parent.state','not in', ['sale', 'done']), '|', ('parent.order_type', '!=', 'rent')]}"/>
                 <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '!=', 'rent')]}"/>
                 <field name="stock_move_status" invisible="1"/>
             </xpath>
