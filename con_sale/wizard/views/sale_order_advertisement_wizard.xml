@@ -8,23 +8,30 @@
             <field name="arch" type="xml">
                 <form string="Advertisement">
                     <group>
-                        <field name="location_id" invisible="1"/>
-                        <field name="location_dest_id"/>
-                        <field name="reason" required="1"/>
-                        <field name="notes" required="1"/>
+                        <group>
+                            <field name="date" required="1"/>
+                            <field name="location_id" invisible="1"/>
+                            <field name="location_dest_id"/>
+                        </group>
+                        <group>
+                            <field name="carrier_type" />
+                            <field name="sale_order_id" invisible="1"/>
+                            <field name="sale_order_line_id"
+                                context="{'special_display': True}"
+                                attrs="{'invisible': [('carrier_type', '=', 'client')]}"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="carrier_type" />
-                        <field name="sale_order_id" invisible="1"/>
-                        <field name="sale_order_line_id"
-                               context="{'special_display': True}"
-                               attrs="{'invisible': [('carrier_type', '=', 'client')]}"/>
+                    <group string="Reason">
+                        <field name="reason" nolabel="1" required="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1" required="1"/>
                     </group>
                     <footer>
                         <button string="Create Advertisement" name="action_create_advertisement"
-                                type="object" default_focus="1" class="btn-primary"/>
+                            type="object" default_focus="1" class="btn-primary"/>
                          <button string="Discard" class="btn-default"
-                                special="cancel"/>
+                            special="cancel"/>
                     </footer>
                 </form>
             </field>

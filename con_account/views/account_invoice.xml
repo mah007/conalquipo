@@ -66,6 +66,8 @@
 
             <field name="date_due" position="after">
                 <field name="invoice_type" widget="radio" invisible="1"/>
+                <field name="init_date_invoice" invisible="1"/>
+                <field name="end_date_invoice" invisible="1"/>
             </field>
 
             <field name="partner_id" position="after">
@@ -86,17 +88,21 @@
 
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
                 <field name="owner_id" />
-                <field name="date_init" />
-                <field name="date_end" />
-                <field name="num_days" />
-                <field name="qty_remmisions" />
-                <field name="qty_returned" />
-                <field name="products_on_work" />
+                <field name="date_init" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="date_end" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="num_days" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="qty_remmisions" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="qty_returned" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
+                <field name="products_on_work" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
             </xpath>
 
-          <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']" position="before">
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='product_id']" position="before">
                 <field name="document" />
                 <field name="date_move" />
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+                <attribute name="default_order">date_move</attribute>
             </xpath>
 
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">

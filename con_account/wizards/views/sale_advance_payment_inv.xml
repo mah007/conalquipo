@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+
+        <record id="view_sale_advance_payment_inv_inherit" model="ir.ui.view">
+            <field name="name">sale.advance.payment.inv.form.inherit</field>
+            <field name="model">sale.advance.payment.inv</field>
+            <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group" position="after">
+                    <group>
+                        <group>
+                            <field name="init_date_invoice" required="1"/>
+                        </group>
+                        <group>
+                            <field name="end_date_invoice" attrs="{'invisible': [('init_date_invoice', '=', False)],
+                             'required': [('init_date_invoice','!=', False)]}"/>
+                        </group>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
