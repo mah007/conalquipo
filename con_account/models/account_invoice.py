@@ -507,9 +507,8 @@ class AccountInvoice(models.Model):
                             sale_lines.write({
                                 'invoice_lines': [(4, inv_line.id)]})
                 # Unlink old invoices lines for product and consu
-                if data.product_id.product_tmpl_id.type != "service": 
+                if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
                 else:
                     data.document = 'ACAR'
         return res
-

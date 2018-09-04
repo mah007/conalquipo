@@ -47,6 +47,11 @@
             <field name="name">Formaletería modular</field>
         </record> 
 
+        <record id="category_for_com" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería - Complementos</field>
+        </record> 
+
         <record id="category_6" model="product.category">
             <field name="parent_id" ref="category_formaleteria"/>
             <field name="name">Losa fácil</field>
@@ -305,6 +310,21 @@
         <record id="category_56" model="product.category">
             <field name="parent_id" ref="category_equipos"/>
             <field name="name">Complementos</field>
+        </record> 
+
+        <record id="category_57" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Operador</field>
+        </record> 
+
+        <record id="category_58" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Operador</field>
+        </record> 
+
+        <record id="category_59" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Otros</field>
         </record> 
 
     </data>
