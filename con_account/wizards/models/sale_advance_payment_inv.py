@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 _logger = logging.getLogger(__name__)
+from datetime import datetime
 from odoo import models, api, _, fields
 from odoo.exceptions import UserError
 
@@ -12,6 +13,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
         string='Init Date')
     end_date_invoice = fields.Datetime(
         string='End Date')
+
+    @api.onchange('init_date_invoice', 'end_date_invoice')
+    def _onchange_dates(self):
+        date_format = "%Y-%m-%d %H:%M:%S"
+        if self.init_date_invoice and self.end_date_invoice:
+            init = datetime.strptime(
+                self.init_date_invoice, date_format)
+            end = datetime.strptime(
+                self.end_date_invoice, date_format)
+            if end < init:
+                self.init_date_invoice = False
+                self.end_date_invoice = False
+                raise UserError(_(
+                    'End day can not be less than init day'))
 
     @api.multi
     def create_invoices(self):

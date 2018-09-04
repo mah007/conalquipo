@@ -10,6 +10,7 @@
 
                 <field name='scheduled_date' position="replace">
                     <field name="scheduled_date" attrs="{'readonly': [('id', '=', False)], 'required': [('id', '!=', False)]}" groups="con_stock.group_change_stock_dates"/>
+                    <field name="advertisement_date" attrs="{'invisible': [('id', '=', False)]}" groups="con_stock.group_change_stock_dates"/>
                 </field>
 
                 <xpath expr="//button[@name='button_scrap']" position="replace">

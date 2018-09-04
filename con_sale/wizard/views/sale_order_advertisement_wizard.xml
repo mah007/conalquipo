@@ -9,7 +9,7 @@
                 <form string="Advertisement">
                     <group>
                         <group>
-                            <field name="date" required="1"/>
+                            <field name="advertisement_date" required="1"/>
                             <field name="location_id" invisible="1"/>
                             <field name="location_dest_id"/>
                         </group>

@@ -145,6 +145,9 @@ class StockPicking(Model):
         string='Collect notification',
         track_visibility='onchange')
     employee_code = fields.Char('Employee code')
+    advertisement_date = fields.Datetime(
+        string="Advertisement date",
+        track_visibility='onchange')
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
