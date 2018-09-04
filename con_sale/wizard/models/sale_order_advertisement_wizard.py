@@ -14,7 +14,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
         return location
 
     project_id = fields.Many2one('project.project', string="Project")
-    date = fields.Date(string="Advertisement date")
+    advertisement_date = fields.Datetime(string="Advertisement date")
     sale_order_id = fields.Many2one('sale.order', 'Sale Order')
     partner_id = fields.Many2one('res.partner', 'Partner')
     location_id = fields.Many2one('stock.location', "Source Location")
@@ -46,12 +46,11 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             if rec.carrier_type == 'client':
                 self.sale_order_line_id = False
 
-
     @api.multi
     def _create_stock_picking(self, partner_id, project_id, picking_type,
                               src_location, des_location, origin, sale_id,
                               group_id, return_reason, user_notes,
-                              carrier_type):
+                              carrier_type, advertisement_date):
         """
         This function create a picking and the stock moves necessaries
         for do a movement between the locations for the return of the
@@ -92,6 +91,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             'return_reason': return_reason,
             'user_notes': user_notes,
             'carrier_type': carrier_type,
+            'advertisement_date': advertisement_date
         })
 
         for move in stock_move:
@@ -123,6 +123,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'group_id': move.group_id.id,
                     'state': 'draft',
                     'sale_line_id': move.sale_line_id.id,
+                    'advertisement_date': advertisement_date
                 })
 
         picking_ids.append(picking_main)
@@ -148,6 +149,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                 'return_reason': return_reason,
                 'user_notes': user_notes,
                 'carrier_type': carrier_type,
+                'advertisement_date': advertisement_date
             })
 
             for move in move_ids_groups[picking]:
@@ -165,6 +167,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'group_id': move.group_id.id,
                     'state': 'draft',
                     'sale_line_id': move.sale_line_id.id,
+                    'advertisement_date': advertisement_date
                 })
 
             picking_ids.append(picking_id)
@@ -181,7 +184,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
             self.location_dest_id.id, self.sale_order_id.name,
             self.sale_order_id.id,
             self.sale_order_id.procurement_group_id.id, self.reason,
-            self.notes, self.carrier_type
+            self.notes, self.carrier_type, self.advertisement_date
         ))
         so_pickings = [x.id for x in self.sale_order_id.picking_ids]
         new_pickings = [x.id for x in picking_ids]
@@ -196,4 +199,3 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                                          self.location_id.id])
                                 ]})
         return {'type': 'ir.actions.act_window_close'}
-        
