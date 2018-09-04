@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import xmlrpc.client
 import csv
+import ast
 
 host = 'http://localhost:9001'
 db = 'prueba_piloto_productos'
@@ -25,14 +26,10 @@ c = 1
 for row in Productos:
     c += 1
 
+    # CATEGORIA
     categ_id = sock.execute_kw(
         db, uid, password, 'product.category', 'search_read', [
             [['name', '=', row['Categoria'].strip()]]], {'fields': ['id']})
-
-    uom_id = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
-            [['name',
-              '=', row['Unidad de medida'].strip()]]], {'fields': ['id']})
 
     if not categ_id:
         categ_id = sock.execute_kw(
@@ -42,6 +39,65 @@ for row in Productos:
     else:
         categ_id = categ_id[0]['id']
 
+    # SECCIONES
+    section_id = sock.execute_kw(
+        db, uid, password, 'sale.layout_category', 'search_read', [
+            [['name', '=', row['Seccion'].strip()]]], {'fields': ['id']})
+
+    if not section_id:
+        section_id = sock.execute_kw(
+            db, uid, password,
+            'sale.layout_category',
+            'create', [{'name': row['Seccion'].strip()}])
+    else:
+        section_id = section_id[0]['id']
+
+    # UNIDADES DE MEDIDA
+    ## COMPRA
+    uom_po_id = sock.execute_kw(
+        db, uid, password, 'product.uom', 'search_read', [
+            [['name',
+              '=', row[
+                  'Unidad de medida de compra'].strip()]]], {'fields': ['id']})
+
+    if not uom_po_id:
+        uom_po_id = sock.execute_kw(
+            db, uid, password,
+            'product.uom',
+            'create', [{'name': row['Unidad de medida de compra'].strip()}])
+    else:
+        uom_po_id = uom_po_id[0]['id']
+
+    ## VENTA
+    sale_uom = sock.execute_kw(
+        db, uid, password, 'product.uom', 'search_read', [
+            [['name',
+              '=', row[
+                  'Unidad de medida de venta'].strip()]]], {'fields': ['id']})
+
+    if not sale_uom:
+        sale_uom = sock.execute_kw(
+            db, uid, password,
+            'product.uom',
+            'create', [{'name': row['Unidad de medida de venta'].strip()}])
+    else:
+        sale_uom = sale_uom[0]['id']
+
+    ## UNIDAD
+    uom_id = sock.execute_kw(
+        db, uid, password, 'product.uom', 'search_read', [
+            [['name',
+              '=', row['Unidad de medida'].strip()]]], {'fields': ['id']})
+
+    if not uom_id:
+        uom_id = sock.execute_kw(
+            db, uid, password,
+            'product.uom',
+            'create', [{'name': row['Unidad de medida'].strip()}])
+    else:
+        uom_id = uom_id[0]['id']
+
+    # PRODUCTO
     producto_id = sock.execute_kw(
         db, uid, password, 'product.template', 'search_read', [
             [['default_code', '=', row['Referencia interna'].strip()]]],
@@ -57,17 +113,22 @@ for row in Productos:
         print(message)
 
         vals = {
-
             'name': row['Producto'].strip(),
             'standard_price': row['Coste'].strip(),
             'list_price': row['Precio de venta por unidad de medida'].strip(),
             'categ_id': categ_id,
-            'sale_uom': uom_id[0]['id'],
+            'uom_po_id': uom_po_id,
+            'sale_uom': sale_uom,
+            'uom_id': uom_id,
             'default_code': row['Referencia interna'].strip(),
             'type': 'service',
             'active': True,
-            'sale_ok': True,
-            'purchase_ok': True,
+            'sale_ok': ast.literal_eval(row['Puede ser vendido'].strip()),
+            'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
+            'for_shipping': ast.literal_eval(
+                row['Usado para acarreo'].strip()),
+            'layout_sec_id': section_id,
+            'description_sale': row['Notas'].strip(),
         }
 
         sock.execute_kw(
@@ -87,12 +148,18 @@ for row in Productos:
             'standard_price': row['Coste'].strip(),
             'list_price': row['Precio de venta por unidad de medida'].strip(),
             'categ_id': categ_id,
-            'sale_uom': uom_id[0]['id'],
+            'uom_po_id': uom_po_id,
+            'sale_uom': sale_uom,
+            'uom_id': uom_id,
             'default_code': row['Referencia interna'].strip(),
             'type': 'service',
             'active': True,
-            'sale_ok': True,
-            'purchase_ok': True,
+            'sale_ok': ast.literal_eval(row['Puede ser vendido'].strip()),
+            'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
+            'for_shipping': ast.literal_eval(
+                row['Usado para acarreo'].strip()),
+            'layout_sec_id': section_id,
+            'description_sale': row['Notas'].strip(),
         }
 
         sock.execute_kw(
