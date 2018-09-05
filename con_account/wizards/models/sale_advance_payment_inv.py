@@ -32,7 +32,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.multi
     def create_invoices(self):
-        local = timezone(self._context['tz'])
+        # TODO: Found a better way to do this
+        local = timezone(self._context['tz'] or 'America/Bogota')
         res = super(SaleAdvancePaymentInv, self).create_invoices()
 
         invoice = self.env['account.invoice'].search(
@@ -43,7 +44,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
         local_dt_init = local.localize(date_init, is_dst=None)
         utc_dt_init = local_dt_init.astimezone(utc)
 
-        _logger.info("Pass")
         date_end = datetime.strptime(self.end_date_invoice,
              DEFAULT_SERVER_DATETIME_FORMAT).replace(
                  hour=23, minute=59, second=59, microsecond=0)
