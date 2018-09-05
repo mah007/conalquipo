@@ -66,8 +66,8 @@
 
             <field name="date_due" position="after">
                 <field name="invoice_type" widget="radio" invisible="1"/>
-                <field name="init_date_invoice" invisible="1"/>
-                <field name="end_date_invoice" invisible="1"/>
+                <field name="init_date_invoice" string="Initial range" readonly="1"/>
+                <field name="end_date_invoice" string="Final range" readonly="1"/>
             </field>
 
             <field name="partner_id" position="after">

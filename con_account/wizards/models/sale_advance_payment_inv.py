@@ -4,6 +4,9 @@ _logger = logging.getLogger(__name__)
 from datetime import datetime
 from odoo import models, api, _, fields
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero, float_compare, \
+    DEFAULT_SERVER_DATETIME_FORMAT
+from pytz import timezone
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -16,12 +19,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.onchange('init_date_invoice', 'end_date_invoice')
     def _onchange_dates(self):
-        date_format = "%Y-%m-%d %H:%M:%S"
         if self.init_date_invoice and self.end_date_invoice:
             init = datetime.strptime(
-                self.init_date_invoice, date_format)
+                self.init_date_invoice, DEFAULT_SERVER_DATETIME_FORMAT)
             end = datetime.strptime(
-                self.end_date_invoice, date_format)
+                self.end_date_invoice, DEFAULT_SERVER_DATETIME_FORMAT)
             if end < init:
                 self.init_date_invoice = False
                 self.end_date_invoice = False
@@ -33,8 +35,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
         res = super(SaleAdvancePaymentInv, self).create_invoices()
         invoice = self.env['account.invoice'].search(
             [('id', '=', res['res_id'])])
+        date_init = datetime.strptime(
+            self.init_date_invoice,
+            DEFAULT_SERVER_DATETIME_FORMAT).replace(
+                hour=0, minute=0, second=0, microsecond=0)
+        date_end = datetime.strptime(
+            self.end_date_invoice,
+            DEFAULT_SERVER_DATETIME_FORMAT).replace(
+                hour=23, minute=59, second=59, microsecond=0)
         if invoice.invoice_type == 'rent':
             invoice.write({
-                'init_date_invoice': self.init_date_invoice,
-                'end_date_invoice': self.end_date_invoice})
+                'init_date_invoice': date_init,
+                'end_date_invoice': date_end})
         return res

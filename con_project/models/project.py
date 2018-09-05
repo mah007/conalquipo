@@ -24,6 +24,8 @@ class ProjectWorks(models.Model):
             self.street2_1 = self.partner_id.street
             self.street2_2 = self.partner_id.street2
             self.zip2 = self.partner_id.zip
+            self.sector_id2 = self.partner_id.sector_id
+            self.secondary_sector_ids2 = self.partner_id.secondary_sector_ids
 
     @api.model
     def default_get(self, flds):
