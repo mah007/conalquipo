@@ -151,7 +151,7 @@ for row in Productos:
             'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
             'rental': ast.literal_eval(row['Puede ser alquilado'].strip()),
             'components': ast.literal_eval(row['Tiene componentes'].strip()),
-            'no_mech': ast.literal_eval(row['No Mecanico'].strip()),
+            'non_mech': ast.literal_eval(row['No Mecanico'].strip()),
             'multiples_uom': ast.literal_eval(
                 row['Tiene multiples unidades'].strip()),
             'is_operated': ast.literal_eval(row['inv-es operado'].strip()),
@@ -239,7 +239,7 @@ for row in Productos:
             'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
             'rental': ast.literal_eval(row['Puede ser alquilado'].strip()),
             'components': ast.literal_eval(row['Tiene componentes'].strip()),
-            'no_mech': ast.literal_eval(row['No Mecanico'].strip()),
+            'non_mech': ast.literal_eval(row['No Mecanico'].strip()),
             'multiples_uom': ast.literal_eval(
                 row['Tiene multiples unidades'].strip()),
             'is_operated': ast.literal_eval(row['inv-es operado'].strip()),
