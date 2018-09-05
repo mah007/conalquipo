@@ -33,10 +33,11 @@ for row in Productos:
             [['name', '=', row['Categoria'].strip()]]], {'fields': ['id']})
 
     if not categ_id:
-        categ_id = sock.execute_kw(
-            db, uid, password,
-            'product.category',
-            'create', [{'name': row['Categoria'].strip()}])
+        # categ_id = sock.execute_kw(
+        #     db, uid, password,
+        #     'product.category',
+        #     'create', [{'name': row['Categoria'].strip()}])
+        print("No existe " + row['Categoria'].strip())
     else:
         categ_id = categ_id[0]['id']
 
@@ -168,6 +169,27 @@ for row in Productos:
         product_id = sock.execute_kw(
             db, uid, password, 'product.template', 'create', [vals])
 
+        # CARGA DE CANTIDAD A MANO
+        pro_id = sock.execute_kw(
+            db, uid, password, 'product.product', 'search_read', [
+                [['product_tmpl_id', '=', product_id]]],
+            {'fields': ['id']})
+
+        vals_qty = {
+            'product_id': pro_id[0]['id'],
+            'location_id': origin_location_id[0]['id'],
+            'new_quantity': row['cantidad a mano']
+        }
+
+        wizard = sock.execute_kw(
+            db, uid, password, 'stock.change.product.qty', 'create', [
+                vals_qty])
+
+        sock.execute_kw(
+            db, uid, password,
+            'stock.change.product.qty', 'change_product_qty', [
+                wizard])
+
 
         # Add to public pricelist ###################################
 
@@ -252,9 +274,29 @@ for row in Productos:
             'layout_sec_id': section_id,
             'min_qty_rental': row['cantidad por defecto']
         }
- 
+
         sock.execute_kw(
             db, uid, password, 'product.template', 'write', [
                 [producto_id[0]['id']], vals])
+
+        pro_id = sock.execute_kw(
+            db, uid, password, 'product.product', 'search_read', [
+                [['product_tmpl_id', '=', producto_id[0]['id']]]],
+            {'fields': ['id']})
+
+        vals_qty = {
+            'product_id': pro_id[0]['id'],
+            'location_id': origin_location_id[0]['id'],
+            'new_quantity': row['cantidad a mano']
+        }
+
+        wizard = sock.execute_kw(
+            db, uid, password, 'stock.change.product.qty', 'create', [
+                vals_qty])
+
+        sock.execute_kw(
+            db, uid, password,
+            'stock.change.product.qty', 'change_product_qty', [
+                wizard])
 
 print("Finaliza Proceso (Productos)...")
