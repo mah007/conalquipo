@@ -135,7 +135,7 @@ class AccountInvoice(models.Model):
         string='Init Date')
     end_date_invoice = fields.Datetime(
         string='End Date')
-        
+
     @api.onchange('employee_code')
     def onchange_employe_code(self):
         if self.employee_code:
@@ -155,6 +155,10 @@ class AccountInvoice(models.Model):
                     'this group.'))
         else:
             self.employee_id = False
+
+    @api.onchange('partner_id')
+    def onchange_project(self):
+        self.project_id = False
 
     @api.model
     def _getemployee(self):
@@ -216,7 +220,7 @@ class AccountInvoice(models.Model):
             raise UserError(_(
                 "You don't have permission to edit the record!"))
 
-    @api.depends('project_id')
+    @api.depends('project_id', 'partner_id')
     def _get_merge_address(self):
         """
         This function verify if a project has been selected and return a
@@ -244,7 +248,8 @@ class AccountInvoice(models.Model):
 
     @staticmethod
     def merge_address(
-        street, street2, city, municipality, state, zip_code,
+        street, street2, city,
+        municipality, state, zip_code,
         country, phone, email):
         """
         This function receive text fields for merge the address fields.
