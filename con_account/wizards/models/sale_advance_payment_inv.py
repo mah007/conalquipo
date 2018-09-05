@@ -35,21 +35,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
         # TODO: Found a better way to do this
         local = timezone(self._context['tz'] or 'America/Bogota')
         res = super(SaleAdvancePaymentInv, self).create_invoices()
-
         invoice = self.env['account.invoice'].search(
             [('id', '=', res['res_id'])])
-        date_init = datetime.strptime(self.init_date_invoice,
+        date_init = datetime.strptime(
+            self.init_date_invoice,
             DEFAULT_SERVER_DATETIME_FORMAT).replace(
                 hour=0, minute=0, second=0, microsecond=0)
         local_dt_init = local.localize(date_init, is_dst=None)
         utc_dt_init = local_dt_init.astimezone(utc)
-
-        date_end = datetime.strptime(self.end_date_invoice,
-             DEFAULT_SERVER_DATETIME_FORMAT).replace(
-                 hour=23, minute=59, second=59, microsecond=0)
+        date_end = datetime.strptime(
+            self.end_date_invoice,
+            DEFAULT_SERVER_DATETIME_FORMAT).replace(
+                hour=23, minute=59, second=59, microsecond=0)
         local_dt_end = local.localize(date_end, is_dst=None)
         utc_dt_end = local_dt_end.astimezone(utc)
-
         if invoice.invoice_type == 'rent':
             invoice.write({
                 'init_date_invoice': utc_dt_init,
