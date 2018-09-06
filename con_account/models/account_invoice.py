@@ -402,7 +402,9 @@ class AccountInvoice(models.Model):
                             delta = a - b
                             # Get tasks values
                             if not sale_lines.is_extra and \
-                             not sale_lines.is_component:
+                             not sale_lines.is_component and \
+                              sale_lines.bill_uom.name not in \
+                               ["Día(s)", "Unidad(es)"]:
                                 task = self.env['project.task'].search(
                                     [('sale_line_id', '=', sale_lines.id)])
                                 for timesheet in task.timesheet_ids:
@@ -411,6 +413,8 @@ class AccountInvoice(models.Model):
                                       timesheet.create_date <= \
                                        self.end_date_invoice:
                                         qty += timesheet.unit_amount
+                            elif sale_lines.bill_uom.name == "Día(s)":
+                                qty = delta.days + 1
                             else:
                                 qty = mv.product_uom_qty
                             # Get product count history
@@ -463,7 +467,9 @@ class AccountInvoice(models.Model):
                             delta = b - a
                             # Get tasks values
                             if not sale_lines.is_extra and \
-                             not sale_lines.is_component:
+                             not sale_lines.is_component and \
+                              sale_lines.bill_uom.name not in \
+                               ["Día(s)", "Unidad(es)"]:
                                 task = self.env['project.task'].search(
                                     [('sale_line_id', '=', sale_lines.id)])
                                 for timesheet in task.timesheet_ids:
@@ -472,6 +478,8 @@ class AccountInvoice(models.Model):
                                       timesheet.create_date <= \
                                        self.end_date_invoice:
                                         qty += timesheet.unit_amount
+                            elif sale_lines.bill_uom.name == "Día(s)":
+                                qty = delta.days + 1
                             else:
                                 qty = mv.product_uom_qty
                             # Get product count history
