@@ -1337,6 +1337,8 @@ class SaleOrder(models.Model):
                     _('Receive')),
                 'product_uom_qty': 1,
                 'bill_uom_qty': 1,
+                'layout_category_id': \
+                 carrier.product_id.product_tmpl_id.layout_sec_id.id,
                 'product_uom': carrier.product_id.uom_id.id,
                 'bill_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,

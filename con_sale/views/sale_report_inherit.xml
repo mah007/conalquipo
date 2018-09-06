@@ -71,24 +71,38 @@
                             </div>
                         </div>
 
-                        <div style="width:100%;">
+                        <div style="width:50%;font-size:20px;text-align:justify;border: 2px solid #C65A00;border-radius: 5px;">
                             <strong>
                                 <span>Customer: </span>
                             </strong>
                             <span t-field="o.partner_id.name"/><br/>
                             <strong>
-                                <span>NIT. </span>
+                                <span>NIT: </span>
                             </strong>
                             <span t-field="o.partner_id.vat"/><br/>
                             <strong>
-                                <span>Work. </span>
+                                <span>Obra: </span>
                             </strong>
-                            <span t-field="o.project_id.name"/><br/>
-                            <span t-field="o.project_id.work_code"/><br/>
+                            <span t-field="o.project_id.name"/><span> / </span><span t-field="o.project_id.work_code"/><br/>
+                            <strong>
+                                <span>Dirección: </span>
+                            </strong>
                             <span t-field="o.project_id.street1"/><span> / </span><span t-field="o.project_id.street1_2"/><br/>
+                            <strong>
+                                <span>Ciudad: </span>
+                            </strong>
                             <span t-field="o.project_id.city"/><br/>
+                            <strong>
+                                <span>Municipio: </span>
+                            </strong>
                             <span t-field="o.project_id.municipality_id.name"/><br/>
+                            <strong>
+                                <span>Departamento: </span>
+                            </strong>
                             <span t-field="o.project_id.state_id.name"/><br/>
+                            <strong>
+                                <span>Teléfono: </span>
+                            </strong>
                             <span t-field="o.project_id.phone1"/><br/>
                             <br/>
                         </div>
@@ -171,6 +185,7 @@
                                     <tr>
                                         <th style="border: 1px solid #C65A00; text-align:center; background-color: #FFAA64; border-radius:6px 6px 6px 6px!important;">Descripción</th>
                                         <th style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">Cantidad</th>
+                                        <th style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">Cantidad de facturación</th>
                                         <th style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">Precio</th>
                                         <th t-if="display_discount" style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;" groups="sale.group_discount_per_so_line">Desc.(%)</th>
                                         <th style="text-align:center; border: 1px solid #C65A00;  background-color: #FFAA64;">IVA</th>
@@ -197,6 +212,10 @@
                                                     <td style="padding:5px; border: 1px solid;">
                                                         <span t-field="l.product_uom_qty"/>
                                                         <span t-field="l.product_uom" groups="product.group_uom"/>
+                                                    </td>
+                                                    <td style="padding:5px; border: 1px solid;">
+                                                        <span t-field="l.bill_uom_qty"/>
+                                                        <span t-field="l.bill_uom" groups="product.group_uom"/>
                                                     </td>
                                                     <td style="padding:5px; border: 1px solid;">
                                                         <span t-field="l.price_unit"/>

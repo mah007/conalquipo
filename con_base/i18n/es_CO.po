@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-12 18:24+0000\n"
-"PO-Revision-Date: 2018-08-12 13:28-0500\n"
+"POT-Creation-Date: 2018-09-06 16:37+0000\n"
+"PO-Revision-Date: 2018-09-06 11:40-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -198,6 +198,11 @@ msgid "Country"
 msgstr "País"
 
 #. module: con_base
+#: model:ir.model.fields,field_description:con_base.field_res_company_cover_page_logo
+msgid "Cover page Logo"
+msgstr "Logo de portada"
+
+#. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_create_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_create_uid
 #: model:ir.model.fields,field_description:con_base.field_res_partner_sector_create_uid
@@ -320,7 +325,7 @@ msgstr "Viernes"
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_company_from_res
 msgid "From"
-msgstr "Desde"
+msgstr "De"
 
 #. module: con_base
 #: model:res.partner.messages,name:con_base.msg12
@@ -339,8 +344,8 @@ msgstr "Guayabal"
 
 #. module: con_base
 #: model:ir.model.fields,field_description:con_base.field_res_country_municipality_id
-#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id_7381
-#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7393
+#: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id_7443
+#: model:ir.model.fields,field_description:con_base.field_res_partner_sector_id_7455
 msgid "ID"
 msgstr "ID"
 
@@ -568,7 +573,7 @@ msgstr "Sabaneta"
 #: model:ir.model.fields,field_description:con_base.field_res_partner_messages_id
 #: model:ir.model.fields,field_description:con_base.field_res_users_messages_id
 msgid "Sale Messages"
-msgstr "Sale Messages"
+msgstr "Mensajes de venta"
 
 #. module: con_base
 #: model:res.partner.sector,name:con_base.sector93
@@ -732,37 +737,44 @@ msgid "Tags..."
 msgstr "Etiquetas..."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:247
+#: code:addons/con_base/models/res_partner.py:265
 #, python-format
 msgid "The days can not be greater than 31."
 msgstr "Los días no pueden ser mayores a 31."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:244
+#: code:addons/con_base/models/res_partner.py:262
 #, python-format
 msgid "The end day can not be less than start day."
 msgstr "El día final no puede ser menor al día inicial."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:258
+#: code:addons/con_base/models/res_partner.py:276
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
 msgstr "El sector principal debe ser diferente al sector secundario."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:159
+#: code:addons/con_base/models/res_partner.py:172
 #, python-format
 msgid "This customer has a invoices on draft or open state. You can not change payment term"
 msgstr "El cliente tiene facturas en estado borrador o abiertas. No se puede cambiar el plazo de pago."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:146
+#: code:addons/con_base/models/res_partner.py:150
 #, python-format
 msgid "This customer has a invoices on draft or open state. You can not change pricelist"
 msgstr "El cliente tiene facturas en estado borrador o abiertas. No se puede cambiar la tarifa."
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:178
+#: code:addons/con_base/models/res_partner.py:155
+#: code:addons/con_base/models/res_partner.py:177
+#, python-format
+msgid "This customer has a sale orders/quotations on draft or open state. You can not change pricelist"
+msgstr "Este cliente tiene pedidos de venta / cotizaciones en borrador o en estado abierto. No puedes cambiar la lista de precios"
+
+#. module: con_base
+#: code:addons/con_base/models/res_partner.py:196
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "Este código de empleado no pertenece al grupo del usuario."
@@ -813,7 +825,7 @@ msgid "Wednesday"
 msgstr "Miercoles"
 
 #. module: con_base
-#: code:addons/con_base/models/res_partner.py:288
+#: code:addons/con_base/models/res_partner.py:306
 #, python-format
 msgid "You have to define a payment term in company config!"
 msgstr "Ud. debe definir el plazo de pago por defecto!"
@@ -826,7 +838,7 @@ msgstr "C.P."
 #. module: con_base
 #: model:ir.ui.view,arch_db:con_base.res_partner_form_inherit
 msgid "e.g. BE0477472701"
-msgstr "Por ejemplo, ESA00000000"
+msgstr "Por ejemplo, BE0477472701"
 
 #. module: con_base
 #: model:ir.model,name:con_base.model_res_partner_messages
