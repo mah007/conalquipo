@@ -419,8 +419,7 @@ class AccountInvoice(models.Model):
                                  ('move_id', '=', mv.id),
                                  ('code', '=', 'incoming')])
                             # Create returned product invoice
-                            inv_line = self.env['account.invoice.line'].create(
-                                {"date_move": mv.advertisement_date,
+                            inv_line = {"date_move": mv.advertisement_date,
                                  "invoice_id": data.invoice_id.id,
                                  "name": data.name,
                                  "account_id": data.account_id.id,
@@ -444,9 +443,11 @@ class AccountInvoice(models.Model):
                                  "products_on_work": history.product_count,
                                  "invoice_line_tax_ids": \
                                   [(6, 0, list(
-                                      data.invoice_line_tax_ids._ids))]})
-                            sale_lines.write({
-                                'invoice_lines': [(4, inv_line.id)]})
+                                      data.invoice_line_tax_ids._ids))]}
+                            # sale_lines.write({
+                            #     'invoice_lines': [(4, inv_line.id)]})
+                            self.write({
+                                'invoice_lines': [(0, 0, inv_line)]})
                     for mv in move_out:
                         qty = 0.0
                         if mv.location_dest_id.usage \
@@ -481,9 +482,7 @@ class AccountInvoice(models.Model):
                                      ('move_id', '=', mv.id),
                                      ('code', '=', 'outgoing')])
                             # Create product on work invoice
-                            inv_line = self.env[
-                                'account.invoice.line'].create(
-                                    {"date_move": mv.date_expected,
+                            inv_line = {"date_move": mv.date_expected,
                                      "invoice_id": data.invoice_id.id,
                                      "name": data.name,
                                      "account_id": data.account_id.id,
@@ -508,12 +507,13 @@ class AccountInvoice(models.Model):
                                      "invoice_line_tax_ids": \
                                         [(6, 0, list(
                                             data.invoice_line_tax_ids._ids))]
-                                    })
-                            sale_lines.write({
-                                'invoice_lines': [(4, inv_line.id)]})
+                                    }
+                            self.write({
+                                'invoice_lines': [(0, 0, inv_line)]})
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
                 else:
                     data.document = 'ACAR'
+            self.compute_taxes()
         return res
