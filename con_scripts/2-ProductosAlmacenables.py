@@ -102,7 +102,8 @@ for row in Productos:
     origin_location_id = sock.execute_kw(
         db, uid, password, 'stock.location', 'search_read', [
             [['complete_name',
-              '=', row['Ubicacion origen'].strip()]]], {'fields': ['id']})
+              '=', row['Ubicacion origen'].strip()]]], {
+                  'fields': ['id', 'name', 'complete_name']})
 
     location_id = sock.execute_kw(
         db, uid, password, 'stock.location', 'search_read', [
@@ -292,6 +293,19 @@ for row in Productos:
         print(message)
         vals = {}
         
+        # RUTAS
+        warehouse = sock.execute_kw(
+            db, uid, password, 'stock.warehouse', 'search_read', [
+                [['lot_stock_id', '=', origin_location_id[0]['id']]]],
+            {'fields': ['id']})
+
+        routes = sock.execute_kw(
+            db, uid, password, 'stock.location.route', 'search_read', [
+                [['supplier_wh_id', '=', warehouse[0]['id']]]],
+            {'fields': ['id']})
+        if routes:
+            routes = [(6, 0, [1, routes[0]['id']])]
+
         if row['No Mecanico'].strip() != "True":
             vals = {
                 'name': row['Producto'].strip(),
@@ -326,7 +340,8 @@ for row in Productos:
                 'description_pickingout': row[
                     'Notas para pedidos de entrega'].strip(),
                 'layout_sec_id': section_id,
-                'min_qty_rental': row['cantidad por defecto']
+                'min_qty_rental': row['cantidad por defecto'],
+                'route_ids': routes
             }
         else:
             vals = {
@@ -363,7 +378,8 @@ for row in Productos:
                 'min_qty_rental': row['cantidad por defecto'],
                 'location_id': False,
                 'color': False,
-                'state_id': False
+                'state_id': False,
+                'route_ids': routes
             }
 
         sock.execute_kw(
