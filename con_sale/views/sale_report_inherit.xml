@@ -84,12 +84,21 @@
                                 <span>Obra: </span>
                             </strong>
                             <span t-field="o.project_id.name"/><span> / </span><span t-field="o.project_id.work_code"/><br/>
-                            <span t-field="o.project_id.street1"/><span> / </span><span t-field="o.project_id.street1_2"/><br/>
-                            <span t-field="o.project_id.city"/><br/>
-                            <strong>
-                                <span>Tel: </span>
-                            </strong>
-                            <span t-field="o.project_id.phone1"/><br/>
+                            <t t-if="o.project_id.street1">
+                                <span t-field="o.project_id.street1"/>
+                            </t>
+                            <t t-if="o.project_id.street1_2">
+                                <span> / </span><span t-field="o.project_id.street1_2"/><br/>
+                            </t>
+                            <t t-if="o.project_id.city">
+                                <span t-field="o.project_id.city"/><br/>
+                            </t>
+                            <t t-if="o.project_id.phone1">
+                                <strong>
+                                    <span>Tel: </span>
+                                </strong>
+                                <span t-field="o.project_id.phone1"/><br/>
+                            </t>
                             <br/>
                         </div>
                         <br/>

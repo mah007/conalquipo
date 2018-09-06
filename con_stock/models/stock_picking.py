@@ -145,7 +145,7 @@ class StockPicking(Model):
         string='Collect notification',
         track_visibility='onchange')
     employee_code = fields.Char('Employee code')
-    advertisement_date = fields.Datetime(
+    advertisement_date = fields.Date(
         string="Advertisement date",
         track_visibility='onchange')
 
