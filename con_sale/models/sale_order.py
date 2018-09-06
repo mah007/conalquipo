@@ -597,6 +597,35 @@ class SaleOrder(models.Model):
                  data.product_id.product_tmpl_id.more_information:
                     list_note.append(
                         data.product_id.product_tmpl_id.more_information)
+                # Create task for product
+                for data in self.order_line:
+                    if data.bill_uom.id not in \
+                    self.env.user.company_id.default_uom_task_id._ids \
+                    and not \
+                    data.is_delivery and not data.is_component and not \
+                     self.task_id:
+                        task_values = {
+                            'name': "Task for: " \
+                            + str(self.project_id.name) \
+                            + " - " \
+                            + str(data.product_id.name) \
+                            + " - " + \
+                            str(data.bill_uom.name),
+                            'project_id': self.project_id.id,
+                            'sale_line_id': data.id,
+                            'so_line': data.id,
+                            'product_id': data.product_id.id,
+                            'partner_id': self.partner_id.id,
+                            'company_id': self.company_id.id,
+                            'email_from': self.partner_id.email,
+                            'user_id': False,
+                            'uom_id': data.bill_uom.id,
+                            'planned_hours': data.bill_uom_qty,
+                            'remaining_hours': data.bill_uom_qty,
+                        }
+                        task = self.env[
+                            'project.task'].create(task_values)
+                        data.write({'task_id': task.id})
         if list_note:
             self.note = '\n \n '.join(list_note)
         cats = self.env.user.company_id.special_quotations_categories
