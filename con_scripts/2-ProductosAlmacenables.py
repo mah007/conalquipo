@@ -33,11 +33,10 @@ for row in Productos:
             [['name', '=', row['Categoria'].strip()]]], {'fields': ['id']})
 
     if not categ_id:
-        # categ_id = sock.execute_kw(
-        #     db, uid, password,
-        #     'product.category',
-        #     'create', [{'name': row['Categoria'].strip()}])
-        print("No existe " + row['Categoria'].strip())
+        categ_id = sock.execute_kw(
+            db, uid, password,
+            'product.category',
+            'create', [{'name': row['Categoria'].strip()}])
     else:
         categ_id = categ_id[0]['id']
 
@@ -136,40 +135,86 @@ for row in Productos:
             c, row['Producto'].strip())
 
         print(message)
+        vals = {}
 
-        vals = {
-            'name': row['Producto'].strip(),
-            'standard_price': row['Coste'].strip(),
-            'list_price': row['Precio de venta por unidad de medida'].strip(),
-            'categ_id': categ_id,
-            'uom_po_id': uom_po_id,
-            'sale_uom': sale_uom,
-            'uom_id': uom_id,
-            'default_code': row['Referencia interna'].strip(),
-            'type': 'product',
-            'active': True,
-            'sale_ok': ast.literal_eval(row['Puede ser vendido'].strip()),
-            'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
-            'rental': ast.literal_eval(row['Puede ser alquilado'].strip()),
-            'components': ast.literal_eval(row['Tiene componentes'].strip()),
-            'non_mech': ast.literal_eval(row['No Mecanico'].strip()),
-            'multiples_uom': ast.literal_eval(
-                row['Tiene multiples unidades'].strip()),
-            'is_operated': ast.literal_eval(row['inv-es operado'].strip()),
-            'product_origin': origin_location_id[0]['id'],
-            'location_id': location_id[0]['id'],
-            'color': row['Estado'].strip(),
-            'replenishment_charge': rep_producto_id,
-            'description_pickingout': row[
-                'Notas para pedidos de entrega'].strip(),
-            'layout_sec_id': section_id,
-            'min_qty_rental': row['cantidad por defecto']
-        }
+        if row['No Mecanico'].strip() != "True":
+            vals = {
+                'name': row['Producto'].strip(),
+                'standard_price': row['Coste'].strip(),
+                'list_price': row[
+                    'Precio de venta por unidad de medida'].strip(),
+                'categ_id': categ_id,
+                'uom_po_id': uom_po_id,
+                'sale_uom': sale_uom,
+                'uom_id': uom_id,
+                'default_code': row['Referencia interna'].strip(),
+                'type': 'product',
+                'active': True,
+                'sale_ok': ast.literal_eval(
+                    row['Puede ser vendido'].strip()),
+                'purchase_ok': ast.literal_eval(
+                    row['Puede ser comprado'].strip()),
+                'rental': ast.literal_eval(row[
+                    'Puede ser alquilado'].strip()),
+                'components': ast.literal_eval(
+                    row['Tiene componentes'].strip()),
+                'non_mech': ast.literal_eval(
+                    row['No Mecanico'].strip()),
+                'multiples_uom': ast.literal_eval(
+                    row['Tiene multiples unidades'].strip()),
+                'is_operated': ast.literal_eval(
+                    row['inv-es operado'].strip()),
+                'product_origin': origin_location_id[0]['id'],
+                'location_id': location_id[0]['id'],
+                'color': row['Estado'].strip(),
+                'replenishment_charge': rep_producto_id,
+                'description_pickingout': row[
+                    'Notas para pedidos de entrega'].strip(),
+                'layout_sec_id': section_id,
+                'min_qty_rental': row['cantidad por defecto']
+            }
+        else:
+            vals = {
+                'name': row['Producto'].strip(),
+                'standard_price': row['Coste'].strip(),
+                'list_price': row[
+                    'Precio de venta por unidad de medida'].strip(),
+                'categ_id': categ_id,
+                'uom_po_id': uom_po_id,
+                'sale_uom': sale_uom,
+                'uom_id': uom_id,
+                'default_code': row['Referencia interna'].strip(),
+                'type': 'product',
+                'active': True,
+                'sale_ok': ast.literal_eval(
+                    row['Puede ser vendido'].strip()),
+                'purchase_ok': ast.literal_eval(
+                    row['Puede ser comprado'].strip()),
+                'rental': ast.literal_eval(row[
+                    'Puede ser alquilado'].strip()),
+                'components': ast.literal_eval(
+                    row['Tiene componentes'].strip()),
+                'non_mech': ast.literal_eval(
+                    row['No Mecanico'].strip()),
+                'multiples_uom': ast.literal_eval(
+                    row['Tiene multiples unidades'].strip()),
+                'is_operated': ast.literal_eval(
+                    row['inv-es operado'].strip()),
+                'product_origin': origin_location_id[0]['id'],
+                'replenishment_charge': rep_producto_id,
+                'description_pickingout': row[
+                    'Notas para pedidos de entrega'].strip(),
+                'layout_sec_id': section_id,
+                'min_qty_rental': row['cantidad por defecto'],
+                'location_id': False,
+                'color': False,
+                'state_id': False
+            }
 
         product_id = sock.execute_kw(
             db, uid, password, 'product.template', 'create', [vals])
 
-        # CARGA DE CANTIDAD A MANO
+        # AÑADIR CANTIDAAD A MANO
         pro_id = sock.execute_kw(
             db, uid, password, 'product.product', 'search_read', [
                 [['product_tmpl_id', '=', product_id]]],
@@ -245,58 +290,105 @@ for row in Productos:
             c, row['Producto'].strip())
 
         print(message)
-
-        vals = {
-            'name': row['Producto'].strip(),
-            'standard_price': row['Coste'].strip(),
-            'list_price': row['Precio de venta por unidad de medida'].strip(),
-            'categ_id': categ_id,
-            'uom_po_id': uom_po_id,
-            'sale_uom': sale_uom,
-            'uom_id': uom_id,
-            'default_code': row['Referencia interna'].strip(),
-            'type': 'product',
-            'active': True,
-            'sale_ok': ast.literal_eval(row['Puede ser vendido'].strip()),
-            'purchase_ok': ast.literal_eval(row['Puede ser comprado'].strip()),
-            'rental': ast.literal_eval(row['Puede ser alquilado'].strip()),
-            'components': ast.literal_eval(row['Tiene componentes'].strip()),
-            'non_mech': ast.literal_eval(row['No Mecanico'].strip()),
-            'multiples_uom': ast.literal_eval(
-                row['Tiene multiples unidades'].strip()),
-            'is_operated': ast.literal_eval(row['inv-es operado'].strip()),
-            'product_origin': origin_location_id[0]['id'],
-            'location_id': location_id[0]['id'],
-            'color': row['Estado'].strip(),
-            'replenishment_charge': rep_producto_id,
-            'description_pickingout': row[
-                'Notas para pedidos de entrega'].strip(),
-            'layout_sec_id': section_id,
-            'min_qty_rental': row['cantidad por defecto']
-        }
+        vals = {}
+        
+        if row['No Mecanico'].strip() != "True":
+            vals = {
+                'name': row['Producto'].strip(),
+                'standard_price': row['Coste'].strip(),
+                'list_price': row[
+                    'Precio de venta por unidad de medida'].strip(),
+                'categ_id': categ_id,
+                'uom_po_id': uom_po_id,
+                'sale_uom': sale_uom,
+                'uom_id': uom_id,
+                'default_code': row['Referencia interna'].strip(),
+                'type': 'product',
+                'active': True,
+                'sale_ok': ast.literal_eval(
+                    row['Puede ser vendido'].strip()),
+                'purchase_ok': ast.literal_eval(
+                    row['Puede ser comprado'].strip()),
+                'rental': ast.literal_eval(row[
+                    'Puede ser alquilado'].strip()),
+                'components': ast.literal_eval(
+                    row['Tiene componentes'].strip()),
+                'non_mech': ast.literal_eval(
+                    row['No Mecanico'].strip()),
+                'multiples_uom': ast.literal_eval(
+                    row['Tiene multiples unidades'].strip()),
+                'is_operated': ast.literal_eval(
+                    row['inv-es operado'].strip()),
+                'product_origin': origin_location_id[0]['id'],
+                'location_id': location_id[0]['id'],
+                'color': row['Estado'].strip(),
+                'replenishment_charge': rep_producto_id,
+                'description_pickingout': row[
+                    'Notas para pedidos de entrega'].strip(),
+                'layout_sec_id': section_id,
+                'min_qty_rental': row['cantidad por defecto']
+            }
+        else:
+            vals = {
+                'name': row['Producto'].strip(),
+                'standard_price': row['Coste'].strip(),
+                'list_price': row[
+                    'Precio de venta por unidad de medida'].strip(),
+                'categ_id': categ_id,
+                'uom_po_id': uom_po_id,
+                'sale_uom': sale_uom,
+                'uom_id': uom_id,
+                'default_code': row['Referencia interna'].strip(),
+                'type': 'product',
+                'active': True,
+                'sale_ok': ast.literal_eval(
+                    row['Puede ser vendido'].strip()),
+                'purchase_ok': ast.literal_eval(
+                    row['Puede ser comprado'].strip()),
+                'rental': ast.literal_eval(row[
+                    'Puede ser alquilado'].strip()),
+                'components': ast.literal_eval(
+                    row['Tiene componentes'].strip()),
+                'non_mech': ast.literal_eval(
+                    row['No Mecanico'].strip()),
+                'multiples_uom': ast.literal_eval(
+                    row['Tiene multiples unidades'].strip()),
+                'is_operated': ast.literal_eval(
+                    row['inv-es operado'].strip()),
+                'product_origin': origin_location_id[0]['id'],
+                'replenishment_charge': rep_producto_id,
+                'description_pickingout': row[
+                    'Notas para pedidos de entrega'].strip(),
+                'layout_sec_id': section_id,
+                'min_qty_rental': row['cantidad por defecto'],
+                'location_id': False,
+                'color': False,
+                'state_id': False
+            }
 
         sock.execute_kw(
             db, uid, password, 'product.template', 'write', [
                 [producto_id[0]['id']], vals])
 
-        pro_id = sock.execute_kw(
-            db, uid, password, 'product.product', 'search_read', [
-                [['product_tmpl_id', '=', producto_id[0]['id']]]],
-            {'fields': ['id']})
+        # AÑADIR CANTIDAAD A MANO
+        # pro_id = sock.execute_kw(
+        #     db, uid, password, 'product.product', 'search_read', [
+        #         [['product_tmpl_id', '=', producto_id[0]['id']]]],
+        #     {'fields': ['id']})
 
-        vals_qty = {
-            'product_id': pro_id[0]['id'],
-            'location_id': origin_location_id[0]['id'],
-            'new_quantity': row['cantidad a mano']
-        }
+        # vals_qty = {
+        #     'product_id': pro_id[0]['id'],
+        #     'location_id': origin_location_id[0]['id'],
+        #     'new_quantity': row['cantidad a mano']
+        # }
 
-        wizard = sock.execute_kw(
-            db, uid, password, 'stock.change.product.qty', 'create', [
-                vals_qty])
+        # wizard = sock.execute_kw(
+        #     db, uid, password, 'stock.change.product.qty', 'create', [
+        #         vals_qty])
 
-        sock.execute_kw(
-            db, uid, password,
-            'stock.change.product.qty', 'change_product_qty', [
-                wizard])
+        # sock.execute_kw(
+        #     db, uid, password,
+        #     'stock.change.product.qty', 'change_product_qty', [
+        #         wizard])
 
 print("Finaliza Proceso (Productos)...")

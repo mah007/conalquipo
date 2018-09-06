@@ -106,10 +106,10 @@ Fracción de hora se cobra como hora completa."|||PTL 260 CMF|
 COMPRESOR #22 SULLAIR|Producto almacenable|CMAR-022|Alquiler|1|Physical Locations/CAR/Stock|#33FF00|Compresores|50000||Unit(s)|Hour(s)|Unit(s)|True|True|True|True|False|True||1||||REDIMA|||||False|REPO. COMPRESOR||"* Incluye operador y combustible
 Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o daño total.
 Fracción de hora se cobra como hora completa."|||185|
-BOTELLA LUBRICACION COMPRESOR |Producto almacenable|COMP-001|||Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. BOTELLA LUBRICACION COMPRESOR||||||
-MANGUERA COMPRESOR|Producto almacenable|COMP-002|||Physical Locations/CAR/Stock|#33FF00|Complementos|0||m|m|m|False|True|True|False|True|False|||||||||||False|REPO. MANGUERA COMPRESOR||||||
-PALA PARA COMPRESOR|Producto almacenable|COMP-003|||Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. PALA PARA COMPRESOR||||||
-PUNTA PARA MARTILLO|Producto almacenable|COMP-004|||Physical Locations/CAR/Stock|#33FF00|Complementos|7000||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. PUNTA PARA MARTILLO||||||
+BOTELLA LUBRICACION COMPRESOR |Producto almacenable|COMP-001|Complementos||Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. BOTELLA LUBRICACION COMPRESOR||||||
+MANGUERA COMPRESOR|Producto almacenable|COMP-002|Complementos||Physical Locations/CAR/Stock|#33FF00|Complementos|0||m|m|m|False|True|True|False|True|False|||||||||||False|REPO. MANGUERA COMPRESOR||||||
+PALA PARA COMPRESOR|Producto almacenable|COMP-003|Complementos||Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. PALA PARA COMPRESOR||||||
+PUNTA PARA MARTILLO|Producto almacenable|COMP-004|Complementos||Physical Locations/CAR/Stock|#33FF00|Complementos|7000||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||||||||||False|REPO. PUNTA PARA MARTILLO||||||
 CONCRETADORA TOLVA 3S HIDRAULICA #1|Producto almacenable|CNCH-001|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Concretadoras|88000||Unit(s)|Day(s)|Unit(s)|True|True|True|True|False|False||1|D­as(s)|3|88000|FECON|||||False|REPO. CONCRETADORA HIDRAULICA||||||
 CONCRETADORA TOLVA 3S HIDRAULICA #2|Producto almacenable|CNCH-002|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Concretadoras|88000||Unit(s)|Day(s)|Unit(s)|True|True|True|True|False|False||1|D­as(s)|3|88000|FECON|||||False|REPO. CONCRETADORA HIDRAULICA||||||
 CONCRETADORA TOLVA 3S HIDRAULICA #3|Producto almacenable|CNCH-003|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Concretadoras|88000||Unit(s)|Day(s)|Unit(s)|True|True|True|True|False|False||1|D­as(s)|3|88000|HUMBERTO MONTOYA GAVIRIA|||||False|REPO. CONCRETADORA HIDRAULICA|||||E500R|
@@ -157,7 +157,7 @@ Conalquipo tiene 6 horas hïż½?biles para atender una solicitud mantenimiento 
 MINIEXCAVADORA HIDRAULICA|Producto almacenable|MEXC-003|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Retroexcavadoras|120000||Unit(s)|Hour(s)|Unit(s)|True|True|True|False|False|True||1||||RODRIGUEZ Y LONDOïż½?O|||||False|REPO. MINIEXCAVADORA||"Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o daño total.
 Fracción de hora se cobra como hora completa.
 Conalquipo tiene 6 horas hïż½?biles para atender una solicitud mantenimiento correctivo."|||3503|
-BALDE PARA RETROEXCAVADORA|Producto almacenable|COMP-171||1|Physical Locations/B7/Existencias|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||1|||||||||False|REPO. BALDE PARA RETROEXCAVADORA||||||
+BALDE PARA RETROEXCAVADORA|Producto almacenable|COMP-171|Complementos|1|Physical Locations/B7/Existencias|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||1|||||||||False|REPO. BALDE PARA RETROEXCAVADORA||||||
 RETROCARGADOR CON LLANTAS|Producto almacenable|REXC-004|Alquiler||Physical Locations/B7/Existencias|#33FF00|Retroexcavadoras|85000||Unit(s)|Hour(s)|Unit(s)|True|True|True|False|False|False|||Hora(s)|3|85000||||||False|REPO. RETROCARGADOR||"Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o daño total.
 Fracción de hora se cobra como hora completa.
 Conalquipo tiene 6 horas hïż½?biles para atender una solicitud mantenimiento correctivo."|||555E|
@@ -241,7 +241,7 @@ Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o da�
 Valor deducible del seguro a cargo del cliente en caso de robo, hurto o substracci³n.
 Conalquipo tiene 6 horas hïż½?biles para atender una solicitud mantenimiento correctivo."||||
 TABLERO ELECTRICO PARA PLANTAS|Producto almacenable|PLGN-C01|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Plantas|12000||Unit(s)|Day(s)|Unit(s)|True|True|True|False|False|False||1|D­a(s)|3|12000||||||False|REPO. TABLERO ELECTRICO PARA PLANTAS||||||
-LLAVE SUICHE|Producto almacenable|COMP-005|||Physical Locations/B7/Existencias|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||D­a(s)|0|0||||||False|REPO. LLAVE SUICHE||||||
+LLAVE SUICHE|Producto almacenable|COMP-005|Complementos||Physical Locations/B7/Existencias|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|False|True|True|False|True|False|||D­a(s)|0|0||||||False|REPO. LLAVE SUICHE||||||
 PULMON COMPRESOR #1|Producto almacenable|PULN-001|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Compresores|35000||Unit(s)|Day(s)|Unit(s)|True|True|True|False|False|False||1|D­a(s)|3|35000|JUAN VELEZ|||||False|REPO. PULMON COMPRESOR||||||
 PULMON COMPRESOR #2|Producto almacenable|PULN-002|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Compresores|35000||Unit(s)|Day(s)|Unit(s)|True|True|True|False|False|False||1|D­a(s)|3|35000|JUAN VELEZ|||||False|REPO. PULMON COMPRESOR||||||
 PULMON COMPRESOR #3|Producto almacenable|PULN-003|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Compresores|35000||Unit(s)|Day(s)|Unit(s)|True|True|True|False|False|False||1|D­a(s)|3|35000|JUAN VELEZ|||||False|REPO. PULMON COMPRESOR||||||
@@ -406,7 +406,7 @@ ABRAZADERAS|Producto almacenable|COMP-006|Alquiler||Physical Locations/CAR/Stock
 PALANCA SOPORTE ALLANADORA|Producto almacenable|COMP-007|Alquiler|12|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||12|||||||||False|REPO. PALANCA SOPORTE ALLANADORA||||||
 "PLATO FLOTADOR ALLANADORA 36"""|Producto almacenable|COMP-170|Complementos|12|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||12|||||||||False|REPO. PLATO FLOTADOR ALLANADORA ||||||
 ALMADANA|Producto almacenable|COMP-008|Alquiler||Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False|||||||||||False|REPO. ALMADANA||||||
-AND. CARGA BASE|Producto almacenable|ACAR-001|Alquiler|219|Physical Locations/B6/Existencias|#33FF00|Andamios de carga|180||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||219|||||||||False|REPO. AND. CARGA BASE||||||
+AND. CARGA BASE|Producto almacenable|ACAR-0001|Alquiler|219|Physical Locations/B6/Existencias|#33FF00|Andamios de carga|180||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||219|||||||||False|REPO. AND. CARGA BASE||||||
 AND. CARGA BASE HEMBRA|Producto almacenable|ACAR-002|Alquiler|0|Physical Locations/B6/Existencias|#33FF00|Andamios de carga|480||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||0|||||||||False|REPO. AND. CARGA BASE HEMBRA||||||
 AND. CARGA BASE MACHO|Producto almacenable|ACAR-003|Alquiler|0|Physical Locations/B6/Existencias|#33FF00|Andamios de carga|480||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||0|||||||||False|REPO. AND. CARGA BASE MACHO||||||
 AND. CARGA DIAGONALES|Producto almacenable|ACAR-004|Alquiler|338|Physical Locations/B6/Existencias|#33FF00|Andamios de carga|480||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||338||||||||5|False|REPO. AND. CARGA DIAGONALES||||||
@@ -958,7 +958,7 @@ GUIAS DE CABLE (MALACATE)|Producto almacenable|COMP-118|Complementos||Physical L
 MAQUINA PARA BLOQUES|Producto almacenable|MQBL-001|Alquiler|1|Physical Locations/B6/Existencias|#33FF00|Otro equipo electromecánico|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||1|||||||||False|REPO. MAQUINA PARA BLOQUES||||||
 MORDAZAS ELLIS|Producto almacenable|MRDZ-001|Alquiler|60|Physical Locations/B7/Existencias|#33FF00|Formaletería losa|80||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||60|||||||||False|REPO. MORDAZAS ELLIS||||||
 SIERRA CIRCULAR MESA|Producto almacenable|SRCM-001|Alquiler|1|Physical Locations/CAR/Stock|#33FF00|Otro equipo electromecánico|10000||Unit(s)|Day(s)|Unit(s)|True|True|True|False|False|False||1|||||||||False|REPO. SIERRA CIRCULAR MESA||||||
-DISCO SIERRA CIRCULAR|Producto almacenable|COMP-122||1|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|False|False|True|False||1|||||||||False|REPO. DISCO SIERRA CIRCULAR||||||
+DISCO SIERRA CIRCULAR|Producto almacenable|COMP-122|Complementos|1|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|False|False|True|False||1|||||||||False|REPO. DISCO SIERRA CIRCULAR||||||
 MOTOSIERRA PARA CONCRETO|Producto almacenable|MTSC-001|Alquiler|1|Physical Locations/CAR/Stock|#33FF00|Otro equipo electromecánico|0||Unit(s)|m|Unit(s)|True|True|True|False|False|False||1|||||||||False|REPO. MOTOSIERRA PARA CONCRETO||||||
 MOTOSOLDADOR LINCON 250 AMP. 10 KW  No. 1|Producto almacenable|MTSL-001|Alquiler|1|Physical Locations/CAR/Stock|#33FF00|Soldadores|68400||Unit(s)|Day(s)|Unit(s)|True|True|True|True|False|False||1|||||||||False|REPO. MOTOSOLDADOR LINCON ||"* Las mïż½?quinas que salen sin operador y requieran de combustible para su funcionamiento, se entregarïż½?n con el tanque lleno. La mïż½?quina debe ser devuelta en las mismas condiciones, en caso contrario se cobrarïż½? el combustible a $9.500/gal³n.
 Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o daño total.
@@ -976,8 +976,8 @@ MOTOSOLDADOR LINCON 250 AMP. 10 KW  No. 4|Producto almacenable|MTSL-004|Alquiler
 Valor reposición del equipo a cargo del cliente en caso de pérdida, robo o daño total.
 Valor deducible del seguro a cargo del cliente en caso de robo, hurto o substracci³n.
 Conalquipo tiene 6 horas hïż½?biles para atender una solicitud mantenimiento correctivo."||||
-CABLE PINZA MASA|Producto almacenable|COMP-123||4|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||4|||||||||False|REPO. CABLE PINZA MASA||||||
-CABLE PORTAELECTRODO|Producto almacenable|COMP-124||4|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||4|||||||||False|REPO. CABLE PORTAELECTRODO||||||
+CABLE PINZA MASA|Producto almacenable|COMP-123|Complementos|4|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||4|||||||||False|REPO. CABLE PINZA MASA||||||
+CABLE PORTAELECTRODO|Producto almacenable|COMP-124|Complementos|4|Physical Locations/CAR/Stock|#33FF00|Complementos|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||4|||||||||False|REPO. CABLE PORTAELECTRODO||||||
 MIRA METALICA|Producto almacenable|TPGF-001|Alquiler|10|Physical Locations/B7/Existencias|#33FF00|Topografía|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||10|||||||||False|REPO. MIRA METALICA||||||
 MIRA-JALON|Producto almacenable|TPGF-002|Alquiler|3|Physical Locations/B7/Existencias|#33FF00|Topografía|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||3|||||||||False|REPO. MIRA-JALON||||||
 NIVEL PENTAX AL-3|Producto almacenable|TPGF-003|Alquiler|1|Physical Locations/B7/Existencias|#33FF00|Topografía|0||Unit(s)|Day(s)|Unit(s)|True|True|True|False|True|False||1|||||||||False|REPO. NIVEL PENTAX AL-3||||||
