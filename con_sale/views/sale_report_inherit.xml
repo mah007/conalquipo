@@ -71,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div style="width:50%;font-size:20px;text-align:justify;border: 2px solid #C65A00;border-radius: 5px;">
+                        <div style="width:50%;font-size:20px;text-align:justify;">
                             <strong>
                                 <span>Customer: </span>
                             </strong>
@@ -84,24 +84,10 @@
                                 <span>Obra: </span>
                             </strong>
                             <span t-field="o.project_id.name"/><span> / </span><span t-field="o.project_id.work_code"/><br/>
-                            <strong>
-                                <span>Dirección: </span>
-                            </strong>
                             <span t-field="o.project_id.street1"/><span> / </span><span t-field="o.project_id.street1_2"/><br/>
-                            <strong>
-                                <span>Ciudad: </span>
-                            </strong>
                             <span t-field="o.project_id.city"/><br/>
                             <strong>
-                                <span>Municipio: </span>
-                            </strong>
-                            <span t-field="o.project_id.municipality_id.name"/><br/>
-                            <strong>
-                                <span>Departamento: </span>
-                            </strong>
-                            <span t-field="o.project_id.state_id.name"/><br/>
-                            <strong>
-                                <span>Teléfono: </span>
+                                <span>Tel: </span>
                             </strong>
                             <span t-field="o.project_id.phone1"/><br/>
                             <br/>

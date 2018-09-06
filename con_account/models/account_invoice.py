@@ -51,40 +51,6 @@ class AccountInvoiceLine(models.Model):
     products_on_work = fields.Float(
         string='Products on work')
 
-    @api.one
-    @api.depends(
-        'price_unit', 'discount', 'invoice_line_tax_ids', 'quantity',
-        'product_id', 'invoice_id.partner_id',
-        'invoice_id.currency_id', 'invoice_id.company_id',
-        'invoice_id.date_invoice', 'invoice_id.date')
-    def _compute_price(self):
-        newqty = 0.0
-        if self.product_id.product_tmpl_id.type != "service":
-            newqty = self.num_days * self.products_on_work * self.quantity
-        else:
-            newqty = self.quantity
-        currency = self.invoice_id and self.invoice_id.currency_id or None
-        price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
-        taxes = False
-        if self.invoice_line_tax_ids:
-            taxes = self.invoice_line_tax_ids.compute_all(
-                price, currency, newqty,
-                product=self.product_id,
-                partner=self.invoice_id.partner_id)
-        self.price_subtotal = price_subtotal_signed = taxes['total_excluded'] \
-         if taxes else newqty * price
-        self.price_total = taxes['total_included'] if taxes \
-         else self.price_subtotal
-        if self.invoice_id.currency_id and \
-         self.invoice_id.currency_id != self.invoice_id.company_id.currency_id:
-            price_subtotal_signed = \
-             self.invoice_id.currency_id.with_context(
-                 date=self.invoice_id._get_currency_rate_date()).compute(
-                     price_subtotal_signed,
-                     self.invoice_id.company_id.currency_id)
-        sign = self.invoice_id.type in ['in_refund', 'out_refund'] and -1 or 1
-        self.price_subtotal_signed = price_subtotal_signed * sign
-
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
@@ -448,7 +414,9 @@ class AccountInvoice(models.Model):
                                  "products_on_work": history.product_count,
                                  "invoice_line_tax_ids": \
                                   [(6, 0, list(
-                                      data.invoice_line_tax_ids._ids))]})
+                                      data.invoice_line_tax_ids._ids))],
+                                 "layout_category_id": \
+                                      sale_lines.layout_category_id.id})
                             sale_lines.write({
                                 'invoice_lines': [(4, inv_line.id)]})
                     for mv in move_out:
@@ -515,7 +483,9 @@ class AccountInvoice(models.Model):
                                         history.product_count,
                                      "invoice_line_tax_ids": \
                                         [(6, 0, list(
-                                            data.invoice_line_tax_ids._ids))]
+                                            data.invoice_line_tax_ids._ids))],
+                                     "layout_category_id": \
+                                      sale_lines.layout_category_id.id
                                     })
                             sale_lines.write({
                                 'invoice_lines': [(4, inv_line.id)]})
