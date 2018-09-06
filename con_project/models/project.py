@@ -346,7 +346,7 @@ class ProjectWorks(models.Model):
     @api.model
     def create(self, values):
         res = super(ProjectWorks, self).create(values)
-        if values['partner_id']:
+        if 'partner_id' in values:
             numbers = []
             max_number = 1
             # Get partner

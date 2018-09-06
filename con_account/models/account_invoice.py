@@ -51,40 +51,6 @@ class AccountInvoiceLine(models.Model):
     products_on_work = fields.Float(
         string='Products on work')
 
-    @api.one
-    @api.depends(
-        'price_unit', 'discount', 'invoice_line_tax_ids', 'quantity',
-        'product_id', 'invoice_id.partner_id',
-        'invoice_id.currency_id', 'invoice_id.company_id',
-        'invoice_id.date_invoice', 'invoice_id.date')
-    def _compute_price(self):
-        newqty = 0.0
-        if self.product_id.product_tmpl_id.type != "service":
-            newqty = self.num_days * self.products_on_work * self.quantity
-        else:
-            newqty = self.quantity
-        currency = self.invoice_id and self.invoice_id.currency_id or None
-        price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
-        taxes = False
-        if self.invoice_line_tax_ids:
-            taxes = self.invoice_line_tax_ids.compute_all(
-                price, currency, newqty,
-                product=self.product_id,
-                partner=self.invoice_id.partner_id)
-        self.price_subtotal = price_subtotal_signed = taxes['total_excluded'] \
-         if taxes else newqty * price
-        self.price_total = taxes['total_included'] if taxes \
-         else self.price_subtotal
-        if self.invoice_id.currency_id and \
-         self.invoice_id.currency_id != self.invoice_id.company_id.currency_id:
-            price_subtotal_signed = \
-             self.invoice_id.currency_id.with_context(
-                 date=self.invoice_id._get_currency_rate_date()).compute(
-                     price_subtotal_signed,
-                     self.invoice_id.company_id.currency_id)
-        sign = self.invoice_id.type in ['in_refund', 'out_refund'] and -1 or 1
-        self.price_subtotal_signed = price_subtotal_signed * sign
-
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
@@ -131,9 +97,9 @@ class AccountInvoice(models.Model):
     employee_code = fields.Char('Employee code')
     pre_invoice = fields.Boolean(
         string='Pre-Invoice?')
-    init_date_invoice = fields.Datetime(
+    init_date_invoice = fields.Date(
         string='Init Date')
-    end_date_invoice = fields.Datetime(
+    end_date_invoice = fields.Date(
         string='End Date')
 
     @api.onchange('employee_code')
@@ -368,7 +334,7 @@ class AccountInvoice(models.Model):
     def write(self, values):
         res = super(AccountInvoice, self).write(values)
         date_end = None
-        date_format = "%Y-%m-%d %H:%M:%S"
+        date_format = "%Y-%m-%d %S:%M:%S"
         if 'init_date_invoice' in values and self.invoice_type == "rent":
             for data in self.invoice_line_ids:
                 for sale_lines in data.sale_line_ids:
@@ -388,21 +354,22 @@ class AccountInvoice(models.Model):
                          ('sale_line_id', '=', sale_lines.id)])
                     for mv in move_in:
                         qty = 0.0
-                        date_end = datetime.strptime(
-                            mv.advertisement_date, date_format
-                        )
+                        date_end = fields.Date.from_string(
+                            mv.advertisement_date)
                         if mv.returned and \
                          mv.location_dest_id.return_location \
                           and mv.picking_id.state == 'done':
                             # Get delta days
-                            a = datetime.strptime(
-                                self.end_date_invoice, date_format)
-                            b = datetime.strptime(
-                                mv.advertisement_date, date_format)
+                            a = fields.Date.from_string(
+                                self.end_date_invoice)
+                            b = fields.Date.from_string(
+                                mv.advertisement_date)
                             delta = a - b
                             # Get tasks values
                             if not sale_lines.is_extra and \
-                             not sale_lines.is_component:
+                             not sale_lines.is_component and \
+                              sale_lines.bill_uom.name not in \
+                               ["Día(s)", "Unidad(es)"]:
                                 task = self.env['project.task'].search(
                                     [('sale_line_id', '=', sale_lines.id)])
                                 for timesheet in task.timesheet_ids:
@@ -411,6 +378,8 @@ class AccountInvoice(models.Model):
                                       timesheet.create_date <= \
                                        self.end_date_invoice:
                                         qty += timesheet.unit_amount
+                            elif sale_lines.bill_uom.name == "Día(s)":
+                                qty = delta.days + 1
                             else:
                                 qty = mv.product_uom_qty
                             # Get product count history
@@ -432,22 +401,21 @@ class AccountInvoice(models.Model):
                                  "bill_uom": data.bill_uom.id,
                                  "discount": data.discount,
                                  "qty_returned": history.quantity_done,
-                                 "date_init": datetime.strptime(
-                                     mv.advertisement_date, date_format
-                                 ).strftime('%d'),
-                                 "date_end": datetime.strptime(
-                                     self.end_date_invoice, date_format
-                                 ).strftime('%d'),
+                                 "date_init": fields.Date.from_string(
+                                     mv.advertisement_date).day,
+                                 "date_end": fields.Date.from_string(
+                                     self.end_date_invoice).day,
                                  "num_days": delta.days + 1,
                                  "quantity": qty,
                                  "products_on_work": history.product_count,
                                  "invoice_line_tax_ids": \
                                   [(6, 0, list(
-                                      data.invoice_line_tax_ids._ids))]}
-                            # sale_lines.write({
-                            #     'invoice_lines': [(4, inv_line.id)]})
+                                      data.invoice_line_tax_ids._ids))],
+                                  "layout_category_id": \
+                                      sale_lines.layout_category_id.id}
                             self.write({
                                 'invoice_lines': [(0, 0, inv_line)]})
+
                     for mv in move_out:
                         qty = 0.0
                         if mv.location_dest_id.usage \
@@ -455,16 +423,16 @@ class AccountInvoice(models.Model):
                           == 'done':
                             # Get delta days
                             if not date_end:
-                                date_end = datetime.strptime(
-                                    self.end_date_invoice, date_format
-                                )
-                            a = datetime.strptime(
-                                mv.date_expected, date_format)
+                                date_end = fields.Date.from_string(
+                                    self.end_date_invoice)
+                            a = fields.Date.from_string(mv.date_expected)
                             b = date_end
                             delta = b - a
                             # Get tasks values
                             if not sale_lines.is_extra and \
-                             not sale_lines.is_component:
+                             not sale_lines.is_component and \
+                              sale_lines.bill_uom.name not in \
+                               ["Día(s)", "Unidad(es)"]:
                                 task = self.env['project.task'].search(
                                     [('sale_line_id', '=', sale_lines.id)])
                                 for timesheet in task.timesheet_ids:
@@ -473,6 +441,8 @@ class AccountInvoice(models.Model):
                                       timesheet.create_date <= \
                                        self.end_date_invoice:
                                         qty += timesheet.unit_amount
+                            elif sale_lines.bill_uom.name == "Día(s)":
+                                qty = delta.days + 1
                             else:
                                 qty = mv.product_uom_qty
                             # Get product count history
@@ -496,20 +466,22 @@ class AccountInvoice(models.Model):
                                      "discount": data.discount,
                                      "qty_remmisions": \
                                         history.quantity_done,
-                                     "date_init": datetime.strptime(
-                                         mv.date_expected, date_format
-                                     ).strftime('%d'),
-                                     "date_end": date_end.strftime('%d'),
+                                     "date_init": fields.Datetime.from_string(
+                                         mv.date_expected).day,
+                                     "date_end": date_end.day,
                                      "num_days": delta.days + 1,
                                      "quantity": qty,
                                      "products_on_work": \
                                         history.product_count,
                                      "invoice_line_tax_ids": \
                                         [(6, 0, list(
-                                            data.invoice_line_tax_ids._ids))]
+                                            data.invoice_line_tax_ids._ids))],
+                                     "layout_category_id": \
+                                      sale_lines.layout_category_id.id
                                     }
                             self.write({
                                 'invoice_lines': [(0, 0, inv_line)]})
+
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
