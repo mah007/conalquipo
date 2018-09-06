@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-06 17:00+0000\n"
+"PO-Revision-Date: 2018-09-06 12:01-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: con_purchase
+#: selection:purchase.order,order_type:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: con_purchase
+#: model:ir.model,name:con_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de Compra"
+
+#. module: con_purchase
+#: model:ir.model,name:con_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea de Orden de Compra"
+
+#. module: con_purchase
+#: model:ir.model.fields,field_description:con_purchase.field_purchase_order_line_bill_uom_qty
+msgid "Quantity to Purchase"
+msgstr "Cantidad de compra"
+
+#. module: con_purchase
+#: selection:purchase.order,order_type:0
+msgid "Rent"
+msgstr "Arriendo"
+
+#. module: con_purchase
+#: model:ir.model.fields,field_description:con_purchase.field_purchase_order_sale_order_id
+msgid "Sale Order"
+msgstr "Orden de Venta"
+
+#. module: con_purchase
+#: model:ir.model.fields,field_description:con_purchase.field_purchase_order_line_sale_order_line_id
+msgid "Sale Order Line"
+msgstr "Linea de la orden"
+
+#. module: con_purchase
+#: model:ir.model.fields,field_description:con_purchase.field_purchase_order_order_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: con_purchase
+#: model:ir.model.fields,field_description:con_purchase.field_purchase_order_line_bill_uom
+msgid "Unit of Measure to Purchase"
+msgstr "Unidad de medida de compra"

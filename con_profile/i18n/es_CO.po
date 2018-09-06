@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 19:31+0000\n"
-"PO-Revision-Date: 2018-08-08 14:31-0500\n"
+"POT-Creation-Date: 2018-09-06 16:55+0000\n"
+"PO-Revision-Date: 2018-09-06 11:56-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,16 @@ msgid "Administrative assistant"
 msgstr "Asistente administrativo"
 
 #. module: con_profile
+#: model:res.groups,name:con_profile.group_sale_special_quotations
+msgid "Can approve special quotations"
+msgstr "Puede aprobar cotizaciones especiales"
+
+#. module: con_profile
+#: model:res.groups,name:con_profile.group_sale_discount_modifications
+msgid "Can confirm discount modifications"
+msgstr "CPuede confirmar modificaciones de descuento."
+
+#. module: con_profile
 #: model:res.groups,name:con_profile.group_inactive_partners
 msgid "Can confirm inactive partners"
 msgstr "Puede confirmar ordenes de clientes inactivos"
@@ -36,11 +46,6 @@ msgstr "Puede confirmar ventas que pasen el limite"
 #: model:res.groups,name:con_profile.group_sale_small_qty
 msgid "Can confirm smaller quantities"
 msgstr "Puede confirmar ordenes con cantidades mínimas a las permitidas del producto"
-
-#. module: con_profile
-#: model:res.groups,name:con_profile.group_sale_special_quotations
-msgid "Can confirm special quotations"
-msgstr "Puede confirmar cotizaciones especiales"
 
 #. module: con_profile
 #: model:res.groups,name:con_profile.group_can_see_employees

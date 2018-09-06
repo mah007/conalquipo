@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 21:05+0000\n"
-"PO-Revision-Date: 2018-06-22 16:06-0500\n"
+"POT-Creation-Date: 2018-09-06 16:41+0000\n"
+"PO-Revision-Date: 2018-09-06 11:45-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_delivery
 #: selection:shipping.driver,job_title:0
@@ -47,7 +47,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_create_date
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_delivery_carrier_id
@@ -58,7 +58,7 @@ msgstr "Transportista"
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_display_name
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre Público"
 
 #. module: con_delivery
 #: selection:shipping.driver,job_title:0
@@ -88,7 +88,7 @@ msgstr "Precio fijo"
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_job_title
 msgid "HR Type"
-msgstr "HR Type"
+msgstr "Tipo de empleado"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_id
@@ -111,7 +111,7 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_write_uid
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_write_date
@@ -122,7 +122,7 @@ msgstr "Actualizado"
 #. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_delivery_carrier_cost
 msgid "Lines Delivery CarrierCost"
-msgstr "Lines Delivery CarrierCost"
+msgstr "Lineas de costo de entregas"
 
 #. module: con_delivery
 #: selection:delivery.carrier,price_type:0
@@ -145,19 +145,24 @@ msgid "Pricing"
 msgstr "Precios"
 
 #. module: con_delivery
+#: model:res.groups,name:con_delivery.group_shipping_driver
+msgid "Shipping carrier/driver admin"
+msgstr "Encargado de envío / Conductor"
+
+#. module: con_delivery
 #: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_stock_picking_id
 msgid "Stock Picking"
 msgstr "Selección de Existencias"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:133
-#: code:addons/con_delivery/models/delivery.py:151
+#: code:addons/con_delivery/models/delivery.py:147
+#: code:addons/con_delivery/models/delivery.py:164
 #, python-format
 msgid "The amount limit can't be negative"
 msgstr "El limite o cantidad del método de envío no puede ser negativo"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:209
+#: code:addons/con_delivery/models/delivery.py:221
 #, python-format
 msgid "The category of the driver's license of this employee does not coincide with the category required by the vehicle assiging this order"
 msgstr "La categoría de la licencia de conducir de este empleado no coincide con la categoría requerida por el vehículo que asigne esta orden."
@@ -170,15 +175,9 @@ msgid "The cost can't be negative"
 msgstr "El costo del vehiculo no puede ser negativo"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:62
-#: code:addons/con_delivery/models/delivery.py:73
-#, python-format
-msgid "The cost is required on the line"
-msgstr "El costo es requerido en la línea"
-
-#. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:141
-#: code:addons/con_delivery/models/delivery.py:159
+#: code:addons/con_delivery/models/delivery.py:138
+#: code:addons/con_delivery/models/delivery.py:154
+#: code:addons/con_delivery/models/delivery.py:171
 #, python-format
 msgid "The vehicle %s already asigned in delivery carrier"
 msgstr "El vehículo %s ya esta asignado en este método de envío."
@@ -191,7 +190,7 @@ msgid "The vehicle is required on the line"
 msgstr "El vehículo es requerido en la línea"
 
 #. module: con_delivery
-#: code:addons/con_delivery/models/delivery.py:214
+#: code:addons/con_delivery/models/delivery.py:226
 #, python-format
 msgid "This employee does not possess driving skills"
 msgstr "Este empleado no posee habilidades de conducción"

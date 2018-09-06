@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-09 23:49+0000\n"
-"PO-Revision-Date: 2018-08-09 18:52-0500\n"
+"POT-Creation-Date: 2018-09-06 17:02+0000\n"
+"PO-Revision-Date: 2018-09-06 12:09-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,34 +41,181 @@ msgid "${ctx['subject']}"
 msgstr "${ctx['subject']}"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "&amp;bull;"
 msgstr "&amp;bull;"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "&amp;nbsp;<span>on</span>&amp;nbsp;"
 msgstr "&amp;nbsp;<span>en</span>&amp;nbsp;"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ", según las siguientes especificaciones:"
+msgstr ", según las siguientes especificaciones:"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
+msgid "<b>TOTAL</b>"
+msgstr "<b>TOTAL</b>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ""
+"<br/>\n"
+"                                <span>Pbx.</span>"
+msgstr ""
+"<br/>\n"
+"                                <span>Pbx.</span>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ""
+"<br/>\n"
+"                            <strong>\n"
+"                                <span>NIT. </span>\n"
+"                            </strong>"
+msgstr ""
+"<br/>\n"
+"                            <strong>\n"
+"                                <span>NIT. </span>\n"
+"                            </strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ""
+"<br/>\n"
+"                            <strong>\n"
+"                                <span>Work. </span>\n"
+"                            </strong>"
+msgstr ""
+"<br/>\n"
+"                            <strong>\n"
+"                                <span>Work. </span>\n"
+"                            </strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<span style=\"margin-left:200px; color:#000000; text-align:center;\">GERENTE</span>"
+msgstr "<span style=\"margin-left:200px; color:#000000; text-align:center;\">GERENTE</span>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<span style=\"text-align:center; margin-left:200px; color:#000000;\">CARGO: </span>"
+msgstr "<span style=\"text-align:center; margin-left:200px; color:#000000;\">CARGO: </span>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ""
+"<strong>\n"
+"                                <span>Customer: </span>\n"
+"                            </strong>"
+msgstr ""
+"<strong>\n"
+"                                <span>Cliente: </span>\n"
+"                            </strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Basket:</strong>"
+msgstr "<strong>Basket:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Cap. Emptying:</strong>"
+msgstr "<strong>Cap. vacio:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Descuentos</strong>"
+msgstr "<strong>Descuentos</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Fiscal Position Remark:</strong>"
+msgstr "<strong>Posición Fiscal:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Height:</strong>"
+msgstr "<strong>Altura:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Max. Emptying:</strong>"
+msgstr "<strong>Max. vacio:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Maximum load capacity:</strong>"
+msgstr "<strong>Capacidad de carga máxima:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Maximun value of pipe:</strong>"
+msgstr "<strong>Valor máximo de tubería:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Min. Emptying:</strong>"
+msgstr "<strong>Min. vacio:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid ""
+"<strong>NOTES:</strong>\n"
+"                            <br/>\n"
+"                            <br/>"
+msgstr ""
+"<strong>NOTAS:</strong>\n"
+"                            <br/>\n"
+"                            <br/>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Payment terms:</strong>"
+msgstr "<strong>Condiciones de pagos:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "<strong>Subtotal: </strong>"
 msgstr "<strong>Subtotal: </strong>"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report
-msgid "<strong>Total discounts</strong>"
-msgstr "<strong>Total discounts</strong>"
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Tip load capacity:</strong>"
+msgstr "<strong>Capacidad de carga de la punta:</strong>"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "<strong>Total</strong>"
 msgstr "<strong>Total</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Towers:</strong>"
+msgstr "<strong>Torres:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Useful arm:</strong>"
+msgstr "<strong>Brazo utíl:</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "<strong>Vel.(m/min):</strong>"
+msgstr "<strong>Vel.(m/min):</strong>"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "A la espera de sus comentarios."
+msgstr "A la espera de sus comentarios."
 
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_product_components
@@ -101,19 +248,34 @@ msgid "Advertisement"
 msgstr "Anuncio"
 
 #. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_advertisement_date
+msgid "Advertisement date"
+msgstr "Fecha de anuncio"
+
+#. module: con_sale
 #: selection:customer.portfolio,typeselection:0
 msgid "All"
 msgstr "Todos"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Amount"
-msgstr "Importe"
+#: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
+msgid "Amounts"
+msgstr "Montos"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_approved_discount_modifications
+msgid "Approve discount modifications"
+msgstr "Approve discount modifications"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_approved_min_prices
-msgid "Approve min and prices for products"
-msgstr "Approve min and prices for products"
+msgid "Approve min prices for products"
+msgstr "Approve min prices for products"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_approved_min_qty
+msgid "Approve min qty for products"
+msgstr "Approve min qty for products"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_approved_special_quotations
@@ -126,13 +288,18 @@ msgid "Assigned Operator"
 msgstr "Operador asignado"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:870
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Atentamente,"
+msgstr "Atentamente,"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:1043
 #, python-format
 msgid "Attention: The order %s are created by %s"
 msgstr "Atención: La orden %s ha  creada por %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:732
+#: code:addons/con_sale/models/sale_order.py:879
 #, python-format
 msgid "Attention: The order %s are created by %s with template: %s"
 msgstr "Atención: La orden %s ha sido creada por %s utilizando la plantilla: %s"
@@ -172,6 +339,11 @@ msgstr "Cancelar"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_cancel_options
 msgid "Cancel reason"
 msgstr "Razón de cancelación"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Cantidad"
+msgstr "Cantidad"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_carrier_type
@@ -227,6 +399,21 @@ msgstr "Compute Uoms"
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "Confirm Sale"
 msgstr "Confirmar Venta"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Cordial Saludo,"
+msgstr "Cordial Saludo,"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Cotización"
+msgstr "Cotización"
+
+#. module: con_sale
+#: model:ir.actions.report,name:con_sale.action_report_sale_con
+msgid "Cotización / Orden"
+msgstr "Cotización / Orden"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
@@ -301,7 +488,7 @@ msgid "Delivered Quantity"
 msgstr "Cantidad Entregada"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1133
+#: code:addons/con_sale/models/sale_order.py:1336
 #, python-format
 msgid "Delivery"
 msgstr "Entrega"
@@ -312,8 +499,13 @@ msgid "Delivery Type"
 msgstr "Tipo de entrega"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Description"
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Desc.(%)"
+msgstr "Desc.(%)"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Descripción"
 msgstr "Descripción"
 
 #. module: con_sale
@@ -322,14 +514,9 @@ msgid "Destination Location"
 msgstr "Ubicación Destino"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Disc.(%)"
-msgstr "Desc.(%)"
-
-#. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
 msgid "Discard"
-msgstr "Descartado"
+msgstr "Descartar"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_display_name
@@ -338,11 +525,6 @@ msgstr "Descartado"
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_display_name
 msgid "Display Name"
 msgstr "Nombre Público"
-
-#. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
-msgid "Draft invoices"
-msgstr "Facturas borrador"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.res_config_settings_view_form_con_sale
@@ -370,22 +552,27 @@ msgid "End project-work"
 msgstr "Finalización de obra"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:352
+#: code:addons/con_sale/models/sale_order.py:446
 #, python-format
 msgid "Exceeds credit limit!"
 msgstr "Excede el limite de crédito!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:320
+#: code:addons/con_sale/models/sale_order.py:413
 #, python-format
 msgid "Exceeds limit and has expired invoice!"
 msgstr "Excede el limite y tiene facturas vencidas!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:330
+#: code:addons/con_sale/models/sale_order.py:423
 #, python-format
 msgid "Exceeds limit on outstanding invoices!"
 msgstr "Excede el limite en facturas pendientes!"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty_executed
+msgid "Executed"
+msgstr "Ejecutado"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_is_extra
@@ -403,7 +590,7 @@ msgid "Fleet Line"
 msgstr "Linea de flete"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:310
+#: code:addons/con_sale/models/sale_order.py:403
 #, python-format
 msgid "Has an expired bill!"
 msgstr "Tiene factura(s) vencida(s)"
@@ -414,7 +601,7 @@ msgid "Have components?"
 msgstr "Tiene componentes?"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:338
+#: code:addons/con_sale/models/sale_order.py:432
 #, python-format
 msgid "Have outstanding invoices!"
 msgstr "Tiene facturas pendientes!"
@@ -438,6 +625,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "IVA"
+msgstr "IVA"
+
+#. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."
 msgstr "Si la venta está bloqueada, no puede modificarla. Sin embargo, todavía podrá facturarla o entregarla."
@@ -445,7 +637,7 @@ msgstr "Si la venta está bloqueada, no puede modificarla. Sin embargo, todavía
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_quote_line_indicted
 msgid "Indicted"
-msgstr "Indicted"
+msgstr "Procesado"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -460,6 +652,7 @@ msgstr "Cantidad Facturada"
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_invoice_ids
 #: model:ir.ui.view,arch_db:con_sale.customer_portfolio_wizard_view
+#: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
 msgid "Invoices"
 msgstr "Facturas"
 
@@ -511,6 +704,11 @@ msgid "Logistic section"
 msgstr "Sección logística"
 
 #. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_min_sale_qty
+msgid "MQty"
+msgstr "MQty"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_signs_ids
 msgid "Main signs"
 msgstr "Firmas"
@@ -521,7 +719,7 @@ msgid "Manual"
 msgstr "Manual"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:50
+#: code:addons/con_sale/models/sale_order.py:57
 #: model:ir.ui.view,arch_db:con_sale.sale_order_view_search_inherit_quotation
 #, python-format
 msgid "Merged"
@@ -548,23 +746,13 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_min_sale_qty
-msgid "Min QTY"
-msgstr "Cant. Min."
-
-#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_product_uoms
 msgid "Multiple uoms?"
 msgstr "Multiple uoms?"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Name"
-msgstr "Nombre"
-
-#. module: con_sale
-#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:110
-#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:154
+#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:111
+#: code:addons/con_sale/wizard/models/sale_order_advertisement_wizard.py:157
 #, python-format
 msgid "New Move:"
 msgstr "Nuevo movimiento:"
@@ -575,12 +763,23 @@ msgid "No longer need it"
 msgstr "Ya no se necesita"
 
 #. module: con_sale
+#: selection:sale.order,type_quotation:0
+msgid "No special"
+msgstr "No especial"
+
+#. module: con_sale
 #: selection:sale.order,cancel_options:0
 msgid "No vehicle availability"
 msgstr "No hay disponibilidad de vehículo"
 
 #. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Nos permitimos poner a su consideración y estudio la siguiente propuesta"
+msgstr "Nos permitimos poner a su consideración y estudio la siguiente propuesta"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_notes
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
 msgid "Notes"
 msgstr "Notas"
 
@@ -595,11 +794,6 @@ msgid "Number of products on work"
 msgstr "Cantidad de productos en obra"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_customer_portfolio
-msgid "Open invoices"
-msgstr "Facturas abiertas"
-
-#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_operators_services
 msgid "Operator Services"
 msgstr "Servicios de operador"
@@ -608,6 +802,11 @@ msgstr "Servicios de operador"
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "Operator section"
 msgstr "Sección de operador"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Orden"
+msgstr "Orden"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -650,24 +849,24 @@ msgid "Partners"
 msgstr "Empresas"
 
 #. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_payment_term_note
+msgid "Payment Terms and conditions"
+msgstr "Terminos de pagos y condiciones"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_picking_ids
 msgid "Pickings"
 msgstr "Albaranes"
 
 #. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Precio"
+msgstr "Precio"
+
+#. module: con_sale
 #: model:product.pricelist,name:con_sale.list_commercial
 msgid "Pricelist - Commercial"
 msgstr "Tarifa - Comercial"
-
-#. module: con_sale
-#: model:product.pricelist,name:con_sale.list_financial_10
-msgid "Pricelist - Financial 10%"
-msgstr "Tarifa - Financiera 10%"
-
-#. module: con_sale
-#: model:product.pricelist,name:con_sale.list_financial_20
-msgid "Pricelist - Financial 20%"
-msgstr "Tarifa - Financiera 20%"
 
 #. module: con_sale
 #: model:product.pricelist,name:con_sale.list_rio_negro
@@ -698,12 +897,12 @@ msgstr "Producto componente"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_project_id
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_project_id
 msgid "Project"
-msgstr "Obra"
+msgstr "Proyecto"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_customer_portfolio_project_ids
 msgid "Projects"
-msgstr "Obras"
+msgstr "Proyectos"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_purchase_order_line
@@ -716,14 +915,9 @@ msgid "Purchase Orders"
 msgstr "Órdenes de Compra"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Quantity"
-msgstr "Cantidad"
-
-#. module: con_sale
-#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty
-msgid "Quantity to Sale"
-msgstr "Cant. vendida"
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
 
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_order
@@ -742,11 +936,12 @@ msgstr "El presupuesto expira después de"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_reason
+#: model:ir.ui.view,arch_db:con_sale.sale_order_advertisement_view
 msgid "Reason"
 msgstr "Motivo"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1134
+#: code:addons/con_sale/models/sale_order.py:1337
 #, python-format
 msgid "Receive"
 msgstr "Recibo"
@@ -766,6 +961,11 @@ msgstr "Arriendo"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_carrier_type
 msgid "Responsable"
 msgstr "Responsable"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "SUBTOTAL"
+msgstr "SUBTOTAL"
 
 #. module: con_sale
 #: selection:sale.order,order_type:0
@@ -789,6 +989,11 @@ msgid "Sale Quotation Template"
 msgstr "Plantilla de Cotización de Venta"
 
 #. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom_qty
+msgid "Sale Unit"
+msgstr "Unidad de venta"
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_product_components_sale_line_id
 msgid "Sale line"
 msgstr "Linea de venta"
@@ -806,7 +1011,7 @@ msgstr "Sección de venta"
 #. module: con_sale
 #: model:ir.model,name:con_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Línea de Pedido de Venta"
+msgstr "Línea de orden de ventas"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -839,6 +1044,11 @@ msgid "Set to Quotation"
 msgstr "Convertir a Cotización"
 
 #. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Setup default terms and conditions in your sales settings ..."
+msgstr "Configure los términos y condiciones predeterminados en su configuración de ventas..."
+
+#. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_shipping_address
 msgid "Shipping"
 msgstr "Transporte"
@@ -857,6 +1067,17 @@ msgstr "Firmas/Documentos"
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_advertisement_wizard_location_id
 msgid "Source Location"
 msgstr "Ubicación Origen"
+
+#. module: con_sale
+#: selection:sale.order,type_quotation:0
+msgid "Special"
+msgstr "Especial"
+
+#. module: con_sale
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_special_category
+#: model:ir.model.fields,field_description:con_sale.field_sale_quote_template_special_category
+msgid "Special category"
+msgstr "Categoria especial"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_start_date
@@ -890,21 +1111,21 @@ msgid "Task"
 msgstr "Tarea"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Taxes"
-msgstr "Impuestos"
+#: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
+msgid "Terms and conditions"
+msgstr "Términos y condiciones"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:651
+#: code:addons/con_sale/models/sale_order.py:782
 #, python-format
 msgid "The client has not delivered all the documents"
 msgstr "El cliente no ha entregado toda la documentación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:1278
-#: code:addons/con_sale/models/sale_order.py:1295
-#: code:addons/con_sale/models/sale_order.py:1564
-#: code:addons/con_sale/models/sale_order.py:1639
+#: code:addons/con_sale/models/sale_order.py:1491
+#: code:addons/con_sale/models/sale_order.py:1508
+#: code:addons/con_sale/models/sale_order.py:1782
+#: code:addons/con_sale/models/sale_order.py:1857
 #, python-format
 msgid "The end date can't be less than start date"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
@@ -915,7 +1136,7 @@ msgid "The equipment did not serve you"
 msgstr "El equipo no fue necesario"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:295
+#: code:addons/con_sale/models/sale_order.py:388
 #, python-format
 msgid "The invoice %s don't have due date, check please!"
 msgstr "La factura %s no tiene fecha de expiración, por favor chequear!"
@@ -936,13 +1157,13 @@ msgid "There is no stock"
 msgstr "No hay en existencia"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:165
+#: code:addons/con_sale/models/sale_order.py:240
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "El código de empleado no forma parte del grupo del usuario."
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
 msgid "Total Price"
 msgstr "Precio total"
 
@@ -962,14 +1183,14 @@ msgid "Type Order"
 msgstr "Tipo de orden"
 
 #. module: con_sale
-#: model:ir.ui.view,arch_db:con_sale.report_sale_document_inherit_report_con
-msgid "Unit Price"
-msgstr "Precio Unitario"
+#: model:ir.model.fields,field_description:con_sale.field_sale_order_type_quotation
+msgid "Type of quotation"
+msgstr "Tipo de cotización"
 
 #. module: con_sale
 #: model:ir.model.fields,field_description:con_sale.field_sale_order_line_bill_uom
-msgid "Unit of Measure to Sale"
-msgstr "Und. de medida de venta"
+msgid "UMS"
+msgstr "UMS"
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -989,7 +1210,7 @@ msgid "Wait for approval"
 msgstr "Espera por aprobación"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:359
+#: code:addons/con_sale/models/sale_order.py:453
 #, python-format
 msgid "Without credit limit define!"
 msgstr "Sin limite de crédito definido!"
@@ -1006,53 +1227,65 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:224
+#: code:addons/con_sale/models/sale_order.py:297
 #, python-format
 msgid "You can't approve special quotations!"
 msgstr "Ud. no puede aprobar cotizaciones especiales!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:204
+#: code:addons/con_sale/models/sale_order.py:277
 #, python-format
 msgid "You can't approve, small qty or prices!"
 msgstr "Ud. no puede aprobar cotizaciones con precios o cantidades menores a las especificadas en las fichas de los productos!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:620
+#: code:addons/con_sale/models/sale_order.py:317
+#, python-format
+msgid "You can't modify products discounts!"
+msgstr "Ud. no puede modificar los descuentos del producto!"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:751
 #, python-format
 msgid "You need define a sale uom for product: %s"
 msgstr "Ud. necesita definir la unidad de medida de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:624
+#: code:addons/con_sale/models/sale_order.py:755
 #, python-format
 msgid "You need specify a quantity for product: %s"
 msgstr "Ud. necesita especificar la cantidad de venta del producto: %s"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:879
-#: code:addons/con_sale/models/sale_order.py:1003
+#: code:addons/con_sale/models/sale_order.py:1062
+#: code:addons/con_sale/models/sale_order.py:1206
 #, python-format
 msgid "You need specify a work in this sale order"
 msgstr "Ud. necesita especificar una obra a esta orden."
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:252
+#: code:addons/con_sale/models/sale_order.py:345
 #, python-format
 msgid "You need to add delivery method!"
 msgstr "Ud. necesita agregar un método de envío!"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:244
+#: code:addons/con_sale/models/sale_order.py:337
 #, python-format
 msgid "You need to add products!"
 msgstr "Ud. necesita agregar productos a las lineas"
 
 #. module: con_sale
-#: code:addons/con_sale/models/sale_order.py:648
+#: code:addons/con_sale/models/sale_order.py:779
 #, python-format
 msgid "You need to attach the client's validation documents"
 msgstr "Ud. necesita adjuntar los documentos para validar al cliente"
+
+#. module: con_sale
+#: code:addons/con_sale/models/sale_order.py:573
+#, python-format
+msgid "You need to define product units, quantities and prices values (Multiple values)"
+msgstr "Ud. necesita definir las unidades del producto, cantidades y precios. Esta configurado con multiples valores."
 
 #. module: con_sale
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
@@ -1074,6 +1307,11 @@ msgstr "customer.portfolio"
 #: model:ir.ui.view,arch_db:con_sale.view_sale_order_form_inherit
 msgid "days"
 msgstr "días"
+
+#. module: con_sale
+#: model:ir.ui.view,arch_db:con_sale.report_sale_document_con
+msgid "de"
+msgstr "de"
 
 #. module: con_sale
 #: selection:sale.order.line,delivery_direction:0

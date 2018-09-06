@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 17:23+0000\n"
-"PO-Revision-Date: 2018-07-19 12:26-0500\n"
+"POT-Creation-Date: 2018-09-06 17:12+0000\n"
+"PO-Revision-Date: 2018-09-06 12:15-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: es_CO\n"
-"X-Generator: Poedit 2.0.9\n"
+"Language: es\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_stock
 #: model:mail.template,body_html:con_stock.stock_automatic_email_template
@@ -147,7 +147,7 @@ msgstr ""
 "\n"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:48
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:67
 #, python-format
 msgid " change by "
 msgstr " reemplazo de  "
@@ -304,6 +304,12 @@ msgid "<strong>Verificación interna</strong>"
 msgstr "<strong>Verificación interna</strong>"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_advertisement_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_advertisement_date
+msgid "Advertisement date"
+msgstr "Fecha de anuncio"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
 msgid "Applicant details"
 msgstr "Detalle de anuncio"
@@ -347,6 +353,11 @@ msgstr "CANT. ENVIADA"
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "CANT. OBRA"
 msgstr "CANT. OBRA"
+
+#. module: con_stock
+#: model:res.groups,name:con_stock.group_change_stock_dates
+msgid "Can change stock dates"
+msgstr "Puede modificar fechas de movimientos"
 
 #. module: con_stock
 #: model:res.groups,name:con_stock.group_notifications_biweekly
@@ -436,9 +447,15 @@ msgid "Color"
 msgstr "Color"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_create_uid
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_create_uid
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_create_uid
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_create_uid
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_create_uid
 msgid "Created by"
@@ -448,6 +465,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_create_date
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_create_date
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_create_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_create_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_create_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_create_date
 msgid "Created on"
@@ -467,6 +485,11 @@ msgstr "CÓDIGO"
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "DESCRIPCIÓN"
 msgstr "DESCRIPCIÓN"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "DEV"
+msgstr "DEV"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_location_set_default_location
@@ -509,12 +532,13 @@ msgstr "Devolución"
 #: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
 #: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
 msgid "Discard"
-msgstr "Descartado"
+msgstr "Descartar"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_display_name
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_display_name
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_display_name
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_display_name
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_display_name
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_display_name
 msgid "Display Name"
@@ -528,7 +552,7 @@ msgstr "Realizar cancelación"
 #. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
 msgid "Done"
-msgstr "Terminado"
+msgstr "Hecho"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_driver_client
@@ -602,6 +626,11 @@ msgid "Group By"
 msgstr "Agrupar por"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_qty_history
+msgid "History on work"
+msgstr "History on work"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "Hora Acordada:"
 msgstr "Hora Acordada:"
@@ -645,11 +674,17 @@ msgstr "Hora de salida"
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_id
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_id
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_type_sp
 msgid "ID"
 msgstr "ID"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "INI"
+msgstr "INI"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_id_driver_client
@@ -687,6 +722,12 @@ msgid "Inmediatamente (X) avisan después ( )"
 msgstr "Inmediatamente (X) avisan después ()"
 
 #. module: con_stock
+#: code:addons/con_stock/models/stock_scrap.py:50
+#, python-format
+msgid "Insufficient Quantity"
+msgstr "Cantidad insuficiente"
+
+#. module: con_stock
 #: selection:set.inv.locations,get_locations:0
 msgid "Internal"
 msgstr "Interno"
@@ -721,6 +762,7 @@ msgstr "Cargo"
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard___last_update
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations___last_update
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines___last_update
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history___last_update
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard___last_update
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard___last_update
 msgid "Last Modified on"
@@ -730,6 +772,7 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_write_uid
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_write_uid
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_write_uid
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_uid
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_uid
 msgid "Last Updated by"
@@ -739,6 +782,7 @@ msgstr "Actualizado por"
 #: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_write_date
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_write_date
 #: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_write_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_write_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_date
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_date
 msgid "Last Updated on"
@@ -777,7 +821,12 @@ msgstr "MIN."
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_attachment_ids
 msgid "Main Attachments"
-msgstr "Main Attachments"
+msgstr "Adjuntos"
+
+#. module: con_stock
+#: model:stock.location,name:con_stock.stock_location_maintenance
+msgid "Maintenance"
+msgstr "Mantenimiento"
 
 #. module: con_stock
 #: model:ir.model.fields,help:con_stock.field_stock_location_is_charge_replacement
@@ -788,6 +837,11 @@ msgstr "Marque este checkbox si desea que se carguen los productos que se trasla
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_mess_operated
 msgid "Message Operated"
 msgstr "Mensaje para operador"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_move_id
+msgid "Move"
+msgstr "Movimiento"
 
 #. module: con_stock
 #: model:ir.actions.report,name:con_stock.action_report_delivery_con
@@ -830,6 +884,7 @@ msgid "On company"
 msgstr "En compañoa"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_product_count
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_product_count
 #: selection:stock.picking,check_good_conditions:0
 msgid "On work"
@@ -868,6 +923,12 @@ msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
 msgstr "Página: <span class=\"page\"/>/<span class=\"topage\"/>"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_parent_sale_line
+msgid "Parent sale line"
+msgstr "Parent sale line"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_partner_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_move_line_partner_id
 #: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
@@ -883,6 +944,7 @@ msgid "Person identification"
 msgstr "Identificación de persona"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_picking_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_picking_ids
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_picking_id
 msgid "Picking"
@@ -910,6 +972,11 @@ msgid "Proceed"
 msgstr "Proceder"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_product_ids
 msgid "Product Change"
 msgstr "Cambio de producto"
@@ -920,6 +987,7 @@ msgid "Product New"
 msgstr "Nuevo producto"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_project_id
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_project_id
 #: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
@@ -927,12 +995,22 @@ msgstr "Nuevo producto"
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
 #: model:ir.ui.view,arch_db:con_stock.view_stock_move_tree_inherit
 msgid "Project"
-msgstr "Obra"
+msgstr "Proyecto"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_quantity_done
+msgid "Qty done"
+msgstr "Cant. hecha"
 
 #. module: con_stock
 #: model:ir.model,name:con_stock.model_stock_quant
 msgid "Quants"
 msgstr "Cants"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "REM"
+msgstr "REM"
 
 #. module: con_stock
 #: model:ir.model.fields,field_description:con_stock.field_stock_picking_reason
@@ -973,8 +1051,9 @@ msgid "Repair requests"
 msgstr "Solicitudes de reparación"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_scrap.py:50
-#: code:addons/con_stock/models/stock_scrap.py:78
+#: code:addons/con_stock/models/stock_scrap.py:82
+#: code:addons/con_stock/models/stock_scrap.py:98
+#: code:addons/con_stock/models/stock_scrap.py:122
 #, python-format
 msgid "Replenishment %s"
 msgstr "Reposición %s"
@@ -1005,7 +1084,12 @@ msgid "SALDO OBRA"
 msgstr "SALDO OBRA"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:736
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_sale_line_id
+msgid "Sale Line"
+msgstr "Línea de venta"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:744
 #: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
 #, python-format
 msgid "Scrap"
@@ -1017,7 +1101,7 @@ msgid "Select the color of the state"
 msgstr "Seleccione el color del estado"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:283
+#: code:addons/con_stock/models/stock_picking.py:286
 #, python-format
 msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
 msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
@@ -1128,8 +1212,9 @@ msgid "The equipment did not serve you"
 msgstr "El equipo no funcionó"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_scrap.py:55
-#: code:addons/con_stock/models/stock_scrap.py:83
+#: code:addons/con_stock/models/stock_scrap.py:87
+#: code:addons/con_stock/models/stock_scrap.py:96
+#: code:addons/con_stock/models/stock_scrap.py:127
 #, python-format
 msgid "The product doesn't have replacement service!"
 msgstr "El producto no tiene servicio de reposición establecido!"
@@ -1145,7 +1230,7 @@ msgid "They warn later"
 msgstr "Advierten más tarde"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:163
+#: code:addons/con_stock/models/stock_picking.py:166
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "El código de empleado no forma parte del grupo del empleado."
@@ -1166,6 +1251,11 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_code
+msgid "Type of Operation"
+msgstr "Tipo de Operación"
+
+#. module: con_stock
 #: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
 msgid "UND."
 msgstr "UND."
@@ -1182,7 +1272,7 @@ msgid "View"
 msgstr "Vista"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:283
+#: code:addons/con_stock/models/stock_picking.py:286
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
@@ -1199,13 +1289,13 @@ msgid "Works"
 msgstr "Obras"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:53
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:72
 #, python-format
 msgid "You can't select the same product"
 msgstr "No puede seleccionar el mismo producto!"
 
 #. module: con_stock
-#: code:addons/con_stock/models/stock_picking.py:467
+#: code:addons/con_stock/models/stock_picking.py:471
 #, python-format
 msgid "You need specify a operator for: %s"
 msgstr "Necesita especificar un operado para: %s"
@@ -1236,7 +1326,7 @@ msgid "returned"
 msgstr "Devuelto"
 
 #. module: con_stock
-#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:55
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:74
 #, python-format
 msgid "selected product does not have quantity available in the inventory"
 msgstr "El producto seleccionado no tiene disponibilidad en el inventario"
@@ -1250,6 +1340,11 @@ msgstr "set.inv.locations"
 #: model:ir.model,name:con_stock.model_set_inv_locations_lines
 msgid "set.inv.locations.lines"
 msgstr "set.inv.locations.lines"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_move_history
+msgid "stock.move.history"
+msgstr "stock.move.history"
 
 #. module: con_stock
 #: model:ir.model,name:con_stock.model_stock_picking_cancel_wizard

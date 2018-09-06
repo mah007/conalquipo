@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 17:19+0000\n"
-"PO-Revision-Date: 2018-07-19 12:21-0500\n"
+"POT-Creation-Date: 2018-09-06 16:57+0000\n"
+"PO-Revision-Date: 2018-09-06 11:59-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_project
 #: model:mail.template,body_html:con_project.create_work_email_template
@@ -53,15 +53,10 @@ msgstr "Dirección"
 #. module: con_project
 #: selection:project.product.available,typeselection:0
 msgid "All"
-msgstr "All"
+msgstr "Todos"
 
 #. module: con_project
-#: model:ir.model.fields,field_description:con_project.field_project_product_available_picking_ids
-msgid "All pickings"
-msgstr "All pickings"
-
-#. module: con_project
-#: code:addons/con_project/models/project.py:378
+#: code:addons/con_project/models/project.py:380
 #, python-format
 msgid "Attention: The work %s are created by %s"
 msgstr "Atención: La obra %s fue creada por %s"
@@ -76,6 +71,11 @@ msgstr "Razón social a facturar y/o"
 #: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Cant. Mov"
+msgstr "Cant. Mov"
 
 #. module: con_project
 #: model:ir.ui.view,arch_db:con_project.report_product_project
@@ -137,9 +137,19 @@ msgid "Customer"
 msgstr "Cliente"
 
 #. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Código"
+msgstr "Código"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_query_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: con_project
 #: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
 msgid "Discard"
-msgstr "Descartado"
+msgstr "Descartar"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_product_available_display_name
@@ -149,13 +159,13 @@ msgstr "Nombre Público"
 
 #. module: con_project
 #: model:ir.ui.view,arch_db:con_project.report_product_project
-msgid "Disponibilidad"
-msgstr "Disponibilidad"
+msgid "Documento"
+msgstr "Documento"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_project_email
 msgid "Email"
-msgstr "Correo electrónico"
+msgstr "Email"
 
 #. module: con_project
 #: model:ir.ui.view,arch_db:con_project.project_form_works
@@ -176,6 +186,26 @@ msgstr "Empleado"
 #: model:ir.model.fields,field_description:con_project.field_project_project_employee_code
 msgid "Employee code"
 msgstr "Código empleado"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "F. Fin"
+msgstr "F. Fin"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "F. Inicio"
+msgstr "F. Inicio"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Fecha"
+msgstr "Fecha"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_move_ids
+msgid "History"
+msgstr "History"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_product_available_id
@@ -252,16 +282,9 @@ msgid "Manual"
 msgstr "Manual"
 
 #. module: con_project
-#: model:ir.model.fields,field_description:con_project.field_project_product_available_in_move_ids
 #: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
-msgid "Moves in"
-msgstr "Moves in"
-
-#. module: con_project
-#: model:ir.model.fields,field_description:con_project.field_project_product_available_out_move_ids
-#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
-msgid "Moves out"
-msgstr "Moves out"
+msgid "Moves"
+msgstr "Movimientos"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_project_municipality2_id
@@ -315,11 +338,6 @@ msgstr "Teléfono..."
 
 #. module: con_project
 #: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
-msgid "Pickings"
-msgstr "Movimientos de Inventario"
-
-#. module: con_project
-#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
 msgid "Proceed"
 msgstr "Proceder"
 
@@ -334,10 +352,8 @@ msgid "Producto"
 msgstr "Producto"
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:332
-#: model:ir.model.fields,field_description:con_project.field_project_product_available_products_ids
+#: code:addons/con_project/models/project.py:334
 #: model:ir.ui.view,arch_db:con_project.project_form_works
-#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
 #, python-format
 msgid "Products"
 msgstr "Productos"
@@ -388,7 +404,7 @@ msgstr "Productos disponibles en obra"
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_product_available_project_ids
 msgid "Projects"
-msgstr "Obras"
+msgstr "Proyectos"
 
 #. module: con_project
 #: model:ir.ui.view,arch_db:con_project.view_task_form2_inherit
@@ -493,14 +509,14 @@ msgid "The associated product to the service task"
 msgstr "The associated product to the service task "
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:257
-#: code:addons/con_project/models/project.py:263
+#: code:addons/con_project/models/project.py:259
+#: code:addons/con_project/models/project.py:265
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
-msgstr "The main sector must be different from the secondary sectors. "
+msgstr "El sector principal debe ser distinto al secundario."
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:211
+#: code:addons/con_project/models/project.py:213
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "Este código de empleado no forma parte del grupo del usuario."
@@ -514,6 +530,11 @@ msgstr "Programación de Tiempo"
 #: model:ir.model.fields,field_description:con_project.field_project_task_uom_id
 msgid "UoM"
 msgstr "UoM"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Valor"
+msgstr "Valor"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_project_work_code
@@ -574,7 +595,13 @@ msgid "Work date creation"
 msgstr "Fecha creación de obra"
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:385
+#: code:addons/con_project/wizards/models/project_product_available.py:38
+#, python-format
+msgid "You need defined a billing year and periods"
+msgstr "Ud. nececesita definir años de facturación y períodos"
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:387
 #, python-format
 msgid "You need to select a client!"
 msgstr "Ud. necesita seleccionar un cliente"

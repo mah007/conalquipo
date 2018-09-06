@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-20 15:57+0000\n"
-"PO-Revision-Date: 2018-06-20 11:08-0500\n"
+"POT-Creation-Date: 2018-09-06 16:45+0000\n"
+"PO-Revision-Date: 2018-09-06 11:47-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_affiliation
@@ -25,12 +25,12 @@ msgstr "Afiliación"
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_bearing
 msgid "Bearing"
-msgstr "Bearing"
+msgstr "Transporte"
 
 #. module: con_fleet
 #: model:ir.ui.view,arch_db:con_fleet.fleet_vehicle_view_form_inherit_con
 msgid "Bearing information"
-msgstr "Bearing information"
+msgstr "Información de transporte"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_capacity
@@ -52,7 +52,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_create_date
 #: model:ir.model.fields,field_description:con_fleet.field_license_category_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_license_category_description
@@ -69,7 +69,7 @@ msgstr "Determinar el orden de visualización"
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_display_name
 #: model:ir.model.fields,field_description:con_fleet.field_license_category_display_name
 msgid "Display Name"
-msgstr "Nombre a mostrar"
+msgstr "Nombre Público"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_gravamen
@@ -102,13 +102,13 @@ msgstr "Última Modificación el"
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_write_uid
 #: model:ir.model.fields,field_description:con_fleet.field_license_category_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización de"
+msgstr "Actualizado por"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_write_date
 #: model:ir.model.fields,field_description:con_fleet.field_license_category_write_date
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr "Actualizado"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_licence_date
@@ -154,8 +154,8 @@ msgstr "Secuencia"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_tec_mechanic
-msgid "Tec Mechanic"
-msgstr "Ultima revisión mecánica"
+msgid "Tech Mechanic"
+msgstr "Mecanica"
 
 #. module: con_fleet
 #: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_traffic
