@@ -414,7 +414,7 @@ class AccountInvoice(models.Model):
                                   "layout_category_id": \
                                       sale_lines.layout_category_id.id}
                             self.write({
-                                'invoice_lines': [(0, 0, inv_line)]})
+                                'invoice_line_ids': [(0, 0, inv_line)]})
 
                     for mv in move_out:
                         qty = 0.0
@@ -480,7 +480,7 @@ class AccountInvoice(models.Model):
                                       sale_lines.layout_category_id.id
                                     }
                             self.write({
-                                'invoice_lines': [(0, 0, inv_line)]})
+                                'invoice_line_ids': [(0, 0, inv_line)]})
 
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
