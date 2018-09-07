@@ -755,6 +755,9 @@ class SaleOrder(models.Model):
                     raise UserError(_(
                         "You need specify a quantity for product: %s"
                     ) % pr.product_id.name)
+
+        res = super(SaleOrder, self).action_confirm()
+
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
         # ~ dl_ids: Deliveries Lines Ids
@@ -869,7 +872,7 @@ class SaleOrder(models.Model):
                         task = self.env[
                             'project.task'].create(task_values)
                         data.write({'task_id': task.id})
-                res = super(SaleOrder, self).action_confirm()
+                # res = super(SaleOrder, self).action_confirm()
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
