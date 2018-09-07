@@ -195,6 +195,12 @@ class ProjectWorks(models.Model):
         track_visibility='onchange',
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
+    work_manager = fields.Many2one(
+        "hr.employee", string='Work manager',
+        track_visibility='onchange')
+    commercial = fields.Many2one(
+        "hr.employee", string='Commercial',
+        track_visibility='onchange')
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
