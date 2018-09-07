@@ -51,6 +51,19 @@ class AccountInvoiceLine(models.Model):
     products_on_work = fields.Float(
         string='Products on work')
 
+    @api.one
+    @api.depends(
+        'price_unit', 'discount', 'invoice_line_tax_ids',
+        'quantity', 'product_id', 'invoice_id.partner_id',
+        'invoice_id.currency_id', 'invoice_id.company_id',
+        'invoice_id.date_invoice', 'invoice_id.date')
+    def _compute_price(self):
+        res = super(AccountInvoiceLine, self)._compute_price()
+        if self.products_on_work == 0.0:
+            self.price_subtotal = 0.0
+            self.price_unit = 0.0
+        return res
+
 
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
@@ -335,6 +348,7 @@ class AccountInvoice(models.Model):
         res = super(AccountInvoice, self).write(values)
         date_end = None
         date_format = "%Y-%m-%d %S:%M:%S"
+        total = 0.0
         if 'init_date_invoice' in values and self.invoice_type == "rent":
             for data in self.invoice_line_ids:
                 for sale_lines in data.sale_line_ids:
