@@ -273,12 +273,47 @@
         <report 
             id="account_invoices_con"
             model="account.invoice"
-            string="Facturas nuevas"
+            string="Facturas"
             report_type="qweb-pdf"
             name="con_account.report_invoice_document_con"
             file="con_account.report_invoice_document_con"
             attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
             print_report_name="(object._get_printed_report_name())"
+        />
+
+        <report 
+            id="account.account_invoices"
+            model="account.invoice"
+            string="Invoices"
+            report_type="qweb-pdf"
+            menu="False"
+            name="account.report_invoice_with_payments"
+            file="account.report_invoice_with_payments"
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            print_report_name="(object._get_printed_report_name())"
+        />
+
+        <report
+            id="account.account_invoices_without_payment"
+            model="account.invoice"
+            string="Invoices without Payment"
+            report_type="qweb-pdf"
+            menu="False"
+            name="account.report_invoice"
+            file="account.report_invoice"
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            print_report_name="(object._get_printed_report_name())"
+        />
+
+        <report 
+            id="account.action_report_print_overdue"
+            model="res.partner"
+            report_type="qweb-pdf"
+            string="Due Payments"
+            menu="False"
+            name="account.report_overdue"
+            file="account.report_overdue"
+            print_report_name="'Due Payments - %s' % (object.name)"
         />
 
     </data>
