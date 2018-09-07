@@ -872,7 +872,7 @@ class SaleOrder(models.Model):
                         task = self.env[
                             'project.task'].create(task_values)
                         data.write({'task_id': task.id})
-                # res = super(SaleOrder, self).action_confirm()
+                res = super(SaleOrder, self).action_confirm()
         self._propagate_picking_project()
         self._get_components()
         self.function_add_picking_owner()
