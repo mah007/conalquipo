@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180430\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-06 16:57+0000\n"
-"PO-Revision-Date: 2018-09-06 11:59-0500\n"
+"POT-Creation-Date: 2018-09-07 15:53+0000\n"
+"PO-Revision-Date: 2018-09-07 10:54-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgid "All"
 msgstr "Todos"
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:380
+#: code:addons/con_project/models/project.py:386
 #, python-format
 msgid "Attention: The work %s are created by %s"
 msgstr "Atención: La obra %s fue creada por %s"
@@ -97,6 +97,12 @@ msgstr "Ciudad"
 #: model:ir.model.fields,field_description:con_project.field_project_project_city2
 msgid "City2"
 msgstr "Barrio"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_commercial
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Commercial"
+msgstr "Comercial"
 
 #. module: con_project
 #: model:ir.model.fields,field_description:con_project.field_project_product_available_company_id
@@ -352,7 +358,7 @@ msgid "Producto"
 msgstr "Producto"
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:334
+#: code:addons/con_project/models/project.py:340
 #: model:ir.ui.view,arch_db:con_project.project_form_works
 #, python-format
 msgid "Products"
@@ -509,14 +515,14 @@ msgid "The associated product to the service task"
 msgstr "The associated product to the service task "
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:259
 #: code:addons/con_project/models/project.py:265
+#: code:addons/con_project/models/project.py:271
 #, python-format
 msgid "The main sector must be different from the secondary sectors."
 msgstr "El sector principal debe ser distinto al secundario."
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:213
+#: code:addons/con_project/models/project.py:219
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "Este código de empleado no forma parte del grupo del usuario."
@@ -595,13 +601,18 @@ msgid "Work date creation"
 msgstr "Fecha creación de obra"
 
 #. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_manager
+msgid "Work manager"
+msgstr "Gerente de la obra"
+
+#. module: con_project
 #: code:addons/con_project/wizards/models/project_product_available.py:38
 #, python-format
 msgid "You need defined a billing year and periods"
 msgstr "Ud. nececesita definir años de facturación y períodos"
 
 #. module: con_project
-#: code:addons/con_project/models/project.py:387
+#: code:addons/con_project/models/project.py:393
 #, python-format
 msgid "You need to select a client!"
 msgstr "Ud. necesita seleccionar un cliente"
