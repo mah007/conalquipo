@@ -756,7 +756,7 @@ class SaleOrder(models.Model):
                         "You need specify a quantity for product: %s"
                     ) % pr.product_id.name)
 
-        res = super(SaleOrder, self).action_confirm()
+        # res = super(SaleOrder, self).action_confirm()
 
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
