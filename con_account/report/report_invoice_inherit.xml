@@ -293,13 +293,19 @@
             </t>
         </template>
 
+        <template id="report_invoice_con">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="con_sale.report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </template>
+
         <report 
             id="account_invoices_con"
             model="account.invoice"
-            string="Facturas"
+            string="Facturas nuevas"
             report_type="qweb-pdf"
-            name="con_account.report_invoice_document"
-            file="con_account.report_invoice_document"
+            name="con_account.report_invoice_con"
+            file="con_account.report_invoice_con"
             attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
             print_report_name="(object._get_printed_report_name())"
         />
