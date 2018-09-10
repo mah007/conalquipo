@@ -60,8 +60,11 @@ class AccountInvoiceLine(models.Model):
     def _compute_price(self):
         res = super(AccountInvoiceLine, self)._compute_price()
         if self.products_on_work == 0.0:
-            self.price_subtotal = 0.0
-            self.price_unit = 0.0
+            if self.product_id.categ_id.name == "Acarreos":
+                self.price_subtotal = self.quantity * self.price_unit
+            else:
+                self.price_subtotal = 0.0
+                self.price_unit = 0.0
         return res
 
 
