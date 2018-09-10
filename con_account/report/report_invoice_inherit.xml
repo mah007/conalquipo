@@ -15,7 +15,7 @@
                         <div class="row" style="width:100%;">
 
                             <div class="col-xs-3" style="width:40%;">
-                                <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="border:auto; max-height: 100px; max-width: 288px;" />
+                                <img class="image" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="border:auto; max-height: 110px; max-width: 298px;" />
                             </div>
                             <div class="col-xs-5" style="width:20%; padding:10px;">
                                 <table>
@@ -73,73 +73,80 @@
                             </t>
 
                             <div class="oe_structure"/>
-
-                            <div style="width:100%; text-align:right;">
-                                <strong>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'draft' and not o.pre_invoice">Draft Invoice</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'draft' and o.pre_invoice">Pre Invoice</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_refund'">Credit Note</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'in_refund'">Vendor Credit Note</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'in_invoice'">Vendor Bill</span>
-                                    <span style="color:#C65A00;font-size: 20px" t-field="o.number"/>
-                                </strong>
-                                <br/>
-                                <span style="font-size: 20px;"># </span><span style="font-size: 20px;" t-field="o.sequence_number_next_prefix"/><span style="font-size: 20px;" t-field="o.sequence_number_next"/>
-                            </div>
                         </div>
 
                         <div class="row">
                             <div name="invoice_address" class="col-xs-6">
-                                <div style="width:50%;font-size:12px;text-align:justify;">
+                                <div style="font-size:25px;text-align:left;">
                                     <strong>
-                                        <span>Customer: </span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'draft' and not o.pre_invoice">Draft Invoice No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'draft' and o.pre_invoice">Pre Invoice No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'out_refund'">Credit Note No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'in_refund'">Vendor Credit Note No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-if="o.type == 'in_invoice'">Vendor Bill No</span>
+                                        <span style="color:#C65A00;font-size: 20px" t-field="o.number"/>
                                     </strong>
-                                    <span t-field="o.partner_id.name"/><br/>
-                                    <strong>
-                                        <span>NIT: </span>
-                                    </strong>
-                                    <span t-field="o.partner_id.vat"/><br/>
-                                    <t t-if="o.partner_id.street">
-                                        <span t-field="o.partner_id.street"/>
-                                    </t>
-                                    <t t-if="o.partner_id.street">
-                                        <span> / </span><span t-field="o.partner_id.street2"/><br/>
-                                    </t>
-                                    <t t-if="o.partner_id.city">
-                                        <span t-field="o.partner_id.city"/><br/>
-                                    </t>
-                                    <t t-if="o.partner_id.phone">
-                                        <strong>
-                                            <span>Tel: </span>
-                                        </strong>
-                                        <span t-field="o.partner_id.phone"/><br/>
-                                    </t>
                                     <br/>
+                                    <span style="font-size: 25px;" t-field="o.sequence_number_next_prefix"/><span style="font-size: 20px;" t-field="o.sequence_number_next"/>
                                 </div>
                             </div>
-                            <div name="work_address" class="col-xs-6" style="border-left: 1px solid #FFAA64;;">
-                                <div style="width:50%;font-size:12px;text-align:justify;">
+
+                            <div name="work_address" class="col-xs-6">
+                                <div style="font-size:15px;text-align:right;">
+                                    <strong>Invoice Date: </strong>
+                                    <span t-field="o.date_invoice"/>
+                                    <br/>
+                                    <strong>Due Date: </strong>
+                                    <span t-field="o.date_due"/>
+                                </div>
+                            </div>
+
+                        </div> 
+                        <br/>
+
+                        <div style="width:100%;font-size:20px;text-align:justify">
+                            <div name="invoice_address">
+                                <div>
+                                    <strong>
+                                        <span>Señores: </span>
+                                    </strong>
+                                    <span t-field="o.partner_id.name"/>
+                                    <span t-field="o.partner_id.vat"/>
+                                    <span> / </span>
+                                        <strong>
+                                            <span>NIT: </span>
+                                        </strong>
+                                        <span t-field="o.project_id.work_code"/><br/>
                                     <strong>
                                         <span>Obra: </span>
                                     </strong>
                                     <span t-field="o.project_id.name"/><span> / </span><span t-field="o.project_id.work_code"/><br/>
+                                    <strong>
+                                        <span>Dirección: </span>
+                                    </strong>
                                     <t t-if="o.project_id.street1">
                                         <span t-field="o.project_id.street1"/>
                                     </t>
                                     <t t-if="o.project_id.street1_2">
-                                        <span> / </span><span t-field="o.project_id.street1_2"/><br/>
+                                        <span> / </span><span t-field="o.project_id.street1_2"/>
                                     </t>
                                     <t t-if="o.project_id.city">
-                                        <span t-field="o.project_id.city"/><br/>
+                                        <span> / </span><span t-field="o.project_id.city"/>
                                     </t>
                                     <t t-if="o.project_id.phone1">
+                                        <span> / </span>
                                         <strong>
                                             <span>Tel: </span>
                                         </strong>
-                                        <span t-field="o.project_id.phone1"/><br/>
+                                        <span t-field="o.project_id.phone1"/>
                                     </t>
+                                    <br/>
+                                    <strong>
+                                        <span>Referencia: </span>
+                                    </strong>
+                                    <span t-field="o.name"/>
                                 </div>
                             </div>
                         </div> 
