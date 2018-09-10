@@ -185,24 +185,16 @@
                             <div id="total">
                                 <div>
                                     <table class="table table-condensed" style="min-width: 250px;max-width: 400px;">
-                                        
-                                        <t t-foreach="o.invoice_line_ids" t-as="l">
+
+                                        <t t-set="categories" t-value="o._get_tax_amount_by_category()"/>
+                                        <t t-foreach="categories.keys()" t-as="amount_by_cat">
                                             <tr>
                                                 <td>
-                                                    <t t-foreach="o.invoice_line_ids" t-as="t_cat">
-                                                        <t t-if="l.product_id.categ_id.name==t_cat.product_id.categ_id.name">
-                                                           <span>Total de: </span><span t-field="l.product_id.categ_id.name"/>
-                                                        </t>
-                                                    </t>
+                                                    <span>Total de: </span>
+                                                    <span t-esc="amount_by_cat"/>
                                                 </td>
                                                 <td class="text-right">
-                                                    <t t-set="total_cat" t-value="0.0"/>
-                                                    <t t-foreach="o.invoice_line_ids" t-as="t_cat">
-                                                        <t t-if="l.product_id.categ_id.name==t_cat.product_id.categ_id.name and t_cat.products_on_work &gt; 0">
-                                                            <t t-set="total_cat" t-value="total_cat+t_cat.price_subtotal"/>
-                                                        </t>
-                                                    </t>
-                                                    <span t-esc="total_cat"/>
+                                                    <span t-esc="categories[amount_by_cat]"/>
                                                 </td>
                                             </tr>
                                         </t>
