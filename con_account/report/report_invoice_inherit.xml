@@ -168,7 +168,12 @@
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.document"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_move"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.product_id.default_code"/></td>
-                                    <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.name"/></td>
+                                    <t t-if="l.product_id.type == 'service'">
+                                        <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.name"/></td>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.product_id.name"/></td>
+                                    </t>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_init"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_end"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.num_days"/></td>

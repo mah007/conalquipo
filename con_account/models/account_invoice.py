@@ -405,31 +405,32 @@ class AccountInvoice(models.Model):
                                  ('move_id', '=', mv.id),
                                  ('code', '=', 'incoming')])
                             # Create returned product invoice
-                            inv_line = {"date_move": mv.advertisement_date,
-                                 "invoice_id": data.invoice_id.id,
-                                 "name": data.name,
-                                 "account_id": data.account_id.id,
-                                 "price_unit": data.price_unit,
-                                 "document": "DEV" + '-' + \
-                                  mv.picking_id.name,
-                                 "origin": data.origin,
-                                 "uom_id": data.uom_id.id,
-                                 "product_id": data.product_id.id,
-                                 "bill_uom": data.bill_uom.id,
-                                 "discount": data.discount,
-                                 "qty_returned": history.quantity_done,
-                                 "date_init": fields.Date.from_string(
-                                     mv.advertisement_date).day,
-                                 "date_end": fields.Date.from_string(
-                                     self.end_date_invoice).day,
-                                 "num_days": delta.days + 1,
-                                 "quantity": qty,
-                                 "products_on_work": history.product_count,
-                                 "invoice_line_tax_ids": \
-                                  [(6, 0, list(
-                                      data.invoice_line_tax_ids._ids))],
-                                  "layout_category_id": \
-                                      sale_lines.layout_category_id.id}
+                            inv_line = {
+                                "date_move": mv.advertisement_date,
+                                "invoice_id": data.invoice_id.id,
+                                "name": data.name,
+                                "account_id": data.account_id.id,
+                                "price_unit": data.price_unit,
+                                "document": "DEV" + '-' + \
+                                 mv.picking_id.name,
+                                "origin": data.origin,
+                                "uom_id": data.uom_id.id,
+                                "product_id": data.product_id.id,
+                                "bill_uom": data.bill_uom.id,
+                                "discount": data.discount,
+                                "qty_returned": history.quantity_done,
+                                "date_init": fields.Date.from_string(
+                                    mv.advertisement_date).day,
+                                "date_end": fields.Date.from_string(
+                                    self.end_date_invoice).day,
+                                "num_days": delta.days + 1,
+                                "quantity": qty,
+                                "products_on_work": history.product_count,
+                                "invoice_line_tax_ids": \
+                                 [(6, 0, list(
+                                     data.invoice_line_tax_ids._ids))],
+                                "layout_category_id": \
+                                 sale_lines.layout_category_id.id}
                             self.write({
                                 'invoice_line_ids': [(0, 0, inv_line)]})
 
@@ -469,33 +470,34 @@ class AccountInvoice(models.Model):
                                      ('move_id', '=', mv.id),
                                      ('code', '=', 'outgoing')])
                             # Create product on work invoice
-                            inv_line = {"date_move": mv.date_expected,
-                                     "invoice_id": data.invoice_id.id,
-                                     "name": data.name,
-                                     "account_id": data.account_id.id,
-                                     "price_unit": data.price_unit,
-                                     "document": "REM" + '-' + \
-                                        mv.picking_id.name,
-                                     "origin": data.origin,
-                                     "uom_id": data.uom_id.id,
-                                     "product_id": data.product_id.id,
-                                     "bill_uom": data.bill_uom.id,
-                                     "discount": data.discount,
-                                     "qty_remmisions": \
-                                        history.quantity_done,
-                                     "date_init": fields.Datetime.from_string(
-                                         mv.date_expected).day,
-                                     "date_end": date_end.day,
-                                     "num_days": delta.days + 1,
-                                     "quantity": qty,
-                                     "products_on_work": \
-                                        history.product_count,
-                                     "invoice_line_tax_ids": \
-                                        [(6, 0, list(
-                                            data.invoice_line_tax_ids._ids))],
-                                     "layout_category_id": \
-                                      sale_lines.layout_category_id.id
-                                    }
+                            inv_line = {
+                                "date_move": mv.date_expected,
+                                "invoice_id": data.invoice_id.id,
+                                "name": data.name,
+                                "account_id": data.account_id.id,
+                                "price_unit": data.price_unit,
+                                "document": "REM" + '-' + \
+                                 mv.picking_id.name,
+                                "origin": data.origin,
+                                "uom_id": data.uom_id.id,
+                                "product_id": data.product_id.id,
+                                "bill_uom": data.bill_uom.id,
+                                "discount": data.discount,
+                                "qty_remmisions": \
+                                 history.quantity_done,
+                                "date_init": \
+                                 fields.Datetime.from_string(
+                                     mv.date_expected).day,
+                                "date_end": date_end.day,
+                                "num_days": delta.days + 1,
+                                "quantity": qty,
+                                "products_on_work": \
+                                 history.product_count,
+                                "invoice_line_tax_ids": \
+                                 [(6, 0, list(
+                                     data.invoice_line_tax_ids._ids))],
+                                "layout_category_id": \
+                                 sale_lines.layout_category_id.id}
                             self.write({
                                 'invoice_line_ids': [(0, 0, inv_line)]})
 
