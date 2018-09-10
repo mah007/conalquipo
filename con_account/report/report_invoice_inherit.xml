@@ -164,7 +164,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
-                                <tr t-foreach="o.invoice_line_ids" t-as="l">
+                                <tr t-foreach="o.invoice_line_ids.sorted(key=lambda a:(a.date_move))" t-as="l">
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.document"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_move"/></td>
                                     <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.product_id.default_code"/></td>
