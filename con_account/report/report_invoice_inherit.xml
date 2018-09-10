@@ -185,6 +185,20 @@
                             <div id="total">
                                 <div>
                                     <table class="table table-condensed" style="min-width: 250px;max-width: 400px;">
+
+                                        <t t-set="categories" t-value="o._get_tax_amount_by_category()"/>
+                                        <t t-foreach="categories.keys()" t-as="amount_by_cat">
+                                            <tr>
+                                                <td>
+                                                    <span>Total de: </span>
+                                                    <span t-esc="amount_by_cat"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="categories[amount_by_cat]"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
                                         <tr class="border-black" style="border-bottom:1px solid #dddddd;">
                                             <td><strong>Subtotal</strong></td>
                                             <td class="text-right">

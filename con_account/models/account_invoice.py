@@ -60,8 +60,11 @@ class AccountInvoiceLine(models.Model):
     def _compute_price(self):
         res = super(AccountInvoiceLine, self)._compute_price()
         if self.products_on_work == 0.0:
-            self.price_subtotal = 0.0
-            self.price_unit = 0.0
+            if self.product_id.categ_id.name == "Acarreos":
+                self.price_subtotal = self.quantity * self.price_unit
+            else:
+                self.price_subtotal = 0.0
+                self.price_unit = 0.0
         return res
 
 
@@ -503,3 +506,12 @@ class AccountInvoice(models.Model):
                     data.document = 'ACAR'
             self.compute_taxes()
         return res
+
+    @api.multi
+    def _get_tax_amount_by_category(self):
+        self.ensure_one()
+        res_dict = {}
+        for line in self.invoice_line_ids:
+            res_dict.setdefault(line.product_id.categ_id.name, 0.0)
+            res_dict[line.product_id.categ_id.name] += line.price_subtotal
+        return res_dict
