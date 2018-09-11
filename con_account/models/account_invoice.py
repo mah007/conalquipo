@@ -406,6 +406,7 @@ class AccountInvoice(models.Model):
         if move_static:
             for mv in move_static:
                 qty = 0.0
+                sale_lines = mv.sale_line_id
                 if mv.location_dest_id.usage \
                      == 'customer' and mv.picking_id.state \
                       == 'done':
@@ -416,6 +417,13 @@ class AccountInvoice(models.Model):
                     a = fields.Date.from_string(mv.date_expected)
                     b = date_end
                     delta = b - a
+                    # Get tasks values
+                    qty = self.get_qty_tasks(
+                        sale_lines,
+                        mv.date_expected,
+                        self.end_date_invoice, mv, delta)
+                    # Get product count history
+                    history = self.get_out_history(sale_lines, mv)
                     # Create product on work invoice
                     inv_line = {
                         "date_move": mv.date_expected,
@@ -435,9 +443,15 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "products_on_work": \
+                         history.product_count,
+                        "qty_remmisions": \
+                         history.quantity_done,
                         "invoice_line_tax_ids": \
                             [(6, 0, list(
-                                data.invoice_line_tax_ids._ids))]}
+                                data.invoice_line_tax_ids._ids))],
+                        "layout_category_id": \
+                            sale_lines.layout_category_id.id}
                     self.write({
                         'invoice_line_ids': [(0, 0, inv_line)]})
 
