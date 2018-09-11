@@ -438,8 +438,8 @@ class AccountInvoice(models.Model):
                         "bill_uom": data.bill_uom.id,
                         "discount": data.discount,
                         "date_init": \
-                            fields.Datetime.from_string(
-                                mv.date_expected).day,
+                         fields.Datetime.from_string(
+                             mv.date_expected).day,
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
@@ -448,10 +448,10 @@ class AccountInvoice(models.Model):
                         "qty_remmisions": \
                          history.quantity_done,
                         "invoice_line_tax_ids": \
-                            [(6, 0, list(
-                                data.invoice_line_tax_ids._ids))],
+                         [(6, 0, list(
+                             data.invoice_line_tax_ids._ids))],
                         "layout_category_id": \
-                            sale_lines.layout_category_id.id}
+                         sale_lines.layout_category_id.id}
                     self.write({
                         'invoice_line_ids': [(0, 0, inv_line)]})
 
