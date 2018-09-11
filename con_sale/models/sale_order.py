@@ -1461,6 +1461,12 @@ class SaleOrderLine(models.Model):
         store=True,
         string='Salesperson',
         readonly=True)
+    product_id = fields.Many2one(
+        'product.product', string='Product',
+        domain=[],
+        change_default=True,
+        ondelete='restrict', required=True)
+
 
     @api.multi
     def name_get(self):

@@ -88,3 +88,6 @@ class SaleQuoteLine(models.Model):
     _inherit = "sale.quote.line"
 
     indicted = fields.Boolean(string='Indicted')
+    product_id = fields.Many2one(
+        'product.product',
+        'Product', domain=[], required=True)
