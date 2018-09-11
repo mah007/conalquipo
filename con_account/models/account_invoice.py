@@ -65,6 +65,9 @@ class AccountInvoiceLine(models.Model):
             else:
                 self.price_subtotal = 0.0
                 self.price_unit = 0.0
+        else:
+            self.price_subtotal = \
+             self.products_on_work * self.quantity * self.price_unit
         return res
 
 
@@ -180,27 +183,6 @@ class AccountInvoice(models.Model):
             res.secondary_sector_ids2 = \
              res.project_id.secondary_sector_ids2.id
         return res
-
-    @api.multi
-    def write(self, values):
-        values['employee_code'] = False
-        # Overwrite account invoice write
-        res = super(AccountInvoice, self).write(values)
-        # Account extra permissions
-        groups_company = []
-        users_in_acc_groups = []
-        actual_user = self.env.user.id
-        user_company = self.env['res.users'].browse([self._uid]).company_id
-        for acc_groups in user_company.account_extra_perm:
-            groups_company.append(acc_groups)
-        for data in groups_company:
-            for acc_users in data.users:
-                users_in_acc_groups.append(acc_users.id)
-        if actual_user in users_in_acc_groups:
-            return res
-        else:
-            raise UserError(_(
-                "You don't have permission to edit the record!"))
 
     @api.depends('project_id', 'partner_id')
     def _get_merge_address(self):
@@ -325,6 +307,9 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def _get_printed_report_name(self):
+        """
+        Change the values of the report name
+        """
         self.ensure_one()
         return  \
             self.type == 'out_invoice' and not self.pre_invoice \
@@ -348,10 +333,14 @@ class AccountInvoice(models.Model):
 
     @api.multi
     def write(self, values):
+        """
+        Overwrite the method write from account.invoice
+        """
+        values['employee_code'] = False
         res = super(AccountInvoice, self).write(values)
+        # Get invoice permissions
+        self.get_invoice_permissions()
         date_end = None
-        date_format = "%Y-%m-%d %S:%M:%S"
-        total = 0.0
         if 'init_date_invoice' in values and self.invoice_type == "rent":
             for data in self.invoice_line_ids:
                 for sale_lines in data.sale_line_ids:
@@ -369,138 +358,20 @@ class AccountInvoice(models.Model):
                          ('advertisement_date', '>=', self.init_date_invoice),
                          ('advertisement_date', '<=', self.end_date_invoice),
                          ('sale_line_id', '=', sale_lines.id)])
+                    move_static = self.env['stock.move'].search(
+                        [('product_id', '=', data.product_id.id),
+                         ('project_id', '=', self.project_id.id),
+                         ('partner_id', '=', self.partner_id.id),
+                         ('date_expected', '<=', self.init_date_invoice)])
+
                     for mv in move_in:
                         qty = 0.0
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                        if mv.returned and \
-                         mv.location_dest_id.return_location \
-                          and mv.picking_id.state == 'done':
-                            # Get delta days
-                            a = fields.Date.from_string(
-                                self.end_date_invoice)
-                            b = fields.Date.from_string(
-                                mv.advertisement_date)
-                            delta = a - b
-                            # Get tasks values
-                            if not sale_lines.is_extra and \
-                             not sale_lines.is_component and \
-                              sale_lines.bill_uom.name not in \
-                               ["Día(s)", "Unidad(es)"]:
-                                task = self.env['project.task'].search(
-                                    [('sale_line_id', '=', sale_lines.id)])
-                                for timesheet in task.timesheet_ids:
-                                    if timesheet.create_date >= \
-                                     self.init_date_invoice and \
-                                      timesheet.create_date <= \
-                                       self.end_date_invoice:
-                                        qty += timesheet.unit_amount
-                            elif sale_lines.bill_uom.name == "Día(s)":
-                                qty = delta.days + 1
-                            else:
-                                qty = mv.product_uom_qty
-                            # Get product count history
-                            history = self.env['stock.move.history'].search(
-                                [('sale_line_id', '=', sale_lines.id),
-                                 ('move_id', '=', mv.id),
-                                 ('code', '=', 'incoming')])
-                            # Create returned product invoice
-                            inv_line = {
-                                "date_move": mv.advertisement_date,
-                                "invoice_id": data.invoice_id.id,
-                                "name": data.name,
-                                "account_id": data.account_id.id,
-                                "price_unit": data.price_unit,
-                                "document": "DEV" + '-' + \
-                                 mv.picking_id.name,
-                                "origin": data.origin,
-                                "uom_id": data.uom_id.id,
-                                "product_id": data.product_id.id,
-                                "bill_uom": data.bill_uom.id,
-                                "discount": data.discount,
-                                "qty_returned": history.quantity_done,
-                                "date_init": fields.Date.from_string(
-                                    mv.advertisement_date).day,
-                                "date_end": fields.Date.from_string(
-                                    self.end_date_invoice).day,
-                                "num_days": delta.days + 1,
-                                "quantity": qty,
-                                "products_on_work": history.product_count,
-                                "invoice_line_tax_ids": \
-                                 [(6, 0, list(
-                                     data.invoice_line_tax_ids._ids))],
-                                "layout_category_id": \
-                                 sale_lines.layout_category_id.id}
-                            self.write({
-                                'invoice_line_ids': [(0, 0, inv_line)]})
-
-                    for mv in move_out:
-                        qty = 0.0
-                        if mv.location_dest_id.usage \
-                         == 'customer' and mv.picking_id.state \
-                          == 'done':
-                            # Get delta days
-                            if not date_end:
-                                date_end = fields.Date.from_string(
-                                    self.end_date_invoice)
-                            a = fields.Date.from_string(mv.date_expected)
-                            b = date_end
-                            delta = b - a
-                            # Get tasks values
-                            if not sale_lines.is_extra and \
-                             not sale_lines.is_component and \
-                              sale_lines.bill_uom.name not in \
-                               ["Día(s)", "Unidad(es)"]:
-                                task = self.env['project.task'].search(
-                                    [('sale_line_id', '=', sale_lines.id)])
-                                for timesheet in task.timesheet_ids:
-                                    if timesheet.create_date >= \
-                                     self.init_date_invoice and \
-                                      timesheet.create_date <= \
-                                       self.end_date_invoice:
-                                        qty += timesheet.unit_amount
-                            elif sale_lines.bill_uom.name == "Día(s)":
-                                qty = delta.days + 1
-                            else:
-                                qty = mv.product_uom_qty
-                            # Get product count history
-                            history = self.env[
-                                'stock.move.history'].search(
-                                    [('sale_line_id', '=', sale_lines.id),
-                                     ('move_id', '=', mv.id),
-                                     ('code', '=', 'outgoing')])
-                            # Create product on work invoice
-                            inv_line = {
-                                "date_move": mv.date_expected,
-                                "invoice_id": data.invoice_id.id,
-                                "name": data.name,
-                                "account_id": data.account_id.id,
-                                "price_unit": data.price_unit,
-                                "document": "REM" + '-' + \
-                                 mv.picking_id.name,
-                                "origin": data.origin,
-                                "uom_id": data.uom_id.id,
-                                "product_id": data.product_id.id,
-                                "bill_uom": data.bill_uom.id,
-                                "discount": data.discount,
-                                "qty_remmisions": \
-                                 history.quantity_done,
-                                "date_init": \
-                                 fields.Datetime.from_string(
-                                     mv.date_expected).day,
-                                "date_end": date_end.day,
-                                "num_days": delta.days + 1,
-                                "quantity": qty,
-                                "products_on_work": \
-                                 history.product_count,
-                                "invoice_line_tax_ids": \
-                                 [(6, 0, list(
-                                     data.invoice_line_tax_ids._ids))],
-                                "layout_category_id": \
-                                 sale_lines.layout_category_id.id}
-                            self.write({
-                                'invoice_line_ids': [(0, 0, inv_line)]})
-
+                    self.get_rem_moves(move_out, sale_lines, data, date_end)
+                    self.get_dev_moves(move_in, sale_lines, data, date_end)
+                    self.get_ini_moves(
+                        move_static, data, self.init_date_invoice, date_end)
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
@@ -509,8 +380,234 @@ class AccountInvoice(models.Model):
             self.compute_taxes()
         return res
 
+    def get_invoice_permissions(self):
+        """
+        Check if the user can edit or approve invoices
+        """
+        groups_company = []
+        users_in_acc_groups = []
+        actual_user = self.env.user.id
+        user_company = self.env['res.users'].browse([self._uid]).company_id
+        for acc_groups in user_company.account_extra_perm:
+            groups_company.append(acc_groups)
+        for data in groups_company:
+            for acc_users in data.users:
+                users_in_acc_groups.append(acc_users.id)
+        if actual_user in users_in_acc_groups:
+            return True
+        else:
+            raise UserError(_(
+                "You don't have permission to edit the record!"))
+
+    def get_ini_moves(self, move_static, data, init_date_invoice, date_end):
+        """
+        Create invoices related to product deliveries
+        """
+        if move_static:
+            for mv in move_static:
+                qty = 0.0
+                if mv.location_dest_id.usage \
+                     == 'customer' and mv.picking_id.state \
+                      == 'done':
+                    # Get delta days
+                    if not date_end:
+                        date_end = fields.Date.from_string(
+                            self.end_date_invoice)
+                    a = fields.Date.from_string(mv.date_expected)
+                    b = date_end
+                    delta = b - a
+                    # Create product on work invoice
+                    inv_line = {
+                        "date_move": mv.date_expected,
+                        "invoice_id": data.invoice_id.id,
+                        "name": data.name,
+                        "account_id": data.account_id.id,
+                        "price_unit": data.price_unit,
+                        "document": "INI",
+                        "origin": data.origin,
+                        "uom_id": data.uom_id.id,
+                        "product_id": data.product_id.id,
+                        "bill_uom": data.bill_uom.id,
+                        "discount": data.discount,
+                        "date_init": \
+                            fields.Datetime.from_string(
+                                mv.date_expected).day,
+                        "date_end": date_end.day,
+                        "num_days": delta.days + 1,
+                        "quantity": qty,
+                        "invoice_line_tax_ids": \
+                            [(6, 0, list(
+                                data.invoice_line_tax_ids._ids))]}
+                    self.write({
+                        'invoice_line_ids': [(0, 0, inv_line)]})
+
+    def get_rem_moves(self, move_out, sale_lines, data, date_end):
+        """
+        Create invoices related to product deliveries
+        """
+        if move_out:
+            for mv in move_out:
+                qty = 0.0
+                if mv.location_dest_id.usage \
+                     == 'customer' and mv.picking_id.state \
+                      == 'done':
+                    # Get delta days
+                    if not date_end:
+                        date_end = fields.Date.from_string(
+                            self.end_date_invoice)
+                    a = fields.Date.from_string(mv.date_expected)
+                    b = date_end
+                    delta = b - a
+                    # Get tasks values
+                    qty = self.get_qty_tasks(
+                        sale_lines,
+                        self.init_date_invoice,
+                        self.end_date_invoice, mv, delta)
+                    # Get product count history
+                    history = self.get_out_history(sale_lines, mv)
+                    # Create product on work invoice
+                    inv_line = {
+                        "date_move": mv.date_expected,
+                        "invoice_id": data.invoice_id.id,
+                        "name": data.name,
+                        "account_id": data.account_id.id,
+                        "price_unit": data.price_unit,
+                        "document": "REM" + '-' + \
+                            mv.picking_id.name,
+                        "origin": data.origin,
+                        "uom_id": data.uom_id.id,
+                        "product_id": data.product_id.id,
+                        "bill_uom": data.bill_uom.id,
+                        "discount": data.discount,
+                        "qty_remmisions": \
+                            history.quantity_done,
+                        "date_init": \
+                            fields.Datetime.from_string(
+                                mv.date_expected).day,
+                        "date_end": date_end.day,
+                        "num_days": delta.days + 1,
+                        "quantity": qty,
+                        "products_on_work": \
+                            history.product_count,
+                        "invoice_line_tax_ids": \
+                            [(6, 0, list(
+                                data.invoice_line_tax_ids._ids))],
+                        "layout_category_id": \
+                            sale_lines.layout_category_id.id}
+                    self.write({
+                        'invoice_line_ids': [(0, 0, inv_line)]})
+
+    def get_dev_moves(self, move_in, sale_lines, data, date_end):
+        """
+        Create invoices related to product returns
+        """
+        for mv in move_in:
+            qty = 0.0
+            date_end = fields.Date.from_string(
+                mv.advertisement_date)
+            if mv.returned and \
+                 mv.location_dest_id.return_location \
+                  and mv.picking_id.state == 'done':
+                # Get delta days
+                a = fields.Date.from_string(
+                    self.end_date_invoice)
+                b = fields.Date.from_string(
+                    mv.advertisement_date)
+                delta = a - b
+                # Get tasks values
+                qty = self.get_qty_tasks(
+                    sale_lines,
+                    self.init_date_invoice,
+                    self.end_date_invoice, mv, delta)
+                # Get product count history
+                history = self.get_in_history(sale_lines, mv)
+                # Create returned product invoice
+                inv_line = {
+                    "date_move": mv.advertisement_date,
+                    "invoice_id": data.invoice_id.id,
+                    "name": data.name,
+                    "account_id": data.account_id.id,
+                    "price_unit": data.price_unit,
+                    "document": "DEV" + '-' + \
+                        mv.picking_id.name,
+                    "origin": data.origin,
+                    "uom_id": data.uom_id.id,
+                    "product_id": data.product_id.id,
+                    "bill_uom": data.bill_uom.id,
+                    "discount": data.discount,
+                    "qty_returned": history.quantity_done,
+                    "date_init": fields.Date.from_string(
+                        mv.advertisement_date).day,
+                    "date_end": fields.Date.from_string(
+                        self.end_date_invoice).day,
+                    "num_days": delta.days + 1,
+                    "quantity": qty,
+                    "products_on_work": history.product_count,
+                    "invoice_line_tax_ids": \
+                        [(6, 0, list(
+                            data.invoice_line_tax_ids._ids))],
+                    "layout_category_id": \
+                        sale_lines.layout_category_id.id}
+                self.write({
+                    'invoice_line_ids': [(0, 0, inv_line)]})
+
+    def get_qty_tasks(
+            self, sale_lines, init_date_invoice,
+            end_date_invoice, moves, delta):
+        """
+        Return the quantity of the tasks on
+        executed by the products.
+        """
+        qty = 0.0
+        # Get tasks values
+        if not sale_lines.is_extra and \
+             not sale_lines.is_component and \
+              sale_lines.bill_uom.name not in \
+               ["Día(s)", "Unidad(es)"]:
+            task = self.env['project.task'].search(
+                [('sale_line_id', '=', sale_lines.id)])
+            for timesheet in task.timesheet_ids:
+                if timesheet.create_date >= \
+                    init_date_invoice and \
+                     timesheet.create_date <= \
+                      end_date_invoice:
+                    qty += timesheet.unit_amount
+        elif sale_lines.bill_uom.name == "Día(s)":
+            qty = delta.days + 1
+        else:
+            qty = moves.product_uom_qty
+        return qty
+
+    def get_out_history(self, sale_lines, moves):
+        """
+        Return the product outgoing histoy of the
+        moves
+        """
+        history_out = self.env[
+            'stock.move.history'].search(
+                [('sale_line_id', '=', sale_lines.id),
+                 ('move_id', '=', moves.id),
+                 ('code', '=', 'outgoing')])
+        return history_out
+
+    def get_in_history(self, sale_lines, mv):
+        """
+        Return the product incoming histoy of the
+        moves
+        """
+        history_in = self.env['stock.move.history'].search(
+            [('sale_line_id', '=', sale_lines.id),
+             ('move_id', '=', mv.id),
+             ('code', '=', 'incoming')])
+        return history_in
+
     @api.multi
     def _get_tax_amount_by_category(self):
+        """
+        Create a dict with the total amounts for
+        all the product categories. This dict is used
+        in the invoice report
+        """
         self.ensure_one()
         res_dict = {}
         for line in self.invoice_line_ids:
