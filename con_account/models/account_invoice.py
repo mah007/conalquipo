@@ -360,6 +360,11 @@ class AccountInvoice(models.Model):
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('date_expected', '<=', self.init_date_invoice)])
+
+                    for mv in move_in:
+                        qty = 0.0
+                        date_end = fields.Date.from_string(
+                            mv.advertisement_date)
                     self.get_rem_moves(move_out, sale_lines, data, date_end)
                     self.get_dev_moves(move_in, sale_lines, data, date_end)
                     self.get_ini_moves(
