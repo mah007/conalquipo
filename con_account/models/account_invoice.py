@@ -65,6 +65,9 @@ class AccountInvoiceLine(models.Model):
             else:
                 self.price_subtotal = 0.0
                 self.price_unit = 0.0
+        else:
+            self.price_subtotal = \
+             self.products_on_work * self.quantity * self.price_unit
         return res
 
 
