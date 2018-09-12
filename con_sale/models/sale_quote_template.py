@@ -34,7 +34,9 @@ class SaleQuoteTemplate(models.Model):
 
     @api.model
     def getcategory(self):
-        # Domain for the categories
+        """
+        Domain for templates categories
+        """
         cat_list = []
         cats = self.env.user.company_id.special_quotations_categories
         for data in cats:
@@ -43,6 +45,9 @@ class SaleQuoteTemplate(models.Model):
 
     @api.model
     def create(self, values):
+        """
+        Overwrite the method write from sale quote template
+        """
         res = super(SaleQuoteTemplate, self).create(values)
         for data in res.quote_line:
             components_ids = data.product_id.product_tmpl_id.components_ids
@@ -52,7 +57,8 @@ class SaleQuoteTemplate(models.Model):
                     values = {
                         'product_id': p.product_child_id.id,
                         'product_uom_qty': p.quantity,
-                        'product_uom_id': p.product_child_id.product_tmpl_id.uom_id.id,
+                        'product_uom_id': \
+                         p.product_child_id.product_tmpl_id.uom_id.id,
                         'name': 'Comp. ' + str(
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,
@@ -64,6 +70,9 @@ class SaleQuoteTemplate(models.Model):
 
     @api.multi
     def write(self, values):
+        """
+        Overwrite the method write from sale quote template
+        """
         res = super(SaleQuoteTemplate, self).write(values)
         for data in self.quote_line:
             components_ids = data.product_id.product_tmpl_id.components_ids
@@ -73,7 +82,8 @@ class SaleQuoteTemplate(models.Model):
                     values = {
                         'product_id': p.product_child_id.id,
                         'product_uom_qty': p.quantity,
-                        'product_uom_id': p.product_child_id.product_tmpl_id.uom_id.id,
+                        'product_uom_id': \
+                         p.product_child_id.product_tmpl_id.uom_id.id,
                         'name': 'Comp. ' + str(
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,
@@ -88,3 +98,6 @@ class SaleQuoteLine(models.Model):
     _inherit = "sale.quote.line"
 
     indicted = fields.Boolean(string='Indicted')
+    product_id = fields.Many2one(
+        'product.product',
+        'Product', domain=[], required=True)
