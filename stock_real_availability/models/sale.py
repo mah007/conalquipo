@@ -16,8 +16,7 @@ class SaleOrderLine(models.Model):
         available = self.product_id.with_context(
             warehouse=self.order_id.warehouse_id.id
         ).qty_available - self.product_uom_qty
-        if available > 0:
-            self.real_available = available
+        self.real_available = available
 
     real_available = fields.Float(
         compute="_fnct_line_stock", string='Real Stock')
