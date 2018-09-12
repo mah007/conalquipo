@@ -49,6 +49,9 @@ class AccountInvoiceLine(models.Model):
         string='Qty returned')
     products_on_work = fields.Float(
         string='Products on work')
+    parent_sale_line = fields.Many2one(
+        comodel_name='sale.order.line',
+        string='Parent sale line')
 
     @api.one
     @api.depends(
@@ -122,9 +125,6 @@ class AccountInvoice(models.Model):
         string='Init Date')
     end_date_invoice = fields.Date(
         string='End Date')
-    parent_sale_line = fields.Many2one(
-        comodel_name='sale.order.line',
-        string='Parent sale line')
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
