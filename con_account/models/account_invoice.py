@@ -427,7 +427,7 @@ class AccountInvoice(models.Model):
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
-                        "name": data.name,
+                        "name": data.product_id.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
                         "document": "INI",
@@ -482,7 +482,7 @@ class AccountInvoice(models.Model):
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
-                        "name": data.name,
+                        "name": data.product_id.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
                         "document": \
@@ -538,7 +538,7 @@ class AccountInvoice(models.Model):
                 inv_line = {
                     "date_move": mv.advertisement_date,
                     "invoice_id": data.invoice_id.id,
-                    "name": data.name,
+                    "name": data.product_id.name,
                     "account_id": data.account_id.id,
                     "price_unit": data.price_unit,
                     "document": \

@@ -90,6 +90,10 @@
                 <field name="uom_id" invisible="1"/>
             </xpath>
 
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="replace">
+                <field name="name" invisible="1"/>
+            </xpath>
+
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='name']" position="after">
                 <field name="owner_id" />
                 <field name="date_init" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
