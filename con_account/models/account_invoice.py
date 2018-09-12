@@ -364,13 +364,16 @@ class AccountInvoice(models.Model):
                          ('date_expected', '<=', self.init_date_invoice)])
 
                     for mv in move_in:
-                        qty = 0.0
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                    self.get_rem_moves(move_out, sale_lines, data, date_end)
-                    self.get_dev_moves(move_in, sale_lines, data, date_end)
-                    self.get_ini_moves(
-                        move_static, data, self.init_date_invoice, date_end)
+                    if not sale_lines.parent_line:
+                        self.get_rem_moves(
+                            move_out, sale_lines, data, date_end)
+                        self.get_dev_moves(
+                            move_in, sale_lines, data, date_end)
+                        self.get_ini_moves(
+                            move_static, data,
+                            self.init_date_invoice, date_end)
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
@@ -427,7 +430,7 @@ class AccountInvoice(models.Model):
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
-                        "name": data.name,
+                        "name": data.product_id.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
                         "document": "INI",
@@ -482,7 +485,7 @@ class AccountInvoice(models.Model):
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
-                        "name": data.name,
+                        "name": data.product_id.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
                         "document": \
@@ -538,7 +541,7 @@ class AccountInvoice(models.Model):
                 inv_line = {
                     "date_move": mv.advertisement_date,
                     "invoice_id": data.invoice_id.id,
-                    "name": data.name,
+                    "name": data.product_id.name,
                     "account_id": data.account_id.id,
                     "price_unit": data.price_unit,
                     "document": \
