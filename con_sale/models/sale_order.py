@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Ingeniería, Aplicaciones y Software S.A.S
-#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
+#    Copyright (C) 2003-2017 (<http://www.ias.com.co>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -1007,7 +1007,7 @@ class SaleOrder(models.Model):
                   'sale_order_id': self.id,
                   'location_id': self.env.ref(
                       'stock.stock_location_customers').id,
-                  })
+                 })
         return {
             'name': 'Advertisement Wizard',
             'view_type': 'form',
@@ -1379,7 +1379,9 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _compute_uoms(self):
-        # Compute availables uoms for product
+        """
+        Compute availables uoms for product
+        """
         uom_list = []
         for data in self:
             uoms = data.product_id.product_tmpl_id.uoms_ids
@@ -1474,7 +1476,7 @@ class SaleOrderLine(models.Model):
         if self._context.get('special_display', False):
             for rec in self:
                 vehicle = "{} {}".format(rec.vehicle_id.model_id.name,
-                                          rec.vehicle_id.license_plate)
+                                         rec.vehicle_id.license_plate)
                 name = "{} - {} - {}".format(rec.name, rec.price_unit, vehicle)
                 res.append((rec.id, name))
         else:
@@ -1514,7 +1516,7 @@ class SaleOrderLine(models.Model):
                 ).date()
             if d2 < d1:
                 raise UserError(
-                    _("The end date can't be less than start date")) 
+                    _("The end date can't be less than start date"))
 
     @api.onchange('assigned_operator')
     def assigned_operator_change(self):
@@ -1703,7 +1705,8 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def invoice_line_create(self, invoice_id, qty):
-        """ Create an invoice line. The quantity to invoice can be 
+        """ 
+        Create an invoice line. The quantity to invoice can be
         positive (invoice) or negative (refund).
             :param invoice_id: integer
             :param qty: float quantity to invoice
@@ -2020,7 +2023,7 @@ class SaleOrderLine(models.Model):
                 # which is in the SO's pricelist's currency
                 new_list_price = self.env['res.currency'].browse(
                     currency_id).with_context(context_partner).compute(
-                    new_list_price, self.order_id.pricelist_id.currency_id)
+                        new_list_price, self.order_id.pricelist_id.currency_id)
             discount = (new_list_price - price) / new_list_price * 100
             if discount > 0:
                 self.discount = discount
@@ -2040,12 +2043,12 @@ class SaleOrderLine(models.Model):
                                date=self.order_id.date_order)
         base_price, currency_id = self.with_context(
             context_partner)._get_real_price_currency(
-            self.product_id, rule_id, self.bill_uom_qty, self.product_uom,
-            self.order_id.pricelist_id.id)
+                self.product_id, rule_id, self.bill_uom_qty, self.product_uom,
+                self.order_id.pricelist_id.id)
         if currency_id != self.order_id.pricelist_id.currency_id.id:
             base_price = self.env['res.currency'].browse(
                 currency_id).with_context(context_partner).compute(
-                base_price, self.order_id.pricelist_id.currency_id)
+                    base_price, self.order_id.pricelist_id.currency_id)
         # negative discounts (= surcharge) are included in the display price
         return max(base_price, final_price)
 
@@ -2072,8 +2075,8 @@ class SaleOrderLine(models.Model):
             )
             self.price_unit = self.env[
                 'account.tax']._fix_tax_included_price_company(
-                self._get_display_price(product), product.taxes_id,
-                self.tax_id, self.company_id)
+                    self._get_display_price(product), product.taxes_id,
+                    self.tax_id, self.company_id)
 
     @api.onchange('bill_uom')
     def price_bill_qty(self):

@@ -25,8 +25,7 @@ from datetime import datetime
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 from odoo.addons import decimal_precision as dp
-from odoo.tools import float_is_zero, float_compare, \
-    DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import float_is_zero, float_compare
 
 
 class AccountInvoiceLine(models.Model):
@@ -486,8 +485,8 @@ class AccountInvoice(models.Model):
                         "name": data.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
-                        "document": "REM" + '-' + \
-                            mv.picking_id.name,
+                        "document": \
+                         mv.picking_id.name,
                         "origin": data.origin,
                         "uom_id": data.uom_id.id,
                         "product_id": data.product_id.id,
@@ -542,8 +541,8 @@ class AccountInvoice(models.Model):
                     "name": data.name,
                     "account_id": data.account_id.id,
                     "price_unit": data.price_unit,
-                    "document": "DEV" + '-' + \
-                        mv.picking_id.name,
+                    "document": \
+                     mv.picking_id.name,
                     "origin": data.origin,
                     "uom_id": data.uom_id.id,
                     "product_id": data.product_id.id,

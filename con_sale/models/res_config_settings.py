@@ -18,15 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-from datetime import timedelta
-from datetime import datetime
 import logging
-_logger = logging.getLogger(__name__)
-from odoo import fields, models, api, _
+_LOGGER = logging.getLogger(__name__)
+from odoo import fields, models
 
 
-class con_sale_config_settings(models.TransientModel):
+class ConSaleConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     days_activities = fields.Integer(
