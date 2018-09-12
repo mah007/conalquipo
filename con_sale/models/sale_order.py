@@ -893,8 +893,8 @@ class SaleOrder(models.Model):
             self.send_to_channel(body, new_users)
             # Test smtp connection
             server = self.env['ir.mail_server'].sudo().search([])
+            smtp = False
             for data in server:
-                smtp = False
                 try:
                     smtp = data.connect(mail_server_id=data.id)
                 except Exception as e:
@@ -1909,12 +1909,12 @@ class SaleOrderLine(models.Model):
         there is nothing to invoice. This is also hte default value if the
         conditions of no other status is met.
         - to invoice: we refer to the quantity to invoice of the line. Refer to
-        metho _get_to_invoice_qty()` for more information on how this quantity
+        method _get_to_invoice_qty()` for more information on how this quantity
         is calculated.
         - upselling: this is possible only for a product invoiced on ordered
         quantities for which we delivered more than expected. The could arise
         if, for example, a project took more time than expected but we decided
-        not to invoice the extra cost to the client. This occurs onyl in state
+        not to invoice the extra cost to the client. This occurs only in state
         'sale', so that when a SO is set to done, the upselling opportunity
           is removed from the list.
         - invoiced: the quantity invoiced is larger or equal to the quantity
