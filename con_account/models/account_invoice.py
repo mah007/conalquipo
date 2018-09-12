@@ -67,6 +67,9 @@ class AccountInvoiceLine(models.Model):
         else:
             self.price_subtotal = \
              self.products_on_work * self.quantity * self.price_unit
+        if self.parent_sale_line:
+            self.price_subtotal = 0.0
+            self.price_unit = 0.0
         return res
 
 
@@ -119,6 +122,9 @@ class AccountInvoice(models.Model):
         string='Init Date')
     end_date_invoice = fields.Date(
         string='End Date')
+    parent_sale_line = fields.Many2one(
+        comodel_name='sale.order.line',
+        string='Parent sale line')
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
@@ -366,14 +372,10 @@ class AccountInvoice(models.Model):
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                    if not sale_lines.parent_line:
-                        self.get_rem_moves(
-                            move_out, sale_lines, data, date_end)
-                        self.get_dev_moves(
-                            move_in, sale_lines, data, date_end)
-                        self.get_ini_moves(
-                            move_static, data,
-                            self.init_date_invoice, date_end)
+                    self.get_rem_moves(move_out, sale_lines, data, date_end)
+                    self.get_dev_moves(move_in, sale_lines, data, date_end)
+                    self.get_ini_moves(
+                        move_static, data, self.init_date_invoice, date_end)
                 # Unlink old invoices lines for product and consu
                 if data.product_id.product_tmpl_id.type != "service":
                     data.unlink()
@@ -445,6 +447,7 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "parent_sale_line": sale_lines.parent_line,
                         "products_on_work": \
                          history.product_count,
                         "qty_remmisions": \
@@ -503,6 +506,7 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "parent_sale_line": sale_lines.parent_line,
                         "products_on_work": \
                             history.product_count,
                         "invoice_line_tax_ids": \
@@ -558,6 +562,7 @@ class AccountInvoice(models.Model):
                         self.end_date_invoice).day,
                     "num_days": delta.days + 1,
                     "quantity": qty,
+                    "parent_sale_line": sale_lines.parent_line,
                     "products_on_work": history.product_count,
                     "invoice_line_tax_ids": \
                         [(6, 0, list(
