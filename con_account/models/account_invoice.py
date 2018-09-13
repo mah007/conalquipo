@@ -379,17 +379,15 @@ class AccountInvoice(models.Model):
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                    _logger.warning('11111111')
-                    self.get_ini_moves(
-                        move_static, data, self.init_date_invoice, date_end)
-                    _logger.warning('222222')
-                    self.get_rem_moves(move_out, sale_lines, data, date_end)
-                    _logger.warning('33333')                    
-                    self.get_delivery_out(move_out, data, sale_lines)
-                    _logger.warning('44444')
-                    self.get_dev_moves(move_in, sale_lines, data, date_end)
-                    _logger.warning('55555')
-                    self.get_delivery_in(move_in, data, sale_lines)
+                    if not sale_lines.is_component:
+                        self.get_ini_moves(
+                            move_static, data,
+                            self.init_date_invoice, date_end)
+                        self.get_rem_moves(
+                            move_out, sale_lines, data, date_end)
+                        self.get_delivery_out(move_out, data, sale_lines)
+                        self.get_dev_moves(move_in, sale_lines, data, date_end)
+                        self.get_delivery_in(move_in, data, sale_lines)
                 # Unlink old invoices lines for product and consu
                 data.unlink()
             self._compute_amount()
