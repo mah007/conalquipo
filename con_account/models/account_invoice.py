@@ -30,6 +30,7 @@ from odoo.tools import float_is_zero, float_compare
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
+    _order = "date_move asc"
 
     owner_id = fields.Many2one('res.partner', 'Owner')
     bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
@@ -382,14 +383,86 @@ class AccountInvoice(models.Model):
                     self.get_dev_moves(move_in, sale_lines, data, date_end)
                     self.get_ini_moves(
                         move_static, data, self.init_date_invoice, date_end)
+                    self.get_delivery_out(move_out, data, sale_lines)
+                    self.get_delivery_in(move_in, data, sale_lines)
                 # Unlink old invoices lines for product and consu
-                if data.product_id.product_tmpl_id.type != "service":
-                    data.unlink()
-                else:
-                    data.document = 'ACAR'
+                data.unlink()
             self._compute_amount()
             self.compute_taxes()
         return res
+
+    def get_delivery_out(self, move_out, data, sale_lines):
+        """
+        Create out deliveries
+        """
+        if move_out:
+            for mv in move_out:
+                if mv.location_dest_id.usage \
+                        == 'customer' and mv.picking_id.state \
+                         == 'done' and sale_lines.order_id.carrier_id \
+                          == mv.picking_id.carrier_id and \
+                           sale_lines.order_id.vehicle \
+                            == mv.picking_id.vehicle_id:
+                    product = sale_lines.order_id.carrier_id.product_id
+                    # Get vehicle price
+                    costs = self.env['delivery.carrier.cost'].search(
+                        [('vehicle', '=', mv.picking_id.vehicle_id.id),
+                         ('delivery_carrier_id',
+                          '=', sale_lines.order_id.carrier_id.id)])
+                    inv_line = {
+                        "date_move": mv.date_expected,
+                        "invoice_id": data.invoice_id.id,
+                        "product_id": \
+                         product.id,
+                        "name": sale_lines.name,
+                        "account_id": data.account_id.id,
+                        "document": mv.picking_id.name,
+                        "price_unit": costs.cost,
+                        "bill_uom": product.sale_uom.id,
+                        "invoice_line_tax_ids": \
+                            [(6, 0, list(
+                                data.invoice_line_tax_ids._ids))],
+                        "layout_category_id": \
+                         product.product_tmpl_id.layout_sec_id.id}
+                    self.write({
+                        'invoice_line_ids': [(0, 0, inv_line)]})
+
+    def get_delivery_in(self, move_in, data, sale_lines):
+        """
+        Create in deliveries
+        """
+        if move_in:
+            for mv in move_in:
+                if mv.returned and \
+                 mv.location_dest_id.return_location \
+                  and mv.picking_id.state == 'done' \
+                   and sale_lines.order_id.carrier_id \
+                    == mv.picking_id.carrier_id and \
+                     sale_lines.order_id.vehicle \
+                      == mv.picking_id.vehicle_id:
+                    product = sale_lines.order_id.carrier_id.product_id
+                    # Get vehicle price
+                    costs = self.env['delivery.carrier.cost'].search(
+                        [('vehicle', '=', mv.picking_id.vehicle_id.id),
+                         ('delivery_carrier_id',
+                          '=', sale_lines.order_id.carrier_id.id)])
+                    inv_line = {
+                        "date_move": mv.date_expected,
+                        "invoice_id": data.invoice_id.id,
+                        "product_id": \
+                         product.id,
+                        "name": sale_lines.name,
+                        "account_id": data.account_id.id,
+                        "document": mv.picking_id.name,
+                        "price_unit": costs.cost,
+                        "bill_uom": product.sale_uom.id,
+                        "invoice_line_tax_ids": \
+                            [(6, 0, list(
+                                data.invoice_line_tax_ids._ids))],
+                        "layout_category_id": \
+                         product.product_tmpl_id.layout_sec_id.id}
+                    self.write({
+                        'invoice_line_ids': [(0, 0, inv_line)]})
 
     def get_invoice_permissions(self):
         """
