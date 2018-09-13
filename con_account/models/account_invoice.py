@@ -162,7 +162,9 @@ class AccountInvoice(models.Model):
 
     @api.model
     def create(self, values):
-        # Overwrite invoice create
+        """
+        Overwrite invoice create
+        """
         res = super(AccountInvoice, self).create(values)
         if res.refund_invoice_id:
             # Propagate parent data to refund invoices
@@ -187,6 +189,14 @@ class AccountInvoice(models.Model):
             res.sector_id2 = res.project_id.sector_id2.id
             res.secondary_sector_ids2 = \
              res.project_id.secondary_sector_ids2.id
+        res.date_invoice = fields.Date.today()
+        if res.payment_term_id:
+            pterm = res.payment_term_id
+            pterm_list = pterm.with_context(
+                currency_id=res.company_id.currency_id.id).compute(
+                    value=1, date_ref=res.date_invoice)[0]
+            res.date_due = max(line[0] for line in pterm_list)
+
         return res
 
     @api.depends('project_id', 'partner_id')
@@ -381,6 +391,7 @@ class AccountInvoice(models.Model):
                     data.unlink()
                 else:
                     data.document = 'ACAR'
+            self._compute_amount()
             self.compute_taxes()
         return res
 
