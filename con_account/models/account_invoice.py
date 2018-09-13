@@ -375,15 +375,20 @@ class AccountInvoice(models.Model):
                         [('product_id', '=', data.product_id.id),
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
-                         ('date_expected', '<=', self.init_date_invoice)])
+                         ('date_expected', '<', self.init_date_invoice)])
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                    self.get_rem_moves(move_out, sale_lines, data, date_end)
-                    self.get_dev_moves(move_in, sale_lines, data, date_end)
+                    _logger.warning('11111111')
                     self.get_ini_moves(
                         move_static, data, self.init_date_invoice, date_end)
+                    _logger.warning('222222')
+                    self.get_rem_moves(move_out, sale_lines, data, date_end)
+                    _logger.warning('33333')                    
                     self.get_delivery_out(move_out, data, sale_lines)
+                    _logger.warning('44444')
+                    self.get_dev_moves(move_in, sale_lines, data, date_end)
+                    _logger.warning('55555')
                     self.get_delivery_in(move_in, data, sale_lines)
                 # Unlink old invoices lines for product and consu
                 data.unlink()
@@ -586,7 +591,7 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
-                        "parent_sale_line": sale_lines.parent_line,
+                        "parent_sale_line": sale_lines.parent_line.id,
                         "products_on_work": \
                             history.product_count,
                         "invoice_line_tax_ids": \
@@ -594,6 +599,7 @@ class AccountInvoice(models.Model):
                                 data.invoice_line_tax_ids._ids))],
                         "layout_category_id": \
                             sale_lines.layout_category_id.id}
+                    _logger.warning(inv_line)
                     self.write({
                         'invoice_line_ids': [(0, 0, inv_line)]})
 
@@ -642,7 +648,7 @@ class AccountInvoice(models.Model):
                         self.end_date_invoice).day,
                     "num_days": delta.days + 1,
                     "quantity": qty,
-                    "parent_sale_line": sale_lines.parent_line,
+                    "parent_sale_line": sale_lines.parent_line.id,
                     "products_on_work": history.product_count,
                     "invoice_line_tax_ids": \
                         [(6, 0, list(
