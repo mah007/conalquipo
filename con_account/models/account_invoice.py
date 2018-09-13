@@ -67,13 +67,9 @@ class AccountInvoiceLine(models.Model):
                 self.price_subtotal = self.quantity * self.price_unit
             else:
                 self.price_subtotal = 0.0
-                self.price_unit = 0.0
         else:
             self.price_subtotal = \
              self.products_on_work * self.quantity * self.price_unit
-        if self.parent_sale_line:
-            self.price_subtotal = 0.0
-            self.price_unit = 0.0
         return res
 
 
@@ -568,12 +564,17 @@ class AccountInvoice(models.Model):
                     # Get product count history
                     history = self.get_out_history(sale_lines, mv)
                     # Create product on work invoice
+                    price = 0.0
+                    if history.product_count == 0.0:
+                        price = 0.0
+                    else:
+                        price = data.price_unit
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
                         "name": data.product_id.name,
                         "account_id": data.account_id.id,
-                        "price_unit": data.price_unit,
+                        "price_unit": price,
                         "document": \
                          mv.picking_id.name,
                         "origin": data.origin,
@@ -626,12 +627,17 @@ class AccountInvoice(models.Model):
                 # Get product count history
                 history = self.get_in_history(sale_lines, mv)
                 # Create returned product invoice
+                price = 0.0
+                if history.product_count == 0.0:
+                    price = 0.0
+                else:
+                    price = data.price_unit
                 inv_line = {
                     "date_move": mv.advertisement_date,
                     "invoice_id": data.invoice_id.id,
                     "name": data.product_id.name,
                     "account_id": data.account_id.id,
-                    "price_unit": data.price_unit,
+                    "price_unit": price,
                     "document": \
                      mv.picking_id.name,
                     "origin": data.origin,
