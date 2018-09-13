@@ -564,17 +564,12 @@ class AccountInvoice(models.Model):
                     # Get product count history
                     history = self.get_out_history(sale_lines, mv)
                     # Create product on work invoice
-                    price = 0.0
-                    if history.product_count == 0.0:
-                        price = 0.0
-                    else:
-                        price = data.price_unit
                     inv_line = {
                         "date_move": mv.date_expected,
                         "invoice_id": data.invoice_id.id,
                         "name": data.product_id.name,
                         "account_id": data.account_id.id,
-                        "price_unit": price,
+                        "price_unit": data.price_unit,
                         "document": \
                          mv.picking_id.name,
                         "origin": data.origin,
@@ -598,7 +593,8 @@ class AccountInvoice(models.Model):
                                 data.invoice_line_tax_ids._ids))],
                         "layout_category_id": \
                             sale_lines.layout_category_id.id}
-                    _logger.warning(inv_line)
+                    if history.product_count == 0.0:
+                        inv_line['price_unit'] = 0.0
                     self.write({
                         'invoice_line_ids': [(0, 0, inv_line)]})
 
@@ -627,17 +623,12 @@ class AccountInvoice(models.Model):
                 # Get product count history
                 history = self.get_in_history(sale_lines, mv)
                 # Create returned product invoice
-                price = 0.0
-                if history.product_count == 0.0:
-                    price = 0.0
-                else:
-                    price = data.price_unit
                 inv_line = {
                     "date_move": mv.advertisement_date,
                     "invoice_id": data.invoice_id.id,
                     "name": data.product_id.name,
                     "account_id": data.account_id.id,
-                    "price_unit": price,
+                    "price_unit": data.price_unit,
                     "document": \
                      mv.picking_id.name,
                     "origin": data.origin,
@@ -659,6 +650,8 @@ class AccountInvoice(models.Model):
                             data.invoice_line_tax_ids._ids))],
                     "layout_category_id": \
                         sale_lines.layout_category_id.id}
+                if history.product_count == 0.0:
+                    inv_line['price_unit'] = 0.0
                 self.write({
                     'invoice_line_ids': [(0, 0, inv_line)]})
 
