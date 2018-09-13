@@ -189,14 +189,13 @@ class AccountInvoice(models.Model):
             res.sector_id2 = res.project_id.sector_id2.id
             res.secondary_sector_ids2 = \
              res.project_id.secondary_sector_ids2.id
-        res.date_invoice = fields.Date.today()
+        res.date_invoice = res.end_date_invoice
         if res.payment_term_id:
             pterm = res.payment_term_id
             pterm_list = pterm.with_context(
                 currency_id=res.company_id.currency_id.id).compute(
                     value=1, date_ref=res.date_invoice)[0]
             res.date_due = max(line[0] for line in pterm_list)
-
         return res
 
     @api.depends('project_id', 'partner_id')
@@ -364,21 +363,18 @@ class AccountInvoice(models.Model):
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('date_expected', '>=', self.init_date_invoice),
-                         ('date_expected', '<=', self.end_date_invoice),
-                         ('sale_line_id', '=', sale_lines.id)])
+                         ('date_expected', '<=', self.end_date_invoice)])
                     move_in = self.env['stock.move'].search(
                         [('product_id', '=', data.product_id.id),
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('advertisement_date', '>=', self.init_date_invoice),
-                         ('advertisement_date', '<=', self.end_date_invoice),
-                         ('sale_line_id', '=', sale_lines.id)])
+                         ('advertisement_date', '<=', self.end_date_invoice)])
                     move_static = self.env['stock.move'].search(
                         [('product_id', '=', data.product_id.id),
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('date_expected', '<=', self.init_date_invoice)])
-
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)

@@ -40,7 +40,7 @@
         'l10n_co', 'sale_timesheet', 'hr_contract',
         # Community addons
         'stock_real_availability', 'web_export_view',
-        'web_widget_color', 'partner_firstname',
+        'web_widget_color', 'partner_firstname', 'stock_mts_mto_rule',
         # Conalquipo's addons
         'con_base',
         'con_account',
