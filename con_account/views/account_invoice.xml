@@ -114,10 +114,6 @@
                 <field name="date_move" />
             </xpath>
 
-            <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
-                <attribute name="default_order">date_move</attribute>
-            </xpath>
-
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='quantity']" position="after">
                 <field name="bill_uom" attrs="{'column_invisible': [('parent.invoice_type', '!=', 'rent')]}"/>
             </xpath>
