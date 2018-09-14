@@ -172,15 +172,14 @@
                                       <field name="type_sp"  invisible="1"/>
                                       <field name="location_id" />
                                       <field name="carrier_tracking_ref"/>
-                                      <field name="carrier_type" widget="radio"/>
-
+                                      <field name="carrier_type" widget="radio" attrs="{'readonly': [('state', '=', 'done')]}"/>
                                       <field name="carrier_id"  class="oe_inline"
                                             attrs="{'readonly': [('state', '=', 'done')],
-                                           'invisible': [('carrier_type','!=', 'company')]}"/>
+                                           'invisible': [('carrier_type','!=', 'company')], 'required': [('carrier_type','=', 'company')]}"/>
 
                                       <field name="vehicle_id" class="oe_inline"
                                                attrs="{'readonly': [('state', '=', 'done')],
-                                               'invisible': ['|',('carrier_type','!=', 'company')]}"/>
+                                               'invisible': ['|',('carrier_type','!=', 'company')], 'required': [('carrier_type','=', 'company')]}"/>
 
                                       <field name="license_plate" class="oe_inline" readonly="1"
                                                attrs="{'invisible': ['|',('carrier_type','!=', 'company')]}"/>

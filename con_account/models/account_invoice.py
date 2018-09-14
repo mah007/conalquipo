@@ -601,7 +601,7 @@ class AccountInvoice(models.Model):
                 product.id,
             "name": sale_lines.name,
             "account_id": data.account_id.id,
-            "document": "[ACAR]" + mv.picking_id.name,
+            "document": "ACAR",
             "price_unit": costs.cost,
             "bill_uom": product.sale_uom.id,
             "invoice_line_tax_ids": \
