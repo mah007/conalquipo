@@ -223,9 +223,9 @@ class AccountInvoice(models.Model):
 
     @staticmethod
     def merge_address(
-        street, street2, city,
-        municipality, state, zip_code,
-        country, phone, email):
+            street, street2, city,
+            municipality, state, zip_code,
+            country, phone, email):
         """
         This function receive text fields for merge the address fields.
 
@@ -524,7 +524,8 @@ class AccountInvoice(models.Model):
                         inv_line['price_unit'] = 0.0
                     self.write({
                         'invoice_line_ids': [(0, 0, inv_line)]})
-                    self.get_delivery_invoice(mv, data, sale_lines)
+                    if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
+                        self.get_delivery_invoice(mv, data, sale_lines)
 
     def get_dev_moves(self, move_in, sale_lines, data, date_end):
         """
@@ -582,7 +583,8 @@ class AccountInvoice(models.Model):
                     inv_line['price_unit'] = 0.0
                 self.write({
                     'invoice_line_ids': [(0, 0, inv_line)]})
-                self.get_delivery_invoice(mv, data, sale_lines)
+                if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
+                    self.get_delivery_invoice(mv, data, sale_lines)
 
     def get_delivery_invoice(self, mv, data, sale_lines):
         """

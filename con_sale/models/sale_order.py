@@ -846,7 +846,7 @@ class SaleOrder(models.Model):
                 for data in self.order_line:
                     if data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
-                     and not \
+                      and not \
                        data.is_delivery and not data.is_component:
                         task_values = {
                             'name': "Task for: " \

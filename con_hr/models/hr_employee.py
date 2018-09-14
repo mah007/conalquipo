@@ -37,5 +37,5 @@ class HrEmployee(models.Model):
     _sql_constraints = [
         ('employee_code_unique',
          'UNIQUE(employee_code)',
-         "The emplode code must be unique"),
+         "The employee code must be unique"),
     ]
