@@ -18,7 +18,7 @@
                             <field name="sale_order_id" invisible="1"/>
                             <field name="sale_order_line_id"
                                 context="{'special_display': True}"
-                                attrs="{'invisible': [('carrier_type', '=', 'client')]}"/>
+                                attrs="{'invisible': [('carrier_type', '=', 'client')], 'required': [('carrier_type', '=', 'company')]}"/>
                         </group>
                     </group>
                     <group string="Reason">

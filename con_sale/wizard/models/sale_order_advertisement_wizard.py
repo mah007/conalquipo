@@ -112,9 +112,9 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'partner_id': partner_id,
                     'project_id': project_id,
                     'product_id': move.product_id.id,
-                    'product_uom_qty':
-                        picking_main._product_availibility_on_project(
-                          partner_id, project_id, move.product_id.id),
+                    'product_uom_qty': \
+                     picking_main._product_availibility_on_project(
+                         partner_id, project_id, move.product_id.id),
                     'product_uom': move.product_uom.id,
                     'location_dest_id': des_location,
                     'location_id': src_location,

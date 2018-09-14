@@ -248,7 +248,7 @@
             </xpath>
 
             <xpath expr='//header' position="inside">
-                <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('product_count', '&lt;=', 0)]}"/>
+                <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('product_count', '&lt;=', 0)]}" context="{'default_carrier_type': carrier_type}"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/form//group" position="before">
