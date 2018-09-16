@@ -19,8 +19,10 @@
 #
 ##############################################################################
 import logging
+
+from odoo import _, api, exceptions, fields, models
+
 _logger = logging.getLogger(__name__)
-from odoo import models, fields, api, exceptions, _
 
 
 class ResPartnerCode(models.Model):

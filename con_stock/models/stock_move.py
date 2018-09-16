@@ -21,7 +21,6 @@
 
 from odoo.models import Model, api, _
 from odoo import fields
-from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -82,8 +81,7 @@ class StockMove(Model):
                     [['partner_id', '=', record.picking_id.partner_id.id],
                      ['location_dest_id.usage', 'in',
                       ['customer', 'internal']],
-                     ['project_id', '=', record.picking_id.project_id.id]
-                    ])
+                     ['project_id', '=', record.picking_id.project_id.id]])
             for data in picking:
                 moves = self.env[
                     'stock.move'].search(
@@ -153,12 +151,12 @@ class StockMove(Model):
                     'project_id': order.picking_id.project_id.id,
                     'product_id': order.product_id.id,
                     'code': op,
-                    'product_count': order.qty_history \
-                     if op == 'internal'
-                                     else order.product_count,
-                    'quantity_done': order.quantity_done \
-                     if op != 'internal'
-                                     else 0,
+                    'product_count': order.qty_history
+                    if op == 'internal'
+                    else order.product_count,
+                    'quantity_done': order.quantity_done
+                    if op != 'internal'
+                    else 0,
                     'sale_line_id': order.sale_line_id.id,
                     'move_id': order.id,
                 }

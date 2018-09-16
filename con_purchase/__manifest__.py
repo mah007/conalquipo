@@ -17,7 +17,7 @@
 
         - Adds sale_order_id, order_type field to purchase.order
           model.
-        - Adds bill_uom, bill_uom_qty, sale_order_line_id 
+        - Adds bill_uom, bill_uom_qty, sale_order_line_id
           field to purchase.order.line model.
     """,
     'data': [

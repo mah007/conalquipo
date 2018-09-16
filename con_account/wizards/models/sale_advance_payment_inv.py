@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
-_logger = logging.getLogger(__name__)
 from datetime import datetime
-from odoo import models, api, _, fields
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_is_zero, float_compare, \
-    DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import (DEFAULT_SERVER_DATETIME_FORMAT, float_compare,
+                        float_is_zero)
 from pytz import timezone, utc
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleAdvancePaymentInv(models.TransientModel):

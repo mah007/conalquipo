@@ -19,8 +19,10 @@
 #
 ##############################################################################
 import logging
+
+from odoo import _, api, fields, models
+
 _logger = logging.getLogger(__name__)
-from odoo import fields, models, api, _
 
 
 class SaleQuoteTemplate(models.Model):
@@ -57,8 +59,8 @@ class SaleQuoteTemplate(models.Model):
                     values = {
                         'product_id': p.product_child_id.id,
                         'product_uom_qty': p.quantity,
-                        'product_uom_id': \
-                         p.product_child_id.product_tmpl_id.uom_id.id,
+                        'product_uom_id':
+                        p.product_child_id.product_tmpl_id.uom_id.id,
                         'name': 'Comp. ' + str(
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,
@@ -82,8 +84,8 @@ class SaleQuoteTemplate(models.Model):
                     values = {
                         'product_id': p.product_child_id.id,
                         'product_uom_qty': p.quantity,
-                        'product_uom_id': \
-                         p.product_child_id.product_tmpl_id.uom_id.id,
+                        'product_uom_id':
+                        p.product_child_id.product_tmpl_id.uom_id.id,
                         'name': 'Comp. ' + str(
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,

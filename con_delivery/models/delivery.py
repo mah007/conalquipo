@@ -19,10 +19,12 @@
 #
 ##############################################################################
 import logging
-_logger = logging.getLogger(__name__)
 from collections import Counter
-from odoo import models, fields, api, _
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class DeliveryCarrierCost(models.Model):

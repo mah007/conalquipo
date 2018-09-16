@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import time
 import logging
-_LOGGER = logging.getLogger(__name__)
-from odoo import models, fields, api, _, SUPERUSER_ID
+import time
+
+from odoo import SUPERUSER_ID, _, api, fields, models
 from odoo.exceptions import UserError
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class ProjectWorks(models.Model):
@@ -283,8 +285,7 @@ class ProjectWorks(models.Model):
                     [['partner_id', '=', record.partner_id.id],
                      ['location_dest_id.usage', 'in',
                       ['customer', 'internal']],
-                     ['project_id', '=', record.id]
-                    ])
+                     ['project_id', '=', record.id]])
             for data in picking:
                 moves = self.env[
                     'stock.move'].search(
@@ -319,8 +320,7 @@ class ProjectWorks(models.Model):
                 [['partner_id', '=', self.partner_id.id],
                  ['location_dest_id.usage', 'in',
                   ['customer', 'internal']],
-                 ['project_id', '=', self.id]
-                ])
+                 ['project_id', '=', self.id]])
         for data in picking:
             move = self.env[
                 'stock.move'].search(

@@ -1,7 +1,9 @@
 import logging
-_logger = logging.getLogger(__name__)
-from odoo import models, fields, api, _
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 class ProjectProductAvailable(models.TransientModel):
@@ -29,7 +31,7 @@ class ProjectProductAvailable(models.TransientModel):
         start = ''
         end = ''
 
-        #Enviroments
+        # Enviroments
         bill_periods = self.env['account.invoice.year.period'].search(
             [('state', 'in', ['open']),
              ('company_id', '=', self.company_id.id)])
@@ -38,7 +40,7 @@ class ProjectProductAvailable(models.TransientModel):
             raise ValidationError(_("You need defined a billing year and "
                                     "periods"))
 
-        #searching the period of the query date
+        # Searching the period of the query date
         for period in bill_periods.periods_ids:
             if self.query_date >= period.start_date and self.query_date <= \
                     period.end_date:
@@ -74,8 +76,8 @@ class ProjectProductAvailable(models.TransientModel):
 
         # Filtering by period range
         move_ids = move_ids.search(
-            [('picking_id.scheduled_date','<=', end),
-             ('picking_id.scheduled_date','>=', start)])
+            [('picking_id.scheduled_date', '<=', end),
+             ('picking_id.scheduled_date', '>=', start)])
 
         for info in self:
             info.products_ids = products_lst

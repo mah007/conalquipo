@@ -248,7 +248,7 @@ class ProductTemplate(Model):
     maximum_value_of_pipe = fields.Char('Maximun value of pipe')
     tip_load_capacity = fields.Char('Tip load capacity')
     useful_arm = fields.Char('Useful arm')
-    maximum_load_capacity = fields.Char('Maximum load capacity')  
+    maximum_load_capacity = fields.Char('Maximum load capacity')
     height = fields.Char('Height')
     speed = fields.Char('Vel.(m/min)')
     basket = fields.Char('Basket')
@@ -292,7 +292,7 @@ class ProductTemplate(Model):
                         }
                         line_ids.append((0, 0, val))
                         if data.location_id.product_state.name \
-                         == 'Existencias':
+                                == 'Existencias':
                             reserved_qty.append(data.reserved_quantity)
             # Just for reserved location
             if reserved_qty:
@@ -460,7 +460,7 @@ class ProductStatesNonMech(Model):
     _description = "A model for store non mech product states"
     _rec_name = "state_name"
     _order = "qty"
-    
+
     product_id = fields.Many2one(
         'product.product', string="Product parent")
     product_tmpl_id = fields.Many2one(

@@ -19,8 +19,10 @@
 #
 ##############################################################################
 import logging
-_LOGGER = logging.getLogger(__name__)
+
 from odoo import fields, models
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class ConSaleConfigSettings(models.TransientModel):

@@ -18,17 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-from datetime import timedelta
-from datetime import datetime
 import logging
-_logger = logging.getLogger(__name__)
-from odoo import fields, models, api, _, SUPERUSER_ID
-from odoo.exceptions import UserError
+import time
+from datetime import datetime, timedelta
+
+from odoo import SUPERUSER_ID, _, api, fields, models
 from odoo.addons import decimal_precision as dp
-from odoo.tools import float_is_zero, float_compare, \
-    DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools import (DEFAULT_SERVER_DATETIME_FORMAT, float_compare,
+                        float_is_zero)
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -189,7 +190,7 @@ class SaleOrder(models.Model):
             cats = self.env.user.company_id.special_quotations_categories
             for data in cats:
                 cat_list.append(data.id)
-            return {'domain':{'special_category':[('id', 'in', cat_list)]}}
+            return {'domain': {'special_category': [('id', 'in', cat_list)]}}
 
     @api.onchange('special_category')
     def get_templates(self):
@@ -204,7 +205,7 @@ class SaleOrder(models.Model):
         template = self.env[
             'sale.quote.template'].search(
                 [('special_category', 'not in', cat_list)])
-        return {'domain':{'template_id':[('id', 'in', template._ids)]}}
+        return {'domain': {'template_id': [('id', 'in', template._ids)]}}
 
     @api.depends('order_line.price_total')
     def _amount_all_discount(self):
@@ -272,7 +273,7 @@ class SaleOrder(models.Model):
                 for users in data.users:
                     users_list.append(users.id)
         if not self.approved_min_prices \
-         and actual_user not in users_list:
+                and actual_user not in users_list:
             if self.order_line:
                 raise UserError(_(
                     "You can't approve, small qty or prices!"
@@ -292,7 +293,7 @@ class SaleOrder(models.Model):
                 for users in data.users:
                     users_list_sp_q.append(users.id)
         if not self.approved_special_quotations \
-         and actual_user not in users_list_sp_q:
+                and actual_user not in users_list_sp_q:
             if self.order_line:
                 raise UserError(_(
                     "You can't approve special quotations!"
@@ -312,7 +313,7 @@ class SaleOrder(models.Model):
                 for users in data.users:
                     users_list_dm.append(users.id)
         if not self.approved_discount_modifications \
-         and actual_user not in users_list_dm:
+                and actual_user not in users_list_dm:
             if self.order_line:
                 raise UserError(_(
                     "You can't modify products discounts!"
@@ -396,10 +397,10 @@ class SaleOrder(models.Model):
                     invoices_list.append((4, data.id))
 
                     if actual_user not in users_list and \
-                    not self.partner_id.over_credit:
+                            not self.partner_id.over_credit:
                         # Not credit define and due invoice
                         if self.partner_id.credit_limit == 0.0 and \
-                        due < today:
+                                due < today:
                             msg = _("Has an expired bill!")
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
@@ -409,7 +410,7 @@ class SaleOrder(models.Model):
 
                         # Credit define and due invoice
                         elif self.partner_id.credit_limit > 0.0 and \
-                        due < today and amount < -1:
+                                due < today and amount < -1:
                             msg = _("Exceeds limit and has expired invoice!")
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
@@ -419,7 +420,7 @@ class SaleOrder(models.Model):
 
                         # Credit define and not due invoice but pending
                         elif self.partner_id.credit_limit > 0.0 and \
-                        due > today and amount < -1:
+                                due > today and amount < -1:
                             msg = _("Exceeds limit on outstanding invoices!")
                             self.write({'message_invoice': msg,
                                         'due_invoice_ids': invoices_list,
@@ -428,7 +429,7 @@ class SaleOrder(models.Model):
                                         'available_amount': amount})
                         # Invoice but pending and not exceeds
                         elif self.partner_id.credit_limit > 0.0 \
-                         and due < today:
+                                and due < today:
                             msg = _("Have outstanding invoices!")
                             self.write({'message_invoice': msg,
                                         'can_confirm': True,
@@ -441,8 +442,8 @@ class SaleOrder(models.Model):
                     amount = self.partner_id.credit_limit - (
                         amount_residual + self.amount_total)
                     if amount < -1 and \
-                    actual_user not in users_list and \
-                    not self.partner_id.over_credit:
+                            actual_user not in users_list and \
+                            not self.partner_id.over_credit:
                         msg = _("Exceeds credit limit!")
                         self.write({'message_invoice': msg,
                                     'can_confirm': False,
@@ -494,7 +495,7 @@ class SaleOrder(models.Model):
                     'due_invoice_ids': [],
                     'message_invoice': '',
                     'available_amount': 0.0})
-       
+
     def _compute_product_count(self):
         """
         Method to count the products on works
@@ -507,8 +508,7 @@ class SaleOrder(models.Model):
                     [['partner_id', '=', record.partner_id.id],
                      ['location_dest_id.usage', 'in',
                       ['customer', 'internal']],
-                     ['project_id', '=', record.project_id.id]
-                    ])
+                     ['project_id', '=', record.project_id.id]])
             for data in picking:
                 moves = self.env[
                     'stock.move'].search(
@@ -561,12 +561,12 @@ class SaleOrder(models.Model):
             for data in self.order_line:
                 # Get min qty and price of product
                 product_muoms = data.product_id.product_tmpl_id.multiples_uom
-                if product_muoms != True:
+                if not product_muoms:
                     if data.price_unit < \
                      data.product_id.product_tmpl_id.list_price:
                         product_eval_price.append(data.product_id.id)
                     if data.bill_uom_qty < \
-                     data.product_id.product_tmpl_id.min_qty_rental:
+                            data.product_id.product_tmpl_id.min_qty_rental:
                         product_eval_qty.append(data.product_id.id)
                 else:
                     if not data.product_id.product_tmpl_id.uoms_ids:
@@ -583,9 +583,9 @@ class SaleOrder(models.Model):
                 if self.pricelist_id:
                     for datadisc in self.pricelist_id.item_ids:
                         if data.product_id.product_tmpl_id.id \
-                        == datadisc.product_tmpl_id.id:
+                                == datadisc.product_tmpl_id.id:
                             if data.discount < datadisc.percent_price or \
-                            data.discount > datadisc.percent_price:
+                                    data.discount > datadisc.percent_price:
                                 discount_eval.append(data.product_id.id)
                         else:
                             if data.discount > 0.0:
@@ -594,7 +594,7 @@ class SaleOrder(models.Model):
                 cat_lists.append(data.product_id.product_tmpl_id.categ_id.id)
                 # Get more information from products
                 if not data.product_id.product_tmpl_id.type == 'service' and\
-                 data.product_id.product_tmpl_id.more_information:
+                        data.product_id.product_tmpl_id.more_information:
                     list_note.append(
                         data.product_id.product_tmpl_id.more_information)
         if list_note:
@@ -684,7 +684,7 @@ class SaleOrder(models.Model):
     @staticmethod
     def merge_address(
         street, street2, city, municipality, state, zip_code,
-        country, phone, email):
+            country, phone, email):
         """
         This function receive text fields for merge the address fields.
 
@@ -736,7 +736,8 @@ class SaleOrder(models.Model):
     def _convert_qty_company_hours(self):
         company_time_uom_id = self.env.user.company_id.project_time_mode_id
         if self.product_uom.id != company_time_uom_id.id and \
-        self.product_uom.category_id.id == company_time_uom_id.category_id.id:
+                self.product_uom.category_id.id \
+                == company_time_uom_id.category_id.id:
             planned_hours = self.product_uom._compute_quantity(
                 self.product_uom_qty, company_time_uom_id)
         else:
@@ -784,8 +785,8 @@ class SaleOrder(models.Model):
                     "The client has not delivered all the documents"))
             order_id = self.search([('partner_id', '=', self.partner_id.id),
                                     ('state', '=', 'sale'),
-                                    ('project_id', '=', self.project_id.id)
-                                   ], limit=1)
+                                    ('project_id', '=', self.project_id.id)],
+                                   limit=1)
             if order_id:
                 cats = \
                  self.env.user.company_id.special_quotations_categories
@@ -804,8 +805,7 @@ class SaleOrder(models.Model):
                 if not inter:
                     self.update({'state': 'merged',
                                  'sale_order_id': order_id.id,
-                                 'confirmation_date': fields.Datetime.now()
-                                })
+                                 'confirmation_date': fields.Datetime.now()})
                 else:
                     self.update({
                         'state': 'sale',
@@ -813,9 +813,9 @@ class SaleOrder(models.Model):
                     # Create task for product
                     for data in self.order_line:
                         if data.bill_uom.id not in \
-                        self.env.user.company_id.default_uom_task_id._ids \
-                        and not \
-                        data.is_delivery and not data.is_component:
+                            self.env.user.company_id.default_uom_task_id._ids \
+                            and not \
+                                data.is_delivery and not data.is_component:
                             task_values = {
                                 'name': "Task for: " \
                                 + str(self.project_id.name) \
@@ -1006,8 +1006,7 @@ class SaleOrder(models.Model):
                   'project_id': self.project_id.id,
                   'sale_order_id': self.id,
                   'location_id': self.env.ref(
-                      'stock.stock_location_customers').id,
-                 })
+                      'stock.stock_location_customers').id})
         return {
             'name': 'Advertisement Wizard',
             'view_type': 'form',
@@ -1021,7 +1020,7 @@ class SaleOrder(models.Model):
     @api.model
     def create(self, values):
         # Overwrite sale order create
-        res = super(SaleOrder, self).create(values)               
+        res = super(SaleOrder, self).create(values)
         groups = self.env[
             'res.groups'].search(
                 [['name',
@@ -1338,8 +1337,8 @@ class SaleOrder(models.Model):
                     _('Receive')),
                 'product_uom_qty': 1,
                 'bill_uom_qty': 1,
-                'layout_category_id': \
-                 carrier.product_id.product_tmpl_id.layout_sec_id.id,
+                'layout_category_id':
+                carrier.product_id.product_tmpl_id.layout_sec_id.id,
                 'product_uom': carrier.product_id.uom_id.id,
                 'bill_uom': carrier.product_id.uom_id.id,
                 'product_id': carrier.product_id.id,
@@ -1392,7 +1391,7 @@ class SaleOrderLine(models.Model):
                     data.compute_uoms = uom_list
                 else:
                     data.compute_uoms = \
-                    [data.product_id.product_tmpl_id.sale_uom.id]
+                        [data.product_id.product_tmpl_id.sale_uom.id]
 
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
@@ -1469,7 +1468,6 @@ class SaleOrderLine(models.Model):
         change_default=True,
         ondelete='restrict', required=True)
 
-
     @api.multi
     def name_get(self):
         res = []
@@ -1499,7 +1497,7 @@ class SaleOrderLine(models.Model):
                 ).date()
             if d2 < d1:
                 raise UserError(
-                    _("The end date can't be less than start date")) 
+                    _("The end date can't be less than start date"))
 
     @api.onchange('start_date', 'end_date')
     def _check_dates(self):
@@ -1705,7 +1703,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def invoice_line_create(self, invoice_id, qty):
-        """ 
+        """
         Create an invoice line. The quantity to invoice can be
         positive (invoice) or negative (refund).
             :param invoice_id: integer
@@ -1818,20 +1816,19 @@ class SaleOrderLine(models.Model):
                             [('is_component', '=', True),
                              ('parent_component', '=', rec.product_id.id),
                              ('order_id', '=', rec.order_id.id),
-                             ('product_id', '=', data.product_id.id)
-                            ])
+                             ('product_id', '=', data.product_id.id)])
                         qty = data.quantity * rec.product_uom_qty
                         new_line_component = {
                             'product_id': data.product_id.id,
-                            'name': 'Component ' + '%s'%(
+                            'name': 'Component ' + '%s' % (
                                 rec.product_id.name),
                             'parent_component': rec.product_id.id,
                             'order_id': rec.order_id.id,
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_component': True,
-                            'bill_uom':\
-                                data.product_id.product_tmpl_id.uom_id.id
+                            'bill_uom':
+                            data.product_id.product_tmpl_id.uom_id.id
                         }
                         component.write(new_line_component)
                     else:
@@ -1839,20 +1836,19 @@ class SaleOrderLine(models.Model):
                             [('is_extra', '=', True),
                              ('parent_component', '=', rec.product_id.id),
                              ('order_id', '=', rec.order_id.id),
-                             ('product_id', '=', data.product_id.id)
-                            ])
+                             ('product_id', '=', data.product_id.id)])
                         qty = data.quantity * rec.product_uom_qty
                         new_line_extra = {
                             'product_id': data.product_id.id,
-                            'name': 'Extra ' + '%s'%(
+                            'name': 'Extra ' + '%s' % (
                                 rec.product_id.name),
                             'parent_component': rec.product_id.id,
                             'order_id': rec.order_id.id,
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_extra': True,
-                            'bill_uom':\
-                                data.product_id.product_tmpl_id.uom_id.id
+                            'bill_uom':
+                            data.product_id.product_tmpl_id.uom_id.id
                         }
                         extra.write(new_line_extra)
             # Dates validations
@@ -2084,7 +2080,7 @@ class SaleOrderLine(models.Model):
         Get price for specific uom of product
         """
         product_muoms = self.product_id.product_tmpl_id.multiples_uom
-        if product_muoms != True:
+        if not product_muoms:
             self.price_unit = self.product_id.product_tmpl_id.list_price
             self.min_sale_qty = \
                 self.product_id.product_tmpl_id.min_qty_rental

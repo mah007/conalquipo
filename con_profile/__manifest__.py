@@ -33,7 +33,8 @@
     'website': "http://www.ias.com.co",
     'category': 'Base Profile',
     'version': '0.1',
-    'depends': [# Odoo's addons
+    'depends': [
+        # Odoo's addons
         'base', 'crm', 'project', 'document', 'sale', 'purchase',
         'stock', 'account',
         'web_grid', 'hr_timesheet',

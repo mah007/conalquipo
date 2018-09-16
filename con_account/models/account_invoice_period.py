@@ -19,14 +19,16 @@
 #
 ##############################################################################
 import logging
-_logger = logging.getLogger(__name__)
-from odoo import fields, models, api, _
-from odoo.exceptions import UserError
-from odoo.addons import decimal_precision as dp
 from datetime import datetime
+
 from dateutil.relativedelta import relativedelta
-from odoo.tools import float_is_zero, float_compare, \
-    DEFAULT_SERVER_DATETIME_FORMAT
+from odoo import _, api, fields, models
+from odoo.addons import decimal_precision as dp
+from odoo.exceptions import UserError
+from odoo.tools import (DEFAULT_SERVER_DATETIME_FORMAT, float_compare,
+                        float_is_zero)
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountInvoiceYearPeriod(models.Model):
@@ -81,13 +83,13 @@ class AccountInvoiceYearPeriod(models.Model):
     @api.multi
     def button_open_year(self):
         for rec in self:
-            rec.write({'state':'open'})
+            rec.write({'state': 'open'})
         return True
 
     @api.multi
     def button_closet_year(self):
         for rec in self:
-            rec.write({'state':'closet'})
+            rec.write({'state': 'closet'})
         return True
 
     def button_activate(self):
@@ -115,11 +117,11 @@ class AccountInvoicePeriodPeriod(models.Model):
     @api.multi
     def button_open_period(self):
         for rec in self:
-            rec.write({'state':'open'})
+            rec.write({'state': 'open'})
         return True
 
     @api.multi
     def button_closet_period(self):
         for rec in self:
-            rec.write({'state':'closet'})
+            rec.write({'state': 'closet'})
         return True

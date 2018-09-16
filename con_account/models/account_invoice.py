@@ -19,13 +19,14 @@
 #
 ##############################################################################
 import logging
-_logger = logging.getLogger(__name__)
-from datetime import timedelta
-from datetime import datetime
-from odoo import fields, models, api, _
-from odoo.exceptions import UserError
+from datetime import datetime, timedelta
+
+from odoo import _, api, fields, models
 from odoo.addons import decimal_precision as dp
-from odoo.tools import float_is_zero, float_compare
+from odoo.exceptions import UserError
+from odoo.tools import float_compare, float_is_zero
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountInvoiceLine(models.Model):
@@ -125,6 +126,9 @@ class AccountInvoice(models.Model):
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):
+        """
+        Add the employee assigned with specific code
+        """
         if self.employee_code:
             employee_list = []
             actual_user = self.env.user
@@ -171,21 +175,21 @@ class AccountInvoice(models.Model):
                 [('number', '=', res.origin)])
             res.project_id = parent_invoice.project_id.id
             res.payment_term_id = \
-             parent_invoice.partner_id.property_payment_term_id.id
+                parent_invoice.partner_id.property_payment_term_id.id
             res.sector_id = parent_invoice.sector_id.id
             res.secondary_sector_ids = \
-             parent_invoice.secondary_sector_ids.id
+                parent_invoice.secondary_sector_ids.id
             res.sector_id2 = parent_invoice.sector_id2.id
             res.secondary_sector_ids2 = \
-             parent_invoice.secondary_sector_ids2.id
+                parent_invoice.secondary_sector_ids2.id
         if res.project_id:
             # Update sectors on invoices
             res.sector_id = res.project_id.sector_id.id
             res.secondary_sector_ids = \
-             res.project_id.secondary_sector_ids.id
+                res.project_id.secondary_sector_ids.id
             res.sector_id2 = res.project_id.sector_id2.id
             res.secondary_sector_ids2 = \
-             res.project_id.secondary_sector_ids2.id
+                res.project_id.secondary_sector_ids2.id
         res.date_invoice = res.end_date_invoice
         if res.payment_term_id:
             pterm = res.payment_term_id
@@ -324,21 +328,21 @@ class AccountInvoice(models.Model):
         self.ensure_one()
         return  \
             self.type == 'out_invoice' and not self.pre_invoice \
-             and self.state == 'draft' and _('Draft Invoice') or \
+            and self.state == 'draft' and _('Draft Invoice') or \
             self.type == 'out_invoice' and self.pre_invoice and \
-             self.state == 'draft' and _('Pre Invoice') or \
+            self.state == 'draft' and _('Pre Invoice') or \
             self.type == 'out_invoice' and self.state in ('open', 'paid') \
-             and _('Invoice - %s') % (self.number) or \
+            and _('Invoice - %s') % (self.number) or \
             self.type == 'out_refund' and self.state == 'draft' \
-             and _('Credit Note') or \
+            and _('Credit Note') or \
             self.type == 'out_refund' and _('Credit Note - %s') % (
                 self.number) or \
             self.type == 'in_invoice' and self.state == 'draft' \
-             and _('Vendor Bill') or \
+            and _('Vendor Bill') or \
             self.type == 'in_invoice' and self.state in ('open', 'paid') \
-             and _('Vendor Bill - %s') % (self.number) or \
+            and _('Vendor Bill - %s') % (self.number) or \
             self.type == 'in_refund' and self.state == 'draft' \
-             and _('Vendor Credit Note') or \
+            and _('Vendor Credit Note') or \
             self.type == 'in_refund' and _(
                 'Vendor Credit Note - %s') % (self.number)
 
@@ -360,18 +364,23 @@ class AccountInvoice(models.Model):
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('date_expected', '>=', self.init_date_invoice),
-                         ('date_expected', '<=', self.end_date_invoice)])
+                         ('date_expected', '<=', self.end_date_invoice),
+                         ('sale_line_id', '=', sale_lines.id),
+                         ('parent_sale_line', '=', False)])
                     move_in = self.env['stock.move'].search(
                         [('product_id', '=', data.product_id.id),
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
                          ('advertisement_date', '>=', self.init_date_invoice),
-                         ('advertisement_date', '<=', self.end_date_invoice)])
+                         ('advertisement_date', '<=', self.end_date_invoice),
+                         ('sale_line_id', '=', sale_lines.id),
+                         ('parent_sale_line', '=', False)])
                     move_static = self.env['stock.move'].search(
                         [('product_id', '=', data.product_id.id),
                          ('project_id', '=', self.project_id.id),
                          ('partner_id', '=', self.partner_id.id),
-                         ('date_expected', '<', self.init_date_invoice)])
+                         ('date_expected', '<', self.init_date_invoice),
+                         ('parent_sale_line', '=', False)])
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
@@ -382,8 +391,9 @@ class AccountInvoice(models.Model):
                         self.get_rem_moves(
                             move_out, sale_lines, data, date_end)
                         self.get_dev_moves(move_in, sale_lines, data, date_end)
-                # Unlink old invoices lines for product and consu
-                data.unlink()
+                    # Unlink old invoices lines for product and consu
+                    if sale_lines.is_delivery or sale_lines.is_component:
+                        data.unlink()
             self._compute_amount()
             self.compute_taxes()
         return res
@@ -416,8 +426,8 @@ class AccountInvoice(models.Model):
                 qty = 0.0
                 sale_lines = mv.sale_line_id
                 if mv.location_dest_id.usage \
-                     == 'customer' and mv.picking_id.state \
-                      == 'done':
+                        == 'customer' and mv.picking_id.state \
+                        == 'done':
                     # Get delta days
                     if not date_end:
                         date_end = fields.Date.from_string(
@@ -445,35 +455,36 @@ class AccountInvoice(models.Model):
                         "product_id": data.product_id.id,
                         "bill_uom": data.bill_uom.id,
                         "discount": data.discount,
-                        "date_init": \
-                         fields.Datetime.from_string(
-                             mv.date_expected).day,
+                        "date_init":
+                        fields.Datetime.from_string(
+                            mv.date_expected).day,
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "qty_shipped": history.product_count,
                         "parent_sale_line": sale_lines.parent_line,
-                        "products_on_work": \
-                         history.product_count,
-                        "qty_remmisions": \
-                         history.quantity_done,
-                        "invoice_line_tax_ids": \
-                         [(6, 0, list(
-                             data.invoice_line_tax_ids._ids))],
-                        "layout_category_id": \
-                         sale_lines.layout_category_id.id}
-                    self.write({
-                        'invoice_line_ids': [(0, 0, inv_line)]})
+                        "products_on_work":
+                        history.product_count,
+                        "qty_remmisions":
+                        history.quantity_done,
+                        "invoice_line_tax_ids":
+                        [(6, 0, list(
+                            data.invoice_line_tax_ids._ids))],
+                        "layout_category_id":
+                        sale_lines.layout_category_id.id}
+                    data.write(inv_line)
+                    sale_lines.bill_uom_qty_executed = qty
+                    if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
+                        self.get_delivery_invoice(mv, data)
 
     def get_rem_moves(self, move_out, sale_lines, data, date_end):
-        """
-        Create invoices related to product deliveries
-        """
+        """Create invoices related to product deliveries"""
         if move_out:
             for mv in move_out:
                 qty = 0.0
                 if mv.location_dest_id.usage \
-                     == 'customer' and mv.picking_id.state \
-                      == 'done':
+                        == 'customer' and mv.picking_id.state \
+                        == 'done':
                     # Get delta days
                     if not date_end:
                         date_end = fields.Date.from_string(
@@ -495,37 +506,39 @@ class AccountInvoice(models.Model):
                         "name": data.product_id.name,
                         "account_id": data.account_id.id,
                         "price_unit": data.price_unit,
-                        "document": \
-                         mv.picking_id.name,
+                        "document":
+                        mv.picking_id.name,
                         "origin": data.origin,
                         "uom_id": data.uom_id.id,
                         "product_id": data.product_id.id,
                         "bill_uom": data.bill_uom.id,
                         "discount": data.discount,
-                        "qty_remmisions": \
-                            history.quantity_done,
-                        "date_init": \
-                            fields.Datetime.from_string(
-                                mv.date_expected).day,
+                        "qty_remmisions":
+                        history.quantity_done,
+                        "date_init":
+                        fields.Datetime.from_string(
+                            mv.date_expected).day,
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "qty_shipped": history.product_count,
                         'sale_line_ids': [
                             (6, 0, [sale_lines.id])],
                         "parent_sale_line": sale_lines.parent_line.id,
-                        "products_on_work": \
-                            history.product_count,
-                        "invoice_line_tax_ids": \
-                            [(6, 0, list(
-                                data.invoice_line_tax_ids._ids))],
-                        "layout_category_id": \
-                            sale_lines.layout_category_id.id}
+                        "products_on_work":
+                        history.product_count,
+                        "invoice_line_tax_ids":
+                        [(6, 0, list(
+                            data.invoice_line_tax_ids._ids))],
+                        "layout_category_id":
+                        sale_lines.layout_category_id.id}
                     if history.product_count == 0.0:
                         inv_line['price_unit'] = 0.0
-                    self.write({
-                        'invoice_line_ids': [(0, 0, inv_line)]})
+                    data.write(inv_line)
+                    sale_lines.bill_uom_qty_executed = qty
+                    sale_lines.qty_delivered = history.product_count
                     if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                        self.get_delivery_invoice(mv, data, sale_lines)
+                        self.get_delivery_invoice(mv, data)
 
     def get_dev_moves(self, move_in, sale_lines, data, date_end):
         """
@@ -536,8 +549,8 @@ class AccountInvoice(models.Model):
             date_end = fields.Date.from_string(
                 mv.advertisement_date)
             if mv.returned and \
-                 mv.location_dest_id.return_location \
-                  and mv.picking_id.state == 'done':
+                mv.location_dest_id.return_location \
+                    and mv.picking_id.state == 'done':
                 # Get delta days
                 a = fields.Date.from_string(
                     self.end_date_invoice)
@@ -558,8 +571,8 @@ class AccountInvoice(models.Model):
                     "name": data.product_id.name,
                     "account_id": data.account_id.id,
                     "price_unit": data.price_unit,
-                    "document": \
-                     mv.picking_id.name,
+                    "document":
+                    mv.picking_id.name,
                     "origin": data.origin,
                     "uom_id": data.uom_id.id,
                     "product_id": data.product_id.id,
@@ -572,45 +585,48 @@ class AccountInvoice(models.Model):
                         self.end_date_invoice).day,
                     "num_days": delta.days + 1,
                     "quantity": qty,
+                    "qty_shipped": history.product_count,
                     "parent_sale_line": sale_lines.parent_line.id,
                     "products_on_work": history.product_count,
-                    "invoice_line_tax_ids": \
-                        [(6, 0, list(
-                            data.invoice_line_tax_ids._ids))],
-                    "layout_category_id": \
-                        sale_lines.layout_category_id.id}
+                    "invoice_line_tax_ids":
+                    [(6, 0, list(
+                        data.invoice_line_tax_ids._ids))],
+                    "layout_category_id":
+                    sale_lines.layout_category_id.id}
                 if history.product_count == 0.0:
                     inv_line['price_unit'] = 0.0
                 self.write({
                     'invoice_line_ids': [(0, 0, inv_line)]})
                 if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                    self.get_delivery_invoice(mv, data, sale_lines)
+                    self.get_delivery_invoice(mv, data)
 
-    def get_delivery_invoice(self, mv, data, sale_lines):
+    def get_delivery_invoice(self, mv, data):
         """
         Create deliveries
         """
-        product = sale_lines.order_id.carrier_id.product_id
         # Get vehicle price
         costs = self.env['delivery.carrier.cost'].search(
             [('vehicle', '=', mv.picking_id.vehicle_id.id),
              ('delivery_carrier_id',
-              '=', sale_lines.order_id.carrier_id.id)])
+              '=', mv.picking_id.carrier_id.id)])
+        product = mv.picking_id.carrier_id.product_id
         inv_line = {
             "date_move": mv.date_expected,
             "invoice_id": data.invoice_id.id,
-            "product_id": \
-                product.id,
-            "name": sale_lines.name,
+            "product_id":
+            product.id,
+            "name": mv.picking_id.carrier_id.product_id.name,
             "account_id": data.account_id.id,
             "document": "ACAR",
             "price_unit": costs.cost,
             "bill_uom": product.sale_uom.id,
-            "invoice_line_tax_ids": \
-                [(6, 0, list(
+            "uom_id": data.uom_id.id,
+            "qty_delivered": data.quantity,
+            "invoice_line_tax_ids": [
+                (6, 0, list(
                     data.invoice_line_tax_ids._ids))],
-            "layout_category_id": \
-                product.product_tmpl_id.layout_sec_id.id}
+            "layout_category_id":
+            product.product_tmpl_id.layout_sec_id.id}
         self.write({
             'invoice_line_ids': [(0, 0, inv_line)]})
 
@@ -624,16 +640,16 @@ class AccountInvoice(models.Model):
         qty = 0.0
         # Get tasks values
         if not sale_lines.is_extra and \
-             not sale_lines.is_component and \
-              sale_lines.bill_uom.name not in \
-               ["Día(s)", "Unidad(es)"]:
+                not sale_lines.is_component and \
+                sale_lines.bill_uom.name not in \
+                ["Día(s)", "Unidad(es)"]:
             task = self.env['project.task'].search(
                 [('sale_line_id', '=', sale_lines.id)])
             for timesheet in task.timesheet_ids:
                 if timesheet.create_date >= \
                     init_date_invoice and \
-                     timesheet.create_date <= \
-                      end_date_invoice:
+                        timesheet.create_date <= \
+                        end_date_invoice:
                     qty += timesheet.unit_amount
         elif sale_lines.bill_uom.name == "Día(s)":
             qty = delta.days + 1
