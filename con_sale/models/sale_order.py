@@ -759,17 +759,6 @@ class SaleOrder(models.Model):
 
         for purchase_id in self.purchase_ids:
             purchase_id.button_confirm()
-        # ~ dl_ids: Deliveries Lines Ids
-        dl_ids = self.env['sale.order.line'].search(
-            [('delivery_direction', 'in', ['out']),
-             ('picking_ids', '=', False),
-             ('order_id', '=', self.id)])
-        customer_location = self.env.ref('stock.stock_location_customers')
-        if customer_location:
-            for picking in self.picking_ids:
-                if picking.state not in ['done', 'cancel'] and \
-                        picking.location_dest_id.id == customer_location.id:
-                    dl_ids.update({'picking_ids': [(4, picking.id)]})
 
         if self.partner_id:
             # If partner have documents
@@ -902,6 +891,18 @@ class SaleOrder(models.Model):
                 else:
                     self.send_mail_wtemplate(body, new_mail_users)
             ###########################
+        # FIXME: Put this code in a function and call here
+        # ~ dl_ids: Deliveries Lines Ids
+        dl_ids = self.env['sale.order.line'].search(
+            [('delivery_direction', 'in', ['out']),
+             ('picking_ids', '=', False),
+             ('order_id', '=', self.id)])
+        customer_location = self.env.ref('stock.stock_location_customers')
+        if customer_location:
+            for picking in self.picking_ids:
+                if picking.state not in ['done', 'cancel'] and \
+                        picking.location_dest_id.id == customer_location.id:
+                    dl_ids.write({'picking_ids': [(4, picking.id)]})
         return res
 
     @api.multi
