@@ -384,17 +384,15 @@ class AccountInvoice(models.Model):
                     for mv in move_in:
                         date_end = fields.Date.from_string(
                             mv.advertisement_date)
-                    if not sale_lines.is_component and \
-                            not sale_lines.is_delivery:
+                    if not sale_lines.is_component:
                         self.get_ini_moves(
                             move_static, data,
                             self.init_date_invoice, date_end)
                         self.get_rem_moves(
                             move_out, sale_lines, data, date_end)
-                        self.get_dev_moves(
-                            move_in, sale_lines, data, date_end)
+                        self.get_dev_moves(move_in, sale_lines, data, date_end)
                     # Unlink old invoices lines for product and consu
-                    else:
+                    if sale_lines.is_delivery or sale_lines.is_component:
                         data.unlink()
             self._compute_amount()
             self.compute_taxes()
@@ -463,28 +461,21 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "qty_shipped": history.product_count,
                         "parent_sale_line": sale_lines.parent_line,
                         "products_on_work":
                         history.product_count,
-                        'sale_line_ids': [
-                            (6, 0, [mv.sale_line_id.id])],
                         "qty_remmisions":
                         history.quantity_done,
                         "invoice_line_tax_ids":
                         [(6, 0, list(
                             data.invoice_line_tax_ids._ids))],
                         "layout_category_id":
-                        mv.sale_line_id.layout_category_id.id}
-                    self.write({
-                        'invoice_line_ids': [(0, 0, inv_line)]})
-                    sale_lines.write({
-                        "bill_uom_qty_executed": qty,
-                        "qty_delivered": history.product_count,
-                        "invoice_status": 'invoiced'
-                    })
+                        sale_lines.layout_category_id.id}
+                    data.write(inv_line)
+                    sale_lines.bill_uom_qty_executed = qty
                     if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                        self.get_delivery_invoice(
-                            sale_lines.order_id, mv, data)
+                        self.get_delivery_invoice(mv, data)
 
     def get_rem_moves(self, move_out, sale_lines, data, date_end):
         """Create invoices related to product deliveries"""
@@ -530,8 +521,9 @@ class AccountInvoice(models.Model):
                         "date_end": date_end.day,
                         "num_days": delta.days + 1,
                         "quantity": qty,
+                        "qty_shipped": history.product_count,
                         'sale_line_ids': [
-                            (6, 0, [mv.sale_line_id.id])],
+                            (6, 0, [sale_lines.id])],
                         "parent_sale_line": sale_lines.parent_line.id,
                         "products_on_work":
                         history.product_count,
@@ -542,16 +534,11 @@ class AccountInvoice(models.Model):
                         sale_lines.layout_category_id.id}
                     if history.product_count == 0.0:
                         inv_line['price_unit'] = 0.0
-                    self.write({
-                        'invoice_line_ids': [(0, 0, inv_line)]})
-                    sale_lines.write({
-                        "bill_uom_qty_executed": qty,
-                        "qty_delivered": history.product_count,
-                        "invoice_status": 'invoiced'
-                    })
+                    data.write(inv_line)
+                    sale_lines.bill_uom_qty_executed = qty
+                    sale_lines.qty_delivered = history.product_count
                     if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                        self.get_delivery_invoice(
-                            sale_lines.order_id, mv, data)
+                        self.get_delivery_invoice(mv, data)
 
     def get_dev_moves(self, move_in, sale_lines, data, date_end):
         """
@@ -598,6 +585,7 @@ class AccountInvoice(models.Model):
                         self.end_date_invoice).day,
                     "num_days": delta.days + 1,
                     "quantity": qty,
+                    "qty_shipped": history.product_count,
                     "parent_sale_line": sale_lines.parent_line.id,
                     "products_on_work": history.product_count,
                     "invoice_line_tax_ids":
@@ -610,9 +598,9 @@ class AccountInvoice(models.Model):
                 self.write({
                     'invoice_line_ids': [(0, 0, inv_line)]})
                 if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                    self.get_delivery_invoice(sale_lines.order_id, mv, data)
+                    self.get_delivery_invoice(mv, data)
 
-    def get_delivery_invoice(self, order_id, mv, data):
+    def get_delivery_invoice(self, mv, data):
         """
         Create deliveries
         """
@@ -639,13 +627,6 @@ class AccountInvoice(models.Model):
                     data.invoice_line_tax_ids._ids))],
             "layout_category_id":
             product.product_tmpl_id.layout_sec_id.id}
-        sale = self.env['sale.order'].search(
-            [('id', '=', order_id.id)])
-        for delivery in sale.order_line:
-            if delivery.vehicle_id.id == mv.picking_id.vehicle_id.id and \
-                    order_id.carrier_id.id == mv.picking_id.carrier_id.id:
-                inv_line['sale_line_ids'] = [
-                    (6, 0, [delivery.id])]
         self.write({
             'invoice_line_ids': [(0, 0, inv_line)]})
 
