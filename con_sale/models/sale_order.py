@@ -1349,6 +1349,7 @@ class SaleOrder(models.Model):
                 'delivery_direction': 'out' if x == 0 else 'in',
                 'picking_ids': picking_ids,
                 'vehicle_id': self.vehicle.id,
+                'carrier_id': carrier.id
             }
             if self.order_line:
                 values['sequence'] = self.order_line[-1].sequence + 1
@@ -1450,6 +1451,7 @@ class SaleOrderLine(models.Model):
     delivery_direction = fields.Selection([('in', 'collection'),
                                            ('out', 'delivery')],
                                           string="Delivery Type")
+    carrier_id = fields.Many2one('delivery.carrier', string="Carrier")
     picking_ids = fields.Many2many(
         'stock.picking', 'order_line_picking_rel',
         'picking_id', 'sale_order_line_id',
