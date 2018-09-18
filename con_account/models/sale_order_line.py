@@ -134,9 +134,6 @@ class SaleOrderLine(models.Model):
         date_init = None
         date_move = None
 
-        import pdb;
-        pdb.set_trace()
-
         for mv in moves:
             qty = 0.0
             if reference == 'DEV':
@@ -150,6 +147,11 @@ class SaleOrderLine(models.Model):
                 delta = date_init - date_end
 
             elif reference == 'REM':
+                end_move = self.env['stock.move']
+
+                import pdb;
+                pdb.set_trace()
+
                 date_end = fields.Date.from_string(
                     self.order_id.end_date_invoice)
                 date_init = fields.Date.from_string(
@@ -159,17 +161,30 @@ class SaleOrderLine(models.Model):
                     [('product_id', '=', self.product_id.id),
                      ('project_id', '=', self.order_id.project_id.id),
                      ('partner_id', '=', self.order_id.partner_id.id),
-                     ('advertisement_date', '>=', self.order_id.init_date_invoice),
+                     ('advertisement_date', '>=', mv.date_expected),
                      ('advertisement_date', '<=', self.order_id.end_date_invoice),
                      ('sale_line_id', '=', self.id),
                      ('parent_sale_line', '=', False),
                      ('location_dest_id.return_location', '=', True),
                      ('picking_id.state', '=', 'done')])
 
-                if has_return:
-                    for move in has_return:
-                        date_end = fields.Date.from_string(
-                        move.advertisement_date)
+
+                has_delivery = self.env['stock.move'].search(
+                    [('product_id', '=', self.product_id.id),
+                     ('project_id', '=', self.order_id.project_id.id),
+                     ('partner_id', '=', self.order_id.partner_id.id),
+                     ('date_expected', '>=', mv.date_expected),
+                     ('date_expected', '<=', self.order_id.end_date_invoice),
+                     ('sale_line_id', '=', self.id),
+                     ('parent_sale_line', '=', False),
+                     ('location_dest_id.return_location', '=', True),
+                     ('picking_id.state', '=', 'done')])
+
+                if has_return or has_delivery:
+                    closet_to = min(has_return + has_delivery)
+                    date_end = fields.Date.from_string(
+                        closet_to.advertisement_date or
+                        closet_to.date_expected)
 
                 date_move = fields.Date.from_string(
                     mv.date_expected)
@@ -184,17 +199,35 @@ class SaleOrderLine(models.Model):
                 date_move = fields.Date.from_string(
                     self.order_id.init_date_invoice)
 
-                has_return = self.env['stock.move'].search(
+                future_return = self.env['stock.move'].search(
                     [('product_id', '=', self.product_id.id),
                      ('project_id', '=', self.order_id.project_id.id),
                      ('partner_id', '=', self.order_id.partner_id.id),
-                     ('advertisement_date', '<', self.order_id.init_date_invoice),
+                     ('advertisement_date', '>=',
+                      self.order_id.init_date_invoice),
+                     ('advertisement_date', '>=',
+                      self.order_id.end_date_invoice),
                      ('sale_line_id', '=', self.id),
                      ('parent_sale_line', '=', False),
                      ('location_dest_id.return_location', '=', True),
                      ('picking_id.state', '=', 'done')])
 
-                if has_return:
+                if future_return:
+                    date_end = fields.Date.from_string(
+                        future_return.advertisement_date)
+
+                past_return = self.env['stock.move'].search(
+                    [('product_id', '=', self.product_id.id),
+                     ('project_id', '=', self.order_id.project_id.id),
+                     ('partner_id', '=', self.order_id.partner_id.id),
+                     ('advertisement_date', '<=',
+                      self.order_id.init_date_invoice),
+                     ('sale_line_id', '=', self.id),
+                     ('parent_sale_line', '=', False),
+                     ('location_dest_id.return_location', '=', True),
+                     ('picking_id.state', '=', 'done')])
+
+                if past_return:
                     continue
 
                 # Get delta days
