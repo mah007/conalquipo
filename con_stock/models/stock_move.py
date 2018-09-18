@@ -30,7 +30,7 @@ class StockMove(Model):
 
     project_id = fields.Many2one(
         'project.project', 'Works',
-        related='picking_id.project_id')
+        related='picking_id.project_id', store=True)
     partner_id = fields.Many2one(
         'res.partner', string='Partner')
     child_product = fields.Boolean(

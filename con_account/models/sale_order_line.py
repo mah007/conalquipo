@@ -52,6 +52,19 @@ class SaleOrder(models.Model):
 
         return invoice_vals
 
+
+    @api.multi
+    def action_invoice_create(self, grouped=False, final=False):
+        """
+        Create the invoice associated to the SO.
+        :param grouped: if True, invoices are grouped by SO id. If False, invoices are grouped by
+                        (partner_invoice_id, currency)
+        :param final: if True, refunds will be generated if necessary
+        :returns: list of created invoices
+        """
+        values = super(SaleOrder, self).action_invoice_create(grouped, final)
+        return values
+
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
@@ -65,8 +78,8 @@ class SaleOrderLine(models.Model):
         # Get tasks values
         if not self.is_extra and \
                 not self.is_component and \
-                        self.bill_uom.name not in \
-                        self.company_id.default_uom_task_id:
+                        self.bill_uom.id not in \
+                        self.company_id.default_uom_task_id._ids:
             task = self.env['project.task'].search(
                 [('sale_line_id', '=', self.id)])
             for timesheet in task.timesheet_ids:
@@ -75,7 +88,7 @@ class SaleOrderLine(models.Model):
                                 timesheet.create_date <= \
                                 end_date_invoice:
                     qty += timesheet.unit_amount
-        elif self.bill_uom.id == self.env('product.product_uom_day').id:
+        elif self.bill_uom.id == self.env.ref('product.product_uom_day').id:
             qty = delta.days + 1
         else:
             qty = moves.product_uom_qty
@@ -101,7 +114,6 @@ class SaleOrderLine(models.Model):
             return {}
 
         self.ensure_one()
-        self.ensure_one()
 
         account = self.product_id.property_account_income_id or\
                   self.product_id.categ_id.property_account_income_categ_id
@@ -122,9 +134,12 @@ class SaleOrderLine(models.Model):
         date_init = None
         date_move = None
 
+        import pdb;
+        pdb.set_trace()
+
         for mv in moves:
             qty = 0.0
-            if mv.advertisement_date or reference == 'DEV':
+            if reference == 'DEV':
                 date_end = fields.Date.from_string(
                     mv.advertisement_date)
                 date_init = fields.Date.from_string(
@@ -168,6 +183,20 @@ class SaleOrderLine(models.Model):
                     self.order_id.init_date_invoice)
                 date_move = fields.Date.from_string(
                     self.order_id.init_date_invoice)
+
+                has_return = self.env['stock.move'].search(
+                    [('product_id', '=', self.product_id.id),
+                     ('project_id', '=', self.order_id.project_id.id),
+                     ('partner_id', '=', self.order_id.partner_id.id),
+                     ('advertisement_date', '<', self.order_id.init_date_invoice),
+                     ('sale_line_id', '=', self.id),
+                     ('parent_sale_line', '=', False),
+                     ('location_dest_id.return_location', '=', True),
+                     ('picking_id.state', '=', 'done')])
+
+                if has_return:
+                    continue
+
                 # Get delta days
                 delta = date_end - date_init
 
@@ -221,7 +250,8 @@ class SaleOrderLine(models.Model):
                     self.layout_category_id.id,
                 'account_analytic_id': self.order_id.analytic_account_id.id,
                 'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
-                'sale_line_ids': [(6, 0, [self.id])],
+                'sale_line_ids': [(6, 0, [self.id])]
+                if move_type == 'outgoing' else False,
             }
 
             if history.product_count == 0.0:
@@ -247,6 +277,7 @@ class SaleOrderLine(models.Model):
              ('partner_id', '=', self.order_id.partner_id.id),
              ('date_expected', '>=', self.order_id.init_date_invoice),
              ('date_expected', '<=', self.order_id.end_date_invoice),
+             ('advertisement_date', '=', False),
              ('sale_line_id', '=', self.id),
              ('parent_sale_line', '=', False)], 'REM'),
 
@@ -264,6 +295,7 @@ class SaleOrderLine(models.Model):
              ('project_id', '=', self.order_id.project_id.id),
              ('partner_id', '=', self.order_id.partner_id.id),
              ('date_expected', '<', self.order_id.init_date_invoice),
+             ('advertisement_date', '=', False),
              ('parent_sale_line', '=', False)], 'INI'),
         ]
 
@@ -279,6 +311,7 @@ class SaleOrderLine(models.Model):
                 'Product Unit of Measure')
             # Get REM
             for line in self:
+
                 if not float_is_zero(qty, precision_digits=precision):
                     for op in search_op:
                         vals = line._prepare_invoice_line_from_stock(
@@ -288,3 +321,4 @@ class SaleOrderLine(models.Model):
                             invoice_lines |= self.env['account.invoice.line']\
                                 .create(val)
         return invoice_lines
+
