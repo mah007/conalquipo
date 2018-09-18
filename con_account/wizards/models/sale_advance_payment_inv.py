@@ -35,19 +35,21 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.multi
     def create_invoices(self):
-        # TODO: Found a better way to do this
-        res = super(SaleAdvancePaymentInv, self).create_invoices()
         date_format = "%Y-%m-%d"
-        invoice = self.env['account.invoice'].search(
-            [('id', '=', res['res_id'])])
+        sale_orders = self.env['sale.order'].browse(
+            self._context.get('active_ids', []))
+
         date_init = datetime.strptime(
             self.init_date_invoice,
             date_format)
         date_end = datetime.strptime(
             self.end_date_invoice,
             date_format)
-        if invoice.invoice_type == 'rent':
-            invoice.write({
+
+        sale_orders.write({
                 'init_date_invoice': date_init,
-                'end_date_invoice': date_end})
-        return res
+                'end_date_invoice': date_end
+        })
+
+        return super(SaleAdvancePaymentInv, self).create_invoices()
+

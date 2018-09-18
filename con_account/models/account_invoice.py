@@ -355,48 +355,8 @@ class AccountInvoice(models.Model):
         res = super(AccountInvoice, self).write(values)
         # Get invoice permissions
         self.get_invoice_permissions()
-        date_end = None
-        if 'init_date_invoice' in values and self.invoice_type == "rent":
-            for data in self.invoice_line_ids:
-                for sale_lines in data.sale_line_ids:
-                    move_out = self.env['stock.move'].search(
-                        [('product_id', '=', data.product_id.id),
-                         ('project_id', '=', self.project_id.id),
-                         ('partner_id', '=', self.partner_id.id),
-                         ('date_expected', '>=', self.init_date_invoice),
-                         ('date_expected', '<=', self.end_date_invoice),
-                         ('sale_line_id', '=', sale_lines.id),
-                         ('parent_sale_line', '=', False)])
-                    move_in = self.env['stock.move'].search(
-                        [('product_id', '=', data.product_id.id),
-                         ('project_id', '=', self.project_id.id),
-                         ('partner_id', '=', self.partner_id.id),
-                         ('advertisement_date', '>=', self.init_date_invoice),
-                         ('advertisement_date', '<=', self.end_date_invoice),
-                         ('sale_line_id', '=', sale_lines.id),
-                         ('parent_sale_line', '=', False)])
-                    move_static = self.env['stock.move'].search(
-                        [('product_id', '=', data.product_id.id),
-                         ('project_id', '=', self.project_id.id),
-                         ('partner_id', '=', self.partner_id.id),
-                         ('date_expected', '<', self.init_date_invoice),
-                         ('parent_sale_line', '=', False)])
-                    for mv in move_in:
-                        date_end = fields.Date.from_string(
-                            mv.advertisement_date)
-                    if not sale_lines.is_component:
-                        self.get_ini_moves(
-                            move_static, data,
-                            self.init_date_invoice, date_end)
-                        self.get_rem_moves(
-                            move_out, sale_lines, data, date_end)
-                        self.get_dev_moves(move_in, sale_lines, data, date_end)
-                    # Unlink old invoices lines for product and consu
-                    if sale_lines.is_delivery or sale_lines.is_component:
-                        data.unlink()
-            self._compute_amount()
-            self.compute_taxes()
         return res
+
 
     def get_invoice_permissions(self):
         """
@@ -417,268 +377,49 @@ class AccountInvoice(models.Model):
             raise UserError(_(
                 "You don't have permission to edit the record!"))
 
-    def get_ini_moves(self, move_static, data, init_date_invoice, date_end):
-        """
-        Create invoices related to product deliveries
-        """
-        if move_static:
-            for mv in move_static:
-                qty = 0.0
-                sale_lines = mv.sale_line_id
-                if mv.location_dest_id.usage \
-                        == 'customer' and mv.picking_id.state \
-                        == 'done':
-                    # Get delta days
-                    if not date_end:
-                        date_end = fields.Date.from_string(
-                            self.end_date_invoice)
-                    a = fields.Date.from_string(mv.date_expected)
-                    b = date_end
-                    delta = b - a
-                    # Get tasks values
-                    qty = self.get_qty_tasks(
-                        sale_lines,
-                        mv.date_expected,
-                        self.end_date_invoice, mv, delta)
-                    # Get product count history
-                    history = self.get_out_history(sale_lines, mv)
-                    # Create product on work invoice
-                    inv_line = {
-                        "date_move": mv.date_expected,
-                        "invoice_id": data.invoice_id.id,
-                        "name": data.product_id.name,
-                        "account_id": data.account_id.id,
-                        "price_unit": data.price_unit,
-                        "document": "INI",
-                        "origin": data.origin,
-                        "uom_id": data.uom_id.id,
-                        "product_id": data.product_id.id,
-                        "bill_uom": data.bill_uom.id,
-                        "discount": data.discount,
-                        "date_init":
-                        fields.Datetime.from_string(
-                            mv.date_expected).day,
-                        "date_end": date_end.day,
-                        "num_days": delta.days + 1,
-                        "quantity": qty,
-                        "qty_shipped": history.product_count,
-                        "parent_sale_line": sale_lines.parent_line,
-                        "products_on_work":
-                        history.product_count,
-                        "qty_remmisions":
-                        history.quantity_done,
-                        "invoice_line_tax_ids":
-                        [(6, 0, list(
-                            data.invoice_line_tax_ids._ids))],
-                        "layout_category_id":
-                        sale_lines.layout_category_id.id}
-                    data.write(inv_line)
-                    sale_lines.bill_uom_qty_executed = qty
-                    if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                        self.get_delivery_invoice(mv, data)
-
-    def get_rem_moves(self, move_out, sale_lines, data, date_end):
-        """Create invoices related to product deliveries"""
-        if move_out:
-            for mv in move_out:
-                qty = 0.0
-                if mv.location_dest_id.usage \
-                        == 'customer' and mv.picking_id.state \
-                        == 'done':
-                    # Get delta days
-                    if not date_end:
-                        date_end = fields.Date.from_string(
-                            self.end_date_invoice)
-                    a = fields.Date.from_string(mv.date_expected)
-                    b = date_end
-                    delta = b - a
-                    # Get tasks values
-                    qty = self.get_qty_tasks(
-                        sale_lines,
-                        self.init_date_invoice,
-                        self.end_date_invoice, mv, delta)
-                    # Get product count history
-                    history = self.get_out_history(sale_lines, mv)
-                    # Create product on work invoice
-                    inv_line = {
-                        "date_move": mv.date_expected,
-                        "invoice_id": data.invoice_id.id,
-                        "name": data.product_id.name,
-                        "account_id": data.account_id.id,
-                        "price_unit": data.price_unit,
-                        "document":
-                        mv.picking_id.name,
-                        "origin": data.origin,
-                        "uom_id": data.uom_id.id,
-                        "product_id": data.product_id.id,
-                        "bill_uom": data.bill_uom.id,
-                        "discount": data.discount,
-                        "qty_remmisions":
-                        history.quantity_done,
-                        "date_init":
-                        fields.Datetime.from_string(
-                            mv.date_expected).day,
-                        "date_end": date_end.day,
-                        "num_days": delta.days + 1,
-                        "quantity": qty,
-                        "qty_shipped": history.product_count,
-                        'sale_line_ids': [
-                            (6, 0, [sale_lines.id])],
-                        "parent_sale_line": sale_lines.parent_line.id,
-                        "products_on_work":
-                        history.product_count,
-                        "invoice_line_tax_ids":
-                        [(6, 0, list(
-                            data.invoice_line_tax_ids._ids))],
-                        "layout_category_id":
-                        sale_lines.layout_category_id.id}
-                    if history.product_count == 0.0:
-                        inv_line['price_unit'] = 0.0
-                    data.write(inv_line)
-                    sale_lines.bill_uom_qty_executed = qty
-                    sale_lines.qty_delivered = history.product_count
-                    if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                        self.get_delivery_invoice(mv, data)
-
-    def get_dev_moves(self, move_in, sale_lines, data, date_end):
-        """
-        Create invoices related to product returns
-        """
-        for mv in move_in:
-            qty = 0.0
-            date_end = fields.Date.from_string(
-                mv.advertisement_date)
-            if mv.returned and \
-                mv.location_dest_id.return_location \
-                    and mv.picking_id.state == 'done':
-                # Get delta days
-                a = fields.Date.from_string(
-                    self.end_date_invoice)
-                b = fields.Date.from_string(
-                    mv.advertisement_date)
-                delta = a - b
-                # Get tasks values
-                qty = self.get_qty_tasks(
-                    sale_lines,
-                    self.init_date_invoice,
-                    self.end_date_invoice, mv, delta)
-                # Get product count history
-                history = self.get_in_history(sale_lines, mv)
-                # Create returned product invoice
-                inv_line = {
-                    "date_move": mv.advertisement_date,
-                    "invoice_id": data.invoice_id.id,
-                    "name": data.product_id.name,
-                    "account_id": data.account_id.id,
-                    "price_unit": data.price_unit,
-                    "document":
-                    mv.picking_id.name,
-                    "origin": data.origin,
-                    "uom_id": data.uom_id.id,
-                    "product_id": data.product_id.id,
-                    "bill_uom": data.bill_uom.id,
-                    "discount": data.discount,
-                    "qty_returned": history.quantity_done,
-                    "date_init": fields.Date.from_string(
-                        mv.advertisement_date).day,
-                    "date_end": fields.Date.from_string(
-                        self.end_date_invoice).day,
-                    "num_days": delta.days + 1,
-                    "quantity": qty,
-                    "qty_shipped": history.product_count,
-                    "parent_sale_line": sale_lines.parent_line.id,
-                    "products_on_work": history.product_count,
-                    "invoice_line_tax_ids":
-                    [(6, 0, list(
-                        data.invoice_line_tax_ids._ids))],
-                    "layout_category_id":
-                    sale_lines.layout_category_id.id}
-                if history.product_count == 0.0:
-                    inv_line['price_unit'] = 0.0
-                self.write({
-                    'invoice_line_ids': [(0, 0, inv_line)]})
-                if mv.picking_id.carrier_type and mv.picking_id.vehicle_id:
-                    self.get_delivery_invoice(mv, data)
-
     def get_delivery_invoice(self, mv, data):
         """
         Create deliveries
         """
         # Get vehicle price
-        costs = self.env['delivery.carrier.cost'].search(
-            [('vehicle', '=', mv.picking_id.vehicle_id.id),
-             ('delivery_carrier_id',
-              '=', mv.picking_id.carrier_id.id)])
+        so_to_update = list()
         product = mv.picking_id.carrier_id.product_id
-        inv_line = {
-            "date_move": mv.date_expected,
-            "invoice_id": data.invoice_id.id,
-            "product_id":
-            product.id,
-            "name": mv.picking_id.carrier_id.product_id.name,
-            "account_id": data.account_id.id,
-            "document": "ACAR",
-            "price_unit": costs.cost,
-            "bill_uom": product.sale_uom.id,
-            "uom_id": data.uom_id.id,
-            "qty_delivered": data.quantity,
-            "invoice_line_tax_ids": [
-                (6, 0, list(
-                    data.invoice_line_tax_ids._ids))],
-            "layout_category_id":
-            product.product_tmpl_id.layout_sec_id.id}
-        self.write({
-            'invoice_line_ids': [(0, 0, inv_line)]})
-
-    def get_qty_tasks(
-            self, sale_lines, init_date_invoice,
-            end_date_invoice, moves, delta):
-        """
-        Return the quantity of the tasks on
-        executed by the products.
-        """
-        qty = 0.0
-        # Get tasks values
-        if not sale_lines.is_extra and \
-                not sale_lines.is_component and \
-                sale_lines.bill_uom.name not in \
-                ["Día(s)", "Unidad(es)"]:
-            task = self.env['project.task'].search(
-                [('sale_line_id', '=', sale_lines.id)])
-            for timesheet in task.timesheet_ids:
-                if timesheet.create_date >= \
-                    init_date_invoice and \
-                        timesheet.create_date <= \
-                        end_date_invoice:
-                    qty += timesheet.unit_amount
-        elif sale_lines.bill_uom.name == "Día(s)":
-            qty = delta.days + 1
-        else:
-            qty = moves.product_uom_qty
-        return qty
-
-    def get_out_history(self, sale_lines, moves):
-        """
-        Return the product outgoing histoy of the
-        moves
-        """
-        history_out = self.env[
-            'stock.move.history'].search(
-                [('sale_line_id', '=', sale_lines.id),
-                 ('move_id', '=', moves.id),
-                 ('code', '=', 'outgoing')])
-        return history_out
-
-    def get_in_history(self, sale_lines, mv):
-        """
-        Return the product incoming histoy of the
-        moves
-        """
-        history_in = self.env['stock.move.history'].search(
-            [('sale_line_id', '=', sale_lines.id),
-             ('move_id', '=', mv.id),
-             ('code', '=', 'incoming')])
-        return history_in
+        if mv.picking_id.delivery_cost:
+            for delivery in mv.picking_id.delivery_cost:
+                if delivery.invoice_lines:
+                    continue
+                inv_line = {
+                    "date_move": mv.date_expected,
+                    "invoice_id": data.invoice_id.id,
+                    "product_id": product.id,
+                    "name": product.name + ':' +mv.picking_id.name or
+                            _('Not linked move'),
+                    "account_id": data.account_id.id,
+                    "document": "ACAR:"+mv.picking_id.name or False,
+                    "price_unit": delivery.price_unit,
+                    "bill_uom": product.sale_uom.id,
+                    "uom_id": data.uom_id.id,
+                    "qty_delivered": data.quantity,
+                    'sale_line_ids': [
+                        (6, 0, [delivery.id])],
+                    "invoice_line_tax_ids": [
+                        (6, 0, list(
+                            data.invoice_line_tax_ids._ids))],
+                    "layout_category_id":
+                        product.product_tmpl_id.layout_sec_id.id,
+                    'origin': mv.picking_id.name,
+                    'discount': 0.00,
+                }
+                so_to_update.append({
+                    delivery.id: {
+                        'qty_invoice' :data.quantity,
+                        'qty_invoiced' :data.quantity,
+                        'invoice_status': 'invoiced',
+                    }
+                })
+                self.write({
+                    'invoice_line_ids': [(0, 0, inv_line)]})
+        return so_to_update
 
     @api.multi
     def _get_tax_amount_by_category(self):

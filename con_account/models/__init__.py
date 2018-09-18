@@ -21,3 +21,4 @@
 
 from . import account_invoice
 from . import account_invoice_period
+from . import sale_order_line

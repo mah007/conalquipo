@@ -1701,19 +1701,7 @@ class SaleOrderLine(models.Model):
         """
         res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res['bill_uom'] = self.bill_uom.id
-        res['qty_shipped'] = self.product_uom_qty
-        return res
-
-    @api.multi
-    def invoice_line_create(self, invoice_id, qty):
-        """
-        Create an invoice line. The quantity to invoice can be
-        positive (invoice) or negative (refund).
-            :param invoice_id: integer
-            :param qty: float quantity to invoice
-            :returns recordset of account.invoice.line created
-        """
-        res = super(SaleOrderLine, self).invoice_line_create(invoice_id, qty)
+        # res['qty_shipped'] = self.product_uom_qty
         return res
 
     @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
