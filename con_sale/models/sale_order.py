@@ -280,6 +280,7 @@ class SaleOrder(models.Model):
                 ))
         else:
             self.approved_min_prices = True
+            self.approved_min_qty = True
         # Approve special quotations
         users_list_sp_q = []
         groups_sp_q = self.env[
