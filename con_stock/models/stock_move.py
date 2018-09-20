@@ -144,19 +144,15 @@ class StockMove(Model):
         # This block create a history entry
         history = self.env['stock.move.history']
         for order in res:
-            for op in ['internal', order.picking_id.picking_type_id.code]:
+            if order.picking_id.picking_type_id.code != 'internal':
                 vals = {
                     'picking_id': order.picking_id.id,
                     'partner_id': order.picking_id.partner_id.id,
                     'project_id': order.picking_id.project_id.id,
                     'product_id': order.product_id.id,
-                    'code': op,
-                    'product_count': order.qty_history
-                    if op == 'internal'
-                    else order.product_count,
-                    'quantity_done': order.quantity_done
-                    if op != 'internal'
-                    else 0,
+                    'code': order.picking_id.picking_type_id.code,
+                    'product_count': order.product_count,
+                    'quantity_done': order.quantity_done,
                     'sale_line_id': order.sale_line_id.id,
                     'move_id': order.id,
                 }
