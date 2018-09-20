@@ -110,6 +110,7 @@ class SaleOrderLine(models.Model):
             self, history, invoice_id=False, move_type=''):
         self.ensure_one()
         result = []
+        picking_list = []
 
         account = self.product_id.property_account_income_id or\
             self.product_id.categ_id.property_account_income_categ_id
@@ -189,6 +190,8 @@ class SaleOrderLine(models.Model):
             result.append(inv_line)
             history = history[1:]
 
+            picking_list.append(mv.picking_id)
+
         for mv in history:
             qty = 0.0
             next += 1
@@ -256,8 +259,44 @@ class SaleOrderLine(models.Model):
             if mv.quantity_project == 0.0:
                 inv_line['price_unit'] = 0.0
             result.append(inv_line)
-
+            picking_list.append(mv.picking_id)
+        for pck in list(set(picking_list)):
+            result.append(self.get_delivery_invoice(
+                pck, invoice_id, account))
         return result
+
+    @api.multi
+    def get_delivery_invoice(self, picking, invoice_id, account):
+        """
+        Create deliveries
+        """
+        # Get vehicle price
+        product = picking.carrier_id.product_id
+        if picking.delivery_cost:
+            for delivery in picking.delivery_cost:
+                if delivery.invoice_lines:
+                    continue
+                inv_line = {
+                    "date_move": picking.advertisement_date or
+                    picking.scheduled_date,
+                    "invoice_id": invoice_id,
+                    "product_id": product.id,
+                    "name": product.name + ':' + picking.name or
+                            _('Not linked move'),
+                    "account_id": account.id,
+                    "document": "ACAR: " + picking.name or False,
+                    "price_unit": delivery.price_unit,
+                    "bill_uom": product.sale_uom.id,
+                    "uom_id": product.uom_id.id,
+                    'sale_line_ids': [(6, 0, [self.id])],
+                    "invoice_line_tax_ids":
+                        [(6, 0, self.tax_id.ids)],
+                    "layout_category_id":
+                        product.product_tmpl_id.layout_sec_id.id,
+                    'origin': picking.name,
+                    'discount': 0.00,
+                }
+            return inv_line
 
     @api.multi
     def invoice_line_create(self, invoice_id, qty):
@@ -333,4 +372,3 @@ class SaleOrderLine(models.Model):
                     invoice_lines |= self.env['account.invoice.line']\
                         .create(val)
         return invoice_lines
-

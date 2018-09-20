@@ -377,50 +377,6 @@ class AccountInvoice(models.Model):
             raise UserError(_(
                 "You don't have permission to edit the record!"))
 
-    def get_delivery_invoice(self, mv, data):
-        """
-        Create deliveries
-        """
-        # Get vehicle price
-        so_to_update = list()
-        product = mv.picking_id.carrier_id.product_id
-        if mv.picking_id.delivery_cost:
-            for delivery in mv.picking_id.delivery_cost:
-                if delivery.invoice_lines:
-                    continue
-                inv_line = {
-                    "date_move": mv.date_expected,
-                    "invoice_id": data.invoice_id.id,
-                    "product_id": product.id,
-                    "name": product.name + ':' +mv.picking_id.name or
-                            _('Not linked move'),
-                    "account_id": data.account_id.id,
-                    "document": "ACAR:"+mv.picking_id.name or False,
-                    "price_unit": delivery.price_unit,
-                    "bill_uom": product.sale_uom.id,
-                    "uom_id": data.uom_id.id,
-                    "qty_delivered": data.quantity,
-                    'sale_line_ids': [
-                        (6, 0, [delivery.id])],
-                    "invoice_line_tax_ids": [
-                        (6, 0, list(
-                            data.invoice_line_tax_ids._ids))],
-                    "layout_category_id":
-                        product.product_tmpl_id.layout_sec_id.id,
-                    'origin': mv.picking_id.name,
-                    'discount': 0.00,
-                }
-                so_to_update.append({
-                    delivery.id: {
-                        'qty_invoice' :data.quantity,
-                        'qty_invoiced' :data.quantity,
-                        'invoice_status': 'invoiced',
-                    }
-                })
-                self.write({
-                    'invoice_line_ids': [(0, 0, inv_line)]})
-        return so_to_update
-
     @api.multi
     def _get_tax_amount_by_category(self):
         """
