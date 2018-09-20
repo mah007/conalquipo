@@ -134,7 +134,7 @@ class SaleOrderLine(models.Model):
         date_next = date_end
 
         next = 0
-        if history[0].code == 'incoming' and history[0].move_id.advertisement_date: # noqa
+        if history[0].code == 'incoming' and history[0].move_id.advertisement_date:  # noqa
             create_date = fields.Date.from_string(
                 history[0].move_id.advertisement_date)
         else:
@@ -143,7 +143,7 @@ class SaleOrderLine(models.Model):
 
         if create_date < date_init and history[0].quantity_project > 0:
             try:
-                if history[1].code == 'incoming' and history[1].move_id.advertisement_date: # noqa
+                if history[1].code == 'incoming' and history[1].move_id.advertisement_date:  # noqa
                     date_next = fields.Date.from_string(
                         history[1].move_id.advertisement_date)
                 else:
@@ -189,7 +189,7 @@ class SaleOrderLine(models.Model):
             }
             result.append(inv_line)
             history = history[1:]
-
+            # Pickings for deliveries
             picking_list.append(mv.picking_id)
 
         for mv in history:
@@ -205,7 +205,7 @@ class SaleOrderLine(models.Model):
             date_current = create_date
 
             try:
-                if history[next].code == 'incoming' and history[next].move_id.advertisement_date: # noqa
+                if history[next].code == 'incoming' and history[next].move_id.advertisement_date:  # noqa
                     date_next = fields.Date.from_string(
                         history[next].move_id.advertisement_date)
                 else:
@@ -238,8 +238,8 @@ class SaleOrderLine(models.Model):
                 "product_id": self.product_id.id,
                 "bill_uom": self.bill_uom.id,
                 "discount": self.discount,
-                "qty_remmisions": mv.quantity_done if mv.code ==  'outgoing' else 0.00, # noqa
-                "qty_returned": mv.quantity_done if mv.code ==  'incoming' else 0.00, # noqa
+                "qty_remmisions": mv.quantity_done if mv.code == 'outgoing' else 0.00,  # noqa
+                "qty_returned": mv.quantity_done if mv.code == 'incoming' else 0.00,  # noqa
                 "date_init": date_current.day,
                 "date_end": date_next.day,
                 "num_days": delta.days + 1,
@@ -259,7 +259,9 @@ class SaleOrderLine(models.Model):
             if mv.quantity_project == 0.0:
                 inv_line['price_unit'] = 0.0
             result.append(inv_line)
+            # Pickings for deliveries
             picking_list.append(mv.picking_id)
+        # Create dict for deliveries
         for pck in list(set(picking_list)):
             result.append(self.get_delivery_invoice(
                 pck, invoice_id, account))
@@ -347,9 +349,9 @@ class SaleOrderLine(models.Model):
                         if op[1] == 'INI':
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="date, id")
-                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and ( # noqa
-                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or # noqa
-                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location) # noqa
+                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and (  # noqa
+                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or  # noqa
+                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location)  # noqa
                             ))
 
                             if moves:
@@ -357,15 +359,15 @@ class SaleOrderLine(models.Model):
                         else:
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="create_date, id asc")
-                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and ( # noqa
-                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or # noqa
-                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location) # noqa
+                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and (  # noqa
+                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or  # noqa
+                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location)  # noqa
                             ))
                             if moves:
                                 history += [mh for mh in moves]
 
                         if history:
-                            history = sorted(history, key=lambda h: (h.move_id.advertisement_date or h.move_id.date_expected)) # noqa
+                            history = sorted(history, key=lambda h: (h.move_id.advertisement_date or h.move_id.date_expected))  # noqa
                             vals = line._prepare_invoice_line_from_stock(
                                 history, invoice_id=invoice_id)
                 for val in vals:
