@@ -21,6 +21,7 @@
 import logging
 
 from odoo import _, api, fields, models
+from odoo.addons import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
 
@@ -103,3 +104,27 @@ class SaleQuoteLine(models.Model):
     product_id = fields.Many2one(
         'product.product',
         'Product', domain=[], required=True)
+    bill_uom = fields.Many2one(
+        'product.uom',
+        string='Sale UOM', domain=lambda self: self.compute_uoms())
+    bill_uom_qty = fields.Float(
+        'Sale QTY',
+        digits=dp.get_precision('Product Unit'
+                                ' of Measure'))
+
+    @api.model
+    def compute_uoms(self):
+        """
+        Compute availables uoms for product
+        """
+        uom_list = []
+        uoms = self.product_id.product_tmpl_id.uoms_ids
+        if self.product_id:
+            if uoms:
+                for p in uoms:
+                    uom_list.append(p.uom_id.id)
+                return [('id', 'in', uom_list)]
+            else:
+                uom_list.append(self.product_id.product_tmpl_id.sale_uom.id)
+                return \
+                    [('id', 'in', uom_list)]

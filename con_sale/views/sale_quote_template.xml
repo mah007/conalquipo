@@ -30,6 +30,16 @@
                 <field name="product_id" domain="[]"/>
             </xpath>
 
+           <xpath expr="//field[@name='quote_line']/tree//field[@name='name']" position="replace">
+                <field name="name" invisible="1"/>
+            </xpath>
+
+           <xpath expr="//field[@name='quote_line']/tree//field[@name='product_uom_id']" position="after">
+                <field name="bill_uom_qty"/>
+                <field name="bill_uom"/>
+            </xpath>
+
+
         </field>
     </record>
 

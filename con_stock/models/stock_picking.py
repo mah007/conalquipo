@@ -174,6 +174,20 @@ class StockPicking(Model):
         # Overwrite stock picking write
         values['employee_code'] = False
         res = super(StockPicking, self).write(values)
+        for pk in self:
+            carrier = pk.carrier_id
+            vehicle = pk.vehicle_id
+            if pk.carrier_type == 'company':
+                for data in pk.delivery_cost:
+                    if data.vehicle_id.id != pk.vehicle_id.id:
+                        raise UserError(_(
+                            """
+                            This vehicle or carrier doesn't match.
+                            Please, contact with a commercial to create a new
+                                line in the order with the correct carrier
+                                and vehicle for this picking.
+                            """
+                        ))
         return res
 
     @api.model

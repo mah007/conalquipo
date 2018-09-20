@@ -1365,6 +1365,44 @@ class SaleOrder(models.Model):
         self.order_lines = [(5, 0, 0)]
         self.note = ''
         template = self.template_id.with_context(lang=self.partner_id.lang)
+        new_order_lines = []
+        for line in template.quote_line:
+            discount = 0
+            if self.pricelist_id:
+                price = self.pricelist_id.with_context(
+                    uom=line.product_uom_id.id).get_product_price(
+                        line.product_id, 1, False)
+                if self.pricelist_id.discount_policy == 'without_discount' \
+                        and line.price_unit:
+                    discount = (
+                        line.price_unit - price) / line.price_unit * 100
+                    price = line.price_unit
+            else:
+                price = line.price_unit
+            data = {
+                'name': line.name,
+                'price_unit': price,
+                'discount': 100 - ((100 - discount) * (
+                    100 - line.discount)/100),
+                'product_uom_qty': line.product_uom_qty,
+                'product_id': line.product_id.id,
+                'layout_category_id': line.layout_category_id,
+                'product_uom': line.product_uom_id.id,
+                'bill_uom': line.bill_uom.id,
+                'bill_uom_qty': line.bill_uom_qty,
+                'website_description': line.website_description,
+                'state': 'draft',
+                'customer_lead': self._get_customer_lead(
+                    line.product_id.product_tmpl_id),
+            }
+            if self.pricelist_id:
+                data.update(self.env['sale.order.line']._get_purchase_price(
+                    self.pricelist_id, line.product_id,
+                    line.product_uom_id, fields.Date.context_today(self)))
+            new_order_lines.append((0, 0, data))
+        self.order_line = new_order_lines
+        self.order_line._compute_tax_id()
+
         if template.note:
             self.note = template.note
         return res
