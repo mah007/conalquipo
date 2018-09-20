@@ -51,19 +51,6 @@ class SaleOrder(models.Model):
 
         return invoice_vals
 
-    @api.multi
-    def action_invoice_create(self, grouped=False, final=False):
-        """
-        Create the invoice associated to the SO.
-        :param grouped: if True, invoices are grouped by SO id.
-            If False, invoices are grouped by
-            (partner_invoice_id, currency)
-        :param final: if True, refunds will be generated if necessary
-        :returns: list of created invoices
-        """
-        values = super(SaleOrder, self).action_invoice_create(grouped, final)
-        return values
-
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -189,8 +176,6 @@ class SaleOrderLine(models.Model):
             }
             result.append(inv_line)
             history = history[1:]
-            # Pickings for deliveries
-            picking_list.append(mv.picking_id)
 
         for mv in history:
             qty = 0.0
@@ -263,8 +248,10 @@ class SaleOrderLine(models.Model):
             picking_list.append(mv.picking_id)
         # Create dict for deliveries
         for pck in list(set(picking_list)):
-            result.append(self.get_delivery_invoice(
-                pck, invoice_id, account))
+            delivery = self.get_delivery_invoice(
+                pck, invoice_id, account)
+            if delivery:
+                result.append(delivery)
         return result
 
     @api.multi
@@ -274,17 +261,22 @@ class SaleOrderLine(models.Model):
         """
         # Get vehicle price
         product = picking.carrier_id.product_id
+        document = "ACAR: " + picking.name
         if picking.delivery_cost:
             for delivery in picking.delivery_cost:
-                if delivery.invoice_lines:
-                    continue
+                if self.env['account.invoice.line'].search(
+                        [('document', '=', document),
+                         ('invoice_id', '=', invoice_id)]):
+                    return
+                # if delivery.invoice_lines:
+                #     continue
                 inv_line = {
                     "date_move": picking.advertisement_date or
                     picking.scheduled_date,
                     "invoice_id": invoice_id,
                     "product_id": product.id,
                     "name": product.name + ':' + picking.name or
-                            _('Not linked move'),
+                    _('Not linked move'),
                     "account_id": account.id,
                     "document": "ACAR: " + picking.name or False,
                     "price_unit": delivery.price_unit,
