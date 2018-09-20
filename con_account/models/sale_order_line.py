@@ -83,10 +83,9 @@ class SaleOrderLine(models.Model):
             task = self.env['project.task'].search(
                 [('sale_line_id', '=', self.id)])
             for timesheet in task.timesheet_ids:
-                if timesheet.create_date >= \
-                        init_date_invoice and \
-                                timesheet.create_date <= \
-                                end_date_invoice:
+                date = fields.Date.from_string(timesheet.date)
+                if date >= init_date_invoice and \
+                        date <= end_date_invoice:
                     qty += timesheet.unit_amount
         elif self.bill_uom.id == self.env.ref('product.product_uom_day').id:
             qty = delta.days + 1
@@ -108,175 +107,142 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _prepare_invoice_line_from_stock(
-            self, domain=[], reference=False, invoice_id=False, move_type=''):
-        result = []
-        if not domain:
-            return {}
-
+            self, history, invoice_id=False, move_type=''):
         self.ensure_one()
+        result = []
 
         account = self.product_id.property_account_income_id or\
-                  self.product_id.categ_id.property_account_income_categ_id
+            self.product_id.categ_id.property_account_income_categ_id
         if not account:
             raise UserError(_('Please define income account for this product:'
                               ' "%s" (id:%d) - or for its category: "%s".') %
-                (self.product_id.name, self.product_id.id,
-                 self.product_id.categ_id.name))
+                            (self.product_id.name, self.product_id.id,
+                             self.product_id.categ_id.name))
 
         fpos = self.order_id.fiscal_position_id or\
-               self.order_id.partner_id.property_account_position_id
+            self.order_id.partner_id.property_account_position_id
 
         if fpos:
             account = fpos.map_account(account)
 
-        moves = self.env['stock.move'].search(domain)
-        date_end = None
-        date_init = None
-        date_move = None
+        date_init = fields.Date.from_string(
+            self.order_id.init_date_invoice)
+        date_end = fields.Date.from_string(
+            self.order_id.end_date_invoice)
+        date_current = date_init
+        date_next = date_end
 
-        for mv in moves:
-            qty = 0.0
-            if reference == 'DEV':
-                date_end = fields.Date.from_string(
-                    mv.advertisement_date)
-                date_init = fields.Date.from_string(
-                    self.order_id.end_date_invoice)
-                date_move = fields.Date.from_string(
-                    mv.advertisement_date)
-                # Get delta days
-                delta = date_init - date_end
+        next = 0
+        if history[0].code == 'incoming' and history[0].move_id.advertisement_date: # noqa
+            create_date = fields.Date.from_string(
+                history[0].move_id.advertisement_date)
+        else:
+            create_date = fields.Date.from_string(
+                history[0].move_id.date_expected)
 
-            elif reference == 'REM':
-                end_move = self.env['stock.move']
+        if create_date < date_init and history[0].quantity_project > 0:
+            try:
+                if history[1].code == 'incoming' and history[1].move_id.advertisement_date: # noqa
+                    date_next = fields.Date.from_string(
+                        history[1].move_id.advertisement_date)
+                else:
+                    date_next = fields.Date.from_string(
+                        history[1].move_id.date_expected)
+                if date_next > date_current:
+                    date_next -= timedelta(days=1)
+            except:
+                date_next = date_end
 
-                import pdb;
-                pdb.set_trace()
-
-                date_end = fields.Date.from_string(
-                    self.order_id.end_date_invoice)
-                date_init = fields.Date.from_string(
-                    mv.date_expected)
-
-                has_return = self.env['stock.move'].search(
-                    [('product_id', '=', self.product_id.id),
-                     ('project_id', '=', self.order_id.project_id.id),
-                     ('partner_id', '=', self.order_id.partner_id.id),
-                     ('advertisement_date', '>=', mv.date_expected),
-                     ('advertisement_date', '<=', self.order_id.end_date_invoice),
-                     ('sale_line_id', '=', self.id),
-                     ('parent_sale_line', '=', False),
-                     ('location_dest_id.return_location', '=', True),
-                     ('picking_id.state', '=', 'done')])
-
-
-                has_delivery = self.env['stock.move'].search(
-                    [('product_id', '=', self.product_id.id),
-                     ('project_id', '=', self.order_id.project_id.id),
-                     ('partner_id', '=', self.order_id.partner_id.id),
-                     ('date_expected', '>=', mv.date_expected),
-                     ('date_expected', '<=', self.order_id.end_date_invoice),
-                     ('sale_line_id', '=', self.id),
-                     ('parent_sale_line', '=', False),
-                     ('location_dest_id.return_location', '=', True),
-                     ('picking_id.state', '=', 'done')])
-
-                if has_return or has_delivery:
-                    closet_to = min(has_return + has_delivery)
-                    date_end = fields.Date.from_string(
-                        closet_to.advertisement_date or
-                        closet_to.date_expected)
-
-                date_move = fields.Date.from_string(
-                    mv.date_expected)
-                # Get delta days
-                delta = date_end - date_init
-
-            elif reference == 'INI':
-                date_end = fields.Date.from_string(
-                    self.order_id.end_date_invoice)
-                date_init = fields.Date.from_string(
-                    self.order_id.init_date_invoice)
-                date_move = fields.Date.from_string(
-                    self.order_id.init_date_invoice)
-
-                future_return = self.env['stock.move'].search(
-                    [('product_id', '=', self.product_id.id),
-                     ('project_id', '=', self.order_id.project_id.id),
-                     ('partner_id', '=', self.order_id.partner_id.id),
-                     ('advertisement_date', '>=',
-                      self.order_id.init_date_invoice),
-                     ('advertisement_date', '>=',
-                      self.order_id.end_date_invoice),
-                     ('sale_line_id', '=', self.id),
-                     ('parent_sale_line', '=', False),
-                     ('location_dest_id.return_location', '=', True),
-                     ('picking_id.state', '=', 'done')])
-
-                if future_return:
-                    date_end = fields.Date.from_string(
-                        future_return.advertisement_date)
-
-                past_return = self.env['stock.move'].search(
-                    [('product_id', '=', self.product_id.id),
-                     ('project_id', '=', self.order_id.project_id.id),
-                     ('partner_id', '=', self.order_id.partner_id.id),
-                     ('advertisement_date', '<=',
-                      self.order_id.init_date_invoice),
-                     ('sale_line_id', '=', self.id),
-                     ('parent_sale_line', '=', False),
-                     ('location_dest_id.return_location', '=', True),
-                     ('picking_id.state', '=', 'done')])
-
-                if past_return:
-                    continue
-
-                # Get delta days
-                delta = date_end - date_init
-
-            if mv.returned and \
-                    mv.location_dest_id.return_location \
-                    and mv.picking_id.state == 'done':
-                move_type = 'incoming'
-
-            elif mv.location_dest_id.usage \
-                    == 'customer' and mv.picking_id.state \
-                    == 'done':
-                move_type = 'outgoing'
-
-
-            # Get tasks values
+            delta = date_next - date_current
             qty = self.get_qty_tasks(
-                self.order_id.init_date_invoice,
-                date_end, mv, delta)
-            # Get product count history
-            history = self.get_history(mv, move_type)
-            # Create returned product invoice
+                date_current, date_next,
+                history[0].move_id, delta)
             inv_line = {
-                "date_move": date_move,
+                "date_move": create_date,
                 'invoice_id': invoice_id,
                 "name": self.product_id.name,
                 "account_id": account.id,
                 "price_unit": self.price_unit,
-                "document": reference if reference == 'INI'
-                           else mv.picking_id.name,
+                "document": 'INI',
                 'sequence': self.sequence,
                 'origin': self.order_id.name,
                 "uom_id": self.product_uom.id,
                 "product_id": self.product_id.id,
                 "bill_uom": self.bill_uom.id,
                 "discount": self.discount,
-                "qty_remmisions": history.quantity_done
-                if move_type ==  'outgoing' else 0.00,
-                "qty_returned": history.quantity_done
-                if move_type ==  'incoming' else 0.00,
-                "date_init": date_init.day if move_type == 'outgoing' else
-                date_end.day,
-                "date_end": date_end.day if move_type == 'outgoing' else
-                date_init.day,
+                "qty_remmisions": 0.00,
+                "qty_returned": 0.00,
+                "date_init": date_current.day,
+                "date_end": date_next.day,
                 "num_days": delta.days + 1,
                 "quantity": qty,
                 "parent_sale_line": self.parent_line.id,
-                "products_on_work": history.product_count,
+                "products_on_work": history[0].quantity_project,
+                "invoice_line_tax_ids":
+                    [(6, 0, self.tax_id.ids)],
+                "layout_category_id":
+                    self.layout_category_id.id,
+                'account_analytic_id': self.order_id.analytic_account_id.id,
+                'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
+                'sale_line_ids': False,
+            }
+            result.append(inv_line)
+            history = history[1:]
+
+        for mv in history:
+            qty = 0.0
+            next += 1
+            create_date = fields.Date.from_string(mv.create_date)
+            if mv.code == 'incoming' and mv.move_id.advertisement_date:
+                create_date = fields.Date.from_string(
+                    mv.move_id.advertisement_date)
+            else:
+                create_date = fields.Date.from_string(
+                    mv.move_id.date_expected)
+            date_current = create_date
+
+            try:
+                if history[next].code == 'incoming' and history[next].move_id.advertisement_date: # noqa
+                    date_next = fields.Date.from_string(
+                        history[next].move_id.advertisement_date)
+                else:
+                    date_next = fields.Date.from_string(
+                        history[next].move_id.date_expected)
+                if date_next > date_current:
+                    date_next -= timedelta(days=1)
+            except:
+                date_next = date_end
+
+            if mv.code == 'incoming' and mv.quantity_project <= 0.0:
+                date_next = date_current
+
+            delta = date_next - date_current
+
+            # Get tasks values
+            qty = self.get_qty_tasks(
+                date_current, date_next, mv.move_id, delta)
+            # Create returned product invoice
+            inv_line = {
+                "date_move": create_date,
+                'invoice_id': invoice_id,
+                "name": self.product_id.name,
+                "account_id": account.id,
+                "price_unit": self.price_unit,
+                "document": mv.move_id.picking_id.name,
+                'sequence': self.sequence,
+                'origin': self.order_id.name,
+                "uom_id": self.product_uom.id,
+                "product_id": self.product_id.id,
+                "bill_uom": self.bill_uom.id,
+                "discount": self.discount,
+                "qty_remmisions": mv.quantity_done if mv.code ==  'outgoing' else 0.00, # noqa
+                "qty_returned": mv.quantity_done if mv.code ==  'incoming' else 0.00, # noqa
+                "date_init": date_current.day,
+                "date_end": date_next.day,
+                "num_days": delta.days + 1,
+                "quantity": qty,
+                "parent_sale_line": self.parent_line.id,
+                "products_on_work": mv.quantity_project,
                 "invoice_line_tax_ids":
                     [(6, 0, self.tax_id.ids)],
                 "layout_category_id":
@@ -284,14 +250,13 @@ class SaleOrderLine(models.Model):
                 'account_analytic_id': self.order_id.analytic_account_id.id,
                 'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
                 'sale_line_ids': [(6, 0, [self.id])]
-                if move_type == 'outgoing' else False,
+                if mv.code == 'outgoing' else False,
             }
 
-            if history.product_count == 0.0:
+            if mv.quantity_project == 0.0:
                 inv_line['price_unit'] = 0.0
-
             result.append(inv_line)
-        _logger.warning(result)
+
         return result
 
     @api.multi
@@ -306,52 +271,66 @@ class SaleOrderLine(models.Model):
 
         search_op = [
             ([('product_id', '=', self.product_id.id),
-             ('project_id', '=', self.order_id.project_id.id),
-             ('partner_id', '=', self.order_id.partner_id.id),
-             ('date_expected', '>=', self.order_id.init_date_invoice),
-             ('date_expected', '<=', self.order_id.end_date_invoice),
-             ('advertisement_date', '=', False),
-             ('sale_line_id', '=', self.id),
-             ('parent_sale_line', '=', False)], 'REM'),
+              ('project_id', '=', self.order_id.project_id.id),
+              ('partner_id', '=', self.order_id.partner_id.id),
+              ('code', '!=', 'internal'),
+              ('date', '<', self.order_id.init_date_invoice),
+              ('date', '>=', self.order_id.project_id.work_date_creation),
+              ('move_id.parent_sale_line', '=', False)], 'INI'),
 
             ([('product_id', '=', self.product_id.id),
-             ('project_id', '=', self.order_id.project_id.id),
-             ('partner_id', '=', self.order_id.partner_id.id),
-             ('advertisement_date', '>=', self.order_id.init_date_invoice),
-             ('advertisement_date', '<=', self.order_id.end_date_invoice),
-             ('sale_line_id', '=', self.id),
-             ('parent_sale_line', '=', False),
-             ('location_dest_id.return_location', '=', True),
-             ('picking_id.state', '=', 'done')], 'DEV'),
-
-            ([('product_id', '=', self.product_id.id),
-             ('project_id', '=', self.order_id.project_id.id),
-             ('partner_id', '=', self.order_id.partner_id.id),
-             ('date_expected', '<', self.order_id.init_date_invoice),
-             ('advertisement_date', '=', False),
-             ('parent_sale_line', '=', False)], 'INI'),
+              ('project_id', '=', self.order_id.project_id.id),
+              ('partner_id', '=', self.order_id.partner_id.id),
+              ('code', '!=', 'internal'),
+              ('date', '>=', self.order_id.init_date_invoice),
+              ('date', '<=', self.order_id.end_date_invoice),
+              ('move_id.parent_sale_line', '=', False)], 'ALL'),
         ]
-
-        _logger.warning(search_op)
 
         if self.order_id.order_type not in ['rent']:
             invoice_lines = super(SaleOrderLine, self).invoice_line_create(
                 invoice_id, qty)
         else:
-            vals = []
             invoice_lines = self.env['account.invoice.line']
             precision = self.env['decimal.precision'].precision_get(
                 'Product Unit of Measure')
             # Get REM
             for line in self:
+                vals = []
+                if line.product_id in self.env['account.invoice'].browse(
+                        invoice_id).invoice_line_ids.mapped('product_id'):
+                    continue
 
                 if not float_is_zero(qty, precision_digits=precision):
+                    history = []
                     for op in search_op:
-                        vals = line._prepare_invoice_line_from_stock(
-                            domain=op[0], reference=op[1],
-                            invoice_id=invoice_id)
-                        for val in vals:
-                            invoice_lines |= self.env['account.invoice.line']\
-                                .create(val)
+
+                        if op[1] == 'INI':
+                            moves = self.env['stock.move.history'].search(
+                                op[0], order="date, id")
+                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and ( # noqa
+                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or # noqa
+                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location) # noqa
+                            ))
+
+                            if moves:
+                                history += moves[-1]
+                        else:
+                            moves = self.env['stock.move.history'].search(
+                                op[0], order="create_date, id asc")
+                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and ( # noqa
+                                (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or # noqa
+                                (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location) # noqa
+                            ))
+                            if moves:
+                                history += [mh for mh in moves]
+
+                        if history:
+                            history = sorted(history, key=lambda h: (h.move_id.advertisement_date or h.move_id.date_expected)) # noqa
+                            vals = line._prepare_invoice_line_from_stock(
+                                history, invoice_id=invoice_id)
+                for val in vals:
+                    invoice_lines |= self.env['account.invoice.line']\
+                        .create(val)
         return invoice_lines
 
