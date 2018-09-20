@@ -14,6 +14,8 @@ class SaleOrderLine(models.Model):
         'product_id')
     def _fnct_line_stock(self):
         available = self.product_id.qty_available - self.product_uom_qty
+        if available < 0.0:
+            available = 0.0
         self.real_available = available
 
     real_available = fields.Float(
