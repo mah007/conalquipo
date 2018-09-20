@@ -19,12 +19,11 @@
 #
 ##############################################################################
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from odoo import _, api, fields, models
-from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -52,18 +51,19 @@ class SaleOrder(models.Model):
 
         return invoice_vals
 
-
     @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         """
         Create the invoice associated to the SO.
-        :param grouped: if True, invoices are grouped by SO id. If False, invoices are grouped by
-                        (partner_invoice_id, currency)
+        :param grouped: if True, invoices are grouped by SO id.
+            If False, invoices are grouped by
+            (partner_invoice_id, currency)
         :param final: if True, refunds will be generated if necessary
         :returns: list of created invoices
         """
         values = super(SaleOrder, self).action_invoice_create(grouped, final)
         return values
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -78,8 +78,8 @@ class SaleOrderLine(models.Model):
         # Get tasks values
         if not self.is_extra and \
                 not self.is_component and \
-                        self.bill_uom.id not in \
-                        self.company_id.default_uom_task_id._ids:
+                self.bill_uom.id not in \
+                self.company_id.default_uom_task_id._ids:
             task = self.env['project.task'].search(
                 [('sale_line_id', '=', self.id)])
             for timesheet in task.timesheet_ids:
