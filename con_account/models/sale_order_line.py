@@ -47,7 +47,8 @@ class SaleOrder(models.Model):
         """
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals.update({'init_date_invoice': self.init_date_invoice,
-                             'end_date_invoice': self.end_date_invoice})
+                             'end_date_invoice': self.end_date_invoice,
+                             'invoice_type': self.order_type})
 
         return invoice_vals
 
@@ -348,6 +349,8 @@ class SaleOrderLine(models.Model):
               ('move_id.parent_sale_line', '=', False)], 'ALL'),
         ]
 
+        _logger.info("Search OP: %s" % search_op)
+
         if self.order_id.order_type not in ['rent']:
             invoice_lines = super(SaleOrderLine, self).invoice_line_create(
                 invoice_id, qty)
@@ -393,4 +396,15 @@ class SaleOrderLine(models.Model):
                 for val in vals:
                     invoice_lines |= self.env['account.invoice.line']\
                         .create(val)
+
+                for line in self.filtered(
+                        lambda sol: sol.product_id.type == 'service' and
+                                not sol.product_id.for_shipping):
+                    if not float_is_zero(qty, precision_digits=precision):
+                        vals = line._prepare_invoice_line(qty=qty)
+                        vals.update({'invoice_id': invoice_id,
+                                     'sale_line_ids': [(6, 0, [line.id])]})
+                        invoice_lines |= self.env[
+                            'account.invoice.line'].create(vals)
+
         return invoice_lines

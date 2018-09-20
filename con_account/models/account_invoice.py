@@ -65,14 +65,15 @@ class AccountInvoiceLine(models.Model):
         'invoice_id.date_invoice', 'invoice_id.date')
     def _compute_price(self):
         res = super(AccountInvoiceLine, self)._compute_price()
-        if self.products_on_work == 0.0:
-            if self.product_id.categ_id.name == "Acarreos":
-                self.price_subtotal = self.quantity * self.price_unit
+        if self.invoice_id.invoice_type in ['rent']:
+            if self.products_on_work == 0.0:
+                if self.product_id.type != 'product':
+                    self.price_subtotal = self.quantity * self.price_unit
+                else:
+                    self.price_subtotal = 0.0
             else:
-                self.price_subtotal = 0.0
-        else:
-            self.price_subtotal = \
-             self.products_on_work * self.quantity * self.price_unit
+                self.price_subtotal = \
+                 self.products_on_work * self.quantity * self.price_unit
         return res
 
 
