@@ -241,8 +241,50 @@ class StockMoveHistory(Model):
         default='internal')
     product_count = fields.Float(string="On work")
     quantity_done = fields.Float(string="Qty done")
+    quantity_project = fields.Float(
+        string="Qty Project", compute='_compute_quantity_project', store=False)
     sale_line_id = fields.Many2one('sale.order.line', 'Sale Line')
     move_id = fields.Many2one('stock.move', string="Move")
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=True,
         default=lambda self: self.env.user.company_id)
+    # TODO: Crear campo para relacionar con la linea de la factura
+    date = fields.Datetime(compute='_compute_date', store=True, help="Date")
+
+    @api.depends('move_id.date_expected', 'picking_id.advertisement_date')
+    def _compute_date(self):
+        """
+        Method compute date
+        """
+        for record in self:
+            if record.picking_id.advertisement_date:
+                record.date = record.picking_id.advertisement_date
+            else:
+                record.date = record.move_id.date_expected
+
+    def _compute_quantity_project(self):
+        """Method calc quantity in project"""
+        for record in self:
+            pick_out = self.search([('product_id', '=', record.product_id.id),
+                                    ('project_id', '=', record.project_id.id),
+                                    ('partner_id', '=', record.partner_id.id),
+                                    ('code', '=', 'outgoing'),
+                                    ('date', '<=', record.date),
+                                    ('picking_id.state', '=', 'done'),
+                                    ('move_id.parent_sale_line', '=', False)])
+            pick_out = pick_out.filtered(
+                lambda h: h.move_id.location_dest_id.usage == 'customer')
+
+            pick_in = self.search([('product_id', '=', record.product_id.id),
+                                   ('project_id', '=', record.project_id.id),
+                                   ('partner_id', '=', record.partner_id.id),
+                                   ('code', '=', 'incoming'),
+                                   ('date', '<=', record.date),
+                                   ('picking_id.state', '=', 'done'),
+                                   ('move_id.parent_sale_line', '=', False)])
+            pick_in = pick_in.filtered(
+                lambda h: h.move_id.returned and h.move_id.location_dest_id.return_location) # noqa
+            quantity = sum(pick_out.mapped('quantity_done')) - sum(
+                pick_in.mapped('quantity_done'))
+
+            record.quantity_project = quantity
