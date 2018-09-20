@@ -123,7 +123,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'group_id': move.group_id.id,
                     'state': 'draft',
                     'sale_line_id': move.sale_line_id.id,
-                    'advertisement_date': advertisement_date
+                    # 'advertisement_date': advertisement_date
                 })
 
         picking_ids.append(picking_main)
@@ -167,7 +167,7 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     'group_id': move.group_id.id,
                     'state': 'draft',
                     'sale_line_id': move.sale_line_id.id,
-                    'advertisement_date': advertisement_date
+                    # 'advertisement_date': advertisement_date
                 })
 
             picking_ids.append(picking_id)

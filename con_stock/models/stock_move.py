@@ -56,9 +56,9 @@ class StockMove(Model):
         compute='_compute_product_history',
         string="History on work",
         track_visibility='onchange', store=True)
-    advertisement_date = fields.Datetime(
+    advertisement_date = fields.Date(
         string="Advertisement date",
-        track_visibility='onchange')
+        related="picking_id.advertisement_date", store=True)
 
     @api.model
     def create(self, vals):
