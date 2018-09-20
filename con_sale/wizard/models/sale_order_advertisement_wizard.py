@@ -137,10 +137,17 @@ class SaleOrderAdvertisementWizard(models.TransientModel):
                     move_ids_groups.update({product_origin: [move]})
 
         for picking in move_ids_groups.keys():
+            # import pdb;
+            # pdb.set_trace()
+
+            picking_type_id = self.env['stock.picking.type'].search(
+                [('default_location_src_id', '=', picking),
+                 ('code', '=', 'internal')])
+
             picking_id = self.env['stock.picking'].create({
                 'partner_id': partner_id,
                 'project_id': project_id,
-                'picking_type_id': picking_type,
+                'picking_type_id': picking_type_id.id,
                 'location_id': des_location,
                 'location_dest_id': picking,
                 'origin': origin,
