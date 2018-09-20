@@ -245,6 +245,8 @@ class StockMoveHistory(Model):
         'res.company', string='Company', readonly=True,
         default=lambda self: self.env.user.company_id)
     # TODO: Crear campo para relacionar con la linea de la factura
+    invoice_line_ids = fields.One2many(
+        'account.invoice.line', 'move_history_id', help="Invoice Lines")
     date = fields.Datetime(compute='_compute_date', store=True, help="Date")
 
     @api.depends('move_id.date_expected', 'picking_id.advertisement_date')

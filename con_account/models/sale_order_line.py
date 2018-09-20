@@ -239,6 +239,7 @@ class SaleOrderLine(models.Model):
                 'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
                 'sale_line_ids': [(6, 0, [self.id])]
                 if mv.code == 'outgoing' else False,
+                'move_history_id': mv.id,
             }
 
             if mv.quantity_project == 0.0:
@@ -351,7 +352,7 @@ class SaleOrderLine(models.Model):
                         else:
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="create_date, id asc")
-                            moves = moves.filtered(lambda h: h.picking_id.state == 'done' and (  # noqa
+                            moves = moves.filtered(lambda h: not h.invoice_line_ids and h.picking_id.state == 'done' and (  # noqa
                                 (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or  # noqa
                                 (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location)  # noqa
                             ))

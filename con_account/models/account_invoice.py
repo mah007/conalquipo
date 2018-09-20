@@ -54,6 +54,8 @@ class AccountInvoiceLine(models.Model):
     parent_sale_line = fields.Many2one(
         comodel_name='sale.order.line',
         string='Parent sale line')
+    move_history_id = fields.Many2one(
+        'stock.move.history', 'Stock Move History', help="Stock Move History")
 
     @api.one
     @api.depends(
