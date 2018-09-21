@@ -45,3 +45,9 @@ msgstr "Tarjeta de ciudadania"
 #: model:res.country,vat_label:base.sk model:res.country,vat_label:base.uk
 msgid "VAT"
 msgstr "NIT"
+
+#. module: base_vat_autocomplete
+#: model:ir.ui.view,arch_db:base_vat_autocomplete.view_partner_form
+#: model:ir.ui.view,arch_db:base_vat_autocomplete.view_partner_short_form
+msgid "VAT"
+msgstr "NIT"
