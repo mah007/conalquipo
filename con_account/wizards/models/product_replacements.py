@@ -5,7 +5,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class ProdcuctReplacements(models.TransientModel):
+class ProductReplacements(models.TransientModel):
     _name = "product.replacements"
 
     @api.model
@@ -21,11 +21,12 @@ class ProdcuctReplacements(models.TransientModel):
         qty_invoices = 0.0
         if self.init_date and self.end_date:
             invoice_lines_ids = self.env['account.invoice.line'].search(
-                [('date_move', '>=', self.init_date),
-                 ('date_move', '<=', self.end_date)])
+                [('invoice_id.init_date_invoice', '>=', self.init_date),
+                 ('invoice_id.end_date_invoice', '<=', self.end_date)])
             for data in invoice_lines_ids:
                 if data.product_id.product_tmpl_id.categ_id.id ==\
-                 self.product_category_id.id:
+                 self.product_category_id.id and data.invoice_id.state == \
+                        'paid':
                     qty += data.quantity
                     qty_invoices += data.price_subtotal
                     self.replacement_lines = [(0, 0, {
