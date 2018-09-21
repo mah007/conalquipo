@@ -3,14 +3,28 @@ from odoo import models, api, _, fields
 from odoo.exceptions import UserError
 
 
-class ProdcuctPeplacements(models.TransientModel):
-    _inherit = "product.replacements"
+class ProdcuctReplacements(models.TransientModel):
+    _name = "product.replacements"
 
     @api.model
     def _default_company(self):
         # Get the company
         company = self.env['res.users'].browse([self._uid]).company_id
         return company
+
+    @api.onchange(
+        'init_date', 'end_date')
+    def _get_data_report(self):
+        # Data
+        invoice_lines = []
+        # Lines
+        if self.init_date and self.end_date:
+            invoice_lines_ids = self.env['account.invoice.line'].search(
+                [('date_move', '>=', self.init_date),
+                 ('date_move', '<=', self.end_date)])
+            invoice_lines = invoice_lines_ids
+        for info in self:
+            info.invoice_lines_ids = invoice_lines
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -19,7 +33,7 @@ class ProdcuctPeplacements(models.TransientModel):
         string="initital date")
     end_date = fields.Date(
         string="End date")
-    invoice_lines_ids = fields.One2many(
+    invoice_lines_ids = fields.Many2many(
         'account.invoice.line', string="Lines")
 
     @api.multi

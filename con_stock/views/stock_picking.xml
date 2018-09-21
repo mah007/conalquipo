@@ -15,7 +15,7 @@
 
                 <xpath expr="//button[@name='button_scrap']" position="replace">
                     <button name="button_scrap" type="object" string="Scrap"
-                        attrs="{'invisible': ['|', '|', ('picking_type_code', '!=', 'internal'), ('state', '=', 'done'), ('is_locked', '=', False)]}"/>
+                        attrs="{'invisible': ['|', '|', ('state', '=', 'done'), ('is_locked', '=', False)]}"/>
                 </xpath>
 
                 <xpath expr='//header' position="inside">
