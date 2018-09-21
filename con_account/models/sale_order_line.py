@@ -52,33 +52,33 @@ class SaleOrder(models.Model):
 
         return invoice_vals
 
-    @api.multi
-    def action_invoice_create(self, grouped=False, final=False):
-        """
-        Create the invoice associated to the SO.
-        :param grouped: if True, invoices are grouped by SO id.
-            If False, invoices are grouped by
-            (partner_invoice_id, currency)
-        :param final: if True, refunds will be generated if necessary
-        :returns: list of created invoices
-        """
-        if self.env['account.invoice'].search(
-                ['|', '|', '&',
-                 ('init_date_invoice', '<=', self.init_date_invoice),
-                 ('end_date_invoice', '>=', self.init_date_invoice),
-                 '&',
-                 ('init_date_invoice', '<=', self.end_date_invoice),
-                 ('end_date_invoice', '>=', self.end_date_invoice),
-                 '&',
-                 ('init_date_invoice', '>=', self.init_date_invoice),
-                 ('end_date_invoice', '<=', self.end_date_invoice),
-                 ('partner_id', '=', self.partner_id.id),
-                 ('project_id', '=', self.project_id.id),
-                 ('state', '!=', 'cancel')]):
-            raise UserError(
-                'You are trying to create an invoice in a period and invoice.')
-        values = super(SaleOrder, self).action_invoice_create(grouped, final)
-        return values
+    # @api.multi
+    # def action_invoice_create(self, grouped=False, final=False):
+    #     """
+    #     Create the invoice associated to the SO.
+    #     :param grouped: if True, invoices are grouped by SO id.
+    #         If False, invoices are grouped by
+    #         (partner_invoice_id, currency)
+    #     :param final: if True, refunds will be generated if necessary
+    #     :returns: list of created invoices
+    #     """
+    #     if self.env['account.invoice'].search(
+    #             ['|', '|', '&',
+    #              ('init_date_invoice', '<=', self.init_date_invoice),
+    #              ('end_date_invoice', '>=', self.init_date_invoice),
+    #              '&',
+    #              ('init_date_invoice', '<=', self.end_date_invoice),
+    #              ('end_date_invoice', '>=', self.end_date_invoice),
+    #              '&',
+    #              ('init_date_invoice', '>=', self.init_date_invoice),
+    #              ('end_date_invoice', '<=', self.end_date_invoice),
+    #              ('partner_id', '=', self.partner_id.id),
+    #              ('project_id', '=', self.project_id.id),
+    #              ('state', '!=', 'cancel')]):
+    #         raise UserError(_('You are trying to create an invoice in '
+    #                           'a period and invoice.'))
+    #     values = super(SaleOrder, self).action_invoice_create(grouped, final)
+    #     return values
 
 
 class SaleOrderLine(models.Model):
