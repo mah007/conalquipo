@@ -26,8 +26,8 @@ class ProductReplacements(models.TransientModel):
                  ('invoice_id.end_date_invoice', '<=', self.end_date)])
             for data in invoice_lines_ids:
                 if data.product_id.product_tmpl_id.categ_id.id ==\
-                 self.product_category_id.id and data.invoice_id.state == \
-                        'paid':
+                 self.product_category_id.id and data.invoice_id.state in \
+                        ['open', 'paid']:
                     qty += data.quantity
                     qty_invoices += data.price_subtotal
                     self.replacement_lines = [(0, 0, {
