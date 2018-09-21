@@ -106,9 +106,9 @@ class SaleQuoteLine(models.Model):
         'Product', domain=[], required=True)
     bill_uom = fields.Many2one(
         'product.uom',
-        string='Sale UOM', domain=lambda self: self.compute_uoms())
+        string='Unidad de venta', domain=lambda self: self.compute_uoms())
     bill_uom_qty = fields.Float(
-        'Sale QTY',
+        'Cant. Venta',
         digits=dp.get_precision('Product Unit'
                                 ' of Measure'))
 
