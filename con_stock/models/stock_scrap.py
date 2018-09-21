@@ -41,8 +41,9 @@ class StockScrap(models.Model):
                  ('picking_id', '=', self.picking_id.id)])
         for products_qty in available_qty:
             qtys.append(products_qty.product_qty)
-        if float_compare(sum(qtys), \
-         self.scrap_qty, precision_digits=precision) >= 0:
+        if float_compare(sum(qtys),
+           self.scrap_qty,
+           precision_digits=precision) >= 0:
             return self.do_scrap()
         else:
             return {
