@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 11.0+e-20180918\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 04:18+0000\n"
-"PO-Revision-Date: 2018-09-20 23:32-0500\n"
+"POT-Creation-Date: 2018-09-21 22:37+0000\n"
+"PO-Revision-Date: 2018-09-21 17:40-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_account
 #: model:account.payment.term,name:con_account.account_payment_term_fin_10
@@ -151,6 +151,21 @@ msgstr ""
 "                                    </strong>"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "<strong>Categoria de producto:</strong>"
+msgstr "<strong>Categoria de producto:</strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "<strong>Fecha final:</strong>"
+msgstr "<strong>Fecha final:</strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "<strong>Fecha inicial:</strong>"
+msgstr "<strong>Fecha inicial:</strong>"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "<strong>Invoice Date: </strong>"
 msgstr "<strong>Fecha de Factura: </strong>"
@@ -175,6 +190,11 @@ msgstr "AUTORIZADOS A FACTURAR DEL CR 30001 AL 36000 RESOLUCIÓN No 110000671126
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_active
 msgid "Active"
 msgstr "Activo"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_qty_invoices
+msgid "Amount invoiced"
+msgstr "Monto facturado"
 
 #. module: con_account
 #: model:ir.actions.act_window,name:con_account.action_account_invoice_year_period
@@ -203,6 +223,11 @@ msgid "Biweekly"
 msgstr "Quincenal"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "Cancelled Invoice No"
 msgstr "Factura Cancelada No"
@@ -216,6 +241,16 @@ msgstr "Cant. Dev."
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "Cant. Rem."
 msgstr "Cant. Rem."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "Cantidad"
+msgstr "Cantidad"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "Categoria de productos facturados"
+msgstr "Categoria de productos facturados"
 
 #. module: con_account
 #: model:ir.actions.act_window,help:con_account.action_account_invoice_year_period
@@ -255,6 +290,7 @@ msgstr "Codígo"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_company_id
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_company_id
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_company_id
 msgid "Company"
 msgstr "Compañía"
 
@@ -266,12 +302,16 @@ msgstr "Confirmar las facturas seleccionadas"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_create_uid
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_create_uid
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_create_uid
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_create_date
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_create_date
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_create_date
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_create_date
 msgid "Created on"
 msgstr "Creado"
 
@@ -321,6 +361,9 @@ msgstr "Días entrega"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_display_name
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_display_name
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_display_name
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_display_name
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements_display_name
 msgid "Display Name"
 msgstr "Nombre Público"
 
@@ -379,6 +422,7 @@ msgstr "Fecha Final"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_end_date
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_end_date
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_end_date
 msgid "End date"
 msgstr "Fecha final"
 
@@ -414,6 +458,12 @@ msgid "Final range"
 msgstr "Rango final"
 
 #. module: con_account
+#: code:addons/con_account/report/report_product_replacements.py:19
+#, python-format
+msgid "Form content is missing, this report cannot be printed."
+msgstr "El contenido del formulario de ha perdido. Este reporte no puede ser impreso."
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.view_account_invoice_year_period_form
 msgid "Generate periods"
 msgstr "Generar período"
@@ -421,6 +471,9 @@ msgstr "Generar período"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_id
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_id
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_id
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_id
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements_id
 msgid "ID"
 msgstr "ID"
 
@@ -476,25 +529,43 @@ msgstr "Sector facturación"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period___last_update
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period___last_update
+#: model:ir.model.fields,field_description:con_account.field_product_replacements___last_update
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines___last_update
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements___last_update
 msgid "Last Modified on"
 msgstr "Última Modificación el"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_write_uid
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_write_uid
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_write_uid
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_write_uid
 msgid "Last Updated by"
 msgstr "Actualizado por"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_write_date
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_write_date
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_write_date
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_write_date
 msgid "Last Updated on"
 msgstr "Actualizado"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_replacement_lines
+#: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+msgid "Lines"
+msgstr "Líneas"
 
 #. module: con_account
 #: selection:account.invoice.year.period,interval:0
 msgid "Monthly"
 msgstr "Mensual"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "Monto facturado"
+msgstr "Monto facturado"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_name
@@ -523,7 +594,7 @@ msgid "Nombre de equipo"
 msgstr "Nombre de equipo"
 
 #. module: con_account
-#: code:addons/con_account/models/sale_order_line.py:309
+#: code:addons/con_account/models/sale_order_line.py:310
 #, python-format
 msgid "Not linked move"
 msgstr "No hay movimiento enlazado"
@@ -574,7 +645,7 @@ msgstr "PRE FACTURA"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_parent_sale_line
 msgid "Parent sale line"
-msgstr "Linea de orden padre"
+msgstr "Linea de la orden padre"
 
 #. module: con_account
 #: model:account.payment.term,note:con_account.account_payment_term_fin_10
@@ -620,9 +691,45 @@ msgid "Precio"
 msgstr "Precio"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_product_category_id
+msgid "Product category"
+msgstr "Categoría de producto"
+
+#. module: con_account
+#: model:ir.actions.report,name:con_account.action_product_replacements_report
+msgid "Product invoiced report"
+msgstr "Reporte de productos facturados"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_product_replacements
+msgid "Producto"
+msgstr "Producto"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+msgid "Products invoiced"
+msgstr "Productos facturados"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_products_on_work
 msgid "Products on work"
 msgstr "Productos en obra"
+
+#. module: con_account
+#: model:ir.actions.act_window,name:con_account.action_wizard_replacements
+#: model:ir.ui.menu,name:con_account.menu_product_replacements
+msgid "Products replacements"
+msgstr "Reposiciones de productos"
 
 #. module: con_account
 #: selection:account.invoice,invoice_type:0
@@ -645,6 +752,11 @@ msgid "Qty returned"
 msgstr "Cant. DEV"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: con_account
 #: model:ir.model,name:con_account.model_sale_order
 msgid "Quotation"
 msgstr "Cotización"
@@ -653,6 +765,11 @@ msgstr "Cotización"
 #: selection:account.invoice,invoice_type:0
 msgid "Rent"
 msgstr "Arriendo"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_replacement_id
+msgid "Replacement"
+msgstr "Reposiciones"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
@@ -746,11 +863,6 @@ msgstr "Fecha inicial"
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_state
 msgid "State"
 msgstr "Estado"
-
-#. module: con_account
-#: model:ir.model,name:con_account.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de stock"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_move_history_id
@@ -867,3 +979,28 @@ msgstr "account.invoice.period.period"
 #: model:ir.model,name:con_account.model_account_invoice_year_period
 msgid "account.invoice.year.period"
 msgstr "account.invoice.year.period"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_product_replacements_init_date
+msgid "initital date"
+msgstr "Fecha incial"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+msgid "or"
+msgstr "o"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_product_replacements
+msgid "product.replacements"
+msgstr "product.replacements"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_product_replacements_lines
+msgid "product.replacements.lines"
+msgstr "product.replacements.lines"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_report_con_account_report_product_replacements
+msgid "report.con_account.report_product_replacements"
+msgstr "report.con_account.report_product_replacements"
