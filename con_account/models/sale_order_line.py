@@ -290,9 +290,10 @@ class SaleOrderLine(models.Model):
         Create deliveries
         """
         # Get vehicle price
-        product = picking.carrier_id.product_id
+
+        product = picking.carrier_id.product_id or False
         document = "ACAR: " + picking.name
-        if picking.delivery_cost:
+        if picking.delivery_cost and product:
             for delivery in picking.delivery_cost:
                 if self.env['account.invoice.line'].search(
                         [('document', '=', document),
@@ -369,6 +370,8 @@ class SaleOrderLine(models.Model):
                     for op in search_op:
 
                         if op[1] == 'INI':
+                            import pdb;
+                            pdb.set_trace()
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="date, id")
                             moves = moves.filtered(lambda h: h.picking_id.state == 'done' and (  # noqa
