@@ -8,6 +8,11 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
+            <field name="vat" position="replace">
+                <field name="vat" 
+                string="NIT"/>
+            </field>
+
             <xpath expr="//form/sheet/notebook/page/field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="before">
                 <field name="contact_person" attrs="{'invisible': [('type','!=','contact')]}"/>
             </xpath>
