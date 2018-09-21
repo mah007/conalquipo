@@ -73,7 +73,8 @@ class SaleOrder(models.Model):
                  ('init_date_invoice', '>=', self.init_date_invoice),
                  ('end_date_invoice', '<=', self.end_date_invoice),
                  ('partner_id', '=', self.partner_id.id),
-                 ('project_id', '=', self.project_id.id)]):
+                 ('project_id', '=', self.project_id.id),
+                 ('state', '!=', 'cancel')]):
             raise UserError(
                 'You are trying to create an invoice in a period and invoice.')
         values = super(SaleOrder, self).action_invoice_create(grouped, final)
@@ -349,8 +350,6 @@ class SaleOrderLine(models.Model):
               ('move_id.parent_sale_line', '=', False)], 'ALL'),
         ]
 
-        _logger.info("Search OP: %s" % search_op)
-
         if self.order_id.order_type not in ['rent']:
             invoice_lines = super(SaleOrderLine, self).invoice_line_create(
                 invoice_id, qty)
@@ -382,7 +381,8 @@ class SaleOrderLine(models.Model):
                         else:
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="create_date, id asc")
-                            moves = moves.filtered(lambda h: not h.invoice_line_ids and h.picking_id.state == 'done' and (  # noqa
+                            moves = moves.filtered(
+                                lambda h: (not h.invoice_line_ids or len([li for li in h.invoice_line_ids if li.invoice_id.state == 'cancel']) == len(h.invoice_line_ids)) and h.picking_id.state == 'done' and (  # noqa
                                 (h.code == 'outgoing' and h.move_id.location_dest_id.usage == 'customer') or  # noqa
                                 (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location)  # noqa
                             ))
@@ -399,7 +399,7 @@ class SaleOrderLine(models.Model):
 
                 for line in self.filtered(
                         lambda sol: sol.product_id.type == 'service' and
-                                not sol.product_id.for_shipping):
+                        not sol.product_id.for_shipping):
                     if not float_is_zero(qty, precision_digits=precision):
                         vals = line._prepare_invoice_line(qty=qty)
                         vals.update({'invoice_id': invoice_id,
