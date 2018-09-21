@@ -376,7 +376,7 @@ class SaleOrderLine(models.Model):
                                 (h.code == 'incoming' and h.move_id.returned and h.move_id.location_dest_id.return_location)  # noqa
                             ))
 
-                            if moves:
+                            if moves and moves[-1].quantity_project > 0:
                                 history += moves[-1]
                         else:
                             moves = self.env['stock.move.history'].search(
