@@ -21,6 +21,7 @@
 
 from odoo.models import Model, api, _
 from odoo import fields
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -145,6 +146,25 @@ class StockMove(Model):
         history = self.env['stock.move.history']
         for order in res:
             if order.picking_id.picking_type_id.code != 'internal':
+                date = order.picking_id.advertisement_date \
+                    or order.date_expected
+                m_histories = history.search(
+                    [('partner_id', '=', order.picking_id.partner_id.id),
+                     ('project_id', '=', order.picking_id.project_id.id),
+                     ('product_id', '=', order.product_id.id),
+                     ('date', '>=', date),
+                     ])
+                m_histories = m_histories.filtered(
+                    lambda h: h.invoice_line_ids
+                    and h.invoice_line_ids.filtered(
+                        lambda b: b.invoice_id.state != 'cancel'))
+                if m_histories:
+                    raise UserError(_(
+                        'The move of the product %s, can not be generated '
+                        'for this period, since it is in the following '
+                        'invoices: %s') % (
+                            order.product_id.name,
+                            ', '.join(list(set([li.invoice_id.name or li.invoice_id.origin for li in m_histories.mapped('invoice_line_ids')]))))) # noqa
                 vals = {
                     'picking_id': order.picking_id.id,
                     'partner_id': order.picking_id.partner_id.id,
@@ -244,7 +264,6 @@ class StockMoveHistory(Model):
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=True,
         default=lambda self: self.env.user.company_id)
-    # TODO: Crear campo para relacionar con la linea de la factura
     invoice_line_ids = fields.One2many(
         'account.invoice.line', 'move_history_id', help="Invoice Lines")
     date = fields.Datetime(compute='_compute_date', store=True, help="Date")
