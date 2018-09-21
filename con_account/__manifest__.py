@@ -27,6 +27,7 @@
         'data/account_payment_term.xml',
         'data/account_reconcile_model.xml',
         'report/report_invoice_inherit.xml',
+        'report/product_replacements_report.xml',
     ],
     'qweb': [
     ],

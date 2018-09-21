@@ -3,27 +3,34 @@
     <data>
         <!--Replacement product available Wizard-->
         <record id="product_replacement_wizard_view" model="ir.ui.view">
-            <field name="name">Product replacements Wizard</field>
+            <field name="name">Product invoiced Wizard</field>
             <field name="model">product.replacements</field>
             <field name="arch" type="xml">
-                <form string="Product replacements">
+                <form string="Products invoiced">
 
                     <group>
                         <group>
                             <field name="company_id" invisible="1"/>
-                            <field name="init_date" required="1"/>
+                            <field name="product_category_id" required="1"/>
                         </group>
                         <group>
+                            <field name="init_date" required="1"/>
                             <field name="end_date" required="1"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Lines" invisible="0">
-                            <field name="invoice_lines_ids"/>
+                            <field name="replacement_lines">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="qty_invoices"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                     <footer>
-                        <button name="print_report" type="object" class="oe_highlight" string="Proceed" attrs="{'readonly': [('invoice_lines_ids', '=', False)]}"/>
+                        <button name="print_report" type="object" class="oe_highlight" string="Print" attrs="{'readonly': [('replacement_lines', '=', [])]}"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>

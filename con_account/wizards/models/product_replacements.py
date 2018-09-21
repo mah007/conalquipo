@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import models, api, _, fields
 from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ProdcuctReplacements(models.TransientModel):
@@ -13,18 +15,24 @@ class ProdcuctReplacements(models.TransientModel):
         return company
 
     @api.onchange(
-        'init_date', 'end_date')
+        'product_category_id', 'init_date', 'end_date')
     def _get_data_report(self):
-        # Data
-        invoice_lines = []
-        # Lines
+        qty = 0.0
+        qty_invoices = 0.0
         if self.init_date and self.end_date:
             invoice_lines_ids = self.env['account.invoice.line'].search(
                 [('date_move', '>=', self.init_date),
                  ('date_move', '<=', self.end_date)])
-            invoice_lines = invoice_lines_ids
-        for info in self:
-            info.invoice_lines_ids = invoice_lines
+            for data in invoice_lines_ids:
+                if data.product_id.product_tmpl_id.categ_id.id ==\
+                 self.product_category_id.id:
+                    qty += data.quantity
+                    qty_invoices += data.price_subtotal
+                    self.replacement_lines = [(0, 0, {
+                        'replacement_id': self.id,
+                        'product_id': data.product_id.id,
+                        'qty': qty,
+                        'qty_invoices': qty_invoices})]
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -33,8 +41,10 @@ class ProdcuctReplacements(models.TransientModel):
         string="initital date")
     end_date = fields.Date(
         string="End date")
-    invoice_lines_ids = fields.Many2many(
-        'account.invoice.line', string="Lines")
+    product_category_id = fields.Many2one(
+        'product.category', string="Product category")
+    replacement_lines = fields.One2many(
+        'product.replacements.lines', 'replacement_id', string="Lines")
 
     @api.multi
     def print_report(self):
@@ -44,9 +54,26 @@ class ProdcuctReplacements(models.TransientModel):
         """
         datas = {'ids': self.env.context.get('active_ids', [])}
         res = self.read(
-            ['company_id', 'init_date', 'end_date', 'invoice_lines_ids'])
+            ['company_id',
+             'product_category_id',
+             'init_date',
+             'end_date',
+             'replacement_lines'])
         res = res and res[0] or {}
         datas['form'] = res
         return self.env.ref(
             'con_account.action_product_replacements_report'
         ).with_context(landscape=True).report_action([], data=datas)
+
+
+class ProdcuctReplacementsLines(models.TransientModel):
+    _name = "product.replacements.lines"
+
+    replacement_id = fields.Many2one(
+        'product.replacements', string="Replacement")
+    product_id = fields.Many2one(
+        'product.product', string="Product")
+    qty = fields.Integer(
+        string="Quantity")
+    qty_invoices = fields.Integer(
+        string="Amount invoiced")
