@@ -38,8 +38,7 @@ class StockScrap(models.Model):
             'stock.move'].search(
                 [('product_id', '=', self.product_id.id),
                  ('location_id', '=', self.location_id.id),
-                 ('picking_id', '=', self.picking_id.id)
-                ])
+                 ('picking_id', '=', self.picking_id.id)])
         for products_qty in available_qty:
             qtys.append(products_qty.product_qty)
         if float_compare(sum(qtys), \
@@ -68,11 +67,11 @@ class StockScrap(models.Model):
                 return res
 
         if any([not res, not self.picking_id.sale_id,
-                not self.product_id.replenishment_charge,
+                not self.product_id.product_tmpl_id.replenishment_charge,
                 not self.scrap_location_id.is_charge_replacement]):
             return res
 
-        reple_id = self.product_id.replenishment_charge
+        reple_id = self.product_id.product_tmpl_id.replenishment_charge
         if reple_id:
             self.picking_id.sale_id.order_line.create({
                 'order_id': self.picking_id.sale_id.id,
@@ -91,7 +90,7 @@ class StockScrap(models.Model):
     def do_scrap(self):
         res = super(StockScrap, self).do_scrap()
         for scrap in self:
-            reple_id = scrap.product_id.replenishment_charge
+            reple_id = scrap.product_id.product_tmpl_id.replenishment_charge
             if not reple_id:
                 raise UserError(_(
                     "The product doesn't have replacement service!"))
@@ -108,11 +107,11 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
         scrap_id = self.scrap_id
 
         if any([not res, not scrap_id.picking_id.sale_id,
-                not scrap_id.product_id.replenishment_charge,
+                not scrap_id.product_id.product_tmpl_id.replenishment_charge,
                 not scrap_id.scrap_location_id.is_charge_replacement]):
             return res
 
-        reple_id = scrap_id.product_id.replenishment_charge
+        reple_id = scrap_id.product_id.product_tmpl_id.replenishment_charge
         if reple_id:
             scrap_id.picking_id.sale_id.order_line.create({
                 'order_id': scrap_id.picking_id.sale_id.id,
