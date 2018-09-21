@@ -1342,3 +1342,8 @@ msgstr "res.config.settings"
 #: model:ir.model,name:con_sale.model_sale_order_advertisement_wizard
 msgid "sale.order.advertisement.wizard"
 msgstr "sale.order.advertisement.wizard"
+
+#. module: con_sale
+#: model:ir.model.fields,help:con_sale.field_sale_quote_line_bill_uom
+msgid "Sale UOMt"
+msgstr "Unidad de venta"
