@@ -1019,6 +1019,23 @@ class SaleOrder(models.Model):
             'target': 'new',
         }
 
+    @api.multi
+    def action_cancel_wizard(self):
+        wizard_id = self.env['sale.order.cancel.wizard'].create(
+            vals={'partner_id': self.partner_id.id,
+                  'project_id': self.project_id.id,
+                  'sale_order_id': self.id,
+                  })
+        return {
+            'name': 'Cancellation Wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'sale.order.cancel.wizard',
+            'res_id': wizard_id.id,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
     @api.model
     def create(self, values):
         # Overwrite sale order create

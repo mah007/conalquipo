@@ -247,6 +247,11 @@
                 <field name="sale_order_id" readonly="1" attrs="{'invisible': [('sale_order_id','=', False)]}"/>
             </xpath>
 
+            <xpath expr="//button[@name='action_cancel']" position="replace">
+                <button name="action_cancel_wizard" string="Cancel"
+                        type="object" states="draft,sent,sale"/>
+            </xpath>
+
             <xpath expr='//header' position="inside">
                 <button name="action_advertisement" string="advertisement" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['sale']), ('product_count', '&lt;=', 0)]}" context="{'default_carrier_type': carrier_type}"/>
             </xpath>

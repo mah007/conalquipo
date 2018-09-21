@@ -32,6 +32,7 @@
              'views/sale_report_inherit.xml',
              'wizard/views/sale_order_advertisement_wizard.xml',
              'wizard/views/customer_portfolio_wizard.xml',
+             'wizard/views/sale_order_cancellation.xml',
              'data/res_config.yml',
              'data/email_template.xml',
              'data/cron_template.xml',
