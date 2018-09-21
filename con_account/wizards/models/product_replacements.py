@@ -19,6 +19,7 @@ class ProductReplacements(models.TransientModel):
     def _get_data_report(self):
         qty = 0.0
         qty_invoices = 0.0
+        self.replacement_lines = []
         if self.init_date and self.end_date:
             invoice_lines_ids = self.env['account.invoice.line'].search(
                 [('invoice_id.init_date_invoice', '>=', self.init_date),
