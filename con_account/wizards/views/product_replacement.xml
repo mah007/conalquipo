@@ -24,7 +24,7 @@
                                 <tree>
                                     <field name="product_id"/>
                                     <field name="qty"/>
-                                    <field name="qty_invoices"/>
+                                    <field name="qty_invoices" widget='monetary'/>
                                 </tree>
                             </field>
                         </page>
