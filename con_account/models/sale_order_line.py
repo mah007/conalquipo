@@ -370,8 +370,6 @@ class SaleOrderLine(models.Model):
                     for op in search_op:
 
                         if op[1] == 'INI':
-                            import pdb;
-                            pdb.set_trace()
                             moves = self.env['stock.move.history'].search(
                                 op[0], order="date, id")
                             moves = moves.filtered(lambda h: h.picking_id.state == 'done' and (  # noqa
