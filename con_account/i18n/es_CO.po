@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-06 16:26+0000\n"
-"PO-Revision-Date: 2018-09-06 11:35-0500\n"
+"POT-Creation-Date: 2018-09-21 04:18+0000\n"
+"PO-Revision-Date: 2018-09-20 23:32-0500\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es_CO\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: con_account
 #: model:account.payment.term,name:con_account.account_payment_term_fin_10
@@ -28,14 +28,147 @@ msgid "30 Net Days (Financial discount 20%)"
 msgstr "30 días netos (descuento financiero 20%)"
 
 #. module: con_account
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
-msgid "<strong>Work invoice address:</strong>"
-msgstr "<strong>Dirección facturación de obra:</strong>"
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Dirección: </span>\n"
+"                                    </strong>"
+msgstr ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Dirección: </span>\n"
+"                                    </strong>"
 
 #. module: con_account
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
-msgid "<strong>Work:</strong>"
-msgstr "<strong>Obra:</strong>"
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Obra: </span>\n"
+"                                    </strong>"
+msgstr ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Obra: </span>\n"
+"                                    </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Referencia: </span>\n"
+"                                    </strong>"
+msgstr ""
+"<br/>\n"
+"                                    <strong>\n"
+"                                        <span>Referencia: </span>\n"
+"                                    </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<br/>\n"
+"                                    <strong>Due Date: </strong>"
+msgstr ""
+"<br/>\n"
+"                                    <strong>Fecha de Expiración: </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<br/>\n"
+"                                <span>Pbx.</span>"
+msgstr ""
+"<br/>\n"
+"                                <span>Pbx.</span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<span style=\"font-size:16px;\">CARGO:</span>"
+msgstr "<span style=\"font-size:16px;\">CARGO:</span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<span style=\"font-size:16px;\">FECHA DE RECIBO:</span>"
+msgstr "<span style=\"font-size:16px;\">FECHA DE RECIBO:</span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<span style=\"font-size:16px;\">NOMBRE:</span>"
+msgstr "<span style=\"font-size:16px;\">NOMBRE:</span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<span> / </span>\n"
+"                                        <strong>\n"
+"                                            <span>NIT: </span>\n"
+"                                        </strong>"
+msgstr ""
+"<span> / </span>\n"
+"                                        <strong>\n"
+"                                            <span>NIT: </span>\n"
+"                                        </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<span> / </span>\n"
+"                                        <strong>\n"
+"                                            <span>Tel: </span>\n"
+"                                        </strong>"
+msgstr ""
+"<span> / </span>\n"
+"                                        <strong>\n"
+"                                            <span>Tel: </span>\n"
+"                                        </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<span>&amp;nbsp;\n"
+"                                                        </span>"
+msgstr ""
+"<span>&amp;nbsp;\n"
+"                                                        </span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<span>Total de: </span>"
+msgstr "<span>Total de: </span>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid ""
+"<strong>\n"
+"                                        <span>Señores: </span>\n"
+"                                    </strong>"
+msgstr ""
+"<strong>\n"
+"                                        <span>Señores: </span>\n"
+"                                    </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<strong>Invoice Date: </strong>"
+msgstr "<strong>Fecha de Factura: </strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Subtotal</strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "<strong>Total de la factura</strong>"
+msgstr "<strong>Total de la factura</strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "AUTORIZADOS A FACTURAR DEL CR 30001 AL 36000 RESOLUCIÓN No 110000671126 DE MARZO DE 15 DE 2016."
+msgstr "AUTORIZADOS A FACTURAR DEL CR 30001 AL 36000 RESOLUCIÓN No 110000671126 DE MARZO DE 15 DE 2016."
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_active
@@ -70,9 +203,19 @@ msgid "Biweekly"
 msgstr "Quincenal"
 
 #. module: con_account
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
-msgid "Cancelled Invoice"
-msgstr "Factura cancelada"
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Cancelled Invoice No"
+msgstr "Factura Cancelada No"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Cant. Dev."
+msgstr "Cant. Dev."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Cant. Rem."
+msgstr "Cant. Rem."
 
 #. module: con_account
 #: model:ir.actions.act_window,help:con_account.action_account_invoice_year_period
@@ -92,8 +235,8 @@ msgstr "Cerrar año"
 #. module: con_account
 #: selection:account.invoice.period.period,state:0
 #: selection:account.invoice.year.period,state:0
-#: code:addons/con_account/models/account_invoice_period.py:46
-#: code:addons/con_account/models/account_invoice_period.py:106
+#: code:addons/con_account/models/account_invoice_period.py:48
+#: code:addons/con_account/models/account_invoice_period.py:108
 #, python-format
 msgid "Closet"
 msgstr "Cerrado"
@@ -103,6 +246,11 @@ msgstr "Cerrado"
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_code
 msgid "Code"
 msgstr "Código"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Codígo"
+msgstr "Codígo"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_company_id
@@ -128,22 +276,26 @@ msgid "Created on"
 msgstr "Creado"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:355
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: code:addons/con_account/models/account_invoice.py:340
 #, python-format
 msgid "Credit Note"
 msgstr "Nota de crédito"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:356
+#: code:addons/con_account/models/account_invoice.py:341
 #, python-format
 msgid "Credit Note - %s"
 msgstr "Nota de crédito - %s"
 
 #. module: con_account
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Credit Note No"
+msgstr "Nota de Crédito No"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "DRAFT INVOICE"
-msgstr "FACTURA EN BORRADOR"
+msgstr "FACTURA DE BORRADOR"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_date_move
@@ -178,20 +330,34 @@ msgid "Document"
 msgstr "Documento"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Documento"
+msgstr "Documento"
+
+#. module: con_account
 #: selection:account.invoice.period.period,state:0
 #: selection:account.invoice.year.period,state:0
-#: code:addons/con_account/models/account_invoice_period.py:44
-#: code:addons/con_account/models/account_invoice_period.py:105
+#: code:addons/con_account/models/account_invoice_period.py:46
+#: code:addons/con_account/models/account_invoice_period.py:107
 #, python-format
 msgid "Draft"
 msgstr "Borrador"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:349
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: code:addons/con_account/models/account_invoice.py:334
 #, python-format
 msgid "Draft Invoice"
 msgstr "Factura borrador"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Draft Invoice No"
+msgstr "Factura Borrador No"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "ESTA FACTURA DE VENTA ES UN TITULO VALO (LEY 1231 DE JULIO 17 DE 2018)"
+msgstr "ESTA FACTURA DE VENTA ES UN TITULO VALO (LEY 1231 DE JULIO 17 DE 2018)"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_employee_id
@@ -206,6 +372,7 @@ msgstr "Código empleado"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_end_date_invoice
 #: model:ir.model.fields,field_description:con_account.field_sale_advance_payment_inv_end_date_invoice
+#: model:ir.model.fields,field_description:con_account.field_sale_order_end_date_invoice
 msgid "End Date"
 msgstr "Fecha Final"
 
@@ -216,10 +383,30 @@ msgid "End date"
 msgstr "Fecha final"
 
 #. module: con_account
-#: code:addons/con_account/wizards/models/sale_advance_payment_inv.py:30
+#: code:addons/con_account/wizards/models/sale_advance_payment_inv.py:33
 #, python-format
 msgid "End day can not be less than init day"
 msgstr "La fecha final no puede ser menor a la fecha inicial"
+
+#. module: con_account
+#: model:ir.actions.report,name:con_account.account_invoices_con
+msgid "Facturas"
+msgstr "Facturas"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Fech. Fin"
+msgstr "Fech. Fin"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Fech. Inic."
+msgstr "Fech. Inic."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Fecha"
+msgstr "Fecha"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.invoice_form
@@ -240,6 +427,7 @@ msgstr "ID"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_init_date_invoice
 #: model:ir.model.fields,field_description:con_account.field_sale_advance_payment_inv_init_date_invoice
+#: model:ir.model.fields,field_description:con_account.field_sale_order_init_date_invoice
 msgid "Init Date"
 msgstr "Fecha inicial"
 
@@ -255,12 +443,11 @@ msgstr "Intervalo"
 
 #. module: con_account
 #: model:ir.model,name:con_account.model_account_invoice
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
 msgid "Invoice"
 msgstr "Factura"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:353
+#: code:addons/con_account/models/account_invoice.py:338
 #, python-format
 msgid "Invoice - %s"
 msgstr "Factura - %s"
@@ -274,6 +461,11 @@ msgstr "Dirección facturación"
 #: model:ir.model,name:con_account.model_account_invoice_line
 msgid "Invoice Line"
 msgstr "Línea de Factura"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Invoice No"
+msgstr "Factura No"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_sector_id2
@@ -321,6 +513,22 @@ msgid "New date for invoices"
 msgstr "Nueva fecha"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "No. Días"
+msgstr "No. Días"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Nombre de equipo"
+msgstr "Nombre de equipo"
+
+#. module: con_account
+#: code:addons/con_account/models/sale_order_line.py:309
+#, python-format
+msgid "Not linked move"
+msgstr "No hay movimiento enlazado"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_num_days
 msgid "Number days"
 msgstr "Numero de días"
@@ -337,8 +545,8 @@ msgstr ""
 #. module: con_account
 #: selection:account.invoice.period.period,state:0
 #: selection:account.invoice.year.period,state:0
-#: code:addons/con_account/models/account_invoice_period.py:45
-#: code:addons/con_account/models/account_invoice_period.py:105
+#: code:addons/con_account/models/account_invoice_period.py:47
+#: code:addons/con_account/models/account_invoice_period.py:107
 #, python-format
 msgid "Open"
 msgstr "Abierto"
@@ -359,9 +567,14 @@ msgid "Owner"
 msgstr "Propietario"
 
 #. module: con_account
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "PRE INVOICE"
 msgstr "PRE FACTURA"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_line_parent_sale_line
+msgid "Parent sale line"
+msgstr "Linea de orden padre"
 
 #. module: con_account
 #: model:account.payment.term,note:con_account.account_payment_term_fin_10
@@ -380,16 +593,31 @@ msgid "Periods"
 msgstr "Períodos"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:351
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: code:addons/con_account/models/sale_order_line.py:134
+#, python-format
+msgid "Please define income account for this product: \"%s\" (id:%d) - or for its category: \"%s\"."
+msgstr "Por favor defina una cuenta de ingreso para este producto: \"%s\" (id: %d) - o para este categoría: \"%s\"."
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:336
 #, python-format
 msgid "Pre Invoice"
 msgstr "Pre factura"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Pre Invoice No"
+msgstr "Pre Factura No"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_pre_invoice
 msgid "Pre-Invoice?"
 msgstr "Pre-factura?"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Precio"
+msgstr "Precio"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_products_on_work
@@ -402,6 +630,11 @@ msgid "Purchase"
 msgstr "Compra"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_line_qty_remmisions
 msgid "Qty remmisions"
 msgstr "Cant. REM"
@@ -412,9 +645,29 @@ msgid "Qty returned"
 msgstr "Cant. DEV"
 
 #. module: con_account
+#: model:ir.model,name:con_account.model_sale_order
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: con_account
 #: selection:account.invoice,invoice_type:0
 msgid "Rent"
 msgstr "Arriendo"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "SI DENTRO DE DIEZ DÍAS SIGUIENTES A LA FECHA DE RECEPCIÓN NO SE HA TENIDO NINGÚN RECLAMO, LA FACTURA SE CONSIDERA ACEPTADA, SEGÚN LEY 1231 DE JULIO DE 2008."
+msgstr "SI DENTRO DE DIEZ DÍAS SIGUIENTES A LA FECHA DE RECEPCIÓN NO SE HA TENIDO NINGÚN RECLAMO, LA FACTURA SE CONSIDERA ACEPTADA, SEGÚN LEY 1231 DE JULIO DE 2008."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "SOMOS RETENEDORES DE IVA DEL REGÍMEN SIMPLIFICADO."
+msgstr "SOMOS RETENEDORES DE IVA DEL REGÍMEN SIMPLIFICADO."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Saldo Obra"
+msgstr "Saldo Obra"
 
 #. module: con_account
 #: selection:account.invoice,invoice_type:0
@@ -425,6 +678,11 @@ msgstr "Venta"
 #: model:ir.model,name:con_account.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "Factura de Ventas de Pago Anticipado"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de orden de ventas"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.invoice_form
@@ -490,10 +748,26 @@ msgid "State"
 msgstr "Estado"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:153
+#: model:ir.model,name:con_account.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de stock"
+
+#. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_line_move_history_id
+#: model:ir.model.fields,help:con_account.field_account_invoice_line_move_history_id
+msgid "Stock Move History"
+msgstr "Historial de Movimientos de Stock"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:147
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "Este código de empleado no pertenece a ningún grupo."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Total"
+msgstr "Total"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_invoice_type
@@ -506,30 +780,38 @@ msgid "Unit of Measure of Sale"
 msgstr "Unidad de medida de la venta"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:359
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: code:addons/con_account/models/account_invoice.py:344
 #, python-format
 msgid "Vendor Bill"
 msgstr "Factura de proveedor"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:361
+#: code:addons/con_account/models/account_invoice.py:346
 #, python-format
 msgid "Vendor Bill - %s"
 msgstr "Factura de proveedor - %s"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:363
-#: model:ir.ui.view,arch_db:con_account.report_invoice_inherit
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Vendor Bill No"
+msgstr "Factura Proveedor No"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:348
 #, python-format
 msgid "Vendor Credit Note"
 msgstr "Rectificativa de proveedor"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:364
+#: code:addons/con_account/models/account_invoice.py:349
 #, python-format
 msgid "Vendor Credit Note - %s"
 msgstr "Nota de crédito del vendedor - %s"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
+msgid "Vendor Credit Note No"
+msgstr "Nota de Crédito de Proveedor No"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_project_id
@@ -559,19 +841,19 @@ msgid "Years"
 msgstr "Años"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:341
+#: code:addons/con_account/models/account_invoice.py:323
 #, python-format
 msgid "You can't validate invoces. Check your permissions!"
 msgstr "No puede validar facturas. Por favor, chequea tus permisos!"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:338
+#: code:addons/con_account/models/account_invoice.py:320
 #, python-format
 msgid "You can't validate zero invoces. Check your permissions!"
 msgstr "No puede validar facturas en cero. Chequea tus permisos!"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:220
+#: code:addons/con_account/models/account_invoice.py:380
 #, python-format
 msgid "You don't have permission to edit the record!"
 msgstr "No tiene permisos para editar el registro! Consulte al administrador!"
