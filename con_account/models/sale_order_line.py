@@ -290,9 +290,10 @@ class SaleOrderLine(models.Model):
         Create deliveries
         """
         # Get vehicle price
-        product = picking.carrier_id.product_id
+
+        product = picking.carrier_id.product_id or False
         document = "ACAR: " + picking.name
-        if picking.delivery_cost:
+        if picking.delivery_cost and product:
             for delivery in picking.delivery_cost:
                 if self.env['account.invoice.line'].search(
                         [('document', '=', document),
