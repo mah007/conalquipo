@@ -171,8 +171,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
-                                <tr t-foreach="o.invoice_line_ids" t-as="l">
-
+                                <tr t-foreach="o.invoice_line_ids.sorted(key=lambda r: r.layout_category_id, reverse=True)" t-as="l">
                                     <t t-if="not l.parent_sale_line">
                                         <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.document"/></td>
                                         <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_move"/></td>
