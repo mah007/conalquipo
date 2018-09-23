@@ -126,7 +126,7 @@
                 attrs="{'readonly':[('active','=',False)]}" invisible="1"/>
 
               <field name="work_manager" string="Project Manager"
-                attrs="{'readonly':[('active','=',False)]}" required="0"/>
+                attrs="{'readonly':[('active','=',False)]}" required="0" invisible="1"/>
               <field name="commercial" string="Commercial"
                 attrs="{'readonly':[('active','=',False)]}" required="0"/>
 
