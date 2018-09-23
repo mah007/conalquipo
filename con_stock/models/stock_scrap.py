@@ -40,6 +40,40 @@ class StockScrap(models.Model):
                 'name': _('Replenishment %s') % (reple_id.default_code),
                 'product_uom': reple_id.uom_id.id,
             })
+
+            sign_template = self.env.ref(
+                    'con_website_sign.template_con_website_sign_1')
+            request_id = self.env['signature.request'].create({
+                'sale_id': self.picking_id.sale_id.id,
+                'template_id': sign_template.id,
+                'state': 'draft',
+                'reference': sign_template.share_link,
+            })
+
+            picking = self.picking_id
+            items = ['signature_con_item_1', 'signature_con_item_2',
+                     'signature_con_item_3', 'signature_con_item_4',
+                     'signature_con_item_5', 'signature_con_item_6',
+                     'signature_con_item_7', 'signature_con_item_8',
+                     'signature_con_item_9']
+            items_values = [picking.advertisement_date,
+                            picking.project_id.partner_id.name,
+                            picking.project_id.name,
+                            picking.project_id.city,
+                            picking.advertisement_date,
+                            picking.name,
+                            self.product_id.product_tmpl_id.name,
+                            self.product_id.product_tmpl_id.default_code]
+
+            d = dict(zip(items, items_values))
+            for key, value in d.items():
+                self.env['signature.item.value'].create({
+                    'signature_item_id': self.env.ref(
+                        'con_website_sign.' + str(key)).id,
+                    'signature_request_id': request_id.id,
+                    'value': value
+                })
+
             return res
         else:
             raise UserError(_(
@@ -54,8 +88,12 @@ class StockScrap(models.Model):
             if not reple_id:
                 raise UserError(_(
                     "The product doesn't have replacement service!"))
-            scrap.move_id.update({'description': _(
-                'Replenishment %s') % (reple_id.default_code)})
+            scrap.move_id.update({
+                'description': _(
+                    'Replenishment %s') % (reple_id.default_code),
+                'location_id': self.location_id.id,
+                'location_dest_id': self.scrap_location_id.id,
+                'state': 'draft'})
         return res
 
 
@@ -74,8 +112,40 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
                 'price_unit': reple_id.lst_price,
                 'name': _('Replenishment %s') % (reple_id.default_code),
                 'product_uom': reple_id.uom_id.id})
+
+            sign_template = self.env.ref(
+                    'con_website_sign.template_con_website_sign_1')
+            request_id = self.env['signature.request'].create({
+                'sale_id': scrap_id.picking_id.sale_id.id,
+                'template_id': sign_template.id,
+                'state': 'draft',
+                'reference': sign_template.share_link,
+            })
+
+            picking = scrap_id.picking_id
+            items = ['signature_con_item_1', 'signature_con_item_2',
+                     'signature_con_item_3', 'signature_con_item_4',
+                     'signature_con_item_5', 'signature_con_item_6',
+                     'signature_con_item_7', 'signature_con_item_8',
+                     'signature_con_item_9']
+            items_values = [picking.advertisement_date,
+                            picking.project_id.partner_id.name,
+                            picking.project_id.name,
+                            picking.project_id.city,
+                            picking.advertisement_date,
+                            picking.name,
+                            scrap_id.product_id.product_tmpl_id.name,
+                            scrap_id.product_id.product_tmpl_id.default_code]
+
+            d = dict(zip(items, items_values))
+            for key, value in d.items():
+                self.env['signature.item.value'].create({
+                    'signature_item_id': self.env.ref(
+                        'con_website_sign.' + str(key)).id,
+                    'signature_request_id': request_id.id,
+                    'value': value
+                })
         else:
             raise UserError(_(
                 "The product doesn't have replacement service!"))
         return res
-

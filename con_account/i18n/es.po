@@ -1,21 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* con_account
+#	* con_account
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e-20180918\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 22:37+0000\n"
-"PO-Revision-Date: 2018-09-21 17:40-0500\n"
+"POT-Creation-Date: 2018-09-23 20:38+0000\n"
+"PO-Revision-Date: 2018-09-23 20:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: es_CO\n"
-"X-Generator: Poedit 2.1.1\n"
 
 #. module: con_account
 #: model:account.payment.term,name:con_account.account_payment_term_fin_10
@@ -29,59 +27,49 @@ msgstr "30 días netos (descuento financiero 20%)"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<br/>\n"
+msgid "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Dirección: </span>\n"
 "                                    </strong>"
-msgstr ""
-"<br/>\n"
+msgstr "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Dirección: </span>\n"
 "                                    </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<br/>\n"
+msgid "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Obra: </span>\n"
 "                                    </strong>"
-msgstr ""
-"<br/>\n"
+msgstr "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Obra: </span>\n"
 "                                    </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<br/>\n"
+msgid "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Referencia: </span>\n"
 "                                    </strong>"
-msgstr ""
-"<br/>\n"
+msgstr "<br/>\n"
 "                                    <strong>\n"
 "                                        <span>Referencia: </span>\n"
 "                                    </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<br/>\n"
+msgid "<br/>\n"
 "                                    <strong>Due Date: </strong>"
-msgstr ""
-"<br/>\n"
+msgstr "<br/>\n"
 "                                    <strong>Fecha de Expiración: </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<br/>\n"
+msgid "<br/>\n"
 "                                <span>Pbx.</span>"
-msgstr ""
-"<br/>\n"
+msgstr "<br/>\n"
 "                                <span>Pbx.</span>"
 
 #. module: con_account
@@ -101,37 +89,31 @@ msgstr "<span style=\"font-size:16px;\">NOMBRE:</span>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<span> / </span>\n"
+msgid "<span> / </span>\n"
 "                                        <strong>\n"
 "                                            <span>NIT: </span>\n"
 "                                        </strong>"
-msgstr ""
-"<span> / </span>\n"
+msgstr "<span> / </span>\n"
 "                                        <strong>\n"
 "                                            <span>NIT: </span>\n"
 "                                        </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<span> / </span>\n"
+msgid "<span> / </span>\n"
 "                                        <strong>\n"
 "                                            <span>Tel: </span>\n"
 "                                        </strong>"
-msgstr ""
-"<span> / </span>\n"
+msgstr "<span> / </span>\n"
 "                                        <strong>\n"
 "                                            <span>Tel: </span>\n"
 "                                        </strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<span>&amp;nbsp;\n"
+msgid "<span>&amp;nbsp;\n"
 "                                                        </span>"
-msgstr ""
-"<span>&amp;nbsp;\n"
+msgstr "<span>&amp;nbsp;\n"
 "                                                        </span>"
 
 #. module: con_account
@@ -141,12 +123,10 @@ msgstr "<span>Total de: </span>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
-msgid ""
-"<strong>\n"
+msgid "<strong>\n"
 "                                        <span>Señores: </span>\n"
 "                                    </strong>"
-msgstr ""
-"<strong>\n"
+msgstr "<strong>\n"
 "                                        <span>Señores: </span>\n"
 "                                    </strong>"
 
@@ -461,7 +441,7 @@ msgstr "Rango final"
 #: code:addons/con_account/report/report_product_replacements.py:19
 #, python-format
 msgid "Form content is missing, this report cannot be printed."
-msgstr "El contenido del formulario de ha perdido. Este reporte no puede ser impreso."
+msgstr "El contenido del formulario se ha perdido. No puede ser impreso."
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.view_account_invoice_year_period_form
@@ -606,11 +586,9 @@ msgstr "Numero de días"
 
 #. module: con_account
 #: model:ir.actions.act_window,help:con_account.action_account_invoice_year_period
-msgid ""
-"Odoo helps you easily track all activities related to\n"
+msgid "Odoo helps you easily track all activities related to\n"
 "                a billing years and periods."
-msgstr ""
-"Odoo te ayuda a rastrear fácilmente todas las actividades relacionadas con\n"
+msgstr "Odoo te ayuda a rastrear fácilmente todas las actividades relacionadas con\n"
 "        a años y periodos de facturación.."
 
 #. module: con_account
@@ -703,7 +681,7 @@ msgstr "Producto"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_product_category_id
 msgid "Product category"
-msgstr "Categoría de producto"
+msgstr "Categoria de productos"
 
 #. module: con_account
 #: model:ir.actions.report,name:con_account.action_product_replacements_report
@@ -729,7 +707,7 @@ msgstr "Productos en obra"
 #: model:ir.actions.act_window,name:con_account.action_wizard_replacements
 #: model:ir.ui.menu,name:con_account.menu_product_replacements
 msgid "Products replacements"
-msgstr "Reposiciones de productos"
+msgstr "Productos facturados"
 
 #. module: con_account
 #: selection:account.invoice,invoice_type:0
@@ -769,7 +747,7 @@ msgstr "Arriendo"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_replacement_id
 msgid "Replacement"
-msgstr "Reposiciones"
+msgstr "Reemplazos"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
@@ -983,7 +961,7 @@ msgstr "account.invoice.year.period"
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_init_date
 msgid "initital date"
-msgstr "Fecha incial"
+msgstr "Fecha inicial"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
@@ -1004,3 +982,4 @@ msgstr "product.replacements.lines"
 #: model:ir.model,name:con_account.model_report_con_account_report_product_replacements
 msgid "report.con_account.report_product_replacements"
 msgstr "report.con_account.report_product_replacements"
+

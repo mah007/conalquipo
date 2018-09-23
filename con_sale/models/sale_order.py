@@ -802,7 +802,7 @@ class SaleOrder(models.Model):
                         'confirmation_date': fields.Datetime.now()})
                     # Create task for product
                     for data in self.order_line:
-                        if data.bill_uom.id not in \
+                        if line.bill_uom.id and data.bill_uom.id not in \
                             self.env.user.company_id.default_uom_task_id._ids \
                             and not \
                                 data.is_delivery and not data.is_component:
@@ -834,7 +834,7 @@ class SaleOrder(models.Model):
             else:
                 # Create task for product
                 for data in self.order_line:
-                    if data.bill_uom.id not in \
+                    if line.bill_uom.id and data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
                       and not \
                        data.is_delivery and not data.is_component:
@@ -1845,7 +1845,7 @@ class SaleOrderLine(models.Model):
             line.update({
                 'price_unit': 0.0})
         # Create task on sale lines
-        if line.bill_uom.id not in \
+        if line.bill_uom.id and line.bill_uom.id not in \
             self.env.user.company_id.default_uom_task_id._ids \
             and not \
                 line.is_delivery and not line.is_component:
