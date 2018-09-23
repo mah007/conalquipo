@@ -66,6 +66,8 @@ class SaleQuoteTemplate(models.Model):
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,
                         'quote_id': res.id,
+                        'layout_category_id':
+                        p.product_child_id.product_tmpl_id.layout_sec_id.id,
                         'indicted': True
                     }
                     res.quote_line.create(values)
@@ -91,7 +93,9 @@ class SaleQuoteTemplate(models.Model):
                             data.product_id.product_tmpl_id.name),
                         'price_unit': 0,
                         'quote_id': self.id,
-                        'indicted': True
+                        'layout_category_id':
+                        p.product_child_id.product_tmpl_id.layout_sec_id.id,
+                        'indicted': True,
                     }
                     self.quote_line.create(values)
         return res
@@ -106,25 +110,62 @@ class SaleQuoteLine(models.Model):
         'Product', domain=[], required=True)
     bill_uom = fields.Many2one(
         'product.uom',
-        string='Unidad de venta', domain=lambda self: self.compute_uoms())
+        string='Unidad de venta')
     bill_uom_qty = fields.Float(
         'Cant. Venta',
         digits=dp.get_precision('Product Unit'
                                 ' of Measure'))
+    min_sale_qty = fields.Float('MQty')
 
-    @api.model
-    def compute_uoms(self):
-        """
-        Compute availables uoms for product
-        """
-        uom_list = []
-        uoms = self.product_id.product_tmpl_id.uoms_ids
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        self.ensure_one()
+        uoms_list = []
         if self.product_id:
-            if uoms:
-                for p in uoms:
-                    uom_list.append(p.uom_id.id)
-                return [('id', 'in', uom_list)]
+            name = self.product_id.name_get()[0][1]
+            if self.product_id.description_sale:
+                name += '\n' + self.product_id.description_sale
+            self.name = name
+            self.layout_category_id = \
+                self.product_id.product_tmpl_id.layout_sec_id.id
+            self.price_unit = self.product_id.lst_price
+            self.product_uom_id = self.product_id.uom_id.id
+            self.website_description = \
+                self.product_id.quote_description or \
+                self.product_id.website_description or ''
+            # Get uoms
+            uoms_ids = self.product_id.product_tmpl_id.uoms_ids
+            if uoms_ids:
+                self.product_uoms = True
+                for p in uoms_ids:
+                    uoms_list.append(p.uom_id.id)
             else:
-                uom_list.append(self.product_id.product_tmpl_id.sale_uom.id)
-                return \
-                    [('id', 'in', uom_list)]
+                self.bill_uom = self.product_id.product_tmpl_id.sale_uom.id
+                self.bill_uom_qty = self.product_uom_qty
+                uoms_list.append(self.product_id.product_tmpl_id.sale_uom.id)
+            domain = {
+                'product_uom_id': [
+                    ('category_id',
+                     '=',
+                     self.product_id.uom_id.category_id.id)],
+                'bill_uom': [('id', 'in', uoms_list)]}
+            return {'domain': domain}
+
+    @api.onchange('bill_uom')
+    def _onchange_product_uom(self):
+        """
+        Get price for specific uom of product
+        """
+        product_muoms = self.product_id.product_tmpl_id.multiples_uom
+        if not product_muoms:
+            self.price_unit = self.product_id.product_tmpl_id.list_price
+            self.min_sale_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental
+            self.bill_uom_qty = \
+                self.product_id.product_tmpl_id.min_qty_rental
+        else:
+            for uom_list in self.product_id.product_tmpl_id.uoms_ids:
+                if self.bill_uom.id == uom_list.uom_id.id:
+                    self.price_unit = uom_list.cost_byUom
+                    self.min_sale_qty = uom_list.quantity
+                    self.bill_uom_qty = uom_list.quantity

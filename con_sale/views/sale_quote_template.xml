@@ -37,6 +37,8 @@
            <xpath expr="//field[@name='quote_line']/tree//field[@name='product_uom_id']" position="after">
                 <field name="bill_uom_qty"/>
                 <field name="bill_uom"/>
+                <field name="min_sale_qty" readonly="1" force_save="1"/>
+                <field name="price_unit"/>
             </xpath>
 
 

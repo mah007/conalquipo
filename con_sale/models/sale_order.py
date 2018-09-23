@@ -1401,12 +1401,12 @@ class SaleOrder(models.Model):
                 'price_unit': price,
                 'discount': 100 - ((100 - discount) * (
                     100 - line.discount)/100),
-                'product_uom_qty': line.product_uom_qty,
                 'product_id': line.product_id.id,
                 'layout_category_id': line.layout_category_id,
+                'product_uom_qty': line.product_uom_qty,
                 'product_uom': line.product_uom_id.id,
-                'bill_uom': line.bill_uom.id,
                 'bill_uom_qty': line.bill_uom_qty,
+                'bill_uom': line.bill_uom.id,
                 'website_description': line.website_description,
                 'state': 'draft',
                 'customer_lead': self._get_customer_lead(
