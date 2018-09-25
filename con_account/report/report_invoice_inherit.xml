@@ -200,15 +200,15 @@
                                 <div>
                                     <table class="table table-condensed" style="min-width: 250px;max-width: 400px;">
 
-                                        <t t-set="categories" t-value="o._get_tax_amount_by_category()"/>
-                                        <t t-foreach="categories.keys()" t-as="amount_by_cat">
+                                        <t t-set="sections" t-value="o._get_tax_amount_by_section()"/>
+                                        <t t-foreach="sections.keys()" t-as="amount_by_sec">
                                             <tr>
                                                 <td>
                                                     <span>Total de: </span>
-                                                    <span t-esc="amount_by_cat"/>
+                                                    <span t-esc="amount_by_sec"/>
                                                 </td>
                                                 <td class="text-right">
-                                                    <span t-esc="categories[amount_by_cat]"/>
+                                                    <span t-esc="sections[amount_by_sec]"/>
                                                 </td>
                                             </tr>
                                         </t>

@@ -381,7 +381,7 @@ class AccountInvoice(models.Model):
                 "You don't have permission to edit the record!"))
 
     @api.multi
-    def _get_tax_amount_by_category(self):
+    def _get_tax_amount_by_section(self):
         """
         Create a dict with the total amounts for
         all the product categories. This dict is used
