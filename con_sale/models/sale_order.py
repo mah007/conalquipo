@@ -168,6 +168,17 @@ class SaleOrder(models.Model):
         default=lambda self: self.employee_id.id)
     payment_term_note = fields.Text(
         'Payment Terms and conditions')
+    min_emptying = fields.Char('Min. Emptying')
+    max_emptying = fields.Char('Max. Emptying')
+    cap_emptying = fields.Char('Cap. Emptying')
+    maximum_value_of_pipe = fields.Char('Maximun value of pipe')
+    tip_load_capacity = fields.Char('Tip load capacity')
+    useful_arm = fields.Char('Useful arm')
+    maximum_load_capacity = fields.Char('Maximum load capacity')
+    height = fields.Char('Height')
+    speed = fields.Char('Vel.(m/min)')
+    basket = fields.Char('Basket')
+    towers = fields.Char('Towers')
 
     @api.multi
     def print_quotation2(self):

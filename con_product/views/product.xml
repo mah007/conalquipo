@@ -73,28 +73,6 @@
             <field name="arch" type="xml">
                 <data>
 
-                    <field name="uom_po_id" position="after">
-                        <!-- Minimo vaciado -->
-                        <field name="max_emptying" attrs="{'required':[('categ_id', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
-                        <field name="min_emptying" attrs="{'required':[('categ_id', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
-                        <!-- Valor máximo de tubería -->
-                        <field name="maximum_value_of_pipe" attrs="{'required':[('categ_id', '=', %(con_product.category_30)d)], 'invisible':[('categ_id', '!=', %(con_product.category_30)d)]}"/>
-                        <!-- Capacidad carga en punta -->
-                        <field name="tip_load_capacity" attrs="{'required':[('categ_id', '=', %(con_product.category_24)d)], 'invisible':[('categ_id', '!=', %(con_product.category_24)d)]}"/>
-                        <!-- Capacidad maxima de carga -->
-                        <field name="maximum_load_capacity" attrs="{'required':[('categ_id', 'in', [%(con_product.category_24)d, %(con_product.category_22)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_24)d, %(con_product.category_22)d])]}"/>
-                        <!-- brazo útil -->
-                        <field name="useful_arm" attrs="{'required':[('categ_id', '=', %(con_product.category_24)d)], 'invisible':[('categ_id', '!=', %(con_product.category_24)d)]}"/>
-                        <!-- Altura -->
-                        <field name="height" attrs="{'required':[('categ_id', 'in', [%(con_product.category_24)d, %(con_product.category_22)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_24)d, %(con_product.category_22)d])]}"/>
-                        <!-- Velocidad -->
-                        <field name="speed" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
-                        <!-- Canasta -->
-                        <field name="basket" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
-                        <!-- Torres -->
-                        <field name="towers" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
-                    </field>
-
                     <field name="type" position="after">
                         <field name="for_shipping" attrs="{'invisible':[('type', '!=', 'service')]}"/>
                     </field>
@@ -248,25 +226,6 @@
                         <field name="location_id" />
                         <field name="state_id" />
                         <field name="color" widget="color"/>
-                        <!-- Minimo vaciado -->
-                        <field name="max_emptying" attrs="{'required':[('categ_id', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
-                        <field name="min_emptying" attrs="{'required':[('categ_id', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
-                        <!-- Valor máximo de tubería -->
-                        <field name="maximum_value_of_pipe" attrs="{'required':[('categ_id', '=', %(con_product.category_30)d)], 'invisible':[('categ_id', '!=', %(con_product.category_30)d)]}"/>
-                        <!-- Capacidad carga en punta -->
-                        <field name="tip_load_capacity" attrs="{'required':[('categ_id', '=', %(con_product.category_24)d)], 'invisible':[('categ_id', '!=', %(con_product.category_24)d)]}"/>
-                        <!-- Capacidad maxima de carga -->
-                        <field name="maximum_load_capacity" attrs="{'required':[('categ_id', 'in', [%(con_product.category_24)d, %(con_product.category_22)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_24)d, %(con_product.category_22)d])]}"/>
-                        <!-- brazo útil -->
-                        <field name="useful_arm" attrs="{'required':[('categ_id', '=', %(con_product.category_24)d)], 'invisible':[('categ_id', '!=', %(con_product.category_24)d)]}"/>
-                        <!-- Altura -->
-                        <field name="height" attrs="{'required':[('categ_id', 'in', [%(con_product.category_24)d, %(con_product.category_22)d])], 'invisible':[('categ_id', 'not in', [%(con_product.category_24)d, %(con_product.category_22)d])]}"/>
-                        <!-- Velocidad -->
-                        <field name="speed" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
-                        <!-- Canasta -->
-                        <field name="basket" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
-                        <!-- Torres -->
-                        <field name="towers" attrs="{'required':[('categ_id', '=', %(con_product.category_22)d)], 'invisible':[('categ_id', '!=', %(con_product.category_22)d)]}"/>
                     </field>
 
                     <xpath expr="//div[@name='options']" position="inside">
