@@ -342,7 +342,7 @@ TRANSPORTE ARMADOR|Servicio|OPER-042|Reposición|Reposiciones|0|0|Unit(s)|Unit(s
 TRANSPORTE OPERADOR|Servicio|OPER-043|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE SISO|Servicio|OPER-044|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE TECNICO MECANICO|Servicio|OPER-045|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INTERESES DE MORA|Servicio|INTE-001|Interes|Intereses|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INTERESES DE MORA|Servicio|INTE-001|Interés|Intereses|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 REPO. TORNILLO SIN FIN DOSIFICADORA|Servicio|REPO-243|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|True|True|False|
 REPO. BRAZO EXCAVADOR NEWHOLLAND|Servicio|REPO-244|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|True|True|False|
 REPO. ESTIBADORA PARA MINICARGADOR|Servicio|REPO-245|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|True|True|False|
