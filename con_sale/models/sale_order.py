@@ -1760,28 +1760,6 @@ class SaleOrderLine(models.Model):
         # res['qty_shipped'] = self.product_uom_qty
         return res
 
-    # @api.depends('invoice_lines.invoice_id.state', 'invoice_lines.quantity')
-    # def _get_invoice_qty(self):
-    #     for line in self:
-    #         qty_invoiced = 0.0
-    #         for invoice_line in line.invoice_lines:
-    #             if invoice_line.invoice_id.state != 'cancel':
-    #                 data = {
-    #                     'out_invoice': lambda qty_invoice:
-    #                     qty_invoice +
-    #                     invoice_line.uom_id._compute_quantity(
-    #                         invoice_line.quantity, line.product_uom,
-    #                         rent=True),
-    #                     'out_refund': lambda qty_invoiced:
-    #                     qty_invoiced -
-    #                     invoice_line.uom_id._compute_quantity(
-    #                         invoice_line.quantity, line.product_uom,
-    #                         rent=True)
-    #                 }
-    #                 qty_invoiced = data.get(invoice_line.invoice_id.type,
-    #                                         lambda: 0)(qty_invoiced)
-    #         line.qty_invoiced = qty_invoiced
-
     @api.model
     def create(self, values):
         # Overwrite sale order line create
@@ -1802,6 +1780,8 @@ class SaleOrderLine(models.Model):
                         'parent_line': line.id,
                         'order_id': line.order_id.id,
                         'product_uom_qty': qty,
+                        'layout_category_id':
+                        line.product_id.product_tmpl_id.layout_sec_id.id,
                         'bill_uom_qty': qty,
                         'owner_id': data.owner_id.id,
                         'is_extra': True,
@@ -1821,6 +1801,8 @@ class SaleOrderLine(models.Model):
                         'bill_uom_qty': qty,
                         'price_unit': 0.0,
                         'owner_id': data.owner_id.id,
+                        'layout_category_id':
+                        line.product_id.product_tmpl_id.layout_sec_id.id,
                         'is_component': True,
                         'bill_uom': data.product_id.product_tmpl_id.uom_id.id
                     }
@@ -1901,6 +1883,8 @@ class SaleOrderLine(models.Model):
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_component': True,
+                            'layout_category_id':
+                            rec.product_id.product_tmpl_id.layout_sec_id.id,
                             'bill_uom':
                             data.product_id.product_tmpl_id.uom_id.id
                         }
@@ -1921,6 +1905,8 @@ class SaleOrderLine(models.Model):
                             'product_uom_qty': qty,
                             'bill_uom_qty': qty,
                             'is_extra': True,
+                            'layout_category_id':
+                            line.product_id.product_tmpl_id.layout_sec_id.id,
                             'bill_uom':
                             data.product_id.product_tmpl_id.uom_id.id
                         }

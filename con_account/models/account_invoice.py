@@ -19,12 +19,10 @@
 #
 ##############################################################################
 import logging
-from datetime import datetime, timedelta
 
 from odoo import _, api, fields, models
-from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import float_compare
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +32,8 @@ class AccountInvoiceLine(models.Model):
     _order = "date_move asc"
 
     owner_id = fields.Many2one('res.partner', 'Owner')
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure of Sale')
+    bill_uom = fields.Many2one(
+        'product.uom', string='Unit of Measure of Sale')
     document = fields.Char(
         string='Document')
     date_move = fields.Date(
@@ -55,7 +54,8 @@ class AccountInvoiceLine(models.Model):
         comodel_name='sale.order.line',
         string='Parent sale line')
     move_history_id = fields.Many2one(
-        'stock.move.history', 'Stock Move History', help="Stock Move History")
+        'stock.move.history',
+        'Stock Move History', help="Stock Move History")
 
     @api.one
     @api.depends(
@@ -73,7 +73,7 @@ class AccountInvoiceLine(models.Model):
                     self.price_subtotal = 0.0
             else:
                 self.price_subtotal = \
-                 self.products_on_work * self.quantity * self.price_unit
+                    self.products_on_work * self.quantity * self.price_unit
         return res
 
 
@@ -359,7 +359,6 @@ class AccountInvoice(models.Model):
         # Get invoice permissions
         self.get_invoice_permissions()
         return res
-
 
     def get_invoice_permissions(self):
         """
