@@ -390,6 +390,6 @@ class AccountInvoice(models.Model):
         self.ensure_one()
         res_dict = {}
         for line in self.invoice_line_ids:
-            res_dict.setdefault(line.product_id.categ_id.name, 0.0)
-            res_dict[line.product_id.categ_id.name] += line.price_subtotal
+            res_dict.setdefault(line.product_id.layout_sec_id.name, 0.0)
+            res_dict[line.product_id.layout_sec_id.name] += line.price_subtotal
         return res_dict
