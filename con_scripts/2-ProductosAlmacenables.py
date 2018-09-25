@@ -292,7 +292,6 @@ for row in Productos:
 
         print(message)
         vals = {}
-        
         # RUTAS
         warehouse = sock.execute_kw(
             db, uid, password, 'stock.warehouse', 'search_read', [
@@ -301,7 +300,8 @@ for row in Productos:
 
         routes = sock.execute_kw(
             db, uid, password, 'stock.location.route', 'search_read', [
-                [['supplier_wh_id', '=', warehouse[0]['id']]]],
+                [['supplier_wh_id', '=', warehouse[0]['id']],
+                 ['name', '=', 'Make To Order + Make To Stock']]],
             {'fields': ['id']})
         if routes:
             routes = [(6, 0, [1, routes[0]['id']])]
