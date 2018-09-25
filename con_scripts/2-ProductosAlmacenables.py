@@ -6,7 +6,7 @@ import ast
 import codecs
 
 host = 'http://localhost:9001'
-db = 'prueba_piloto_productos'
+db = 'prueba_piloto_productos_limpia'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -300,11 +300,16 @@ for row in Productos:
 
         routes = sock.execute_kw(
             db, uid, password, 'stock.location.route', 'search_read', [
-                [['supplier_wh_id', '=', warehouse[0]['id']],
-                 ['name', '=', 'Make To Order + Make To Stock']]],
+                [['supplier_wh_id', '=', warehouse[0]['id']]]],
             {'fields': ['id']})
+
+        routes2 = sock.execute_kw(
+            db, uid, password, 'stock.location.route', 'search_read', [
+                [['name', '=', 'Make To Order + Make To Stock']]],
+            {'fields': ['id']})
+
         if routes:
-            routes = [(6, 0, [1, routes[0]['id']])]
+            routes = [(6, 0, [1, routes[0]['id'], routes2[0]['id']])]
 
         if row['No Mecanico'].strip() != "True":
             vals = {
