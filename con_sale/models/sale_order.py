@@ -1906,7 +1906,7 @@ class SaleOrderLine(models.Model):
                             'bill_uom_qty': qty,
                             'is_extra': True,
                             'layout_category_id':
-                            line.product_id.product_tmpl_id.layout_sec_id.id,
+                            rec.product_id.product_tmpl_id.layout_sec_id.id,
                             'bill_uom':
                             data.product_id.product_tmpl_id.uom_id.id
                         }
