@@ -289,7 +289,7 @@ ACARREOS X HORA|Servicio|ACAR-002|Acarreos|Acarreos|0|0|Unit(s)|Hour(s)|Unit(s)|
 SERVICIO DE TRANSPORTE|Servicio|SERV-031|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE CONCRETO|Servicio|SERV-032|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE CONCRETO X MT|Servicio|SERV-033|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-TRANSPORTE DE EQUIPO EN OBRA|Servicio|SERV-034|Acarreo|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+TRANSPORTE DE EQUIPO EN OBRA|Servicio|SERV-034|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE TORRES|Servicio|SERV-035|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE GRUA HIDRAULICA ARTICULADA|Servicio|SERV-036|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE VERTICAL DE MATERIAL|Servicio|SERV-037|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
