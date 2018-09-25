@@ -203,7 +203,10 @@
                                         <t t-foreach="layout_category['lines']" t-as="l">
                                             <t t-if="not l.is_component">
                                                 <tr>
-                                                    <td style="padding:5px; border: 1px solid;"><span t-field="l.product_id.name"/></td>
+                                                    <td style="padding:5px; border: 1px solid;">
+                                                        <span>[</span><span t-field="l.product_id.default_code"/><span>] </span>
+                                                        <span t-field="l.product_id.name"/>
+                                                    </td>
                                                     <td style="padding:5px; border: 1px solid;">
                                                         <span t-field="l.product_uom_qty"/>
                                                         <span t-field="l.product_uom" groups="product.group_uom"/>
