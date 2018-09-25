@@ -1641,7 +1641,7 @@ class SaleOrderLine(models.Model):
                 values = {}
                 values['quantity'] = p.quantity
                 values['product_id'] = p.product_child_id.id
-                values['extra'] = False
+                values['extra'] = p.extra
                 products_ids.append((0, 0, values))
         if uoms_ids:
             self.product_uoms = True
