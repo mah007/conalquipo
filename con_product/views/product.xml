@@ -145,7 +145,8 @@
                         <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', 'in', ['service', 'consu'])]}">
                             <field name="components_ids">
                                 <tree string="Products components" editable="bottom">
-                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="['&amp;', ('id', '!=', parent.id), ('product_tmpl_id.type', '!=', 'service')]" />
+                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="['&amp;', ('id', '!=', parent.id)]" />
+                                    <field name="extra"/>
                                     <field name="quantity"/>
                                     <field name="child" invisible="1"/>
                                 </tree>
