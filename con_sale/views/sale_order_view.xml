@@ -340,8 +340,11 @@
                             attrs="{'invisible': ['|',('carrier_id','=', False), ('carrier_type', '!=', 'company')]}" invisible="1"/>
                     <button name="set_delivery_line" string="Set price" type="object" class="oe_inline fa fa-arrow-right oe_link"
                                 attrs="{'invisible':['|', '|', ('carrier_id','=',False),('state','in',('done')), ('carrier_type', '!=', 'company')]}"/>
-                    <!-- Minimo vaciado -->
+                    <!-- Cap vaciado -->
+                    <field name="cap_emptying" attrs="{'required':[('special_category', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('special_category', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
+                    <!-- Maximo vaciado -->
                     <field name="max_emptying" attrs="{'required':[('special_category', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('special_category', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
+                     <!-- Minimo vaciado -->
                     <field name="min_emptying" attrs="{'required':[('special_category', 'in', [%(con_product.category_31)d, %(con_product.category_30)d])], 'invisible':[('special_category', 'not in', [%(con_product.category_31)d, %(con_product.category_30)d])]}"/>
                     <!-- Valor máximo de tubería -->
                     <field name="maximum_value_of_pipe" attrs="{'required':[('special_category', '=', %(con_product.category_30)d)], 'invisible':[('special_category', '!=', %(con_product.category_30)d)]}"/>
