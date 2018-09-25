@@ -255,42 +255,42 @@ ADECUACION MOLINETES|Servicio|REPA-010|Reparación|Reparaciones|0|0|Unit(s)|Unit
 ADECUACION RUEDAS DE ANDAMIO|Servicio|REPA-011|Reparación|Reparaciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 ADECUACION TACO METALICO|Servicio|REPA-012|Reparación|Reparaciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 LIMPIEZA ESPECIAL DE EQUIPO|Servicio|SERV-028|Reparación|Reparaciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-ANCLAJE DE SILO|Servicio|SERV-001|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-ARRIOSTRAMIENTO MALACATE|Servicio|SERV-002|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-ASESORIA TECNICA|Servicio|SERV-003|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-CALIBRACION PLANTA DOSIFICADORA|Servicio|SERV-004|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+ANCLAJE DE SILO|Servicio|SERV-001|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+ARRIOSTRAMIENTO MALACATE|Servicio|SERV-002|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+ASESORIA TECNICA|Servicio|SERV-003|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+CALIBRACION PLANTA DOSIFICADORA|Servicio|SERV-004|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 CM. ADICIONAL CORTE PISO|Servicio|SERV-005|Arriendo|Cortadoras|450|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-CONEXION ELECTRICA|Servicio|SERV-006|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE BASE MALACATE|Servicio|SERV-007|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-REALCE DE TORRE  MALACATE|Servicio|SERV-008|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE BASE MALACATE|Servicio|SERV-009|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE DE TORRE|Servicio|SERV-010|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-REUBICACION MALACATE|Servicio|SERV-011|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INSTALACION-TRANS. SILO|Servicio|SERV-012|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE PLUMA DOBLE|Servicio|SERV-013|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE DE PLUMA DOBLE|Servicio|SERV-014|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-REALCE PLUMA DOBLE|Servicio|SERV-015|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE PLATAFORMA|Servicio|SERV-016|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE PLATAFORMA|Servicio|SERV-017|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE SISTEMA DE ELEVACION|Servicio|SERV-018|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE SISTEMA DE ELEVACION|Servicio|SERV-019|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-REALCE SISTEMA DE ELEVACION|Servicio|SERV-020|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-REUBICACION PLUMA DOBLE|Servicio|SERV-021|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE CASETA|Servicio|SERV-022|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-DESMONTAJE DE CASETA|Servicio|SERV-023|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INCREMENTO 20% TRANS. VERTICAL|Servicio|SERV-024|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INST. / DESINT. PLANTA DOSIFICADORA|Servicio|SERV-025|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INST. O DESINST. DE EQUIPO EN OBRA|Servicio|SERV-026|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-INSTALACION POLO A TIERRA|Servicio|SERV-027|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE TORRE ADICIONAL|Servicio|SERV-029|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-MONTAJE TORRE GRUA|Servicio|SERV-030|Services|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+CONEXION ELECTRICA|Servicio|SERV-006|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE BASE MALACATE|Servicio|SERV-007|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+REALCE DE TORRE  MALACATE|Servicio|SERV-008|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE BASE MALACATE|Servicio|SERV-009|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE DE TORRE|Servicio|SERV-010|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+REUBICACION MALACATE|Servicio|SERV-011|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INSTALACION-TRANS. SILO|Servicio|SERV-012|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE PLUMA DOBLE|Servicio|SERV-013|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE DE PLUMA DOBLE|Servicio|SERV-014|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+REALCE PLUMA DOBLE|Servicio|SERV-015|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE PLATAFORMA|Servicio|SERV-016|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE PLATAFORMA|Servicio|SERV-017|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE SISTEMA DE ELEVACION|Servicio|SERV-018|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE SISTEMA DE ELEVACION|Servicio|SERV-019|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+REALCE SISTEMA DE ELEVACION|Servicio|SERV-020|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+REUBICACION PLUMA DOBLE|Servicio|SERV-021|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE CASETA|Servicio|SERV-022|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+DESMONTAJE DE CASETA|Servicio|SERV-023|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INCREMENTO 20% TRANS. VERTICAL|Servicio|SERV-024|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INST. / DESINT. PLANTA DOSIFICADORA|Servicio|SERV-025|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INST. O DESINST. DE EQUIPO EN OBRA|Servicio|SERV-026|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+INSTALACION POLO A TIERRA|Servicio|SERV-027|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE TORRE ADICIONAL|Servicio|SERV-029|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+MONTAJE TORRE GRUA|Servicio|SERV-030|Servicios|Otros|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 ACARREOS|Servicio|ACAR-001|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|True|
 ACARREOS X HORA|Servicio|ACAR-002|Acarreos|Acarreos|0|0|Unit(s)|Hour(s)|Unit(s)|False|False|True|Fracción de hora se cobra como hora completa.
 SERVICIO DE TRANSPORTE|Servicio|SERV-031|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE CONCRETO|Servicio|SERV-032|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE CONCRETO X MT|Servicio|SERV-033|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE DE EQUIPO EN OBRA|Servicio|SERV-034|Acarreo|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
-TRANSPORTE DE TORRES|Servicio|SERV-035|Acarreo|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
+TRANSPORTE DE TORRES|Servicio|SERV-035|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE GRUA HIDRAULICA ARTICULADA|Servicio|SERV-036|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 TRANSPORTE VERTICAL DE MATERIAL|Servicio|SERV-037|Acarreos|Acarreos|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
 VENTA DE SEGUNDA - CHATARRA|Servicio|SERV-038|Reposición|Reposiciones|0|0|Unit(s)|Unit(s)|Unit(s)|False|False|False|
