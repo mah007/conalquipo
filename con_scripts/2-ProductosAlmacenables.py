@@ -6,7 +6,7 @@ import ast
 import codecs
 
 host = 'http://localhost:9001'
-db = 'prueba_piloto_productos_limpia'
+db = 'prueba_piloto_productos'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -391,7 +391,7 @@ for row in Productos:
             db, uid, password, 'product.template', 'write', [
                 [producto_id[0]['id']], vals])
 
-        # AÑADIR CANTIDAAD A MANO
+        # AÑADIR CANTIDAD A MANO
         # pro_id = sock.execute_kw(
         #     db, uid, password, 'product.product', 'search_read', [
         #         [['product_tmpl_id', '=', producto_id[0]['id']]]],
