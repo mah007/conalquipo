@@ -6,7 +6,7 @@ import ast
 import codecs
 
 host = 'http://localhost:9001'
-db = 'prueba_piloto_productos'
+db = 'prueba_piloto_productos_limpia'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -299,17 +299,20 @@ for row in Productos:
             {'fields': ['id']})
 
         routes = sock.execute_kw(
-            db, uid, password, 'stock.location.route', 'search_read', [
-                [['supplier_wh_id', '=', warehouse[0]['id']]]],
-            {'fields': ['id']})
+            db, uid, password, 'stock.location.route', 'search', [
+                [['supplied_wh_id', '=', warehouse[0]['id']]]])
 
         routes2 = sock.execute_kw(
             db, uid, password, 'stock.location.route', 'search_read', [
                 [['name', '=', 'Make To Order + Make To Stock']]],
             {'fields': ['id']})
 
+        routes.append(routes2[0]['id'])
+        routes.append(1)
+
         if routes:
-            routes = [(6, 0, [1, routes[0]['id'], routes2[0]['id']])]
+            routes_all = [(6, 0, routes)]
+            print(routes_all)
 
         if row['No Mecanico'].strip() != "True":
             vals = {
@@ -346,7 +349,7 @@ for row in Productos:
                     'Notas para pedidos de entrega'].strip(),
                 'layout_sec_id': section_id,
                 'min_qty_rental': row['cantidad por defecto'],
-                'route_ids': routes
+                'route_ids': routes_all
             }
         else:
             vals = {
@@ -384,7 +387,7 @@ for row in Productos:
                 'location_id': False,
                 'color': False,
                 'state_id': False,
-                'route_ids': routes
+                'route_ids': routes_all
             }
 
         sock.execute_kw(
