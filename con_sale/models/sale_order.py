@@ -815,7 +815,8 @@ class SaleOrder(models.Model):
                         if data.bill_uom.id and data.bill_uom.id not in \
                             self.env.user.company_id.default_uom_task_id._ids \
                             and not \
-                                data.is_delivery and not data.is_component:
+                                data.is_delivery and not data.is_component \
+                                and not data.task_id:
                             task_values = {
                                 'name': "Task for: " \
                                 + str(self.project_id.name) \
@@ -847,13 +848,13 @@ class SaleOrder(models.Model):
                     if data.bill_uom.id and data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
                       and not \
-                       data.is_delivery and not data.is_component:
+                       data.is_delivery and not data.is_component \
+                            and not data.task_id:
                         task_values = {
-                            'name': "Task for: " \
-                             + str(self.project_id.name) \
-                             + " - " \
-                             + str(data.product_id.name) \
-                             + " - " + \
+                            'name': "Task for: " +
+                            str(self.project_id.name) + 
+                            " - " + str(data.product_id.name) + 
+                            " - " +
                              str(data.bill_uom.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
@@ -1840,7 +1841,8 @@ class SaleOrderLine(models.Model):
         if line.bill_uom.id and line.bill_uom.id not in \
             self.env.user.company_id.default_uom_task_id._ids \
             and not \
-                line.is_delivery and not line.is_component:
+                line.is_delivery and not line.is_component \
+                and not line.task_id:
             task_values = {
                 'name': "Task for: " \
                 + str(line.order_id.project_id.name) \
