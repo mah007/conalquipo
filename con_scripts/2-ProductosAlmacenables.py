@@ -298,21 +298,28 @@ for row in Productos:
                 [['lot_stock_id', '=', origin_location_id[0]['id']]]],
             {'fields': ['id']})
 
-        routes = sock.execute_kw(
+        routes = []
+
+        routes1 = sock.execute_kw(
             db, uid, password, 'stock.location.route', 'search', [
                 [['supplied_wh_id', '=', warehouse[0]['id']]]])
 
         routes2 = sock.execute_kw(
-            db, uid, password, 'stock.location.route', 'search_read', [
-                [['name', '=', 'Make To Order + Make To Stock']]],
-            {'fields': ['id']})
+            db, uid, password, 'stock.location.route', 'search', [
+                [['supplier_wh_id', '=', warehouse[0]['id']]]])
 
-        routes.append(routes2[0]['id'])
-        routes.append(1)
+        routes3 = sock.execute_kw(
+            db, uid, password, 'stock.location.route', 'search', [
+                [['name', '=', 'Make To Order + Make To Stock']]])
+
+        routes4 = sock.execute_kw(
+            db, uid, password, 'stock.location.route', 'search', [
+                [['name', '=', 'Make To Order']]])
+
+        routes = routes1 + routes2 + routes3 + routes4
 
         if routes:
             routes_all = [(6, 0, routes)]
-            print(routes_all)
 
         if row['No Mecanico'].strip() != "True":
             vals = {
