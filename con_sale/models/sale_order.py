@@ -847,8 +847,8 @@ class SaleOrder(models.Model):
                 for data in self.order_line:
                     if data.bill_uom.id and data.bill_uom.id not in \
                      self.env.user.company_id.default_uom_task_id._ids \
-                      and not \
-                       data.is_delivery and not data.is_component \
+                            and not \
+                            data.is_delivery and not data.is_component \
                             and not data.task_id:
                         task_values = {
                             'name': "Task for: " +
@@ -1676,7 +1676,7 @@ class SaleOrderLine(models.Model):
             self.service_operator = None
         self.components_ids = products_ids
         self.layout_category_id = \
-        self.product_id.product_tmpl_id.layout_sec_id.id
+            self.product_id.product_tmpl_id.layout_sec_id.id
         return result
 
     def _compute_move_status(self):
@@ -1976,8 +1976,6 @@ class SaleOrderLine(models.Model):
         quantity to invoice is calculated from the ordered quantity.
         Otherwise, the quantity delivered is used.
         """
-
-
         for line in self:
             qty = 0.0
             if line.bill_uom_qty > 0:
