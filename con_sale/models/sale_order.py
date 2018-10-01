@@ -818,11 +818,11 @@ class SaleOrder(models.Model):
                                 data.is_delivery and not data.is_component \
                                 and not data.task_id:
                             task_values = {
-                                'name': "Task for: " \
-                                + str(self.project_id.name) \
-                                + " - " \
-                                + str(data.product_id.name) \
-                                + " - " + \
+                                'name': "Task for: " +
+                                str(self.project_id.name) +
+                                " - " +
+                                str(data.product_id.name) +
+                                " - " +
                                 str(data.bill_uom.name),
                                 'project_id': self.project_id.id,
                                 'sale_line_id': data.id,
@@ -852,10 +852,10 @@ class SaleOrder(models.Model):
                             and not data.task_id:
                         task_values = {
                             'name': "Task for: " +
-                            str(self.project_id.name) + 
-                            " - " + str(data.product_id.name) + 
+                            str(self.project_id.name) +
+                            " - " + str(data.product_id.name) +
                             " - " +
-                             str(data.bill_uom.name),
+                            str(data.bill_uom.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
                             'so_line': data.id,
@@ -1844,11 +1844,11 @@ class SaleOrderLine(models.Model):
                 line.is_delivery and not line.is_component \
                 and not line.task_id:
             task_values = {
-                'name': "Task for: " \
-                + str(line.order_id.project_id.name) \
-                + " - " \
-                + str(line.product_id.name) \
-                + " - " + \
+                'name': "Task for: " +
+                str(line.order_id.project_id.name) +
+                " - " +
+                str(line.product_id.name) +
+                " - " +
                 str(line.bill_uom.name),
                 'project_id': line.order_id.project_id.id,
                 'sale_line_id': line.id,

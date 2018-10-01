@@ -54,7 +54,7 @@ for row in Productos:
         section_id = section_id[0]['id']
 
     # UNIDADES DE MEDIDA
-    ## COMPRA
+    # COMPRA
     uom_po_id = sock.execute_kw(
         db, uid, password, 'product.uom', 'search_read', [
             [['name',
@@ -69,7 +69,7 @@ for row in Productos:
     else:
         uom_po_id = uom_po_id[0]['id']
 
-    ## VENTA
+    # VENTA
     sale_uom = sock.execute_kw(
         db, uid, password, 'product.uom', 'search_read', [
             [['name',
@@ -84,7 +84,7 @@ for row in Productos:
     else:
         sale_uom = sale_uom[0]['id']
 
-    ## UNIDAD
+    # UNIDAD
     uom_id = sock.execute_kw(
         db, uid, password, 'product.uom', 'search_read', [
             [['name',
@@ -235,7 +235,6 @@ for row in Productos:
             db, uid, password,
             'stock.change.product.qty', 'change_product_qty', [
                 wizard])
-
 
         # Add to public pricelist ###################################
 
