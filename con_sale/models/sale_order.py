@@ -1775,6 +1775,28 @@ class SaleOrderLine(models.Model):
     def create(self, values):
         # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
+        # Merge duplicate prioducts in lines
+        same_product = self.search(
+            [('product_id', '=', line.product_id.id),
+             ('order_id', '=', line.order_id.id),
+             ('bill_uom', '=', line.bill_uom.id),
+             ('id', '=', line.id)])
+        if same_product:
+            for data in same_product:
+                if data.product_id.product_tmpl_id.non_mech \
+                        or data.product_id.product_tmpl_id.type \
+                        == 'service':
+                    total_qty = data.product_qty + values.get(
+                        'product_uom_qty', 0)
+                    total_sale_uom = data.bill_uom_qty + values.get(
+                        'bill_uom_qty', 0
+                    )
+                    values.update({
+                        'product_uom_qty': total_qty,
+                        'bill_uom_qty': total_sale_uom
+                    })
+                    same_product.write(values)
+                    return same_product
         # Check owner
         if line.owner_id:
             self.function_management_buy(line)
@@ -1796,7 +1818,8 @@ class SaleOrderLine(models.Model):
                         'bill_uom_qty': qty,
                         'owner_id': data.owner_id.id,
                         'is_extra': True,
-                        'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                        'bill_uom':
+                        data.product_id.product_tmpl_id.uom_id.id
                     }
                     self.create(new_line_extra)
                 else:
@@ -1815,7 +1838,8 @@ class SaleOrderLine(models.Model):
                         'layout_category_id':
                         line.product_id.product_tmpl_id.layout_sec_id.id,
                         'is_component': True,
-                        'bill_uom': data.product_id.product_tmpl_id.uom_id.id
+                        'bill_uom':
+                        data.product_id.product_tmpl_id.uom_id.id
                     }
                     self.create(new_line_components)
         # Dates validations
