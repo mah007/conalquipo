@@ -1781,7 +1781,7 @@ class SaleOrderLine(models.Model):
              ('order_id', '=', line.order_id.id),
              ('bill_uom', '=', line.bill_uom.id),
              ('id', '=', line.id)])
-        if same_product:
+        if same_product and line.order_id.state == 'draft':
             for data in same_product:
                 if data.product_id.product_tmpl_id.non_mech \
                         or data.product_id.product_tmpl_id.type \
