@@ -4,7 +4,7 @@ import xmlrpc.client
 import csv
 
 host = 'http://localhost:9001'
-db = 'prueba_pilotos_productos_limpia'
+db = 'prueba_piloto_productos_limpia'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 

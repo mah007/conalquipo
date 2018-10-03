@@ -1771,16 +1771,22 @@ class SaleOrderLine(models.Model):
         # res['qty_shipped'] = self.product_uom_qty
         return res
 
+    @api.multi
+    def unlink(self):
+        # Overwrite sale order line create
+        for data in self:
+            if not data.merge:
+                line = super(SaleOrderLine, data).unlink()
+                return line
+
     @api.model
     def create(self, values):
         # Overwrite sale order line create
         line = super(SaleOrderLine, self).create(values)
-        # Merge duplicate prioducts in lines
         same_product = self.search(
-            [('product_id', '=', line.product_id.id),
-             ('order_id', '=', line.order_id.id),
-             ('bill_uom', '=', line.bill_uom.id),
-             ('id', '=', line.id)])
+            [('product_id', '=', values.get('product_id', False)),
+             ('order_id', '=', values.get('order_id', False)),
+             ('bill_uom', '=', values.get('bill_uom', False))])
         if same_product and line.order_id.state == 'draft':
             for data in same_product:
                 if data.product_id.product_tmpl_id.non_mech \
@@ -1789,107 +1795,107 @@ class SaleOrderLine(models.Model):
                     total_qty = data.product_qty + values.get(
                         'product_uom_qty', 0)
                     total_sale_uom = data.bill_uom_qty + values.get(
-                        'bill_uom_qty', 0
-                    )
+                        'bill_uom_qty', 0)
                     values.update({
                         'product_uom_qty': total_qty,
-                        'bill_uom_qty': total_sale_uom
+                        'bill_uom_qty': total_sale_uom,
                     })
                     same_product.write(values)
                     return same_product
-        # Check owner
-        if line.owner_id:
-            self.function_management_buy(line)
-        # Create in lines extra products for components
-        if line.components_ids:
-            for data in line.components_ids:
-                if data.extra:
-                    qty = data.quantity * line.product_uom_qty
-                    new_line_extra = {
-                        'product_id': data.product_id.id,
-                        'name': 'Extra ' + '%s' % (
-                            line.product_id.default_code or ''),
-                        'parent_component': line.product_id.id,
-                        'parent_line': line.id,
-                        'order_id': line.order_id.id,
-                        'product_uom_qty': qty,
-                        'layout_category_id':
-                        line.product_id.product_tmpl_id.layout_sec_id.id,
-                        'bill_uom_qty': qty,
-                        'owner_id': data.owner_id.id,
-                        'is_extra': True,
-                        'bill_uom':
-                        data.product_id.product_tmpl_id.uom_id.id
-                    }
-                    self.create(new_line_extra)
-                else:
-                    qty = data.quantity * line.product_uom_qty
-                    new_line_components = {
-                        'product_id': data.product_id.id,
-                        'name': 'Comp ' + '%s' % (
-                            line.product_id.default_code or ''),
-                        'parent_component': line.product_id.id,
-                        'parent_line': line.id,
-                        'order_id': line.order_id.id,
-                        'product_uom_qty': qty,
-                        'bill_uom_qty': qty,
-                        'price_unit': 0.0,
-                        'owner_id': data.owner_id.id,
-                        'layout_category_id':
-                        line.product_id.product_tmpl_id.layout_sec_id.id,
-                        'is_component': True,
-                        'bill_uom':
-                        data.product_id.product_tmpl_id.uom_id.id
-                    }
-                    self.create(new_line_components)
-        # Dates validations
-        if line.end_date and line.start_date:
-            date_format = '%Y-%m-%d'
-            d1 = datetime.strptime(
-                line.start_date, date_format
-                ).date()
-            d2 = datetime.strptime(
-                line.end_date, date_format
-                ).date()
-            if d2 < d1:
-                raise UserError(
-                    _("The end date can't be less than start date"))
-        # Fleet
-        if line.is_delivery:
-            line.update({
-                'price_unit': line.order_id.delivery_price})
-        if line.is_component:
-            line.update({
-                'price_unit': 0.0})
-        # Create task on sale lines
-        if line.bill_uom.id and line.bill_uom.id not in \
-            self.env.user.company_id.default_uom_task_id._ids \
-            and not \
-                line.is_delivery and not line.is_component \
-                and not line.task_id:
-            task_values = {
-                'name': "Task for: " +
-                str(line.order_id.project_id.name) +
-                " - " +
-                str(line.product_id.name) +
-                " - " +
-                str(line.bill_uom.name),
-                'project_id': line.order_id.project_id.id,
-                'sale_line_id': line.id,
-                'so_line': line.id,
-                'product_id': line.product_id.id,
-                'partner_id': line.order_id.partner_id.id,
-                'company_id': self.company_id.id,
-                'email_from': line.order_id.partner_id.email,
-                'user_id': False,
-                'uom_id': line.bill_uom.id,
-                'planned_hours': line.bill_uom_qty,
-                'remaining_hours': line.bill_uom_qty,
-            }
-            task = self.env[
-                'project.task'].create(task_values)
-            line.write({'task_id': task.id})
-        return line
+        else:
+            # Check owner
+            if line.owner_id:
+                self.function_management_buy(line)
+            # Create in lines extra products for components
+            if line.components_ids:
+                for data in line.components_ids:
+                    if data.extra:
+                        qty = data.quantity * line.product_uom_qty
+                        new_line_extra = {
+                            'product_id': data.product_id.id,
+                            'name': 'Extra ' + '%s' % (
+                                line.product_id.default_code or ''),
+                            'parent_component': line.product_id.id,
+                            'parent_line': line.id,
+                            'order_id': line.order_id.id,
+                            'product_uom_qty': qty,
+                            'layout_category_id':
+                            line.product_id.product_tmpl_id.layout_sec_id.id,
+                            'bill_uom_qty': qty,
+                            'owner_id': data.owner_id.id,
+                            'is_extra': True,
+                            'bill_uom':
+                            data.product_id.product_tmpl_id.uom_id.id
+                        }
+                        self.create(new_line_extra)
+                    else:
+                        qty = data.quantity * line.product_uom_qty
+                        new_line_components = {
+                            'product_id': data.product_id.id,
+                            'name': 'Comp ' + '%s' % (
+                                line.product_id.default_code or ''),
+                            'parent_component': line.product_id.id,
+                            'parent_line': line.id,
+                            'order_id': line.order_id.id,
+                            'product_uom_qty': qty,
+                            'bill_uom_qty': qty,
+                            'price_unit': 0.0,
+                            'owner_id': data.owner_id.id,
+                            'layout_category_id':
+                            line.product_id.product_tmpl_id.layout_sec_id.id,
+                            'is_component': True,
+                            'bill_uom':
+                            data.product_id.product_tmpl_id.uom_id.id
+                        }
+                        self.create(new_line_components)
+            # Dates validations
+            if line.end_date and line.start_date:
+                date_format = '%Y-%m-%d'
+                d1 = datetime.strptime(
+                    line.start_date, date_format
+                    ).date()
+                d2 = datetime.strptime(
+                    line.end_date, date_format
+                    ).date()
+                if d2 < d1:
+                    raise UserError(
+                        _("The end date can't be less than start date"))
+            # Fleet
+            if line.is_delivery:
+                line.update({
+                    'price_unit': line.order_id.delivery_price})
+            if line.is_component:
+                line.update({
+                    'price_unit': 0.0})
+            # Create task on sale lines
+            if line.bill_uom.id and line.bill_uom.id not in \
+                self.env.user.company_id.default_uom_task_id._ids \
+                and not \
+                    line.is_delivery and not line.is_component \
+                    and not line.task_id:
+                task_values = {
+                    'name': "Task for: " +
+                    str(line.order_id.project_id.name) +
+                    " - " +
+                    str(line.product_id.name) +
+                    " - " +
+                    str(line.bill_uom.name),
+                    'project_id': line.order_id.project_id.id,
+                    'sale_line_id': line.id,
+                    'so_line': line.id,
+                    'product_id': line.product_id.id,
+                    'partner_id': line.order_id.partner_id.id,
+                    'company_id': self.company_id.id,
+                    'email_from': line.order_id.partner_id.email,
+                    'user_id': False,
+                    'uom_id': line.bill_uom.id,
+                    'planned_hours': line.bill_uom_qty,
+                    'remaining_hours': line.bill_uom_qty,
+                }
+                task = self.env[
+                    'project.task'].create(task_values)
+                line.write({'task_id': task.id})
+            return line
 
     @api.multi
     def write(self, values):
