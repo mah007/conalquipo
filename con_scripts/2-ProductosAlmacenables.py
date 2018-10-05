@@ -401,24 +401,24 @@ for row in Productos:
                 [producto_id[0]['id']], vals])
 
         # AÑADIR CANTIDAD A MANO
-        pro_id = sock.execute_kw(
-            db, uid, password, 'product.product', 'search_read', [
-                [['product_tmpl_id', '=', producto_id[0]['id']]]],
-            {'fields': ['id']})
+        # pro_id = sock.execute_kw(
+        #     db, uid, password, 'product.product', 'search_read', [
+        #         [['product_tmpl_id', '=', producto_id[0]['id']]]],
+        #     {'fields': ['id']})
 
-        vals_qty = {
-            'product_id': pro_id[0]['id'],
-            'location_id': origin_location_id[0]['id'],
-            'new_quantity': row['cantidad a mano']
-        }
+        # vals_qty = {
+        #     'product_id': pro_id[0]['id'],
+        #     'location_id': origin_location_id[0]['id'],
+        #     'new_quantity': row['cantidad a mano']
+        # }
 
-        wizard = sock.execute_kw(
-            db, uid, password, 'stock.change.product.qty', 'create', [
-                vals_qty])
+        # wizard = sock.execute_kw(
+        #     db, uid, password, 'stock.change.product.qty', 'create', [
+        #         vals_qty])
 
-        sock.execute_kw(
-            db, uid, password,
-            'stock.change.product.qty', 'change_product_qty', [
-                wizard])
+        # sock.execute_kw(
+        #     db, uid, password,
+        #     'stock.change.product.qty', 'change_product_qty', [
+        #         wizard])
 
 print("Finaliza Proceso (Productos)...")

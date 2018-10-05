@@ -52,7 +52,6 @@ class ProductReplacements(models.TransientModel):
         'product.replacements.lines', 'replacement_id', string="Lines")
     can_print = fields.Boolean('Can print')
 
-
     @api.multi
     def print_report(self):
         """
