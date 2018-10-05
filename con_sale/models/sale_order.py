@@ -1771,14 +1771,6 @@ class SaleOrderLine(models.Model):
         # res['qty_shipped'] = self.product_uom_qty
         return res
 
-    @api.multi
-    def unlink(self):
-        # Overwrite sale order line create
-        for data in self:
-            if not data.merge:
-                line = super(SaleOrderLine, data).unlink()
-                return line
-
     @api.model
     def create(self, values):
         # Overwrite sale order line create
