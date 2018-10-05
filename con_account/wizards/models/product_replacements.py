@@ -20,6 +20,7 @@ class ProductReplacements(models.TransientModel):
         qty = 0.0
         qty_invoices = 0.0
         self.replacement_lines = []
+        self.can_print = False
         if self.init_date and self.end_date:
             invoice_lines_ids = self.env['account.invoice.line'].search(
                 [('invoice_id.init_date_invoice', '>=', self.init_date),
@@ -35,6 +36,8 @@ class ProductReplacements(models.TransientModel):
                         'product_id': data.product_id.id,
                         'qty': qty,
                         'qty_invoices': qty_invoices})]
+        if self.replacement_lines:
+            self.can_print = True
 
     company_id = fields.Many2one(
         'res.company', string="Company", required=True,
@@ -47,6 +50,8 @@ class ProductReplacements(models.TransientModel):
         'product.category', string="Product category")
     replacement_lines = fields.One2many(
         'product.replacements.lines', 'replacement_id', string="Lines")
+    can_print = fields.Boolean('Can print')
+
 
     @api.multi
     def print_report(self):
