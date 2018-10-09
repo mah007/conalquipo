@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="category_intereses" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Intereses</field>
+        </record>
+
+        <record id="category_repuestos" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Repuestos</field>
+        </record>
+
+        <record id="category_equipos" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Equipos</field>
+        </record>
+
+        <record id="category_formaleteria" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Formaletería</field>
+        </record>
+
+        <record id="category_1" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería losa</field>
+        </record> 
+
+        <record id="category_2" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería columna</field>
+        </record> 
+
+        <record id="category_3" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería man-hall</field>
+        </record> 
+
+        <record id="category_4" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Otra formaletería</field>
+        </record> 
+
+        <record id="category_5" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería modular</field>
+        </record> 
+
+        <record id="category_for_com" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Formaletería - Complementos</field>
+        </record> 
+
+        <record id="category_6" model="product.category">
+            <field name="parent_id" ref="category_formaleteria"/>
+            <field name="name">Losa fácil</field>
+        </record> 
+
+        <record id="category_7" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Acarreos</field>
+        </record> 
+
+        <record id="category_8" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Transporte vertical de materiales</field>
+        </record> 
+
+        <record id="category_9" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Allanadoras-Reglas vibratorias</field>
+        </record> 
+
+        <record id="category_10" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Bombas hidroestáticas</field>
+        </record> 
+
+        <record id="category_11" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Cilindros compactadores</field>
+        </record> 
+
+        <record id="category_12" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Vibro-compactadores</field>
+        </record> 
+
+        <record id="category_13" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Demoledores</field>
+        </record> 
+
+        <record id="category_14" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Soldadores</field>
+        </record> 
+
+        <record id="category_15" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Gusanos destaquiadores</field>
+        </record> 
+
+        <record id="category_andamios" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Andamios</field>
+        </record> 
+
+        <record id="category_16" model="product.category">
+            <field name="parent_id" ref="category_andamios"/>
+            <field name="name">Andamios de carga</field>
+        </record> 
+
+        <record id="category_17" model="product.category">
+            <field name="parent_id" ref="category_andamios"/>
+            <field name="name">Andamios colgantes</field>
+        </record> 
+
+        <record id="category_18" model="product.category">
+            <field name="parent_id" ref="category_andamios"/>
+            <field name="name">Andamios tubulares</field>
+        </record> 
+
+        <record id="category_19" model="product.category">
+            <field name="parent_id" ref="category_andamios"/>
+            <field name="name">Andamios multidireccionales</field>
+        </record> 
+
+        <record id="category_20" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Pulidoras</field>
+        </record> 
+
+        <record id="category_21" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Sistemas Dalmine</field>
+        </record> 
+
+        <record id="category_22" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Malacates</field>
+        </record> 
+
+        <record id="category_23" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Plumas - Complementos</field>
+        </record> 
+
+        <record id="category_24" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Torre grúa</field>
+        </record> 
+
+        <record id="category_25" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Pluma doble</field>
+        </record> 
+
+        <record id="category_26" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Motobombas</field>
+        </record> 
+
+        <record id="category_27" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Compresores</field>
+        </record> 
+
+        <record id="category_28" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Cuna hidráulica</field>
+        </record> 
+
+        <record id="category_29" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Concretadoras</field>
+        </record> 
+
+        <record id="category_30" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Bombas de concreto</field>
+        </record> 
+
+        <record id="category_31" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Dosificadoras</field>
+        </record> 
+
+        <record id="category_32" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Vibradores</field>
+        </record> 
+
+        <record id="category_33" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Taladros</field>
+        </record> 
+
+        <record id="category_34" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Brocas</field>
+        </record> 
+
+        <record id="category_35" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Otro equipo electromecánico</field>
+        </record> 
+
+        <record id="category_36" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Sierra para concreto</field>
+        </record> 
+
+        <record id="category_37" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Hidrolavadoras</field>
+        </record> 
+
+        <record id="category_38" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Movimiento vertical</field>
+        </record> 
+
+        <record id="category_39" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Pernadoras</field>
+        </record> 
+
+        <record id="category_40" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Plantas</field>
+        </record> 
+
+        <record id="category_41" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Cortadoras</field>
+        </record> 
+
+        <record id="category_42" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Topografía</field>
+        </record> 
+
+        <record id="category_43" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Otro equipo</field>
+        </record> 
+
+        <record id="category_44" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Basculas</field>
+        </record> 
+
+        <record id="category_45" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Dumper</field>
+        </record> 
+
+        <record id="category_46" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Minicargadores</field>
+        </record> 
+
+        <record id="category_47" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Retroexcavadoras</field>
+        </record> 
+
+        <record id="category_48" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Montacargas</field>
+        </record> 
+
+        <record id="category_49" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Grúa hidráulica articulada</field>
+        </record> 
+
+        <record id="category_50" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Elevadores de tijera</field>
+        </record> 
+
+        <record id="category_51" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Equipo subarrendado</field>
+        </record> 
+
+        <record id="category_52" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Reposiciones</field>
+        </record> 
+
+        <record id="category_53" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Complementos</field>
+        </record> 
+
+        <record id="category_54" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Suministros</field>
+        </record> 
+
+        <record id="category_55" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Torre de iluminación</field>
+        </record> 
+
+        <record id="category_56" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Complementos</field>
+        </record> 
+
+        <record id="category_57" model="product.category">
+            <field name="parent_id" ref="category_equipos"/>
+            <field name="name">Operador</field>
+        </record> 
+
+        <record id="category_58" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Operador</field>
+        </record> 
+
+        <record id="category_59" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Otros</field>
+        </record> 
+
+    </data>
+</odoo>

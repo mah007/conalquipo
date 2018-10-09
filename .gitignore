@@ -1,0 +1,12 @@
+# Ignore compilated python files pyc
+*.pyc
+# Ignore backup .DS_Store file
+.DS_Store
+# Ignore temporal files vim and gedit
+*.swp
+*.swo
+*~
+access_apps
+access_settings_menu
+web_debranding
+mail_base

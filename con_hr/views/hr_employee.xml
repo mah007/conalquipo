@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_employee_form_inherit">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='resource_calendar_id']" position="after">
+                  <field name="is_operator"/>
+                  <field name="product_ids" class="oe_no_button"
+                         widget="many2many_tags"  attrs="{'invisible': [('is_operator','=', False)]}" />
+              </xpath>
+
+              <field name="address_id" position="after">
+                  <field name="employee_code" required="1"/>
+              </field>
+
+          </field>
+    </record>
+</odoo>

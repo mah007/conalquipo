@@ -1,0 +1,1412 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-21 04:18+0000\n"
+"PO-Revision-Date: 2018-09-21 00:04-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: con_stock
+#: model:mail.template,body_html:con_stock.stock_automatic_email_template
+msgid ""
+"\n"
+"\n"
+"% set products = ctx.get('products_lst', [])\n"
+"\n"
+"% set move_in = ctx.get('move_in', [])\n"
+"\n"
+"% set move_out = ctx.get('move_out', [])\n"
+"\n"
+"% if products:\n"
+"    <table border=\"1\" width=\"800\">\n"
+"        <tr>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Producto</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Disponibilidad</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Remisiones</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Devoluciones</th>\n"
+"        </tr>\n"
+"        % for linepro in products:\n"
+"            <tr>\n"
+"                <td>\n"
+"                    ${linepro['product_tmpl_id'].name}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set stock = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                %if stock.append(linem['sale_line_id'].real_available)\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${stock[0]}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_out:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"            </tr>\n"
+"        % endfor            \n"
+"    </table>\n"
+"% endif\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"% set products = ctx.get('products_lst', [])\n"
+"\n"
+"% set move_in = ctx.get('move_in', [])\n"
+"\n"
+"% set move_out = ctx.get('move_out', [])\n"
+"\n"
+"% if products:\n"
+"    <table border=\"1\" width=\"800\">\n"
+"        <tr>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Producto</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Disponibilidad</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Remisiones</th>\n"
+"            <th align=\"left\" bgcolor=\"#A9A9A9\">Devoluciones</th>\n"
+"        </tr>\n"
+"        % for linepro in products:\n"
+"            <tr>\n"
+"                <td>\n"
+"                    ${linepro['product_tmpl_id'].name}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set stock = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                %if stock.append(linem['sale_line_id'].real_available)\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${stock[0]}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_in:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"                <td>\n"
+"                    % set total = []\n"
+"                    % for linem in move_out:\n"
+"                        % if linem['product_id'].product_tmpl_id == linepro['product_tmpl_id']\n"
+"                            % if linem['sale_line_id']\n"
+"                                % if total.append(linem['product_uom_qty'])\n"
+"                                % endif\n"
+"                            % endif\n"
+"                        % endif\n"
+"                    % endfor\n"
+"                    ${sum(total)}\n"
+"                </td>\n"
+"            </tr>\n"
+"        % endfor            \n"
+"    </table>\n"
+"% endif\n"
+"\n"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:183
+#, python-format
+msgid ""
+"\n"
+"                            This vehicle or carrier doesn't match.\n"
+"                            Please, contact with a commercial to create a new\n"
+"                                line in the order with the correct carrier\n"
+"                                and vehicle for this picking.\n"
+"                            "
+msgstr ""
+"\n"
+"                            Este vehículo o metodo de envio no es igual.\n"
+"                            a los seleccionados en las lineas de las ordenes de venta\n"
+"                                Por favor contacte al comercial para que le asigne o\n"
+"\t\t\t \tle envié un vehículo o forma de envío para este movimiento.\n"
+"                            "
+
+#. module: con_stock
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:67
+#, python-format
+msgid " change by "
+msgstr " reemplazo de  "
+
+#. module: con_stock
+#: model:mail.template,subject:con_stock.stock_automatic_email_template
+msgid "${ctx['subject']}"
+msgstr "${ctx['subject']}"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<br/>\n"
+"                              <span>Pbx.</span>"
+msgstr ""
+"<br/>\n"
+"                              <span>Pbx.</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<br/>\n"
+"                            <span>ACARREO: </span>\n"
+"\n"
+"                            <span> / </span>\n"
+"                            <span>PLACA: </span>"
+msgstr ""
+"<br/>\n"
+"                            <span>ACARREO: </span>\n"
+"\n"
+"                            <span> / </span>\n"
+"                            <span>PLACA: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span> / </span>\n"
+"                            <span>COD: </span>"
+msgstr ""
+"<span> / </span>\n"
+"                            <span>COD: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span> / </span>\n"
+"                            <span>CONDUCTOR: </span>"
+msgstr ""
+"<span> / </span>\n"
+"                            <span>CONDUCTOR: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span> / </span>\n"
+"                            <span>Fecha-hora de anuncio: </span>"
+msgstr ""
+"<span> / </span>\n"
+"                            <span>Fecha-hora de anuncio: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span> NIT. </span>"
+msgstr "<span> NIT. </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>ANUNCIA: </span>"
+msgstr "<span>ANUNCIA: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>Cargo: </span>"
+msgstr "<span>Cargo: </span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>Condiciones externas</span>"
+msgstr "<span>Condiciones externas</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                     de la obra se exigirá lo mismo.</span>\n"
+"                                    <strong>Los productos devueltos pueden generar costos de reparación que le serán facturados.</strong>"
+msgstr ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                     de la obra se exigirá lo mismo.</span>\n"
+"                                    <strong>Los productos devueltos pueden generar costos de reparación que le serán facturados.</strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto.</span>"
+msgstr ""
+"<span>El cliente se compromete al buen uso y mantenimiento del equipo a su cargo. El equipo es entregado trabajando adecuadamente y en forma. Al hacerse la devolución por parte\n"
+"                                    de la obra se exigirá lo mismo. El equipo enviado en esta REMISIÓN no está asegurado, por lo tanto corre por cuenta y riesgo del constructor mientras sea devuelto.</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>FIRMA REVISADO</span>"
+msgstr "<span>FIRMA REVISADO</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>Funcionamiento</span>"
+msgstr "<span>Funcionamiento</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>Limpieza</span>"
+msgstr "<span>Limpieza</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>NIT.</span>"
+msgstr "<span>NIT.</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>OBSERVACIONES:</span><br/>"
+msgstr "<span>OBSERVACIONES:</span><br/>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<span>Recibe:</span>"
+msgstr "<span>Recibe:</span>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.message_body
+msgid "<strong>Change: </strong>"
+msgstr "<strong>Cambio: </strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.message_head
+msgid "<strong>Equipment Change.</strong>"
+msgstr "<strong>Cambio de equipo.</strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<strong>NC</strong>"
+msgstr "<strong>NC</strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.message_body
+msgid "<strong>Reason: </strong>"
+msgstr "<strong>Razón: </strong>"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "<strong>Verificación interna</strong>"
+msgstr "<strong>Verificación interna</strong>"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_advertisement_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_advertisement_date
+msgid "Advertisement date"
+msgstr "Fecha de anuncio"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Applicant details"
+msgstr "Detalle de anuncio"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_line_assigned_operator
+msgid "Assigned Operator"
+msgstr "Operador asignado"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Attachments"
+msgstr "Adjuntos"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "Bad attention"
+msgstr "Mala atención"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_invoice_address
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "C.C."
+msgstr "C.C."
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "CANT. DEVUELTA"
+msgstr "CANT. DEVUELTA"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "CANT. ENVIADA"
+msgstr "CANT. ENVIADA"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "CANT. OBRA"
+msgstr "CANT. OBRA"
+
+#. module: con_stock
+#: model:res.groups,name:con_stock.group_change_stock_dates
+msgid "Can change stock dates"
+msgstr "Puede modificar fechas de movimientos"
+
+#. module: con_stock
+#: model:res.groups,name:con_stock.group_notifications_biweekly
+msgid "Can receive stock notifications email biweekly"
+msgstr "Puede recibir notificación de stock por correo quincenal"
+
+#. module: con_stock
+#: model:res.groups,name:con_stock.group_notifications_diary
+msgid "Can receive stock notifications email diary"
+msgstr "Puede recibir notificación de stock por correo diario"
+
+#. module: con_stock
+#: model:res.groups,name:con_stock.group_notifications_monthly
+msgid "Can receive stock notifications email monthly"
+msgstr "Puede recibir notificación de stock por correo mensual"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_reason
+msgid "Cancel Reason"
+msgstr "Razón de cancelación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Cargo:"
+msgstr "Cargo:"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_carrier_type
+msgid "Carrier Responsible"
+msgstr "Transportista responsable"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "Change Because of Malfunction"
+msgstr "Cambio por malfunción"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
+msgid "Change Equipment"
+msgstr "Cambio de equipo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_set_product_state
+msgid "Change the state to all products when arrive to this location"
+msgstr "Cambie el estado a todos los productos cuando llegue a esta ubicación"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_is_charge_replacement
+msgid "Charge for Replacement?"
+msgstr "Cargo por reemplazo?"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_check_good_conditions
+msgid "Check and receive the equipment in good conditions"
+msgstr "Revisa y recibe el equipo en buenas condiciones"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_child_product
+msgid "Child product"
+msgstr "Producto hijo"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+msgid "Choose your combination"
+msgstr "Seleccione su combinación"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_collect_more_equipment
+msgid "Collect more equipment"
+msgstr "Recoger más equipo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_collect_notification
+msgid "Collect notification"
+msgstr "Notificación de recogida"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_color
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_color
+msgid "Color"
+msgstr "Color"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_create_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_create_date
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_create_date
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_create_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_create_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_create_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_stock
+#: selection:set.inv.locations,get_locations:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "CÓDIGO"
+msgstr "CÓDIGO"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "DESCRIPCIÓN"
+msgstr "DESCRIPCIÓN"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "DEV"
+msgstr "DEV"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_date
+#: model:ir.model.fields,help:con_stock.field_stock_move_history_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_set_default_location
+msgid "Default location for products"
+msgstr "Ubicación por defecto para los productos"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_delivery_cost
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Delivery Cost"
+msgstr "Costo de envío"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Delivery details"
+msgstr "Detalles de entrega"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_delivery_instructions
+msgid "Delivery instructions"
+msgstr "Entrega instrucciones"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_product_desc
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+msgid "Dest. Location"
+msgstr "Ubicación Dest."
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Devolución"
+msgstr "Devolución"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_display_name
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_display_name
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_display_name
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_display_name
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_display_name
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
+msgid "Do Cancellation"
+msgstr "Realizar cancelación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Done"
+msgstr "Hecho"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_driver_client
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_employee_id
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_employee_code
+msgid "Employee code"
+msgstr "Código empleado"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "En obra ( ) En bodega Conalquipo ( )"
+msgstr "En obra () En bodega Conalquipo ()"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "En obra ( ) En bodega Conalquipo (X)"
+msgstr "En obra () En bodega Conalquipo (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "En obra (X) En bodega Conalquipo ( )"
+msgstr "En obra (X) En bodega Conalquipo ()"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "End project-work"
+msgstr "Finalización de la obra"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Entrega instrucciones:"
+msgstr "Entrega instrucciones:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Entrega oportuna:"
+msgstr "Entrega oportuna:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Entregó en:"
+msgstr "Entregó en:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Equipment Change"
+msgstr "Cambio de equipo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_get_locations
+msgid "Get locations"
+msgstr "Traer ubicaciones"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+msgid "Get locations to be set"
+msgstr "Traer ubicaciones para configurar"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_qty_history
+msgid "History on work"
+msgstr "Historia de la obra"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Hora Acordada:"
+msgstr "Hora Acordada:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Hora Dev.:"
+msgstr "Hora Dev.:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Hora Entrega:"
+msgstr "Hora Entrega:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Hora Llegada:"
+msgstr "Hora Llegada:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Hora Salida:"
+msgstr "Hora Salida:"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_agreed_hour
+msgid "Hour Agreed"
+msgstr "Hora acordada"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_in_hour
+msgid "Hour Entry"
+msgstr "Hora de entrada"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_out_hour
+msgid "Hour Output"
+msgstr "Hora de salida"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_id
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_id
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_type_sp
+msgid "ID"
+msgstr "ID"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "INI"
+msgstr "INI"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_id_driver_client
+msgid "Identification No Driver"
+msgstr "Num. ident. conductor"
+
+#. module: con_stock
+#: selection:stock.picking,collect_notification:0
+msgid "Immediately"
+msgstr "Inmediatamente"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Info Remission On Site"
+msgstr "Información de remisión en sitio"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Info Shipping"
+msgstr "Información de envío"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Inmediatamente ( ) avisan después ( )"
+msgstr "Inmediatamente () avisan después ()"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Inmediatamente ( ) avisan después (X)"
+msgstr "Inmediatamente () avisan después (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Inmediatamente (X) avisan después ( )"
+msgstr "Inmediatamente (X) avisan después ()"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_scrap.py:50
+#, python-format
+msgid "Insufficient Quantity"
+msgstr "Cantidad insuficiente"
+
+#. module: con_stock
+#: selection:set.inv.locations,get_locations:0
+msgid "Internal"
+msgstr "Interno"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_inventory
+msgid "Inventory"
+msgstr "Inventario"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de Inventario"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_invoice_line_ids
+msgid "Invoice Line"
+msgstr "Línea de Factura"
+
+#. module: con_stock
+#: model:ir.model.fields,help:con_stock.field_stock_move_history_invoice_line_ids
+msgid "Invoice Lines"
+msgstr "Invoice Lines"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "It seems very expensive"
+msgstr "Parece muy costos"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_job_title
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_request_job_title
+msgid "Job title"
+msgstr "Cargo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard___last_update
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations___last_update
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines___last_update
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history___last_update
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard___last_update
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_uid
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_write_date
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_write_date
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_write_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_write_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_write_date
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_license_plate
+msgid "License Plate"
+msgstr "Matrícula"
+
+#. module: con_stock
+#: model:ir.model.fields,help:con_stock.field_stock_picking_license_plate
+msgid "License plate number of the vehicle (i = plate number for a car)"
+msgstr "Número de matrícula del vehículo (es decir, número de placa para un vehículo)"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_locations_lines
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Log a note..."
+msgstr "Registrar una nota..."
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "MIN."
+msgstr "MIN."
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_attachment_ids
+msgid "Main Attachments"
+msgstr "Adjunto principal"
+
+#. module: con_stock
+#: model:stock.location,name:con_stock.stock_location_maintenance
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+#. module: con_stock
+#: model:ir.model.fields,help:con_stock.field_stock_location_is_charge_replacement
+msgid "Mark this check if you want the products that move to this location to be charged when making a reposition."
+msgstr "Marque este checkbox si desea que se carguen los productos que se trasladan a esta ubicación al realizar una reposición."
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_mess_operated
+msgid "Message Operated"
+msgstr "Mensaje para operador"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_move_id
+msgid "Move"
+msgstr "Movimiento"
+
+#. module: con_stock
+#: model:ir.actions.report,name:con_stock.action_report_delivery_con
+msgid "Movimiento de Inventario"
+msgstr "Movimiento de Inventario"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "No longer need it"
+msgstr "No es necesario"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Nombre:"
+msgstr "Nombre:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra ( ) Conalquipo ( )"
+msgstr "Obra () Conalquipo ()"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra ( ) Conalquipo (X)"
+msgstr "Obra () Conalquipo (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Obra (X) Conalquipo ( )"
+msgstr "Obra (X) Conalquipo ()"
+
+#. module: con_stock
+#: selection:stock.picking,check_good_conditions:0
+msgid "On company"
+msgstr "En compañoa"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_product_count
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_product_count
+#: selection:stock.picking,check_good_conditions:0
+msgid "On work"
+msgstr "En obra"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Operador:"
+msgstr "Operador:"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_employee_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
+msgid "Operator"
+msgstr "Operador"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_work_operator
+msgid "Operator on work"
+msgstr "Operador en obra"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_employee_ids
+msgid "Operators"
+msgstr "Operadores"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_move_line
+msgid "Packing Operation"
+msgstr "Operación de empaquetado"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Página: <span class=\"page\"/>/<span class=\"topage\"/>"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_parent_sale_line
+msgid "Parent sale line"
+msgstr "Linea de la orden padre"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_partner_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_line_partner_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_tree_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_tree_inherit
+msgid "Partner"
+msgstr "Asociado"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_id_number
+msgid "Person identification"
+msgstr "Identificación de persona"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_picking_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_picking_ids
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_picking_id
+msgid "Picking"
+msgstr "Nota de Entrega"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
+msgid "Please explain the reason for cancellation."
+msgstr "Por favor, explique la razones de la cancelación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_cancel_wizard_view
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
+msgid "Post Journal Entries"
+msgstr "Validar asientos"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+msgid "Proceed"
+msgstr "Proceder"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_product_ids
+msgid "Product Change"
+msgstr "Cambio de producto"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_new_product_id
+msgid "Product New"
+msgstr "Nuevo producto"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_project_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_project_id
+#: model:ir.ui.view,arch_db:con_stock.view_move_tree_receipt_picking_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_search_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_line_tree_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_search_inherit
+#: model:ir.ui.view,arch_db:con_stock.view_stock_move_tree_inherit
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_quantity_project
+msgid "Qty Project"
+msgstr "Cant. en Obra"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_quantity_done
+msgid "Qty done"
+msgstr "Cant. hecha"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_quant
+msgid "Quants"
+msgstr "Cants"
+
+#. module: con_stock
+#: selection:stock.move.history,code:0
+msgid "REM"
+msgstr "REM"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_reason
+#: model:ir.ui.view,arch_db:con_stock.stock_picking_equipment_change_wizard_view
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_cancel_wizard_name
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_equipment_change_wizard_reason
+msgid "Reasons for cancellation"
+msgstr "Razones de cancelación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Recoger más equipo:"
+msgstr "Recoger más equipo:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Recogida oportuna:"
+msgstr "Recogida oportuna:"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Remisión"
+msgstr "Remisión"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_mrp_repair_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_repair_requests
+msgid "Repair request"
+msgstr "Solicitud de reparación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Repair requests"
+msgstr "Solicitudes de reparación"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_scrap.py:82
+#: code:addons/con_stock/models/stock_scrap.py:98
+#: code:addons/con_stock/models/stock_scrap.py:122
+#, python-format
+msgid "Replenishment %s"
+msgstr "Reposición %s"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_request_responsible
+msgid "Request responsible"
+msgstr "Responsable anuncio"
+
+#. module: con_stock
+#: model:stock.location,name:con_stock.stock_location_reserved
+msgid "Reserved"
+msgstr "Reservado"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_responsible
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Revisa y recibe el equipo en buenas condiciones"
+msgstr "Revisa y recibe el equipo en buenas condiciones"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "SALDO OBRA"
+msgstr "SALDO OBRA"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_sale_line_id
+msgid "Sale Line"
+msgstr "Línea de venta"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:758
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+#, python-format
+msgid "Scrap"
+msgstr "Chatarra"
+
+#. module: con_stock
+#: model:ir.model.fields,help:con_stock.field_set_inv_locations_lines_color
+msgid "Select the color of the state"
+msgstr "Seleccione el color del estado"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:300
+#, python-format
+msgid "Selected vehicle is not available for the shipping area. please select another vehicle."
+msgstr "El vehículo seleccionado no está disponible para el área de envío. por favor seleccione otro vehículo."
+
+#. module: con_stock
+#: model:ir.actions.server,name:con_stock.ir_cron_stock_move_mail_biweekly_ir_actions_server
+#: model:ir.cron,cron_name:con_stock.ir_cron_stock_move_mail_biweekly
+#: model:ir.cron,name:con_stock.ir_cron_stock_move_mail_biweekly
+msgid "Send stock moves mail biweekly"
+msgstr "Enviar reporte de movimientos por correo quincenal"
+
+#. module: con_stock
+#: model:ir.actions.server,name:con_stock.ir_cron_stock_move_mail_diary_ir_actions_server
+#: model:ir.cron,cron_name:con_stock.ir_cron_stock_move_mail_diary
+#: model:ir.cron,name:con_stock.ir_cron_stock_move_mail_diary
+msgid "Send stock moves mail diary"
+msgstr "Enviar reporte de movimientos por correo diario"
+
+#. module: con_stock
+#: model:ir.actions.server,name:con_stock.ir_cron_stock_move_mail_monthly_ir_actions_server
+#: model:ir.cron,cron_name:con_stock.ir_cron_stock_move_mail_monthly
+#: model:ir.cron,name:con_stock.ir_cron_stock_move_mail_monthly
+msgid "Send stock moves mail monthly"
+msgstr "Enviar reporte de movimientos por correo mensual"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_set_data_id
+msgid "Set data wizard"
+msgstr "Asistente"
+
+#. module: con_stock
+#: model:ir.actions.act_window,name:con_stock.action_set_locations
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+msgid "Set location colors and states"
+msgstr "Asignar colores de ubicaciones y estados"
+
+#. module: con_stock
+#: model:ir.ui.menu,name:con_stock.menu_set_locations
+msgid "Set locations colors"
+msgstr "Asignar colores de ubicaciones"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_location_product_state
+msgid "Set state"
+msgstr "Asignar estado"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_shipping_address
+msgid "Shipping"
+msgstr "Transporte"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "Shipping Address"
+msgstr "Dirección de obra"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_driver_ids
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_receipts_driver_ids
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Shipping Driver"
+msgstr "Conductor de flete"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si ( ) No (X)"
+msgstr "Si () No (X)"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si (X) NO ( )"
+msgstr "Si (X) NO ()"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "Si (X) No ( )"
+msgstr "Si (X) No ()"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_set_inv_locations_lines_states_id
+#: model:ir.ui.view,arch_db:con_stock.view_product_availability_stock_location_tree
+msgid "State"
+msgstr "Estado"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de stock"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_move_line
+msgid "Stock move"
+msgstr "Movimiento de stock"
+
+#. module: con_stock
+#: model:ir.module.category,name:con_stock.module_stock_notifications
+msgid "Stock notifications"
+msgstr "Notificaciones de stock"
+
+#. module: con_stock
+#: selection:set.inv.locations,get_locations:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: con_stock
+#: selection:stock.picking,reason:0
+msgid "The equipment did not serve you"
+msgstr "El equipo no funcionó"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_move.py:162
+#, python-format
+msgid "The move of the product %s, can not be generated for this period, since it is in the following invoices: %s"
+msgstr "El movimiento del producto %s, no puede ser generado para este periodo, ya que se encuentra en la(s) siguiente facturas: %s"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_scrap.py:87
+#: code:addons/con_stock/models/stock_scrap.py:96
+#: code:addons/con_stock/models/stock_scrap.py:127
+#, python-format
+msgid "The product doesn't have replacement service!"
+msgstr "El producto no tiene servicio de reposición establecido!"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_stock_picking_form_inherit
+msgid "There is product in the dispatch order that requires operator, please select the equipment operator."
+msgstr "Hay un producto en la orden de despacho que requiere operador, seleccione el operador del equipo."
+
+#. module: con_stock
+#: selection:stock.picking,collect_notification:0
+msgid "They warn later"
+msgstr "Advierten más tarde"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:166
+#, python-format
+msgid "This employee code in not member of this group."
+msgstr "El código de empleado no forma parte del grupo del empleado."
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_timely_collection
+msgid "Timely collection"
+msgstr "Recogida oportuna"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_timely_delivery
+msgid "Timely delivery"
+msgstr "Entrega oportuna"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_history_code
+msgid "Type of Operation"
+msgstr "Tipo de Operación"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.report_delivery_document_con
+msgid "UND."
+msgstr "UND."
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_vehicle_client
+#: model:ir.model.fields,field_description:con_stock.field_stock_picking_vehicle_id
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: con_stock
+#: selection:set.inv.locations,get_locations:0
+msgid "View"
+msgstr "Vista"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:300
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.view_picking_withcarrier_out_form_inherit
+msgid "Weight"
+msgstr "Peso"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_line_project_id
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_project_id
+msgid "Works"
+msgstr "Obras"
+
+#. module: con_stock
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:72
+#, python-format
+msgid "You can't select the same product"
+msgstr "No puede seleccionar el mismo producto!"
+
+#. module: con_stock
+#: code:addons/con_stock/models/stock_picking.py:485
+#, python-format
+msgid "You need specify a operator for: %s"
+msgstr "Necesita especificar un operado para: %s"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_equipment_cw_id
+msgid "equipment.change.wizard"
+msgstr "equipment.change.wizard"
+
+#. module: con_stock
+#: model:ir.ui.view,arch_db:con_stock.set_inv_locations_view
+msgid "or"
+msgstr "o"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_product_change_wizard_ant_product_id
+msgid "product Ant"
+msgstr "Producto anterior"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_product_change_wizard
+msgid "product.change.wizard"
+msgstr "product.change.wizard"
+
+#. module: con_stock
+#: model:ir.model.fields,field_description:con_stock.field_stock_move_returned
+msgid "returned"
+msgstr "Devuelto"
+
+#. module: con_stock
+#: code:addons/con_stock/wizards/models/stock_picking_equipment_change_wizard.py:74
+#, python-format
+msgid "selected product does not have quantity available in the inventory"
+msgstr "El producto seleccionado no tiene disponibilidad en el inventario"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_set_inv_locations
+msgid "set.inv.locations"
+msgstr "set.inv.locations"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_set_inv_locations_lines
+msgid "set.inv.locations.lines"
+msgstr "set.inv.locations.lines"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_move_history
+msgid "stock.move.history"
+msgstr "stock.move.history"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_picking_cancel_wizard
+msgid "stock.picking.cancel.wizard"
+msgstr "stock.picking.cancel.wizard"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_picking_equipment_change_wizard
+msgid "stock.picking.equipment.change.wizard"
+msgstr "stock.picking.equipment.change.wizard"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_scrap
+msgid "stock.scrap"
+msgstr "stock.scrap"
+
+#. module: con_stock
+#: model:ir.model,name:con_stock.model_stock_warn_insufficient_qty_scrap
+msgid "stock.warn.insufficient.qty.scrap"
+msgstr "stock.warn.insufficient.qty.scrap"

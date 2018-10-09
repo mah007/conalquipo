@@ -1,0 +1,12 @@
+{
+  "odoo": "10.0",
+  "without-demo": "all",
+  "addons": {
+    "path": [
+      "addons"
+    ],
+    "install": [
+      "con_profile"
+    ]
+  }
+}

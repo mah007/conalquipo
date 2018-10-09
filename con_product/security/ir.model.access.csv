@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_states_salesman,product.states,model_product_states,sales_team.group_sale_salesman,1,1,1,0
+access_product_states_sale_manager,product.states,model_product_states,sales_team.group_sale_manager,1,1,1,1
+access_product_components_salesman,product.components,model_product_components,sales_team.group_sale_salesman,1,1,1,0
+access_product_components_sale_manager,product.components,model_product_components,sales_team.group_sale_manager,1,1,1,1
+access_product_multiples_uom_salesman,product.multiples.uom,model_product_multiples_uom,sales_team.group_sale_salesman,1,1,1,0
+access_product_multiples_uom_sale_manager,product.multiples.uom,model_product_multiples_uom,sales_team.group_sale_manager,1,1,1,1
+access_product_states_stock_user,product.states,model_product_states,stock.group_stock_user,1,1,1,0
+access_product_states_stock_manager,product.states,model_product_states,stock.group_stock_manager,1,1,1,1
+access_product_components_stock_user,product.components,model_product_components,stock.group_stock_user,1,1,1,0
+access_product_components_stock_manager,product.components,model_product_components,stock.group_stock_manager,1,1,1,1
+access_product_multiples_uom_stock_user,product.multiples.uom,model_product_multiples_uom,stock.group_stock_user,1,1,1,0
+access_product_multiples_uom_stock_manager,product.multiples.uom,model_product_multiples_uom,stock.group_stock_manager,1,1,1,1
+access_product_states_nonmech_stock_user,product.states.nonmech,model_product_states_nonmech,stock.group_stock_user,1,1,1,0
+access_product_states_nonmech_stock_manager,product.states.nonmech,model_product_states_nonmech,stock.group_stock_manager,1,1,1,1
+access_product_states_nonmech_sale_user,product.states.nonmech,model_product_states_nonmech,sales_team.group_sale_salesman,1,1,1,0
+access_product_states_nonmech_sale_manager,product.states.nonmech,model_product_states_nonmech,sales_team.group_sale_manager,1,1,1,1

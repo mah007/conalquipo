@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.code</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <field name="vat" position="replace">
+                <field name="vat" 
+                string="NIT"/>
+            </field>
+
+            <xpath expr="//form/sheet/notebook/page/field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="before">
+                <field name="contact_person" attrs="{'invisible': [('type','!=','contact')]}"/>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
+                <div class="oe_kanban_details">
+                    <field name="name"/>
+                    <div t-if="record.contact_person.raw_value === true" style="color:green;font-weight: bold;">
+                        CONTACT PERSON <field name="contact_person" invisible="1"/>
+                    </div>
+                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                    <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                    <div t-if="record.type.raw_value != 'contact'">
+                        <div>
+                            <field name="zip"/>
+                            <field name="city"/>
+                        </div>
+                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                        <field name="country_id"/>
+                    </div>
+                    <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                </div>
+            </xpath>
+
+            <xpath expr="//form/sheet/group/group[1]" position="replace">
+                <group>
+                    <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                    <field name="can_edit_doc_delivered" invisible="1"/>
+                    <field name="is_administrative_assistant" invisible="1"/>
+                    <field name="documents_delivered" attrs="{'readonly': [('can_edit_doc_delivered','=',False)]}"/>
+                    <field name="partner_code" readonly="1"/>
+                    <field name="employee_id" required="1" readonly="1" options="{'no_create': True}" force_save="1"/>
+                    <field name="employee_code" required="1"/>
+                    <field name="l10n_co_document_type"/>
+                    <field name="l10n_co_verification_code" invisible="1"/>
+                    <field name="vat" string="Document number" placeholder="e.g. BE0477472701"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
+                        <field name="state_id" class="o_address_country" placeholder="State" options='{"no_open": True}'
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}" context="{'country_id': country_id, 'zip': zip}"/>
+                        <field name="municipality_id" class="o_address_country"
+                            placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state_id)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                        <field name="city" placeholder="Barrio" class="o_address_country"
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
+                        <div class="oe_edit_only">
+                            <button name="open_parent" type="object" string="(edit)" class="oe_link"
+                                attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
+                        </div>
+                        <field name="street" placeholder="Street..." class="o_address_street"
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_country"
+                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
+                        <field name="sector_id" placeholder="Sector"
+                            options='{"no_open": True}'
+                            domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                        <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                    </div>
+                    <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
+                </group>
+            </xpath>
+
+            <field name="category_id" position="replace">
+                <field name="category_id" 
+                string="Tradename"
+                widget="many2many_tags" 
+                options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tradename"/>
+            </field>
+
+            <field name="lang" position="before">
+                <field name="start_day" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                <field name="end_day" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+                <field name="week_list" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="view_partner_property_form_product_inherit" model="ir.ui.view">
+        <field name="name">view.partner.property.form.pricelist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="product.view_partner_property_form"/>
+        <field name="arch" type="xml">
+
+           <field name="property_product_pricelist" position="replace">
+                <field name="can_edit_pricelist" invisible="1"/>
+                <field name="property_product_pricelist" groups="product.group_sale_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)], 'readonly': [('can_edit_pricelist','=',False)]}"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="view_partner_property_form_account_inherit" model="ir.ui.view">
+        <field name="name">view.partner.property.form.pricelist</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+
+            <group name="accounting_entries" position="before">
+                <group string="Credit information" name="credit_information" groups="account.group_account_user">
+                    <field name="credit_limit"/>
+                    <field name="over_credit"/>
+                </group>
+            </group>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_partner_tree_sector">
+        <field name="name">Partner tree with sector</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="sector_id"
+                       attrs="{'invisible': [('is_company', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_res_partner_filter_sector">
+        <field name="name">Partner search with sector</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="sector_id"
+                       string="Sector"
+                       filter_domain="['|',('sector_id','ilike',self),
+                                           ('secondary_sector_ids','ilike',self)]"/>
+            </field>
+            <filter name="salesperson" position="after">
+                <filter name="sector"
+                        string="Sector"
+                        context="{'group_by': 'sector_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="res_partner_view_sale_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.sale.buttons.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']/group[@groups='sale.group_warning_sale']" position="attributes">
+                <attribute name="groups">con_base.group_message_warnings</attribute>
+            </xpath>
+
+            <field name="sale_warn" position="after">
+                <field name="messages_id" nolabel="1" attrs="{'invisible': [('sale_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="sale_warn_msg" position="replace">
+                <field name="sale_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('sale_warn','!=','no-message')],'readonly':[('sale_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="res_partner_stock_warning_inherit" model="ir.ui.view">
+        <field name="name">res.partner.stock.warning.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="stock.view_partner_stock_warnings_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']/group[@groups='stock.group_warning_stock']" position="attributes">
+                <attribute name="groups">con_base.group_message_warnings</attribute>
+            </xpath>
+
+            <field name="picking_warn" position="after">
+                <field name="messages_picking_id" nolabel="1" attrs="{'invisible': [('picking_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="picking_warn_msg" position="replace">
+                <field name="picking_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('picking_warn','!=','no-message')],'readonly':[('picking_warn','=','no-message')]}"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="res_partner_view_account_buttons_inherit" model="ir.ui.view">
+        <field name="name">partner.view.account.buttons.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']/group[@groups='account.group_warning_account']" position="attributes">
+                <attribute name="groups">con_base.group_message_warnings</attribute>
+            </xpath>
+
+            <field name="invoice_warn" position="after">
+                <field name="messages_account_id" nolabel="1" attrs="{'invisible': [('invoice_warn','in',['no-message'])]}" widget="many2many_tags"/>
+            </field>
+
+            <field name="invoice_warn_msg" position="replace">
+                <field name="invoice_warn_msg" colspan="3" nolabel="1" 
+                attrs="{'required':[('invoice_warn','!=','no-message')],'readonly':[('invoice_warn','=','no-message')]}" force_save="1"/>
+            </field>
+
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+        <!-- PRODUCT PRODUCT -->
+        <record id="view_product_availability_product_product_kanban" model="ir.ui.view">
+            <field name="name">product.availability.product.product.kanban</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_kanban_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                  <ul position="inside">
+                    <li t-if="record.state_id != False">State: <field name="state_id"></field></li>
+                    <li>Color: <field name="color" widget="color" ></field></li>
+                    <li>Location: <field name="location_id"></field></li>
+                  </ul>
+
+                </data>
+            </field>
+        </record>
+
+       <record id="view_product_availability_product_variant_tree" model="ir.ui.view">
+            <field name="name">product.availability.product.variant.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <field name="default_code" position="after">
+                        <field name="location_id" />
+                        <field name="state_id" />
+                        <field name="color" widget="color"/>
+                    </field>
+
+                </data>
+            </field>
+        </record>
+
+        <record id="view_product_availability_product_product_form" model="ir.ui.view">
+            <field name="name">product.availability.product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <field name="categ_id" position="after">
+                        <field name="location_id" />
+                        <field name="state_id" />
+                        <field name="color" widget="color"/>
+                    </field>
+
+                    <xpath expr="//div[@name='options']" position="inside">
+                        <div>
+                            <field name="rental"/>
+                            <label for="rental"/>
+                        </div>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+
+        <record id="view_product_availability_product_variant_form" model="ir.ui.view">
+            <field name="name">product.availability.product.variant.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <field name="default_code" position="after">
+                        <field name="location_id" />
+                        <field name="state_id" />
+                        <field name="color" widget="color"/>
+                    </field>
+
+                    <field name="active" position="after">
+                        <field name="rental" />
+                    </field>
+
+                </data>
+            </field>
+        </record>
+
+    </odoo>

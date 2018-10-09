@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_fleet
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-06 16:45+0000\n"
+"PO-Revision-Date: 2018-09-06 11:47-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_affiliation
+msgid "Affiliation"
+msgstr "Afiliación"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_bearing
+msgid "Bearing"
+msgstr "Transporte"
+
+#. module: con_fleet
+#: model:ir.ui.view,arch_db:con_fleet.fleet_vehicle_view_form_inherit_con
+msgid "Bearing information"
+msgstr "Información de transporte"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_capacity
+msgid "Capacity"
+msgstr "Capacidad"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_code
+msgid "Code"
+msgstr "Código"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_create_uid
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_create_date
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: con_fleet
+#: model:ir.model.fields,help:con_fleet.field_fleet_vehicle_type_sequence
+#: model:ir.model.fields,help:con_fleet.field_license_category_sequence
+msgid "Determine the display order"
+msgstr "Determinar el orden de visualización"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_display_name
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_gravamen
+msgid "Gravamen"
+msgstr "Gravamen"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_holder
+msgid "Holder"
+msgstr "Propietario o asignado"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_id
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_fleet
+#: model:ir.model,name:con_fleet.model_fleet_vehicle
+msgid "Information on a vehicle"
+msgstr "Información sobre un vehículo"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type___last_update
+#: model:ir.model.fields,field_description:con_fleet.field_license_category___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_write_uid
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_write_date
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_licence_date
+msgid "Licence Date"
+msgstr "Fecha de la licencia"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_mark
+msgid "Mark"
+msgstr "Marca"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_model
+msgid "Model"
+msgstr "Modelo"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_name
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_num_motor
+msgid "Number Motor"
+msgstr "Serial del motor"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_reference
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_soat
+msgid "SOAT"
+msgstr "SOAT"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type_sequence
+#: model:ir.model.fields,field_description:con_fleet.field_license_category_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_tec_mechanic
+msgid "Tech Mechanic"
+msgstr "Mecanica"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_traffic
+msgid "Traffic"
+msgstr "Ruta asignada"
+
+#. module: con_fleet
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: con_fleet
+#: model:ir.model,name:con_fleet.model_fleet_vehicle_type
+msgid "Vehicle Type"
+msgstr "Tipo de vehiculo"
+
+#. module: con_fleet
+#: model:ir.ui.view,arch_db:con_fleet.fleet_vehicle_view_form_inherit_con
+msgid "category of license that requires"
+msgstr "Se requiere categoría de licencia"
+
+#. module: con_fleet
+#: model:ir.model,name:con_fleet.model_license_category
+#: model:ir.model.fields,field_description:con_fleet.field_fleet_vehicle_license_category
+msgid "license category"
+msgstr "Categoría de licencia"

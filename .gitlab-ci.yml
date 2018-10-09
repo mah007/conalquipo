@@ -1,0 +1,69 @@
+variables:
+  PROJECT: "con_profile"
+  ENTERPRISE_PATH: "/home/gitlab-runner/Enterprise"
+  REQUIREMENTS: "/home/gitlab-runner/requirements.txt"
+  ADDONS_PATH: "./CON"
+  ODOO_REPO: "/home/gitlab-runner/odoo-11"
+  ODOO_ADDONS: "/home/gitlab-runner/odoo-11/addons"
+  ODOO_VERSION: "11.0"
+
+stages:
+  - cq_check
+  - init_env
+  - odoo_test
+  - cleanup
+
+flake8:
+  tags:
+    - cq_check
+  stage: cq_check
+  script:
+  - pwd
+  - flake8 --config=.flake8 .
+
+init_env:
+  tags:
+    - init_env
+  stage: init_env
+  script:
+  - cd ..
+  - pwd
+  - virtualenv -p python3 odoo-env
+  - cd $ODOO_REPO
+  - git pull origin $ODOO_VERSION
+  - cd $ENTERPRISE_PATH
+  - git pull origin $ODOO_VERSION
+
+tests:
+  tags:
+    - odoo_test
+  stage: odoo_test
+  script:
+  - dropdb --if-exists $CI_BUILD_REF
+  - createdb --encoding=UTF8 --locale=en_US.UTF-8 --template=template0 -D ramdisk $CI_BUILD_REF
+  - pwd
+  - cd ..
+  - source odoo-env/bin/activate
+  - pwd
+  - pip install -r $REQUIREMENTS
+  - cd -
+  - pwd
+  - cd ..
+  #- pip install -r CON/Requirements.txt
+  - $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ENTERPRISE_PATH,$ADDONS_PATH,$ODOO_ADDONS -i $PROJECT --test-enable --log-level=warn --stop-after-init
+  - coverage3 run $ODOO_REPO/odoo-bin -d $CI_BUILD_REF --addons-path=$ENTERPRISE_PATH,$ADDONS_PATH,$ODOO_ADDONS -i $PROJECT --test-enable --log-level=warn --stop-after-init
+  - coverage3 html
+  - coverage3 report -i
+  - grep pc_cov htmlcov/index.html | egrep -o "[0-9]+\%" | awk '{ print "covered " $1;}'
+  - dropdb --if-exists $CI_BUILD_REF
+  - deactivate
+
+cleanup_job:
+  tags:
+    - odoo_test
+  stage: cleanup
+  script:
+  - cd ..
+  - dropdb --if-exists $CI_BUILD_REF
+  - rm -R odoo-env
+  when: on_failure

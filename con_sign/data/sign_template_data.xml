@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- documents as data -->
+    <record id="attachment_con_sign_1" model="ir.attachment">
+        <field name="name">PF-148-01-Notificación de averias de equipo</field>
+        <field name="datas_fname">PF-148-01-Notificación de averias de equipo.pdf</field>
+        <field name="datas" type="base64" file="con_sign/static/src/data/PF-148-01-Notificacion-de-averias-de-equipo.pdf"/>
+        <field name="mimetype">application/pdf;base64</field>
+    </record>
+
+    <record id="template_con_sign_1" model="sign.template">
+        <field name="attachment_id" ref="attachment_con_sign_1"/>
+        <field name="archived">False</field>
+        <field name="share_link">PF-148-01-Notificacion de averias de equipo</field>
+    </record>
+
+    <record model="sign.item" id="signature_con_item_1">
+        <field name="name">Fecha</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_date"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.210</field>
+        <field name="posY" type="float">0.215</field>
+        <field name="width" type="float">0.200</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_2">
+        <field name="name">Partner</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_name"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.155</field>
+        <field name="posY" type="float">0.297</field>
+        <field name="width" type="float">0.250</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_3">
+        <field name="name">Obra</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_name"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.180</field>
+        <field name="posY" type="float">0.314</field>
+        <field name="width" type="float">0.250</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_4">
+        <field name="name">Ciudad</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_text"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.127</field>
+        <field name="posY" type="float">0.332</field>
+        <field name="width" type="float">0.250</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_5">
+        <field name="name">Fecha</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_date"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.355</field>
+        <field name="posY" type="float">0.452</field>
+        <field name="width" type="float">0.180</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_6">
+        <field name="name">Número</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_text"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.715</field>
+        <field name="posY" type="float">0.452</field>
+        <field name="width" type="float">0.190</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_7">
+        <field name="name">Equipo</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_text"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.240</field>
+        <field name="posY" type="float">0.471</field>
+        <field name="width" type="float">0.550</field>
+        <field name="height" type="float">0.014</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_8">
+        <field name="name">No.</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_text"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.164</field>
+        <field name="posY" type="float">0.488</field>
+        <field name="width" type="float">0.127</field>
+        <field name="height" type="float">0.014</field>
+    </record>
+    <record model="sign.item" id="signature_con_item_9">
+        <field name="name">Descripción</field>
+        <field name="template_id" ref="template_con_sign_1"/>
+        <field name="type_id" ref="sign.sign_item_type_multiline_text"/>
+        <field name="responsible_id" ref="sign.sign_item_role_employee"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.190</field>
+        <field name="posY" type="float">0.520</field>
+        <field name="width" type="float">0.650</field>
+        <field name="height" type="float">0.125</field>
+    </record>
+
+</odoo>

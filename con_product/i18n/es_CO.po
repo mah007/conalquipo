@@ -1,0 +1,866 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_product
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-06 16:52+0000\n"
+"PO-Revision-Date: 2018-09-06 11:54-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_states_description
+msgid "A little description about the state"
+msgstr "Una pequeña descripción sobre el estado"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_components
+msgid "A model for store and manage the products components"
+msgstr "Modelo para almacenar y gestionar los componentes de los productos"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_states
+msgid "A model for store and manage the products states"
+msgstr "Modelo para almacenar y gestionar los estados de los productos"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_multiples_uom
+msgid "A model for store multiples uoms"
+msgstr "Modelo para almacenar múltiples unidades de medida"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_states_nonmech
+msgid "A model for store non mech product states"
+msgstr "A model for store non mech product states"
+
+#. module: con_product
+#: model:ir.actions.act_window,help:con_product.product_states_action
+msgid "A state is a action that affect the product throw of the workflow."
+msgstr "Un estado es una acción que afecta el producto durante el flujo"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_7
+msgid "Acarreos"
+msgstr "Acarreos"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_9
+msgid "Allanadoras-Reglas vibratorias"
+msgstr "Allanadoras-Reglas vibratorias"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_andamios
+msgid "Andamios"
+msgstr "Andamios"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_17
+msgid "Andamios colgantes"
+msgstr "Andamios colgantes"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_16
+msgid "Andamios de carga"
+msgstr "Andamios de carga"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_19
+msgid "Andamios multidireccionales"
+msgstr "Andamios multidireccionales"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_18
+msgid "Andamios tubulares"
+msgstr "Andamios tubulares"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_44
+msgid "Basculas"
+msgstr "Basculas"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_basket
+#: model:ir.model.fields,field_description:con_product.field_product_template_basket
+msgid "Basket"
+msgstr "Canasta"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_30
+msgid "Bombas de concreto"
+msgstr "Bombas de concreto"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_10
+msgid "Bombas hidroestáticas"
+msgstr "Bombas hidroestáticas"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_34
+msgid "Brocas"
+msgstr "Brocas"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_cap_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_cap_emptying
+msgid "Cap. Emptying"
+msgstr "Cap. vaciado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_child
+msgid "Child"
+msgstr "Hijo"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_11
+msgid "Cilindros compactadores"
+msgstr "Cilindros compactadores"
+
+#. module: con_product
+#: model:ir.actions.act_window,help:con_product.product_states_action
+msgid "Click to create a new state."
+msgstr "Click para crear un nuevo estado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_color
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_color
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Color"
+msgstr "Color"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Color:"
+msgstr "Color:"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_53
+#: model:product.category,name:con_product.category_56
+msgid "Complementos"
+msgstr "Complementos"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_components_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_components_ids
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Components"
+msgstr "Componentes"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_27
+msgid "Compresores"
+msgstr "Compresores"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_29
+msgid "Concretadoras"
+msgstr "Concretadoras"
+
+#. module: con_product
+#: code:addons/con_product/models/product_uom.py:38
+#, python-format
+msgid "Conversion from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!."
+msgstr "Conversión de la unidad del producto %s hacia la unidad por defecto %s no es posible porque pertenecen a diferentes categorias."
+
+#. module: con_product
+#: model:product.category,name:con_product.category_41
+msgid "Cortadoras"
+msgstr "Cortadoras"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_cost_byUom
+msgid "Cost by UOM"
+msgstr "Costo por unidad"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_create_uid
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_create_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_create_date
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_create_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_create_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_product
+#: model:product.uom,name:con_product.product_uom_cubic_meter
+msgid "Cubic meter (m3)"
+msgstr "Metro cubico (m3)"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_28
+msgid "Cuna hidráulica"
+msgstr "Cuna hidráulica"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.product_states_tree_view
+msgid "Customize Product States"
+msgstr "Personalizar estados de los productos"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_quantity
+msgid "Default quantity"
+msgstr "Cant. por defecto"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_13
+msgid "Demoledores"
+msgstr "Demoledores"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_display_name
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_display_name
+#: model:ir.model.fields,field_description:con_product.field_product_states_display_name
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_31
+msgid "Dosificadoras"
+msgstr "Dosificadoras"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_45
+msgid "Dumper"
+msgstr "Dumper"
+
+#. module: con_product
+#: model:ir.actions.act_window,help:con_product.product_states_action
+msgid "Each state include a sequence for a easily ordering."
+msgstr "Cada estado incluye una secuencia para ordenar de forma facil"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_50
+msgid "Elevadores de tijera"
+msgstr "Elevadores de tijera"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_employee_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_employee_ids
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_emptying_per_month
+msgid "Emptying per month"
+msgstr "Vaciado por mes"
+
+#. module: con_product
+#: model:product.uom.categ,name:con_product.product_uom_categ_energy
+msgid "Energy"
+msgstr "Energia"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_51
+msgid "Equipo subarrendado"
+msgstr "Equipo subarrendado"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_equipos
+msgid "Equipos"
+msgstr "Equipos"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_extra
+msgid "Extra product"
+msgstr "Producto extra"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_formaleteria
+msgid "Formaletería"
+msgstr "Formaletería"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_for_com
+msgid "Formaletería - Complementos"
+msgstr "Formaletería - Complementos"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_2
+msgid "Formaletería columna"
+msgstr "Formaletería columna"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_1
+msgid "Formaletería losa"
+msgstr "Formaletería losa"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_3
+msgid "Formaletería man-hall"
+msgstr "Formaletería man-hall"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_5
+msgid "Formaletería modular"
+msgstr "Formaletería modular"
+
+#. module: con_product
+#: model:product.uom,name:con_product.product_uom_fractures
+msgid "Fracture(s)"
+msgstr "Fractura(s)"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_49
+msgid "Grúa hidráulica articulada"
+msgstr "Grúa hidráulica articulada"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_15
+msgid "Gusanos destaquiadores"
+msgstr "Gusanos destaquiadores"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_components
+#: model:ir.model.fields,field_description:con_product.field_product_template_components
+msgid "Has components?"
+msgstr "Tiene componentes?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_multiples_uom
+#: model:ir.model.fields,field_description:con_product.field_product_template_multiples_uom
+msgid "Has multiples uom?"
+msgstr "Tiene múltiples unidades?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_height
+#: model:ir.model.fields,field_description:con_product.field_product_template_height
+msgid "Height"
+msgstr "Altura"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_37
+msgid "Hidrolavadoras"
+msgstr "Hidrolavadoras"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_id
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_intereses
+msgid "Intereses"
+msgstr "Intereses"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_is_operated
+#: model:ir.model.fields,field_description:con_product.field_product_template_is_operated
+#: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
+msgid "Is Operated"
+msgstr "Es operado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components___last_update
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom___last_update
+#: model:ir.model.fields,field_description:con_product.field_product_states___last_update
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_write_uid
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_write_uid
+#: model:ir.model.fields,field_description:con_product.field_product_states_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_write_date
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_write_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_write_date
+#: model:ir.model.fields,field_description:con_product.field_product_states_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_states_nonmech_ids
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_location_id
+#: model:ir.model.fields,field_description:con_product.field_product_template_states_nonmech_ids
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_search
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_product_origin
+#: model:ir.model.fields,field_description:con_product.field_product_template_product_origin
+msgid "Location Origin"
+msgstr "Ubicación origen"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Location:"
+msgstr "Ubicación actual:"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Locations, quantity and states"
+msgstr "Ubicaciones, cantidades y estados"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_6
+msgid "Losa fácil"
+msgstr "Losa fácil"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_unavailable
+#: model:ir.model.fields,help:con_product.field_product_states_unavailable
+msgid "Make the product unavailable when the product have this state"
+msgstr "Hacer que el producto no esté disponible cuando el producto tenga este estado"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_22
+msgid "Malacates"
+msgstr "Malacates"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_max_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_max_emptying
+msgid "Max. Emptying"
+msgstr "Max. vaciado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_maximum_load_capacity
+#: model:ir.model.fields,field_description:con_product.field_product_template_maximum_load_capacity
+msgid "Maximum load capacity"
+msgstr "Capacidad de carga máxima"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_maximum_value_of_pipe
+#: model:ir.model.fields,field_description:con_product.field_product_template_maximum_value_of_pipe
+msgid "Maximun value of pipe"
+msgstr "Valor máximo de tubería"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_min_qty_rental
+#: model:ir.model.fields,field_description:con_product.field_product_template_min_qty_rental
+msgid "Min Qty rental"
+msgstr "Cant. Min. Renta"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_quantity
+msgid "Min quantity"
+msgstr "Cant. Min"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_min_emptying
+#: model:ir.model.fields,field_description:con_product.field_product_template_min_emptying
+msgid "Min. Emptying"
+msgstr "Min. vaciado"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_46
+msgid "Minicargadores"
+msgstr "Minicargadores"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_48
+msgid "Montacargas"
+msgstr "Montacargas"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_more_information
+#: model:ir.model.fields,field_description:con_product.field_product_template_more_information
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "More information"
+msgstr "Otras observaciones"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_26
+msgid "Motobombas"
+msgstr "Motobombas"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_38
+msgid "Movimiento vertical"
+msgstr "Movimiento vertical"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Multiples UOM"
+msgstr "Múltiples unidades de medida"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_uoms_ids
+#: model:ir.model.fields,field_description:con_product.field_product_template_uoms_ids
+msgid "Multiples UOMs"
+msgstr "Múltiples unidades de medidas"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_non_mech
+#: model:ir.model.fields,field_description:con_product.field_product_template_non_mech
+msgid "Not mechanical?"
+msgstr "No mecánicos?"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_57
+#: model:product.category,name:con_product.category_58
+msgid "Operador"
+msgstr "Operador"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.con_product_template_form_view_inherit
+msgid "Operated"
+msgstr "Operado"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Origin:"
+msgstr "Ubicación origen:"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_4
+msgid "Otra formaletería"
+msgstr "Otra formaletería"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_43
+msgid "Otro equipo"
+msgstr "Otro equipo"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_35
+msgid "Otro equipo electromecánico"
+msgstr "Otro equipo electromecánico"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_59
+msgid "Otros"
+msgstr "Otros"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_39
+msgid "Pernadoras"
+msgstr "Pernadoras"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_40
+msgid "Plantas"
+msgstr "Plantas"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_25
+msgid "Pluma doble"
+msgstr "Pluma doble"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_23
+msgid "Plumas - Complementos"
+msgstr "Plumas - Complementos"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.product_states_form_view
+msgid "Pricelist Items"
+msgstr "Líneas de la lista de precios"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_product
+#: model:ir.actions.act_window,name:con_product.product_states_action
+#: model:ir.ui.menu,name:con_product.menu_product_states_form
+msgid "Product States"
+msgstr "Estados del producto"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Product States Non mech"
+msgstr "Estado productos no mecánicos"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_template
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_product_tmpl_id
+msgid "Product Template"
+msgstr "Plantilla del Producto"
+
+#. module: con_product
+#: model:ir.model,name:con_product.model_product_uom
+msgid "Product Unit of Measure"
+msgstr "Unidad de Medida del Producto"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_product_child_id
+msgid "Product component"
+msgstr "Producto componente"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_components_product_id
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_product_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_product_id
+msgid "Product parent"
+msgstr "Producto padre"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.product_states_view_search
+msgid "Products State Search"
+msgstr "Búsqueda de estados de productos"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.product_states_view_search
+msgid "Products States"
+msgstr "Estados de productos"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "Products components"
+msgstr "Componentes"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_20
+msgid "Pulidoras"
+msgstr "Pulidoras"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "Qty reserved:"
+msgstr "Cantidad reservada:"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_replenishment_charge
+#: model:ir.model.fields,field_description:con_product.field_product_template_replenishment_charge
+msgid "Replenishment charge"
+msgstr "Cargo por reabastecimiento"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_52
+msgid "Reposiciones"
+msgstr "Reposiciones"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_repuestos
+msgid "Repuestos"
+msgstr "Repuestos"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_47
+msgid "Retroexcavadoras"
+msgstr "Retroexcavadoras"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_multiples_uom_uom_id
+msgid "Sale UOM"
+msgstr "Unidad de medida de venta"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_sale_uom
+#: model:ir.model.fields,field_description:con_product.field_product_template_sale_uom
+msgid "Sale UoM"
+msgstr "Unidad de medida de venta"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_layout_sec_id
+#: model:ir.model.fields,field_description:con_product.field_product_template_layout_sec_id
+msgid "Section"
+msgstr "Sección"
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_states_color
+msgid "Select the color of the state"
+msgstr "Seleccione el color del estado"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_states_default_value
+msgid "Set as a default value when the product is created"
+msgstr "Establecer como valor predeterminado cuando se crea el producto"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_36
+msgid "Sierra para concreto"
+msgstr "Sierra para concreto"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_21
+msgid "Sistemas Dalmine"
+msgstr "Sistemas Dalmine"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_14
+msgid "Soldadores"
+msgstr "Soldadores"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_state_id
+#: model:ir.model.fields,field_description:con_product.field_product_states_nonmech_state_name
+#: model:ir.model.fields,field_description:con_product.field_product_template_state_id
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "State"
+msgstr "Estado"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_product_kanban
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_template_kanban
+msgid "State:"
+msgstr "Estado:"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_search
+msgid "States"
+msgstr "Estados"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_54
+msgid "Suministros"
+msgstr "Suministros"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_33
+msgid "Taladros"
+msgstr "Taladros"
+
+#. module: con_product
+#: code:addons/con_product/models/product.py:154
+#: code:addons/con_product/models/product.py:173
+#: code:addons/con_product/models/product.py:379
+#: code:addons/con_product/models/product.py:398
+#, python-format
+msgid "The following location don't have a state asigned"
+msgstr "La ubicación no tiene un estado definido, debe asignarla"
+
+#. module: con_product
+#: code:addons/con_product/models/product.py:44
+#: code:addons/con_product/models/product.py:78
+#: code:addons/con_product/models/product.py:89
+#, python-format
+msgid "The following state '%s' is the actual default for all products"
+msgstr "El estado '%s' es la ubicación actual por defecto para todos los productos"
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_states_name
+msgid "The name for the state for example:Fixing, Unavailable, sold, etc.."
+msgstr "El nombre del estado, por ejemplo: Fijación, No disponible, vendido, entre otros."
+
+#. module: con_product
+#: sql_constraint:product.states:0
+msgid "The sequence must be unique and right now already exists"
+msgstr "La secuencia debe ser única y actualmente existe."
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_states_sequence
+msgid "The sequence priority the state will be ordered following this sequence"
+msgstr "La prioridad de secuencia se ordenará según esta secuencia"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "This note will show up on sales orders."
+msgstr "Esta nota aparecerá en los pedidos de venta."
+
+#. module: con_product
+#: code:addons/con_product/models/product.py:194
+#, python-format
+msgid "This product needs to be a service type"
+msgstr "Este producto necesita ser del tipo servicio."
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_tip_load_capacity
+#: model:ir.model.fields,field_description:con_product.field_product_template_tip_load_capacity
+msgid "Tip load capacity"
+msgstr "Capacidad de carga punta"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_42
+msgid "Topografía"
+msgstr "Topografía"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_55
+msgid "Torre de iluminación"
+msgstr "Torre de iluminación"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_24
+msgid "Torre grúa"
+msgstr "Torre grúa"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_towers
+#: model:ir.model.fields,field_description:con_product.field_product_template_towers
+msgid "Towers"
+msgstr "Torres"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_8
+msgid "Transporte vertical de materiales"
+msgstr "Transporte vertical de materiales"
+
+#. module: con_product
+#: model:ir.ui.view,arch_db:con_product.view_product_availability_product_form
+msgid "UOMs for product"
+msgstr "Unidades de medida para productos"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_for_shipping
+#: model:ir.model.fields,field_description:con_product.field_product_template_for_shipping
+msgid "Use for shipping?"
+msgstr "Usado para acarreo?"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_useful_arm
+#: model:ir.model.fields,field_description:con_product.field_product_template_useful_arm
+msgid "Useful arm"
+msgstr "Brazo util"
+
+#. module: con_product
+#: model:ir.model.fields,field_description:con_product.field_product_product_speed
+#: model:ir.model.fields,field_description:con_product.field_product_template_speed
+msgid "Vel.(m/min)"
+msgstr "Vel.(m/min)"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_32
+msgid "Vibradores"
+msgstr "Vibradores"
+
+#. module: con_product
+#: model:product.category,name:con_product.category_12
+msgid "Vibro-compactadores"
+msgstr "Vibro-compactadores"
+
+#. module: con_product
+#: model:ir.model.fields,help:con_product.field_product_product_components
+#: model:ir.model.fields,help:con_product.field_product_template_components
+msgid "if this field is true the bills of material of the product is treated as a set of components adding this product in the picking"
+msgstr "Si este campo es verdadero, las listas de materiales del producto se tratan como un conjunto de componentes que agregan este producto a la selección"

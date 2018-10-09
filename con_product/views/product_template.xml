@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+      <!-- PRODUCT TEMPLATE -->
+      <record id="view_product_availability_product_search" model="ir.ui.view">
+        <field name="name">product.availability.product.search</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+          <data>
+
+            <xpath expr="//search" position="inside">
+              <separator/>
+              <field name="state_id" widget="selection" context="{'state_id': self}"/>
+              <field name="location_id" widget="selection" context="{'location_id': self}"/>
+              <separator/>
+              <filter string="States" name="state_id" domain="[('state_id', '!=', False)]"/>
+              <filter string="Location" name="location_id" domain="[('location_id', '!=', False)]"/>
+            </xpath>
+
+          </data>
+        </field>
+      </record>
+
+      <record id="view_product_availability_product_template_kanban" model="ir.ui.view">
+          <field name="name">product.availability.product.template.kanban</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_kanban_view"/>
+          <field name="arch" type="xml">
+              <data>
+
+                <ul position="inside">
+                    <t t-if="record.type!='service'">
+                        <div t-if="! record.non_mech">
+                            <li t-if="record.state_id.value">State: <field name="state_id"></field></li>
+                            <li t-if="record.color.value">Color: <field name="color" widget="color" ></field></li>
+                            <li t-if="record.location_id.value">Location: <field name="location_id"></field></li>
+                            <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
+                            <!-- <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b> -->
+                        </div>
+                        <div t-if="record.non_mech">
+                            <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
+                            <!-- <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b> -->
+                        </div>
+                    </t>
+                </ul>
+
+              </data>
+          </field>
+      </record>
+
+        <record id="view_product_availability_product_tree" model="ir.ui.view">
+            <field name="name">product.availability.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <field name="name" position="after">
+                        <field name="location_id" />
+                        <field name="state_id" />
+                        <field name="color" widget="color"/>
+                    </field>
+
+                </data>
+            </field>
+        </record>
+
+        <record id="view_product_availability_product_form" model="ir.ui.view">
+            <field name="name">product.availability.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+
+                    <field name="type" position="after">
+                        <field name="for_shipping" attrs="{'invisible':[('type', '!=', 'service')]}"/>
+                    </field>
+
+                    <field name="uom_po_id" position="before">
+                        <field name="sale_uom" 
+                        attrs="{'required':[('multiples_uom', '=', False)],
+                        'invisible':[('multiples_uom', '!=', False)]}"/>
+                    </field>
+
+                    <field name="list_price" position="before">
+                        <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
+                    </field>
+
+                    <!-- <field name="invoice_policy" position="after">
+                        <field name="replenishment_charge"/>
+                    </field> -->
+
+                    <field name="categ_id" position="after">
+                        <field name="layout_sec_id"/>
+                        <field name="location_id" string="Location" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}"/>
+                        <field name="state_id" string="State" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}"/>
+                        <field name="color" widget="color" string="Color" attrs="{'required':[('type', '=', 'product'), ('non_mech', '!=', True)], 'invisible':['|', ('type', 'in', ['service', 'consu']), ('non_mech', '=', True)]}" readonly="1" force_save="1"/>
+                        <field name="product_origin"
+                        attrs="{'required':[('type', 'in', ['product', 'consu'])], 'invisible':[('type', '=', 'service')]}"/>
+                    </field>
+
+                    <xpath expr="//div[@name='options']" position="inside">
+                        <div>
+                            <field name="rental"/>
+                            <label for="rental"/>
+                        </div>
+                        <div attrs="{'invisible':[('type', 'in', ['service', 'consu'])]}">
+                            <field name="components" />
+                            <label for="components"/>
+                        </div>
+                        <div attrs="{'invisible':[('type', 'in', ['service', 'consu'])]}">
+                            <field name="non_mech" />
+                            <label for="non_mech"/>
+                        </div>
+                        <div>
+                            <field name="multiples_uom"/>
+                            <label for="multiples_uom"/>
+                        </div>
+                    </xpath>
+
+                    <xpath expr="//page[@name='general_information']" position="after">
+                        <page string="Components" attrs="{'invisible':['|', ('components', '=', False), ('type', 'in', ['service', 'consu'])]}">
+                            <field name="components_ids">
+                                <tree string="Products components" editable="bottom">
+                                    <field name="product_child_id" options="{'no_create_edit':True}" domain="[('id', '!=', parent.id)]" />
+                                    <field name="extra"/>
+                                    <field name="quantity"/>
+                                    <field name="child" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Multiples UOM" attrs="{'invisible':[('multiples_uom', '=', False)]}">
+                            <field name="uoms_ids">
+                                <tree string="UOMs for product" editable="bottom">
+                                    <field name="uom_id" options="{'no_create_edit':True}"/>
+                                    <field name="quantity"/>
+                                    <field name="cost_byUom"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Product States Non mech" attrs="{'invisible':[('non_mech', '=', False)]}">
+                            <field name="states_nonmech_ids" mode="tree">
+                                <tree string="Locations, quantity and states" default_order='qty' editable="bottom" delete="false" create="false">
+                                    <field name="product_id" invisible="1" readonly="1" force_save="1"/>
+                                    <field name="location_id" readonly="1" force_save="1"/>
+                                    <field name="state_name" readonly="1" force_save="1"/>
+                                    <field name="color" widget="color" readonly="1" force_save="1"/>
+                                    <field name="qty" readonly="1" force_save="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </xpath>
+
+                    <!-- <xpath expr="//page[@name='notes']" position="inside">
+                        <group name="more_information">
+                            <group string="More information">
+                                <field name="more_information" nolabel="1" placeholder="This note will show up on sales orders."/>
+                            </group>
+                        </group>
+                    </xpath> -->
+
+                </data>
+            </field>
+        </record>
+
+        <!-- <record id="con_product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='stock_property']" position="after">
+                        <group name="operated" >
+                            <field name="is_operated" string="Is Operated"/>
+                            <field name="employee_ids" string="Operated" widget="many2many_tags"
+                                    attrs="{'invisible': [('is_operated','=', False)]}"/>
+                        </group>
+                </xpath>
+            </field>
+        </record> -->
+
+    </odoo>

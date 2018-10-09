@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="base.COP" model="res.currency">
+        <field name="active">True</field>
+    </record>
+
+    <record id="base.main_partner" model="res.partner">
+        <field name="name">Conalquipo S.A.S</field>
+        <field name="company_type">company</field>
+        <field name="street">Cl. 72</field>
+        <field name="street2">#64C , Bodega 110</field>
+        <field name="city">Medellín</field>
+        <field name="state_id" eval="ref('base.state_co_01')"/>
+        <field name="zip"></field>
+        <field name="country_id" eval="ref('base.co')"/>
+        <field name="phone">Tel: (57 4) 441 0341</field>
+        <field name="email">conalquipo@conalquipo.com</field>
+        <field name="website">https://www.conalquipo.com</field>
+        <field name="lang">es_ES</field>
+        <field name="vat"></field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="name">Conalquipo S.A.S</field>
+        <field name="partner_id" ref="base.main_partner"/>
+        <field name="currency_id" ref="base.COP"/>
+        <field name="anglo_saxon_accounting" eval="1"/>
+        <field name="logo" type="base64" file="con_base/static/src/img/logo.png"/>
+        <field name="iso_logo" type="base64" file="con_base/static/src/img/ISO-9001.jpg"/>
+        <field name="footer_logo" type="base64" file="con_base/static/src/img/footer.png"/>
+        <field name="cover_page_logo" type="base64" file="con_base/static/src/img/cover_page.png"/>
+    </record>
+
+</odoo>

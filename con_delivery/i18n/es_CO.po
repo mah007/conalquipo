@@ -1,0 +1,211 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-06 16:41+0000\n"
+"PO-Revision-Date: 2018-09-06 11:45-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: con_delivery
+#: selection:shipping.driver,job_title:0
+msgid "Assistant"
+msgstr "Asistente"
+
+#. module: con_delivery
+#: model:res.groups,name:con_delivery.group_shipping_order
+msgid "Can cancel shipping order"
+msgstr "Puede cancelar la orden de envío"
+
+#. module: con_delivery
+#: model:ir.model,name:con_delivery.model_delivery_carrier
+msgid "Carrier"
+msgstr "Forma de envío"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_cost
+msgid "Cost"
+msgstr "Costo"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_create_uid
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_create_date
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_delivery_carrier_id
+msgid "Delivery Carrier"
+msgstr "Transportista"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_display_name
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_delivery
+#: selection:shipping.driver,job_title:0
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_driver_ids
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_delivery
+#: model:res.groups,name:con_delivery.group_equipment_change
+msgid "Equipment Change"
+msgstr "Cambio de equipo"
+
+#. module: con_delivery
+#: model:ir.module.category,name:con_delivery.module_extra_shipping_access
+msgid "Extra shipping access"
+msgstr "Accesos extras para envíos"
+
+#. module: con_delivery
+#: selection:delivery.carrier,price_type:0
+msgid "Fixed price"
+msgstr "Precio fijo"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_job_title
+msgid "HR Type"
+msgstr "Tipo de empleado"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_id
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_identification_id
+msgid "Identification No"
+msgstr "Nº de identificación"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost___last_update
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_write_uid
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_write_date
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_delivery_carrier_cost
+msgid "Lines Delivery CarrierCost"
+msgstr "Lineas de costo de entregas"
+
+#. module: con_delivery
+#: selection:delivery.carrier,price_type:0
+msgid "Multiple prices"
+msgstr "Precios multiples"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_municipality_ids
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_price_type
+msgid "Price Type"
+msgstr "Tipos de precios"
+
+#. module: con_delivery
+#: model:ir.ui.view,arch_db:con_delivery.view_delivery_carrier_form_inherit
+msgid "Pricing"
+msgstr "Precios"
+
+#. module: con_delivery
+#: model:res.groups,name:con_delivery.group_shipping_driver
+msgid "Shipping carrier/driver admin"
+msgstr "Encargado de envío / Conductor"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_shipping_driver_stock_picking_id
+msgid "Stock Picking"
+msgstr "Selección de Existencias"
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:147
+#: code:addons/con_delivery/models/delivery.py:164
+#, python-format
+msgid "The amount limit can't be negative"
+msgstr "El limite o cantidad del método de envío no puede ser negativo"
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:221
+#, python-format
+msgid "The category of the driver's license of this employee does not coincide with the category required by the vehicle assiging this order"
+msgstr "La categoría de la licencia de conducir de este empleado no coincide con la categoría requerida por el vehículo que asigne esta orden."
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:64
+#: code:addons/con_delivery/models/delivery.py:75
+#, python-format
+msgid "The cost can't be negative"
+msgstr "El costo del vehiculo no puede ser negativo"
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:138
+#: code:addons/con_delivery/models/delivery.py:154
+#: code:addons/con_delivery/models/delivery.py:171
+#, python-format
+msgid "The vehicle %s already asigned in delivery carrier"
+msgstr "El vehículo %s ya esta asignado en este método de envío."
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:60
+#: code:addons/con_delivery/models/delivery.py:71
+#, python-format
+msgid "The vehicle is required on the line"
+msgstr "El vehículo es requerido en la línea"
+
+#. module: con_delivery
+#: code:addons/con_delivery/models/delivery.py:226
+#, python-format
+msgid "This employee does not possess driving skills"
+msgstr "Este empleado no posee habilidades de conducción"
+
+#. module: con_delivery
+#: model:ir.model.fields,field_description:con_delivery.field_delivery_carrier_cost_vehicle
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: con_delivery
+#: model:ir.model,name:con_delivery.model_delivery_carrier_cost
+msgid "delivery.carrier.cost"
+msgstr "delivery.carrier.cost"
+
+#. module: con_delivery
+#: model:ir.model,name:con_delivery.model_shipping_driver
+msgid "shipping.driver"
+msgstr "shipping.driver"

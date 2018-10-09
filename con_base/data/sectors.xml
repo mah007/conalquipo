@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="res.country.sector" id="sector1">
+            <field name="name">Sector 1</field>
+        </record>
+
+        <record id="sector01" model="res.country.sector">
+            <field name="parent_id" ref="sector1"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Centro</field>
+        </record>
+
+        <record model="res.country.sector" id="sector2">
+            <field name="name">Sector 2</field>
+        </record>
+
+        <record id="sector21" model="res.country.sector">
+            <field name="parent_id" ref="sector2"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Poblado arriba</field>
+        </record>
+
+        <record model="res.country.sector" id="sector3">
+            <field name="name">Sector 3</field>
+        </record>
+
+        <record id="sector31" model="res.country.sector">
+            <field name="parent_id" ref="sector3"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Poblado</field>
+        </record>
+
+        <record model="res.country.sector" id="sector4">
+            <field name="name">Sector 4</field>
+        </record>
+
+        <record id="sector41" model="res.country.sector">
+            <field name="parent_id" ref="sector4"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Envigado</field>
+        </record>
+
+        <record model="res.country.sector" id="sector5">
+            <field name="name">Sector 5</field>
+        </record>
+
+        <record id="sector51" model="res.country.sector">
+            <field name="parent_id" ref="sector5"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Itaguí</field>
+        </record>
+
+        <record id="sector52" model="res.country.sector">
+            <field name="parent_id" ref="sector5"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Guayabal</field>
+        </record>
+
+        <record id="sector53" model="res.country.sector">
+            <field name="parent_id" ref="sector5"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Estrella</field>
+        </record>
+
+        <record model="res.country.sector" id="sector6">
+            <field name="name">Sector 6</field>
+        </record>
+
+        <record id="sector61" model="res.country.sector">
+            <field name="parent_id" ref="sector6"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Buenos Aires</field>
+        </record>
+
+        <record id="sector62" model="res.country.sector">
+            <field name="parent_id" ref="sector6"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Milagrosa</field>
+        </record>
+
+        <record model="res.country.sector" id="sector7">
+            <field name="name">Sector 7</field>
+        </record>
+
+        <record id="sector71" model="res.country.sector">
+            <field name="parent_id" ref="sector7"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Belén</field>
+        </record>
+
+        <record model="res.country.sector" id="sector8">
+            <field name="name">Sector 8</field>
+        </record>
+ 
+        <record id="sector81" model="res.country.sector">
+            <field name="parent_id" ref="sector8"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Laureles</field>
+        </record>
+
+        <record model="res.country.sector" id="sector9">
+            <field name="name">Sector 9</field>
+        </record>
+
+        <record id="sector91" model="res.country.sector">
+            <field name="parent_id" ref="sector9"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Ameríca</field>
+        </record>
+
+        <record id="sector92" model="res.country.sector">
+            <field name="parent_id" ref="sector9"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">San Juan</field>
+        </record>
+
+        <record id="sector93" model="res.country.sector">
+            <field name="parent_id" ref="sector9"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">San Javier</field>
+        </record>
+
+        <record model="res.country.sector" id="sector10">
+            <field name="name">Sector 10</field>
+        </record>
+
+        <record id="sector101" model="res.country.sector">
+            <field name="parent_id" ref="sector10"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Estadio</field>
+        </record>
+
+        <record id="sector102" model="res.country.sector">
+            <field name="parent_id" ref="sector10"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Floresta</field>
+        </record>
+
+        <record id="sector103" model="res.country.sector">
+            <field name="parent_id" ref="sector10"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Calazans</field>
+        </record>
+
+        <record model="res.country.sector" id="sector11">
+            <field name="name">Sector 11</field>
+        </record>
+
+        <record id="sector111" model="res.country.sector">
+            <field name="parent_id" ref="sector11"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Robledo</field>
+        </record>
+
+        <record model="res.country.sector" id="sector12">
+            <field name="name">Sector 12</field>
+        </record>
+
+        <record id="sector121" model="res.country.sector">
+            <field name="parent_id" ref="sector12"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Bello</field>
+        </record>
+
+        <record id="sector122" model="res.country.sector">
+            <field name="parent_id" ref="sector12"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Girardota</field>
+        </record>
+
+        <record id="sector123" model="res.country.sector">
+            <field name="parent_id" ref="sector12"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Copacabana</field>
+        </record>
+
+        <record model="res.country.sector" id="sector13">
+            <field name="name">Sector 13</field>
+        </record>
+
+        <record id="sector131" model="res.country.sector">
+            <field name="parent_id" ref="sector13"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Villa Hermosa</field>
+        </record>
+
+        <record id="sector132" model="res.country.sector">
+            <field name="parent_id" ref="sector13"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Prado centro</field>
+        </record>
+
+        <record id="sector133" model="res.country.sector">
+            <field name="parent_id" ref="sector13"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Av. Ferrocarril</field>
+        </record>
+
+        <record model="res.country.sector" id="sector14">
+            <field name="name">Sector 14</field>
+        </record>
+
+        <record id="sector141" model="res.country.sector">
+            <field name="parent_id" ref="sector14"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Caldas</field>
+        </record>
+
+        <record model="res.country.sector" id="sector15">
+            <field name="name">Sector 15</field>
+        </record>
+
+        <record id="sector151" model="res.country.sector">
+            <field name="parent_id" ref="sector15"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Otro departamento</field>
+        </record>
+
+        <record model="res.country.sector" id="sector16">
+            <field name="name">Sector 16</field>
+        </record>
+
+        <record id="sector161" model="res.country.sector">
+            <field name="parent_id" ref="sector16"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Caribe</field>
+        </record>
+
+        <record model="res.country.sector" id="sector17">
+            <field name="name">Sector 17</field>
+        </record>
+
+        <record id="sector171" model="res.country.sector">
+            <field name="parent_id" ref="sector17"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Sabaneta</field>
+        </record>
+
+        <record model="res.country.sector" id="sector18">
+            <field name="name">Sector 18</field>
+        </record>
+
+        <record id="sector181" model="res.country.sector">
+            <field name="parent_id" ref="sector18"/>
+            <field name="country_id" ref="base.co"/>
+            <field name="name">Oriente</field>
+        </record>
+
+    </data>
+</odoo>

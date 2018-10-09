@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page name="config_reports" string="Configuration Report">
+                    <group>
+                        <field name="iso_logo" widget="image"/>
+                        <field name="footer_logo" widget="image"/>
+                    </group>
+                    <group>
+                        <field name="cover_page_logo" widget="image"/>
+                    </group>
+                </page>
+                <page string="Extra permissions/Parameters">
+                    <group>
+                        <group>
+                            <field name="account_extra_perm" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="default_validate_invoices" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="default_payment_term_id" widget="selection"/>
+                        </group>
+                        <group>
+                            <field name="default_uom_task_id" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="special_quotations_categories" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+            <field name="company_registry" position="after">
+                <field name="billing_resolution"/>
+                <field name="from_res"/>
+                <field name="to_res"/>
+                <field name="authorization_date"/>
+                <field name="invoice_note"/>
+            </field>
+
+        </field>
+    </record>
+
+</odoo>

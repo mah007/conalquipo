@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sign_form_inherit" model="ir.ui.view">
+        <field name="name">sign.request.form</field>
+        <field name="model">sign.request</field>
+        <field name="inherit_id" ref="sign.sign_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="attributes">
+                <attribute name='edit'>1</attribute>
+            </xpath>
+
+            <field name="favorited_ids" position="before">
+                <field name="sale_id"/>
+            </field>
+
+      </field>
+    </record>
+
+    <record id="sign_tree_inherit" model="ir.ui.view">
+        <field name="name">sign.request.tree</field>
+        <field name="model">sign.request</field>
+        <field name="inherit_id" ref="sign.sign_request_view_tree"/>
+        <field name="arch" type="xml">
+      
+            <field name="state" position="after">
+                <field name="sale_id"/>
+            </field>
+
+      </field>
+    </record>
+
+</odoo>

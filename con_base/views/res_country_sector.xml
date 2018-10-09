@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_country_sector_action" model="ir.actions.act_window">
+        <field name="name">Sectors</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.country.sector</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">Display and manage the list of all sectors that can be assigned to your partner records. You can create or delete sectors to make sure the ones you are working on will be maintained.</field>
+    </record>
+
+    <record id="res_country_sector_form_view" model="ir.ui.view">
+        <field name="name">res.country.sector.form</field>
+        <field name="model">res.country.sector</field>
+        <field name="arch" type="xml">
+            <form string="Sector">
+                <group>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="child_ids" options='{"no_open": True}'/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_country_sector_tree_view" model="ir.ui.view">
+        <field name="name">res.country.sector.tree</field>
+        <field name="model">res.country.sector</field>
+        <field name="arch" type="xml">
+            <tree string="Sectors" editable="top">
+                <field name="country_id"/>
+                <field name="state_id"/>
+                <field name="name"/>
+                <field name="parent_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_res_country_sector"
+        name="Sectors"
+        action="res_country_sector_action"
+        parent="sale.menu_sale_config"/>
+
+</odoo>

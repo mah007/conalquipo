@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_inherit" model="ir.ui.view">
+        <field name="name">Add related employees</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <xpath expr="//page[@name='access_rights']/group[1]" position="after">
+                    <group string="Related employees" name="related_employees">
+                        <field name="employee_ids" widget="many2many_tags" string="Related employees"/>
+                    </group>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+</odoo>
