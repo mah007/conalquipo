@@ -3,48 +3,10 @@
 from odoo import fields, models
 
 
-class VehicleType(models.Model):
-    """
-    This model create a database table for manage the vehicles types for
-    example:
-        * Motorcicle
-        * Car
-        * Bus
-    """
-    _name = 'fleet.vehicle.type'
-    _description = "Vehicle Type"
-    _order = 'sequence, id'
-
-    sequence = fields.Integer(
-        help="Determine the display order", default=10,
-        invisible=True)
-    code = fields.Char(string="Code")
-    name = fields.Char(string="Name")
-
-
-class LicenseCategory(models.Model):
-    """
-    This model create a database table for manage the license category for
-    example:
-        * A1
-        * A2
-        * B1
-    """
-    _name = 'license.category'
-    _description = "license category"
-    _order = 'sequence, id'
-
-    sequence = fields.Integer(
-        help="Determine the display order", default=10,
-        invisible=True)
-    name = fields.Char(string="Name")
-    description = fields.Text(string="Description")
-
-
 class FleetVehicle(models.Model):
     _inherit = 'fleet.vehicle'
 
-    license_category = fields.Many2one('license.category',
+    license_category = fields.Many2one('fleet.license.category',
                                        string='license category')
     holder = fields.Many2one('res.partner', 'Holder',
                              track_visibility='onchange')

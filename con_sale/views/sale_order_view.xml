@@ -68,7 +68,7 @@
                         <field name="layout_category_id" groups="sale.group_sale_layout"/>
                         <field name="invoice_status" invisible="1"/>
                         <field name="qty_to_invoice" invisible="1"/>
-                        <field name="qty_delivered_updateable" invisible="1"/>
+                        <!-- <field name="qty_delivered_updateable" invisible="1"/> -->
                         <field name="price_subtotal" invisible="1"/>
                         <label for="product_uom_qty" string="Ordered Quantity"/>
                         <div>
@@ -83,9 +83,9 @@
                             <field name="customer_lead" class="oe_inline"/> days
                         </div>
                         <label for="qty_delivered" string="Delivered Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
-                        <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                        <!-- <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
                             <field name="qty_delivered" attrs="{'readonly': [('qty_delivered_updateable', '=', False)]}"/>
-                        </div>
+                        </div> -->
                         <label for="qty_invoiced" string="Invoiced Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
                         <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
                             <field name="qty_invoiced" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
@@ -141,7 +141,7 @@
                 <field name="limit" force_save="1"/>
                 <field name="available_amount" readonly="1" force_save="1"/>
                 <field name="message_invoice" readonly="1" force_save="1"/>
-                <field name="employee_id" required="0" readonly="1" options="{'no_create': True}" force_save="1"/>
+                <!-- <field name="employee_id" required="0" readonly="1" options="{'no_create': True}" force_save="1"/> -->
                 <field name="employee_code" required="0"/>
                 <field name="type_quotation" attrs="{'required': [('state','in',['draft', 'sent'])], 'readonly': [('state','not in',['draft', 'sent'])]}"/>
                 <field name="special_category"  attrs="{'invisible': [('type_quotation','in',['no_special', '', False])], 'required': [('type_quotation','=','special')], 'readonly': [('state','not in',['draft', 'sent'])]}"/>
@@ -239,10 +239,6 @@
                 <field name="owner_id" invisible="1"/>
             </xpath>
 
-            <xpath expr="//field[@name='order_line']/tree//field[@name='layout_category_id']" position="replace">
-                <field name="layout_category_id" invisible="1"/>
-            </xpath>
-
             <xpath expr="//field[@name='validity_date']" position="after">
                 <field name="sale_order_id" readonly="1" attrs="{'invisible': [('sale_order_id','=', False)]}"/>
             </xpath>
@@ -287,7 +283,7 @@
             <field name="project_id" string="Works"/>
             <field name="message_invoice"/>
             <field name="cancel_options"/>
-            <field name="employee_id"/>
+            <!-- <field name="employee_id"/> -->
         </field>
 
       </field>
@@ -307,7 +303,7 @@
        </field>
     </record>
 
-     <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
+     <!-- <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
         <field name="name">sale.order.search.inherit.quotation</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
@@ -316,7 +312,7 @@
                 <filter string="Merged" name="merged" domain="[('state','=','merged')]"/>
             </xpath>
         </field>
-    </record>
+    </record> -->
 
     <record id="view_order_form_with_carrier_inherit" model="ir.ui.view">
         <field name="name">delivery.sale.order.form.view.with_carrier</field>

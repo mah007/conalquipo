@@ -42,8 +42,8 @@ class StockScrap(models.Model):
             })
 
             sign_template = self.env.ref(
-                    'con_website_sign.template_con_website_sign_1')
-            request_id = self.env['signature.request'].create({
+                    'con_sign.template_con_website_sign_1')
+            request_id = self.env['sign.request'].create({
                 'sale_id': self.picking_id.sale_id.id,
                 'template_id': sign_template.id,
                 'state': 'draft',
@@ -67,10 +67,10 @@ class StockScrap(models.Model):
 
             d = dict(zip(items, items_values))
             for key, value in d.items():
-                self.env['signature.item.value'].create({
-                    'signature_item_id': self.env.ref(
-                        'con_website_sign.' + str(key)).id,
-                    'signature_request_id': request_id.id,
+                self.env['sign.item.value'].create({
+                    'sign_item_id': self.env.ref(
+                        'con_sign.' + str(key)).id,
+                    'sign_request_id': request_id.id,
                     'value': value
                 })
 
@@ -114,8 +114,8 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
                 'product_uom': reple_id.uom_id.id})
 
             sign_template = self.env.ref(
-                    'con_website_sign.template_con_website_sign_1')
-            request_id = self.env['signature.request'].create({
+                    'con_sign.template_con_website_sign_1')
+            request_id = self.env['sign.request'].create({
                 'sale_id': scrap_id.picking_id.sale_id.id,
                 'template_id': sign_template.id,
                 'state': 'draft',
@@ -139,7 +139,7 @@ class StockWarnInsufficientQtyScrap(models.TransientModel):
 
             d = dict(zip(items, items_values))
             for key, value in d.items():
-                self.env['signature.item.value'].create({
+                self.env['sign.item.value'].create({
                     'signature_item_id': self.env.ref(
                         'con_website_sign.' + str(key)).id,
                     'signature_request_id': request_id.id,

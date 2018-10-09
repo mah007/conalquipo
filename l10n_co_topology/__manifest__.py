@@ -2,30 +2,27 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': "Conalquipo's Base module modifications",
+    'name': "Colombia topology (Municipalities and sectors",
     'version': '1.1',
     'category': 'Base',
     'sequence': 10,
     'summary': 'Base',
     'depends': [
-        'base', 'sale', 'con_delivery'
+        'base',
     ],
     'description':
     """
         Base module modification
 
+        - res.country.municipality: Adds colommbian municipalities.
         - res.country.sectors: Adds colommbian sectors.
     """,
     'data': [
-        'sequences/client_sequence.xml',
-        'data/groups.xml',
-        'data/messages.xml',
-        'data/res_company_data.xml',
-        'data/res_lang_data.xml',
-        'data/res_users.xml',
-        'views/res_company.xml',
-        'views/res_partner.xml',
-        'views/res_users.xml',
+        'security/ir.model.access.csv',
+        'data/res.country.municipality.csv',
+        'data/sectors.xml',
+        'views/res_country_municipality.xml',
+        'views/res_country_sector.xml',
     ],
     'qweb': [
     ],

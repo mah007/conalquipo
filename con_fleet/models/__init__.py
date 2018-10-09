@@ -19,4 +19,6 @@
 #
 ##############################################################################
 
+from . import fleet_license_category
+from . import fleet_vehicle_type
 from . import fleet_vehicle

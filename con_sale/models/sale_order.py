@@ -32,6 +32,16 @@ from odoo.tools import (DEFAULT_SERVER_DATETIME_FORMAT, float_compare,
 _logger = logging.getLogger(__name__)
 
 
+class SaleLayoutCategory(models.Model):
+    _name = 'sale.layout_category'
+    _order = 'sequence, id'
+
+    name = fields.Char('Name', required=True, translate=True)
+    sequence = fields.Integer('Sequence', required=True, default=10)
+    subtotal = fields.Boolean('Add subtotal', default=True)
+    pagebreak = fields.Boolean('Add pagebreak')
+
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -42,12 +52,6 @@ class SaleOrder(models.Model):
                 if ml.sale_line_id.components_ids:
                     ml.get_components_info()
         return True
-
-    def _get_default_template(self):
-        template = self.env.ref(
-            'website_quote.website_quote_template_default',
-            raise_if_not_found=False)
-        return template and template.active and template or False
 
     order_type = fields.Selection(
         [('rent', 'Rent'), ('sale', 'Sale')],
@@ -126,10 +130,10 @@ class SaleOrder(models.Model):
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices',
         track_visibility='onchange')
-    employee_id = fields.Many2one(
-        "hr.employee", string='Employee',
-        track_visibility='onchange',
-        domain=lambda self: self.getemployee())
+    # employee_id = fields.Many2one(
+    #     "hr.employee", string='Employee',
+    #     track_visibility='onchange',
+    #     domain=lambda self: self.getemployee())
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
         'Approve min prices for products',
@@ -157,15 +161,14 @@ class SaleOrder(models.Model):
         'product.category', 'Special category',
         track_visibility='onchange')
     template_id = fields.Many2one(
-        'sale.quote.template', 'Quotation Template',
+        'sale.order.template', 'Quotation Template',
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
-        default=_get_default_template,
         track_visibility='onchange')
-    user_id = fields.Many2one(
-        'hr.employee', string='Salesperson',
-        index=True, track_visibility='onchange',
-        default=lambda self: self.employee_id.id)
+    # user_id = fields.Many2one(
+    #     'hr.employee', string='Salesperson',
+    #     index=True, track_visibility='onchange',
+    #     default=lambda self: self.employee_id.id)
     payment_term_note = fields.Text(
         'Payment Terms and conditions')
     min_emptying = fields.Char('Min. Emptying')
@@ -214,7 +217,7 @@ class SaleOrder(models.Model):
         if self.special_category:
             cat_list.remove(self.special_category.id)
         template = self.env[
-            'sale.quote.template'].search(
+            'sale.order.template'].search(
                 [('special_category', 'not in', cat_list)])
         return {'domain': {'template_id': [('id', 'in', template._ids)]}}
 
@@ -1394,7 +1397,7 @@ class SaleOrder(models.Model):
         self.note = ''
         template = self.template_id.with_context(lang=self.partner_id.lang)
         new_order_lines = []
-        for line in template.quote_line:
+        for line in template.sale_order_template_line_ids:
             discount = 0
             if self.pricelist_id:
                 price = self.pricelist_id.with_context(
@@ -1462,15 +1465,17 @@ class SaleOrderLine(models.Model):
                     data.compute_uoms = \
                         [data.product_id.product_tmpl_id.sale_uom.id]
 
+    layout_category_id = fields.Many2one(
+        'sale.layout_category', string='Section')
     start_date = fields.Date(string="Start")
     end_date = fields.Date(string="End")
     order_type = fields.Selection(related='order_id.order_type',
                                   string="Type Order")
     bill_uom = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UMS')
     compute_uoms = fields.Many2many(
-        'product.uom',
+        'uom.uom',
         compute='_compute_uoms',
         store=False)
     owner_id = fields.Many2one('res.partner', string='Supplier',
@@ -1536,7 +1541,7 @@ class SaleOrderLine(models.Model):
         'product.product', string='Product',
         domain=[],
         change_default=True,
-        ondelete='restrict', required=True)
+        ondelete='restrict', required=False)
 
     @api.multi
     def name_get(self):

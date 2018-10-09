@@ -7,8 +7,9 @@
         <field name="inherit_id" ref="repair.view_repair_order_form"/>
         <field name="arch" type="xml">
 
-            <field name="partner_id" position="after">
-                <field name="project_id" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}"/>
+            <field name="partner_id" position="replace">
+                <field name="partner_id" widget="res_partner_many2one" attrs="{'required':[('invoice_method','!=','none')]}" context="{'show_vat': True}"/>
+                <field name="project_id" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}" attrs="{'required':[('invoice_method','!=','none')]}"/>
             </field>
 
         </field>

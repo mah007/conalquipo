@@ -13,7 +13,7 @@ class ProjectTask(models.Model):
                                  help="The associated product to the service "
                                       "task")
     uom_id = fields.Many2one(
-        'product.uom', string="UoM",
+        'uom.uom', string="UoM",
         help="The associated UoM to the service task")
 
     @api.multi

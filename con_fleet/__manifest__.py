@@ -8,7 +8,7 @@
     'category': 'Fleet',
     'sequence': 10,
     'summary': 'Fleet',
-    'depends': ['con_base', 'fleet', 'stock'],
+    'depends': ['l10n_co_topology', 'fleet'],
     'description':
     """
         Conalquipo Fleet customizations

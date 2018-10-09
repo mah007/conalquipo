@@ -19,6 +19,22 @@
 #
 ##############################################################################
 
-from . import sale_order
-from . import res_config_settings
-from . import sale_order_template
+from odoo import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
+
+
+class ResCountryMunicipality(models.Model):
+    _name = 'res.country.municipality'
+    _description = "Municipality"
+    _order = 'sequence, id'
+
+    sequence = fields.Integer(help="Determine the display order", default=10)
+    name = fields.Char(string="Name")
+    state_id = fields.Many2one('res.country.state', string='State')
+    code = fields.Char(string="Code")
+    delivery_carrier_id = fields.Many2one('delivery.carrier',
+                                          string='Delivery Carrier',
+                                          ondelete='cascade', index=True,
+                                          copy=False,
+                                          track_visibility='onchange')

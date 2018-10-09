@@ -26,8 +26,8 @@ from odoo.addons import decimal_precision as dp
 _logger = logging.getLogger(__name__)
 
 
-class SaleQuoteTemplate(models.Model):
-    _inherit = 'sale.quote.template'
+class SaleOrderTemplate(models.Model):
+    _inherit = 'sale.order.template'
 
     groups_ids = fields.Many2many(
         "res.groups", string='Notifications to groups')
@@ -51,7 +51,7 @@ class SaleQuoteTemplate(models.Model):
         """
         Overwrite the method write from sale quote template
         """
-        res = super(SaleQuoteTemplate, self).create(values)
+        res = super(SaleOrderTemplate, self).create(values)
         for data in res.quote_line:
             components_ids = data.product_id.product_tmpl_id.components_ids
             if components_ids and not data.indicted:
@@ -78,7 +78,7 @@ class SaleQuoteTemplate(models.Model):
         """
         Overwrite the method write from sale quote template
         """
-        res = super(SaleQuoteTemplate, self).write(values)
+        res = super(SaleOrderTemplate, self).write(values)
         for data in self.quote_line:
             components_ids = data.product_id.product_tmpl_id.components_ids
             if components_ids and not data.indicted:
@@ -101,15 +101,15 @@ class SaleQuoteTemplate(models.Model):
         return res
 
 
-class SaleQuoteLine(models.Model):
-    _inherit = "sale.quote.line"
+class SaleOrderTemplateLine(models.Model):
+    _inherit = "sale.order.template.line"
 
     indicted = fields.Boolean(string='Indicted')
     product_id = fields.Many2one(
         'product.product',
         'Product', domain=[], required=True)
     bill_uom = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='Unidad de venta')
     bill_uom_qty = fields.Float(
         'Cant. Venta',
