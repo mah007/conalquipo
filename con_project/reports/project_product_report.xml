@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_report_product_project"
+        model="project.project"
+        string="Project product report"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_project.report_product_project"
+        file="con_project.report_product_project" 
+    />
+    
+    <template id="report_product_project">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <center><h1>Products on works</h1></center>
+            
+                    <t t-foreach="data['partner_ids']" t-as="partner">
+                        <t t-foreach="data['project_ids']" t-as="project">
+                            <t t-if="project.partner_id.id == partner.id">
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="partner.name"/>
+                                            </strong>
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" bgcolor="#A9A9A9">
+                                            <strong>
+                                                <span t-esc="project.name"/>
+                                            </strong>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th align="left" bgcolor="#A9A9A9">Código</th>
+                                        <th align="left" bgcolor="#A9A9A9">Documento</th>
+                                        <th align="left" bgcolor="#A9A9A9">Fecha</th>
+                                        <th align="left" bgcolor="#A9A9A9">Código</th>
+                                        <th align="left" bgcolor="#A9A9A9">Producto</th>
+                                        <th align="left" bgcolor="#A9A9A9">F. Inicio</th>
+                                        <th align="left" bgcolor="#A9A9A9">F. Fin</th>
+                                        <th align="left"  bgcolor="#A9A9A9">Cant. Mov</th>
+                                        <th align="left" bgcolor="#A9A9A9">Cantidad en obra</th>
+                                        <th align="left" bgcolor="#A9A9A9">Valor</th>
+                                    </tr>
+                                    <t t-foreach="data['move_ids']" t-as="move_id">
+                                        <t t-if="move_id.partner_id.id == partner.id and move_id.project_id.id == project.id">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="move_id.code"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.picking_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.picking_id.scheduled_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.product_id.default_code"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.product_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.sale_line_id.start_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.sale_line_id.end_date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.quantity_done"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.product_count"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="move_id.sale_line_id.price_unit"/>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </table>
+
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

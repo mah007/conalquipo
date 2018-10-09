@@ -1,0 +1,20 @@
+-
+  Sales
+-
+  !record {model: res.config.settings, id: con_default_sale_properties}:
+    {
+      'group_sale_pricelist': True,
+      'group_product_pricelist': False,
+      'group_pricelist_item': True,
+      'group_warning_sale': True,
+      'multi_sales_price': True,
+      'group_discount_per_so_line': True,
+      'multi_sales_price_method': 'formula',
+      'sale_pricelist_setting': 'formula',
+      'group_warning_account': True,
+      'group_sale_layout': True,
+      'use_sale_note': True,
+    }
+-
+  !python {model: res.config.settings}: |
+        self.browse(ref('con_default_sale_properties')).execute()

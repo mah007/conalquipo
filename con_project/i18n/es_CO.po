@@ -1,0 +1,668 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* con_project
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e-20180430\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-07 15:53+0000\n"
+"PO-Revision-Date: 2018-09-07 10:54-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_CO\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: con_project
+#: model:mail.template,body_html:con_project.create_work_email_template
+msgid ""
+"\n"
+"\n"
+"${ctx['subject']}\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"${ctx['subject']}\n"
+"\n"
+
+#. module: con_project
+#: model:mail.template,subject:con_project.create_work_email_template
+msgid "${ctx['subject']}"
+msgstr "${ctx['subject']}"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.view_project_availability_product_template_kanban
+msgid "<span class=\"o_label\">Product Qty:</span>"
+msgstr "<span class=\"o_label\">Cant. productos:</span>"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Accept Emails From"
+msgstr "Aceptar Correos Desde"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Address"
+msgstr "Dirección"
+
+#. module: con_project
+#: selection:project.product.available,typeselection:0
+msgid "All"
+msgstr "Todos"
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:386
+#, python-format
+msgid "Attention: The work %s are created by %s"
+msgstr "Atención: La obra %s fue creada por %s"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_business_name
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Business name"
+msgstr "Razón social a facturar y/o"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Cant. Mov"
+msgstr "Cant. Mov"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Cantidad en obra"
+msgstr "Cantidad en obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "Choose a Project Email"
+msgstr "Escoja un correo electrónico de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_city
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "City"
+msgstr "Ciudad"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_city2
+msgid "City2"
+msgstr "Barrio"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_commercial
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Commercial"
+msgstr "Comercial"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_country2_id
+#: model:ir.model.fields,field_description:con_project.field_project_project_country_id
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Country"
+msgstr "País"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "Create"
+msgstr "Crear"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_create_date
+msgid "Created on"
+msgstr "Creado"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Código"
+msgstr "Código"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_query_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_display_name
+#: model:ir.model.fields,field_description:con_project.field_report_con_project_report_product_project_display_name
+msgid "Display Name"
+msgstr "Nombre Público"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Documento"
+msgstr "Documento"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_email
+msgid "Email"
+msgstr "Email"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Email Alias"
+msgstr "Pseudónimo de correo"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Emails"
+msgstr "Correos electrónicos"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_employee_id
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_employee_code
+msgid "Employee code"
+msgstr "Código empleado"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "F. Fin"
+msgstr "F. Fin"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "F. Inicio"
+msgstr "F. Inicio"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Fecha"
+msgstr "Fecha"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_move_ids
+msgid "History"
+msgstr "History"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_id
+#: model:ir.model.fields,field_description:con_project.field_report_con_project_report_product_project_id
+msgid "ID"
+msgstr "ID"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_interventor_phone
+msgid "Interventor Phone"
+msgstr "Teléfono interventor"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Invoice Address"
+msgstr "Dirección facturación"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_sector_id2
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+#: model:ir.ui.view,arch_db:con_project.view_project_code_search
+msgid "Invoice Sector"
+msgstr "Sector facturación"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_invoice_limit_date
+msgid "Invoice limit date"
+msgstr "Fecha limite de facturación"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_is_comercial
+msgid "Is Comercial"
+msgstr "Is Comercial"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_is_director_comercial
+msgid "Is Director Comercial"
+msgstr "Is Director Comercial"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_is_director_logistic
+msgid "Is Director Logistic"
+msgstr "Is Director Logistic"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_is_logistic
+msgid "Is Logistic"
+msgstr "Is Logistic"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available___last_update
+#: model:ir.model.fields,field_description:con_project.field_report_con_project_report_product_project___last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_write_date
+msgid "Last Updated on"
+msgstr "Actualizado"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_legal_cont_responsible
+msgid "Legal Responsible"
+msgstr "Responsable legal"
+
+#. module: con_project
+#: selection:project.product.available,typeselection:0
+msgid "Manual"
+msgstr "Manual"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
+msgid "Moves"
+msgstr "Movimientos"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_municipality2_id
+#: model:ir.model.fields,field_description:con_project.field_project_project_municipality_id
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_product_count
+msgid "Number of products on work"
+msgstr "Cantidad de productos en obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_observations
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Observations"
+msgstr "Observaciones"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_owner_phone
+msgid "Owner Phone"
+msgstr "Teléfono de propietario"
+
+#. module: con_project
+#: selection:project.product.available,selectionby:0
+msgid "Partner"
+msgstr "Cliente"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_partner_code
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Partner Code"
+msgstr "Código de cliente"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_partner_ids
+msgid "Partners"
+msgstr "Empresas"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_phone1
+#: model:ir.model.fields,field_description:con_project.field_project_project_phone2
+msgid "Phone"
+msgstr "Teléfono"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Phone..."
+msgstr "Teléfono..."
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
+msgid "Proceed"
+msgstr "Proceder"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_task_product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Producto"
+msgstr "Producto"
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:340
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+#, python-format
+msgid "Products"
+msgstr "Productos"
+
+#. module: con_project
+#: model:ir.actions.act_window,name:con_project.action_wizard_project
+#: model:ir.ui.menu,name:con_project.menu_product_available_works
+msgid "Products available on works"
+msgstr "Productos en obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_tree_works
+msgid "Products on work"
+msgstr "Productos en obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Products on works"
+msgstr "Productos en obra"
+
+#. module: con_project
+#: model:ir.model,name:con_project.model_project_project
+#: selection:project.product.available,selectionby:0
+msgid "Project"
+msgstr "Obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Project Manager"
+msgstr "Gerente de obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "Project Name"
+msgstr "Nombre de obra"
+
+#. module: con_project
+#: model:ir.actions.report,name:con_project.action_report_product_project
+msgid "Project product report"
+msgstr "Reporte de productos en obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
+msgid "Project products available"
+msgstr "Productos disponibles en obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_project_ids
+msgid "Projects"
+msgstr "Proyectos"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.view_task_form2_inherit
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Responsibles"
+msgstr "Responsables"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.task_view_form_inherit_con_operator
+msgid "Schedule Task"
+msgstr "Planificación de tarea"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Secondary Sector"
+msgstr "Sector secundario"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_secondary_sector_ids2
+msgid "Secondary invoice sectors"
+msgstr "Subsector facturación"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_secondary_sector_ids
+msgid "Secondary work sectors"
+msgstr "Subsector obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_selectionby
+msgid "Selection by"
+msgstr "Selección por"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_product_available_typeselection
+msgid "Selection type"
+msgstr "Tipo de selección"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Shipping Address"
+msgstr "Dirección de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_state2_id
+#: model:ir.model.fields,field_description:con_project.field_project_project_state_id
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "State"
+msgstr "Estado"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_street1
+msgid "Street1"
+msgstr "Calle1"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_street1_2
+msgid "Street1 2"
+msgstr "Calle1 2"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_street2_1
+msgid "Street2 1"
+msgstr "Calle2 1"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_street2_2
+msgid "Street2 2"
+msgstr "Calle2 2"
+
+#. module: con_project
+#: model:ir.model,name:con_project.model_project_task
+msgid "Task"
+msgstr "Tarea"
+
+#. module: con_project
+#: model:ir.model.fields,help:con_project.field_project_task_uom_id
+msgid "The associated UoM to the service task"
+msgstr "The associated UoM to the service task"
+
+#. module: con_project
+#: model:ir.model.fields,help:con_project.field_project_task_product_id
+msgid "The associated product to the service task"
+msgstr "The associated product to the service task "
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:265
+#: code:addons/con_project/models/project.py:271
+#, python-format
+msgid "The main sector must be different from the secondary sectors."
+msgstr "El sector principal debe ser distinto al secundario."
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:219
+#, python-format
+msgid "This employee code in not member of this group."
+msgstr "Este código de empleado no forma parte del grupo del usuario."
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Time Scheduling"
+msgstr "Programación de Tiempo"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_task_uom_id
+msgid "UoM"
+msgstr "UoM"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.report_product_project
+msgid "Valor"
+msgstr "Valor"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_code
+msgid "Work Code"
+msgstr "Código de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_interventor
+msgid "Work Interventor"
+msgstr "Interventor de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_owner
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "Work Owner"
+msgstr "Propietario de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_phone
+msgid "Work Phone"
+msgstr "Teléfono del trabajo"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_resident
+msgid "Work Resident"
+msgstr "Residente de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_responsible
+msgid "Work Responsible"
+msgstr "Responsable de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_sector_id
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+#: model:ir.ui.view,arch_db:con_project.view_project_code_search
+msgid "Work Sector"
+msgstr "Sector Obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_storer
+msgid "Work Storer"
+msgstr "Almacenista de obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.view_project_code_search
+msgid "Work code"
+msgstr "Código de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_contact
+msgid "Work contact"
+msgstr "Contacto de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_date_creation
+msgid "Work date creation"
+msgstr "Fecha creación de obra"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_work_manager
+msgid "Work manager"
+msgstr "Gerente de la obra"
+
+#. module: con_project
+#: code:addons/con_project/wizards/models/project_product_available.py:38
+#, python-format
+msgid "You need defined a billing year and periods"
+msgstr "Ud. nececesita definir años de facturación y períodos"
+
+#. module: con_project
+#: code:addons/con_project/models/project.py:393
+#, python-format
+msgid "You need to select a client!"
+msgstr "Ud. necesita seleccionar un cliente"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "ZIP"
+msgstr "C.P."
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_zip
+msgid "Zip"
+msgstr "C.P."
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_zip2
+msgid "Zip2"
+msgstr "Código postal"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "contact"
+msgstr "Contacto"
+
+#. module: con_project
+#: model:ir.model.fields,field_description:con_project.field_project_project_contact_number
+msgid "contact Number"
+msgstr "Número de contacto"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works
+msgid "contact Work information"
+msgstr "Información de obra"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_form_works_simpl
+msgid "e.g. Office Party"
+msgstr "e.g. Fiesta en la oficina"
+
+#. module: con_project
+#: model:ir.ui.view,arch_db:con_project.project_product_available_wizard_view
+msgid "or"
+msgstr "o"
+
+#. module: con_project
+#: model:ir.model,name:con_project.model_project_product_available
+msgid "project.product.available"
+msgstr "project.product.available"
+
+#. module: con_project
+#: model:ir.model,name:con_project.model_report_con_project_report_product_project
+msgid "report.con_project.report_product_project"
+msgstr "report.con_project.report_product_project"

@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <record id="account_invoice_confirm_view_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.confirm.form.inherit</field>
+            <field name="model">account.invoice.confirm</field>
+            <field name="inherit_id" ref="account.account_invoice_confirm_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//footer" position="after">
+                    <group>
+                        <group>
+                            <field name="custom_date" string="Set custom dates"/>
+                        </group>
+                        <group>
+                            <field name="new_date_invoice" attrs="{'invisible': [('custom_date', '=', False)]}"/>
+                        </group>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

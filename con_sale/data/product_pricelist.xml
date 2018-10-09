@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="list_commercial" model="product.pricelist">
+            <field name="name">Pricelist - Commercial</field>
+            <field name="discount_policy">without_discount</field>
+        </record>
+
+        <record id="list_rio_negro" model="product.pricelist">
+            <field name="name">Pricelist - Rio Negro</field>
+            <field name="discount_policy">without_discount</field>
+        </record>
+        <record id="pricelist_rio_negro" model="product.pricelist.item">
+            <field name="pricelist_id" ref="list_rio_negro"/>
+            <field name="applied_on">2_product_category</field>
+            <field name="compute_price">percentage</field>
+            <field name="categ_id" ref="con_product.category_7"/>
+        </record>
+
+    </data>
+</odoo>

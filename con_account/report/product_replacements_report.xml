@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_product_replacements_report"
+        model="account.invoice.line"
+        string="Product invoiced report"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_account.report_product_replacements"
+        file="con_account.report_product_replacements" 
+    />
+    
+    <template id="report_product_replacements">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <center><h1>Categoria de productos facturados</h1></center>
+                        <br/>
+                        <div class="row mt32 mb32">
+                            <div class="col-xs-3">
+                                <strong>Categoria de producto:</strong>
+                                <span t-field="o.product_category_id.name"/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>Fecha inicial:</strong>
+                                <span t-field="o.init_date" t-field-options='{"widget": "date"}'/>
+                            </div>
+                            <div class="col-xs-3">
+                                <strong>Fecha final:</strong>
+                                <span t-field="o.end_date" t-field-options='{"widget": "date"}'/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-condensed">
+                            <tr>
+                                <th align="left" bgcolor="#A9A9A9">Producto</th>
+                                <th align="left" bgcolor="#A9A9A9">Cantidad</th>
+                                <th align="left" bgcolor="#A9A9A9">Monto facturado</th>
+                            </tr>
+                            <t t-foreach="o.replacement_lines" t-as="lines">
+                                <tr>
+                                    <td>
+                                        <span t-field="lines.product_id.name"/>
+                                    </td>                                   <td>
+                                        <span t-field="lines.qty"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="lines.qty_invoices" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
