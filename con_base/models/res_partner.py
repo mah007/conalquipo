@@ -28,7 +28,6 @@ _logger = logging.getLogger(__name__)
 class ResPartnerCode(models.Model):
     _inherit = "res.partner"
 
- 
     def _default_category(self):
         return self.env[
             'res.partner.category'].browse(
@@ -273,18 +272,18 @@ class ResPartnerCode(models.Model):
                 p.property_product_pricelist = self.env[
                     'product.pricelist']._get_partner_pricelist(p.id)
 
-    @api.model
-    def create(self, values):
-        values['partner_code'] = self.env[
-            'ir.sequence'].next_by_code('res.partner.code')
-        res = super(ResPartnerCode, self).create(values)
-        pay_term = self.env.user.company_id.default_payment_term_id.id
-        if pay_term:
-            res.property_payment_term_id = pay_term
-        else:
-            raise exceptions.Warning(_(
-                'You have to define a payment term in company config!'))
-        return res
+    # @api.model
+    # def create(self, values):
+    #     values['partner_code'] = self.env[
+    #         'ir.sequence'].next_by_code('res.partner.code')
+    #     res = super(ResPartnerCode, self).create(values)
+    #     pay_term = self.env.user.company_id.default_payment_term_id.id
+    #     if pay_term:
+    #         res.property_payment_term_id = pay_term
+    #     else:
+    #         raise exceptions.Warning(_(
+    #             'You have to define a payment term in company config!'))
+    #     return res
 
     @api.multi
     def write(self, values):

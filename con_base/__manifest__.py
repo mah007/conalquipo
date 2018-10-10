@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Base',
     'depends': [
-        'base', 'sale', 'con_delivery'
+        'base', 'sale', 'l10n_co_topology'
     ],
     'description':
     """
@@ -18,9 +18,11 @@
     """,
     'data': [
         'sequences/client_sequence.xml',
-        'data/groups.xml',
-        'data/messages.xml',
+        'security/ir.model.access.csv',
+        'data/module_category.xml',
         'data/res_company_data.xml',
+        'data/messages.xml',
+        'data/groups.xml',
         'data/res_lang_data.xml',
         'data/res_users.xml',
         'views/res_company.xml',

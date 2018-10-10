@@ -2,15 +2,32 @@
 <odoo>
   <data>
 
+    <record id="l10n_co_topology_inherit" model="ir.ui.view">
+        <field name="name">res.partner.l10n_co_topology</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_co_topology.res_partner_form_inherit1"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@class='o_address_format']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('type', '=', 'contact'), ('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
     <record id="res_partner_form_inherit" model="ir.ui.view">
         <field name="name">res.partner.form.code</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
+            <field name="l10n_co_document_type" position="replace">
+                <field name="l10n_co_document_type"/>
+                <field name="l10n_co_verification_code" invisible="1"/>
+            </field>
+
             <field name="vat" position="replace">
-                <field name="vat" 
-                string="NIT"/>
+                <field name="vat" string="NIT"/>
             </field>
 
             <xpath expr="//form/sheet/notebook/page/field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="before">
@@ -38,45 +55,14 @@
                 </div>
             </xpath>
 
-            <xpath expr="//form/sheet/group/group[1]" position="replace">
-                <group>
-                    <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
-                    <field name="can_edit_doc_delivered" invisible="1"/>
-                    <field name="is_administrative_assistant" invisible="1"/>
-                    <field name="documents_delivered" attrs="{'readonly': [('can_edit_doc_delivered','=',False)]}"/>
-                    <field name="partner_code" readonly="1"/>
-                    <field name="employee_id" required="1" readonly="1" options="{'no_create': True}" force_save="1"/>
-                    <field name="employee_code" required="1"/>
-                    <field name="l10n_co_document_type"/>
-                    <field name="l10n_co_verification_code" invisible="1"/>
-                    <field name="vat" string="Document number" placeholder="e.g. BE0477472701"/>
-                    <label for="street" string="Address"/>
-                    <div class="o_address_format">
-                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
-                        <field name="state_id" class="o_address_country" placeholder="State" options='{"no_open": True}'
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}" context="{'country_id': country_id, 'zip': zip}"/>
-                        <field name="municipality_id" class="o_address_country"
-                            placeholder="Municipality" options='{"no_open": True}' required="0" domain="[('state_id', '=', state_id)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                        <field name="city" placeholder="Barrio" class="o_address_country"
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
-                        <div class="oe_edit_only">
-                            <button name="open_parent" type="object" string="(edit)" class="oe_link"
-                                attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/>
-                        </div>
-                        <field name="street" placeholder="Street..." class="o_address_street"
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
-                        <field name="street2" placeholder="Street 2..." class="o_address_street"
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
-                        <field name="zip" placeholder="ZIP" class="o_address_country"
-                            attrs="{'readonly': ['|', ('type', '=', 'contact'),('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}"/>
-                        <field name="sector_id" placeholder="Sector"
-                            options='{"no_open": True}'
-                            domain="[('parent_id','=',False)]" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                        <field name="secondary_sector_ids" widget="many2many_tags" placeholder="Secondary Sector" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
-                    </div>
-                    <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
-                </group>
+            <xpath expr="//form/sheet/group/group[1]/field[@name='type']" position="replace">
+                <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                <field name="can_edit_doc_delivered" invisible="1"/>
+                <field name="is_administrative_assistant" invisible="1"/>
+                <field name="documents_delivered" attrs="{'readonly': [('can_edit_doc_delivered','=',False)]}"/>
+                <field name="partner_code" readonly="1"/>
+                <field name="employee_id" required="1" readonly="1" options="{'no_create': True}" force_save="1"/>
+                <field name="employee_code" required="1"/>
             </xpath>
 
             <field name="category_id" position="replace">
