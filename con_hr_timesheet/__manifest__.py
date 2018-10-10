@@ -8,7 +8,7 @@
     'category': 'HR',
     'sequence': 10,
     'summary': 'HR',
-    'depends': ['timesheet_grid', 'product'],
+    'depends': ['timesheet_grid', 'hr_timesheet', 'product'],
     'description':
     """
         HR Timesheet customizations.

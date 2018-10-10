@@ -30,10 +30,11 @@ _logger = logging.getLogger(__name__)
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    sale_order_id = fields.Many2one('sale.order', string='Sale Order',
-                                    ondelete='cascade')
-    order_type = fields.Selection([('rent', 'Rent'), ('purchase', 'Purchase')],
-                                  string="Type", default="purchase")
+    sale_order_id = fields.Many2one(
+        'sale.order', string='Sale Order', ondelete='cascade')
+    order_type = fields.Selection(
+        [('rent', 'Rent'), ('purchase', 'Purchase')],
+        string="Type", default="purchase")
 
     @api.multi
     def button_confirm(self):
@@ -61,15 +62,14 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    bill_uom = fields.Many2one('product.uom', string='Unit of Measure to '
-                                                     'Purchase')
-    bill_uom_qty = fields.Float('Quantity to Purchase',
-                                digits=dp.get_precision(
-                                    'Product Unit of Measure'))
-    sale_order_line_id = fields.Many2one('sale.order.line',
-                                         'Sale Order Line',
-                                         ondelete='set null', index=True,
-                                         readonly=True)
+    bill_uom = fields.Many2one(
+        'uom.uom', string='Unit of Measure to Purchase')
+    bill_uom_qty = fields.Float(
+        'Quantity to Purchase', digits=dp.get_precision(
+            'Product Unit of Measure'))
+    sale_order_line_id = fields.Many2one(
+        'sale.order.line', 'Sale Order Line', ondelete='set null',
+        index=True, readonly=True)
 
     @api.depends('product_qty', 'price_unit', 'taxes_id', 'bill_uom_qty')
     def _compute_amount(self):
@@ -80,11 +80,12 @@ class PurchaseOrderLine(models.Model):
             else:
                 quantity = line.product_qty
 
-            taxes = line.taxes_id.compute_all(line.price_unit,
-                                              line.order_id.currency_id,
-                                              quantity,
-                                              product=line.product_id,
-                                              partner=line.order_id.partner_id)
+            taxes = line.taxes_id.compute_all(
+                line.price_unit,
+                line.order_id.currency_id,
+                quantity,
+                product=line.product_id,
+                partner=line.order_id.partner_id)
             line.update({
                 'price_tax': sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', [])),
