@@ -23,6 +23,7 @@
         'data/sectors.xml',
         'views/res_country_municipality.xml',
         'views/res_country_sector.xml',
+        'views/res_partner.xml',
     ],
     'qweb': [
     ],

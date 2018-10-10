@@ -28,12 +28,7 @@ _logger = logging.getLogger(__name__)
 class ResPartnerCode(models.Model):
     _inherit = "res.partner"
 
-    @api.model
-    def _get_default_country(self):
-        country = self.env[
-            'res.country'].search([('code', '=', 'CO')], limit=1)
-        return country
-
+ 
     def _default_category(self):
         return self.env[
             'res.partner.category'].browse(
@@ -41,9 +36,6 @@ class ResPartnerCode(models.Model):
 
     partner_code = fields.Char(
         string='Partner Code')
-    country_id = fields.Many2one(
-        'res.country', string='Country', ondelete='restrict',
-        default=_get_default_country)
     l10n_co_document_type = fields.Selection(
         [('nit', 'NIT'),
          ('citizenship_card', 'Citizenship card'),
@@ -54,12 +46,6 @@ class ResPartnerCode(models.Model):
         string='Document Type',
         help='Indicates to what document the information in here belongs to.'
         )
-    state_id = fields.Many2one(
-        "res.country.state", string='State',
-        ondelete='restrict')
-    municipality_id = fields.Many2one(
-        'res.country.municipality',
-        string='Municipality')
     category_id = fields.Many2many(
         'res.partner.category',
         column1='partner_id',
@@ -83,15 +69,6 @@ class ResPartnerCode(models.Model):
         track_visibility='onchange')
     can_edit_doc_delivered = fields.Boolean(
         compute='_compute_can_edit_doc_delivered')
-    sector_id = fields.Many2one(
-        comodel_name='res.country.sector',
-        string='Main Sector',
-        track_visibility='onchange')
-    secondary_sector_ids = fields.Many2many(
-        comodel_name='res.country.sector',
-        string="Secondary Sectors",
-        domain="[('parent_id', '=', sector_id)]",
-        track_visibility='onchange')
     is_administrative_assistant = fields.Boolean(
         compute='_compute_is_administrative_assistant',
         default=True)
