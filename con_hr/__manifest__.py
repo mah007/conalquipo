@@ -27,7 +27,7 @@
     'sequence': 10,
     'summary': '',
     'depends': [
-        'hr', 'hr_contract', 'con_fleet',
+        'product', 'hr', 'hr_contract', 'con_fleet',
     ],
     'description':
     """

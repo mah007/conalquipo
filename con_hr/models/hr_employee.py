@@ -20,7 +20,6 @@
 ##############################################################################
 from odoo import fields, models
 import logging
-
 _logger = logging.getLogger(__name__)
 
 
@@ -29,9 +28,9 @@ class HrEmployee(models.Model):
 
     employee_code = fields.Char('Employee code')
     is_operator = fields.Boolean('Is Operator')
-    product_ids = fields.Many2many(comodel_name='product.template',
-                                   string='Product', search='hr_products',
-                                   track_visibility='onchange')
+    product_ids = fields.Many2many(
+        comodel_name='product.template', string='Product',
+        search='hr_products', track_visibility='onchange')
 
     _sql_constraints = [
         ('employee_code_unique',

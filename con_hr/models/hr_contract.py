@@ -27,6 +27,6 @@ class HrContract(models.Model):
     _inherit = "hr.contract"
 
     is_driver = fields.Boolean('Is Driver')
-    license_category = fields.Many2one('license.category',
-                                       string='license category')
+    license_category = fields.Many2one(
+        'fleet.license.category', string='license category')
     license_number = fields.Char('license number')
