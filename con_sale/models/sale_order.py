@@ -806,12 +806,9 @@ class SaleOrder(models.Model):
                     self.update({'state': 'merged',
                                  'sale_order_id': order_id.id,
                                  'confirmation_date': fields.Datetime.now()})
-                else:
-                    self.update({
-                        'state': 'sale',
-                        'confirmation_date': fields.Datetime.now()})
+
                     # Create task for product
-                    for data in self.order_line:
+                    for data in order_id.order_line:
                         if data.bill_uom.id and data.bill_uom.id not in \
                             self.env.user.company_id.default_uom_task_id._ids \
                             and not \
@@ -839,6 +836,10 @@ class SaleOrder(models.Model):
                             task = self.env[
                                 'project.task'].create(task_values)
                             data.write({'task_id': task.id})
+                else:
+                    self.update({
+                        'state': 'sale',
+                        'confirmation_date': fields.Datetime.now()})
                     if self.env.context.get('send_email'):
                         self.force_quotation_send()
                 res = True
@@ -1839,28 +1840,6 @@ class SaleOrderLine(models.Model):
         if line.is_component:
             line.update({
                 'price_unit': 0.0})
-        # Merge products
-        # same_product = self.search(
-        #     [('product_id', '=', values.get('product_id', False)),
-        #      ('order_id', '=', values.get('order_id', False)),
-        #      ('bill_uom', '=', values.get('bill_uom', False))])
-        # if same_product:
-        #     for data in same_product:
-        #         if values.get('product_id') == data.product_id.id and \
-        #                 data.product_id.product_tmpl_id.non_mech \
-        #                 or data.product_id.product_tmpl_id.type \
-        #                 == 'service':
-        #             total_qty = data.product_qty + values.get(
-        #                 'product_uom_qty', 0)
-        #             total_sale_uom = data.bill_uom_qty + values.get(
-        #                 'bill_uom_qty', 0)
-        #             values.update({
-        #                 'product_uom_qty': total_qty,
-        #                 'bill_uom_qty': total_sale_uom,
-        #             })
-        #             same_product.write(values)
-        #             return same_product
-        # else:
         return line
 
     @api.multi
