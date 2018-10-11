@@ -171,7 +171,7 @@
                                 </tr>
                             </thead>
                             <tbody class="invoice_tbody">
-                                <tr t-foreach="o.invoice_line_ids.sorted(key=lambda r: (r.date_move, r.layout_category_id.id, r.product_id.id), reverse=True)" t-as="l">
+                                <tr t-foreach="o.invoice_line_ids.sorted(key=lambda r: (r.layout_category_id.id, r.product_id.id, r.date_move), reverse=False)" t-as="l">
                                     <t t-if="not l.parent_sale_line">
                                         <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.document"/></td>
                                         <td style="padding:5px; border: 1px solid;font-size:10px;"><span t-field="l.date_move"/></td>
@@ -208,7 +208,7 @@
                                                     <span t-esc="amount_by_sec"/>
                                                 </td>
                                                 <td class="text-right">
-                                                    <span t-esc="sections[amount_by_sec]"/>
+                                                    <span t-esc="sections[amount_by_sec]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                                 </td>
                                             </tr>
                                         </t>
