@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_account_stock_move_report"
+        model="account.invoice.line"
+        string="Stock move report"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_account.account_stock_move_report"
+        file="con_account.account_stock_move_report" 
+    />
+    
+     <template id="account_stock_move_report">
+         <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <center><h3>LISTADO DE EQUIPO EN OBRAS</h3></center>
+                        <div class="row mt32 mb32">
+                             <div class="col-xs-4"/>
+                             <div class="mr128 col-xs-2">
+                                <strong>Fecha inicial:</strong>
+                                <span t-field="o.date_from" t-field-options='{"widget": "date"}'/>
+                            </div>
+                            <div class="col-xs-2">
+                                <strong>Fecha final:</strong>
+                                <span t-field="o.date_to" t-field-options='{"widget": "date"}'/>
+                            </div>
+                        </div>
+                         <br/>
+                         <t t-foreach="o.group_lines()" t-as="product_id">
+                         <t t-set="product" t-value="request.env['product.product'].browse(product_id)"/>
+                         <div class="row mt32">
+                            <span><t t-esc="product.code"/> <t t-esc="product.name"/></span>
+                            <div style="width:100%; border-bottom: 3px solid;"/>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <th>CLIENTE</th>
+                                    <th>OBRA</th>
+                                    <th>NOMBRE DEL CLIENTE</th>
+                                    <th>NOMBRE DE LA OBRA</th>
+                                    <th>CANTIDAD</th>
+                                </thead>
+                                <tbody t-foreach="o.group_lines()[product_id]['lines']" t-as="line">
+                                    <tr>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="line.get('partner_code')"/></td>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="line.get('work_code')"/></td>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="line.get('partner_name')"/></td>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="line.get('project_name')"/></td>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="line.get('qty')"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-top:none;border-bottom:none;"></td>
+                                        <td style="border-top:none;border-bottom:none;"></td>
+                                        <td style="border-top:none;border-bottom:none;"></td>
+                                        <td style="border-top:none;border-bottom:none;">CANTIDAD TOTAL</td>
+                                        <td style="border-top:none;border-bottom:none;" ><t t-esc="o.group_lines()[product_id]['total']"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                     </t>
+                    </div>
+                </t>
+            </t>
+         </t>
+     
+     </template>
+
+</odoo>

@@ -4,7 +4,7 @@
     <report 
         id="action_product_replacements_report"
         model="account.invoice.line"
-        string="Product invoiced report"
+        string="Product move report"
         report_type="qweb-pdf"
         menu="False"
         name="con_account.report_product_replacements"

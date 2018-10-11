@@ -22,3 +22,4 @@
 from . import account_invoice_state
 from . import sale_advance_payment_inv
 from . import product_replacements
+from . import account_stock_move_report
