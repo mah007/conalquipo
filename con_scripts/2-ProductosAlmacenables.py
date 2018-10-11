@@ -294,14 +294,14 @@ for row in Productos:
         # RUTAS
         warehouse = sock.execute_kw(
             db, uid, password, 'stock.warehouse', 'search_read', [
-                [['lot_stock_id', '=', origin_location_id[0]['id']]]],
+                [['lot_stock_id', '=', location_id[0]['id']]]],
             {'fields': ['id']})
 
         routes = []
 
-        # routes1 = sock.execute_kw(
-        #     db, uid, password, 'stock.location.route', 'search', [
-        #         [['supplied_wh_id', '=', warehouse[0]['id']]]])
+        routes1 = sock.execute_kw(
+            db, uid, password, 'stock.location.route', 'search', [
+                [['supplied_wh_id', '=', warehouse[0]['id']]]])
 
         routes2 = sock.execute_kw(
             db, uid, password, 'stock.location.route', 'search', [
@@ -315,7 +315,7 @@ for row in Productos:
             db, uid, password, 'stock.location.route', 'search', [
                 [['name', '=', 'Make To Order']]])
 
-        routes = routes2 + routes3 + routes4
+        routes = routes2 + routes3
 
         if routes:
             routes_all = [(6, 0, routes)]
