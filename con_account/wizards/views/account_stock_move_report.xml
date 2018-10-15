@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_report_client_wizard_view" model="ir.ui.view">
+            <field name="name">Account report Wizard</field>
+            <field name="model">account.stock.move.report</field>
+            <field name="arch" type="xml">
+                <form string="Report invoiced">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="project_ids" widget="many2many_tags"/>
+                            <field name="products_ids" widget="many2many_tags"/>
+                        </group>
+                        <field name="lines_ids" invisible="1"/>
+                        <field name="can_print" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" type="object" class="oe_highlight" string="Print" attrs="{'invisible': [('can_print', '=', False)]}"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+      <record id="action_wizard_account_move_stock" model="ir.actions.act_window">
+            <field name="name">Report invoiced to move</field>
+            <field name="res_model">account.stock.move.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_report_client_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_account_stock_move_report"
+            name="Report stock move"
+            sequence="1"
+            parent="conalquipo_reports"
+            groups="account.group_account_user"
+            action="con_account.action_wizard_account_move_stock"/>
+
+    </data>
+</odoo>

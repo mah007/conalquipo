@@ -24,10 +24,12 @@
         'wizards/views/account_invoice_state.xml',
         'wizards/views/sale_advance_payment_inv.xml',
         'wizards/views/product_replacement.xml',
+        'wizards/views/account_stock_move_report.xml',
         'data/account_payment_term.xml',
         'data/account_reconcile_model.xml',
         'report/report_invoice_inherit.xml',
         'report/product_replacements_report.xml',
+        'report/report_account_stock_move.xml',
     ],
     'qweb': [
     ],
