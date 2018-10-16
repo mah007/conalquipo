@@ -156,10 +156,20 @@ msgid "<strong>Categoria de producto:</strong>"
 msgstr "<strong>Categoria de producto:</strong>"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "<strong>Fecha desde:</strong>"
+msgstr "<strong>Fecha desde:</strong>"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_stock_move_report
 #: model:ir.ui.view,arch_db:con_account.report_product_replacements
 msgid "<strong>Fecha final:</strong>"
 msgstr "<strong>Fecha final:</strong>"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "<strong>Fecha hasta:</strong>"
+msgstr "<strong>Fecha hasta:</strong>"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_stock_move_report
@@ -178,6 +188,11 @@ msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "<strong>Total Deuda Obra</strong>"
+msgstr "<strong>Total Deuda Obra</strong>"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "<strong>Total de la factura</strong>"
 msgstr "<strong>Total de la factura</strong>"
@@ -186,6 +201,11 @@ msgstr "<strong>Total de la factura</strong>"
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "AUTORIZADOS A FACTURAR DEL CR 30001 AL 36000 RESOLUCIÓN No 110000671126 DE MARZO DE 15 DE 2016."
 msgstr "AUTORIZADOS A FACTURAR DEL CR 30001 AL 36000 RESOLUCIÓN No 110000671126 DE MARZO DE 15 DE 2016."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "Abono"
+msgstr "Abono"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_active
@@ -245,14 +265,20 @@ msgid "CLIENTE"
 msgstr "CLIENTE"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_can_print
+msgid "Can Print"
+msgstr "Puede imprimir"
+
+#. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_report_can_print
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_can_print
 msgid "Can print"
-msgstr "Can print"
+msgstr "Puede imprimir"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_report_client_wizard_view
 #: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+#: model:ir.ui.view,arch_db:con_account.wizard_account_project_invoice_view
 #: model:ir.ui.view,arch_db:con_account.wizard_project_create_report
 msgid "Cancel"
 msgstr "Cancelar"
@@ -288,6 +314,7 @@ msgid "Click to add a new billing year."
 msgstr "Haga clic para agregar un nuevo año de facturación."
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
 #: model:ir.ui.view,arch_db:con_account.project_create_report
 msgid "Cliente"
 msgstr "Cliente"
@@ -336,6 +363,7 @@ msgstr "Confirmar las facturas seleccionadas"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_create_uid
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_create_uid
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_create_uid
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_create_uid
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_create_uid
@@ -347,6 +375,7 @@ msgstr "Creado por"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_create_date
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_create_date
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_create_date
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_create_date
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_create_date
@@ -384,11 +413,13 @@ msgid "Date"
 msgstr "Fecha"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_date_from
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_date_from
 msgid "Date From"
 msgstr "Fecha desde"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_date_to
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_date_to
 msgid "Date To"
 msgstr "Fecha hasta"
@@ -426,12 +457,14 @@ msgstr "Direccion"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_display_name
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_display_name
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_display_name
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_display_name
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_display_name
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_report_display_name
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_display_name
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_display_name
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_account_project_invoice_report_display_name
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_account_stock_move_report_display_name
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_project_create_report_display_name
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements_display_name
@@ -509,6 +542,11 @@ msgid "Equipments"
 msgstr "Equipos"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "Factura"
+msgstr "Factura"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.project_create_report
 msgid "Facturado"
 msgstr "Facturado"
@@ -529,6 +567,7 @@ msgid "Fech. Inic."
 msgstr "Fech. Inic."
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "Fecha"
 msgstr "Fecha"
@@ -557,12 +596,14 @@ msgstr "HASTA"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_id
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_id_9194
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_id
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_id
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_id
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_report_id
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_id
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_lines_id
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_account_project_invoice_report_id
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_account_stock_move_report_id
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_project_create_report_id
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements_id
@@ -588,6 +629,7 @@ msgstr "Intervalo"
 
 #. module: con_account
 #: model:ir.model,name:con_account.model_account_invoice
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_invoice_ids
 msgid "Invoice"
 msgstr "Factura"
 
@@ -630,12 +672,14 @@ msgstr "LISTADO DE OBRAS DESDE"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period___last_update
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project___last_update
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period___last_update
 #: model:ir.model.fields,field_description:con_account.field_account_project_client___last_update
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines___last_update
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_report___last_update
 #: model:ir.model.fields,field_description:con_account.field_product_replacements___last_update
 #: model:ir.model.fields,field_description:con_account.field_product_replacements_lines___last_update
+#: model:ir.model.fields,field_description:con_account.field_report_con_account_account_project_invoice_report___last_update
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_account_stock_move_report___last_update
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_project_create_report___last_update
 #: model:ir.model.fields,field_description:con_account.field_report_con_account_report_product_replacements___last_update
@@ -644,6 +688,7 @@ msgstr "Última Modificación el"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_write_uid
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_write_uid
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_write_uid
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_write_uid
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_write_uid
@@ -655,6 +700,7 @@ msgstr "Actualizado por"
 
 #. module: con_account
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_period_period_write_date
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_write_date
 #: model:ir.model.fields,field_description:con_account.field_account_invoice_year_period_write_date
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_write_date
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_write_date
@@ -670,6 +716,21 @@ msgstr "Actualizado"
 #: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
 msgid "Lines"
 msgstr "Líneas"
+
+#. module: con_account
+#: model:ir.actions.report,name:con_account.action_project_invoice_report
+msgid "List invoice to work"
+msgstr "List invoice to work"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.wizard_account_project_invoice_view
+msgid "List of customer invoices"
+msgstr "List of customer invoices"
+
+#. module: con_account
+#: model:ir.actions.act_window,name:con_account.action_account_invoice_project_wizard_view
+msgid "List of projects invoiced"
+msgstr "List of projects invoiced"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.wizard_project_create_report
@@ -690,6 +751,11 @@ msgstr "Mensual"
 #: model:ir.ui.view,arch_db:con_account.report_product_replacements
 msgid "Monto facturado"
 msgstr "Monto facturado"
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "N.C"
+msgstr "N.C"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_stock_move_report
@@ -749,6 +815,7 @@ msgid "OBRA"
 msgstr "OBRA"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
 #: model:ir.ui.view,arch_db:con_account.project_create_report
 msgid "Obra"
 msgstr "Obra"
@@ -808,6 +875,7 @@ msgid "Parent sale line"
 msgstr "Linea de la orden padre"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_partner_ids
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_partner_id
 msgid "Partner"
 msgstr "Asociado"
@@ -863,6 +931,7 @@ msgstr "Precio"
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_report_client_wizard_view
 #: model:ir.ui.view,arch_db:con_account.product_replacement_wizard_view
+#: model:ir.ui.view,arch_db:con_account.wizard_account_project_invoice_view
 #: model:ir.ui.view,arch_db:con_account.wizard_project_create_report
 msgid "Print"
 msgstr "Imprimir"
@@ -905,6 +974,7 @@ msgid "Products replacements"
 msgstr "Productos facturados"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_project_project_ids
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_project_ids
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_project_id
 msgid "Project"
@@ -913,7 +983,7 @@ msgstr "Proyecto"
 #. module: con_account
 #: model:ir.actions.report,name:con_account.action_project_create_report
 msgid "Project client report"
-msgstr "Project client report"
+msgstr "Relación de facturas pendientes"
 
 #. module: con_account
 #: selection:account.invoice,invoice_type:0
@@ -951,6 +1021,11 @@ msgid "Quotation"
 msgstr "Cotización"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "RELACIÓN DE FACTURAS PENDIENTES"
+msgstr "RELACIÓN DE FACTURAS PENDIENTES"
+
+#. module: con_account
 #: model:ir.ui.view,arch_db:con_account.project_create_report
 msgid "Razon Social"
 msgstr "Razon Social"
@@ -968,13 +1043,18 @@ msgstr "Reemplazos"
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.account_report_client_wizard_view
 msgid "Report invoiced"
-msgstr "Report invoiced"
+msgstr "Reporte de facturados"
 
 #. module: con_account
 #: model:ir.actions.act_window,name:con_account.action_wizard_account_move_stock
 #: model:ir.actions.act_window,name:con_account.action_wizard_project_create_report
 msgid "Report invoiced to move"
-msgstr "Report invoiced to move"
+msgstr "Reporte relación de facturas pendientes"
+
+#. module: con_account
+#: model:ir.ui.menu,name:con_account.menu_account_project_invoice_report
+msgid "Report project to invoice"
+msgstr "Relación de facturas pendientes"
 
 #. module: con_account
 #: model:ir.ui.menu,name:con_account.menu_account_stock_move_report
@@ -995,6 +1075,11 @@ msgstr "SI DENTRO DE DIEZ DÍAS SIGUIENTES A LA FECHA DE RECEPCIÓN NO SE HA TEN
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "SOMOS RETENEDORES DE IVA DEL REGÍMEN SIMPLIFICADO."
 msgstr "SOMOS RETENEDORES DE IVA DEL REGÍMEN SIMPLIFICADO."
+
+#. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "Saldo"
+msgstr "Saldo"
 
 #. module: con_account
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
@@ -1112,6 +1197,7 @@ msgid "To Invoice"
 msgstr "facturado"
 
 #. module: con_account
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
 #: model:ir.ui.view,arch_db:con_account.report_invoice_document_con
 msgid "Total"
 msgstr "Total"
@@ -1133,6 +1219,12 @@ msgstr "Unidad de medida de la venta"
 
 #. module: con_account
 #: code:addons/con_account/models/account_invoice.py:345
+#: model:ir.ui.view,arch_db:con_account.account_project_invoice_report
+msgid "Valor N.C"
+msgstr "Valor N.C"
+
+#. module: con_account
+#: code:addons/con_account/models/account_invoice.py:344
 #, python-format
 msgid "Vendor Bill"
 msgstr "Factura de proveedor"
@@ -1217,6 +1309,11 @@ msgid "account.invoice.period.period"
 msgstr "account.invoice.period.period"
 
 #. module: con_account
+#: model:ir.model,name:con_account.model_account_invoice_project
+msgid "account.invoice.project"
+msgstr "account.invoice.project"
+
+#. module: con_account
 #: model:ir.model,name:con_account.model_account_invoice_year_period
 msgid "account.invoice.year.period"
 msgstr "account.invoice.year.period"
@@ -1255,6 +1352,11 @@ msgstr "product.replacements"
 #: model:ir.model,name:con_account.model_product_replacements_lines
 msgid "product.replacements.lines"
 msgstr "product.replacements.lines"
+
+#. module: con_account
+#: model:ir.model,name:con_account.model_report_con_account_account_project_invoice_report
+msgid "report.con_account.account_project_invoice_report"
+msgstr "report.con_account.account_project_invoice_report"
 
 #. module: con_account
 #: model:ir.model,name:con_account.model_report_con_account_account_stock_move_report
