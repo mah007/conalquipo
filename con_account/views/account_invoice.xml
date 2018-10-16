@@ -136,6 +136,15 @@
                     </group>
                 </div>
             </xpath>
+             <xpath expr="//notebook/page[@name='other_info']" position="after">
+                <page string="Observation" name="pg_observation">
+                    <group>
+                        <group>
+                            <field name="observation" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+             </xpath>
 
         </field>
     </record>
@@ -151,6 +160,7 @@
                 <field name="sector_id" />
                 <field name="sector_id2" />
                 <field name="days_delivery"/>
+                <field name="observation"/>
             </field>
         </field>
     </record>

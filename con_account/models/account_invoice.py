@@ -126,6 +126,7 @@ class AccountInvoice(models.Model):
         string='Init Date')
     end_date_invoice = fields.Date(
         string='End Date')
+    observation = fields.Text("Observation")
 
     @api.onchange('employee_code')
     def onchange_employe_code(self):

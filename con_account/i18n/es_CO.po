@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-15 22:33+0000\n"
-"PO-Revision-Date: 2018-10-15 18:36-0400\n"
+"POT-Creation-Date: 2018-10-16 15:31+0000\n"
+"PO-Revision-Date: 2018-10-16 11:32-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -357,13 +357,13 @@ msgid "Created on"
 msgstr "Creado"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:340
+#: code:addons/con_account/models/account_invoice.py:341
 #, python-format
 msgid "Credit Note"
 msgstr "Nota de crédito"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:341
+#: code:addons/con_account/models/account_invoice.py:342
 #, python-format
 msgid "Credit Note - %s"
 msgstr "Nota de crédito - %s"
@@ -458,7 +458,7 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:334
+#: code:addons/con_account/models/account_invoice.py:335
 #, python-format
 msgid "Draft Invoice"
 msgstr "Factura borrador"
@@ -592,7 +592,7 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:338
+#: code:addons/con_account/models/account_invoice.py:339
 #, python-format
 msgid "Invoice - %s"
 msgstr "Factura - %s"
@@ -754,6 +754,12 @@ msgid "Obra"
 msgstr "Obra"
 
 #. module: con_account
+#: model:ir.model.fields,field_description:con_account.field_account_invoice_observation
+#: model:ir.ui.view,arch_db:con_account.invoice_form
+msgid "Observation"
+msgstr "Observación"
+
+#. module: con_account
 #: model:ir.actions.act_window,help:con_account.action_account_invoice_year_period
 msgid ""
 "Odoo helps you easily track all activities related to\n"
@@ -834,7 +840,7 @@ msgid "Please define income account for this product: \"%s\" (id:%d) - or for it
 msgstr "Por favor defina una cuenta de ingreso para este producto: \"%s\" (id: %d) - o para este categoría: \"%s\"."
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:336
+#: code:addons/con_account/models/account_invoice.py:337
 #, python-format
 msgid "Pre Invoice"
 msgstr "Pre factura"
@@ -902,7 +908,7 @@ msgstr "Productos facturados"
 #: model:ir.model.fields,field_description:con_account.field_account_project_client_project_ids
 #: model:ir.model.fields,field_description:con_account.field_account_stock_move_lines_project_id
 msgid "Project"
-msgstr "Obra"
+msgstr "Proyecto"
 
 #. module: con_account
 #: model:ir.actions.report,name:con_account.action_project_create_report
@@ -1090,7 +1096,7 @@ msgid "Telefono"
 msgstr "Telefono"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:147
+#: code:addons/con_account/models/account_invoice.py:148
 #, python-format
 msgid "This employee code in not member of this group."
 msgstr "Este código de empleado no pertenece a ningún grupo."
@@ -1126,13 +1132,13 @@ msgid "Unit of Measure of Sale"
 msgstr "Unidad de medida de la venta"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:344
+#: code:addons/con_account/models/account_invoice.py:345
 #, python-format
 msgid "Vendor Bill"
 msgstr "Factura de proveedor"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:346
+#: code:addons/con_account/models/account_invoice.py:347
 #, python-format
 msgid "Vendor Bill - %s"
 msgstr "Factura de proveedor - %s"
@@ -1143,13 +1149,13 @@ msgid "Vendor Bill No"
 msgstr "Factura Proveedor No"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:348
+#: code:addons/con_account/models/account_invoice.py:349
 #, python-format
 msgid "Vendor Credit Note"
 msgstr "Rectificativa de proveedor"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:349
+#: code:addons/con_account/models/account_invoice.py:350
 #, python-format
 msgid "Vendor Credit Note - %s"
 msgstr "Nota de crédito del vendedor - %s"
@@ -1188,19 +1194,19 @@ msgid "Years"
 msgstr "Años"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:323
+#: code:addons/con_account/models/account_invoice.py:324
 #, python-format
 msgid "You can't validate invoces. Check your permissions!"
 msgstr "No puede validar facturas. Por favor, chequea tus permisos!"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:320
+#: code:addons/con_account/models/account_invoice.py:321
 #, python-format
 msgid "You can't validate zero invoces. Check your permissions!"
 msgstr "No puede validar facturas en cero. Chequea tus permisos!"
 
 #. module: con_account
-#: code:addons/con_account/models/account_invoice.py:379
+#: code:addons/con_account/models/account_invoice.py:380
 #, python-format
 msgid "You don't have permission to edit the record!"
 msgstr "No tiene permisos para editar el registro! Consulte al administrador!"
