@@ -454,3 +454,21 @@ class ProjectWorks(models.Model):
             if mail_template:
                 mail_template.with_context(ctx).send_mail(
                     self.id, force_send=True, raise_exception=True)
+
+    @api.multi
+    def _get_addres_work(self):
+        self.ensure_one()
+        res = {}
+        address = (
+            "{country_id} {state_id} {municipality2_id} {city} {street1}"
+            " {street1_2} {sector_id} {secondary_sector_ids2}")
+        address_read = self.read([
+            'country_id', 'state_id', 'municipality2_id', 'city',
+            'street1', 'street1_2', 'sector_id',
+            'secondary_sector_ids2'])[0]
+        for key, val in address_read.items():
+            val = val or ''
+            if key.endswith(('_id', '_ids', '_ids2')) and val:
+                val = val[1]
+            res[key] = val
+        return address.format(**res)

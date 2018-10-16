@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_project_create_report" model="ir.ui.view">
+            <field name="name">List project Wizard</field>
+            <field name="model">account.project.client</field>
+            <field name="arch" type="xml">
+                <form string="List projects">
+                    <group>
+                         <field name="type_report" />
+                    </group>
+                    <group col="4">
+                        <field name="date_from" required="1" col="2"/>
+                        <field name="date_to" required="1" col="2"/>
+                    </group>
+                    <field name="project_ids" invisible="1"/>
+                    <footer>
+                        <button name="print_report" type="object" class="oe_highlight" string="Print"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_project_create_report" model="ir.actions.act_window">
+            <field name="name">Report invoiced to move</field>
+            <field name="res_model">account.project.client</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_project_create_report"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="menu_wizard_project_create_report"
+            name="Listing works"
+            sequence="0"
+            parent="conalquipo_reports"
+            groups="account.group_account_user"
+            action="con_account.action_wizard_project_create_report"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="action_project_create_report"
+        model="project.project"
+        string="Project client report"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_account.project_create_report"
+        file="con_account.project_create_report" 
+    />
+
+    <template id="project_create_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                <div class="page">
+                    <center><h3>LISTADO DE OBRAS DESDE <t t-esc="date_from"/> HASTA <t t-esc="date_to"/></h3></center>
+                    <br/>
+                    <div class="row mt32 mb32">
+                    </div>
+                     <table class="table table-condensed">
+                     <tr>
+                        <th>Cliente</th>
+                        <th>Razon Social</th>
+                    </tr>
+                     <tr>
+                        <th>Obra</th>
+                        <th>Nombre</th>
+                        <th t-if="o.type_report == 'client'" >Telefono</th>
+                        <th t-if="o.type_report == 'client'">Direccion</th>
+                        <th t-if="o.type_report == 'invoice'">Facturado</th>
+                        <th t-if="o.type_report == 'invoice'">Pagado</th>
+                        <th t-if="o.type_report == 'invoice'">Adeudado</th>
+                    </tr>
+                    <tbody t-foreach="o.project_ids" t-as="line">
+                         <tr>
+                            <td><span t-field="line.partner_code"/></td>
+                            <td><span t-field="line.partner_id.name"/></td>
+                        </tr>
+                         <tr>
+                            <td><span t-field="line.work_code"/></td>
+                            <td><span t-field="line.name"/></td>
+                            <td t-if="o.type_report == 'client'"><t t-esc="line.work_phone or 'N/A'"/></td>
+                            <td t-if="o.type_report == 'client'"><t t-esc="line._get_addres_work()"/></td>
+                            <td t-if="o.type_report == 'invoice'"><t t-esc="invoiced_work.get(line.id, {}).get('invoiced') or 0.00"/></td>
+                            <td t-if="o.type_report == 'invoice'"><t t-esc="invoiced_work.get(line.id, {}).get('paid') or 0.00"/></td>
+                            <td t-if="o.type_report == 'invoice'"><t t-esc="invoiced_work.get(line.id, {}).get('due') or 0.00"/></td>
+                        </tr>
+                    </tbody>
+                     </table>
+                </div>
+            </t>
+          </t>
+        </t>
+    </template>
+
+</odoo>
