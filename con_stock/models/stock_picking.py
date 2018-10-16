@@ -30,6 +30,16 @@ from odoo.exceptions import UserError
 class StockPicking(Model):
     _inherit = "stock.picking"
 
+    @api.model
+    def _getemployee(self):
+        # Domain for the employee
+        employee_list = []
+        actual_user = self.env.user
+        other = actual_user.employee_ids
+        for data in other:
+            employee_list.append(data.id)
+        return [('id', 'in', employee_list)]
+
     project_id = fields.Many2one(
         'project.project', string="Project", track_visibility='onchange')
     employee_id = fields.Many2one(
@@ -190,16 +200,6 @@ class StockPicking(Model):
                         ))
         return res
 
-    @api.model
-    def _getemployee(self):
-        # Domain for the employee
-        employee_list = []
-        actual_user = self.env.user
-        other = actual_user.employee_ids
-        for data in other:
-            employee_list.append(data.id)
-        return [('id', 'in', employee_list)]
-
     @api.multi
     def _product_availibility_on_project(self, partner_id=False,
                                          project_id=False,
@@ -244,7 +244,7 @@ class StockPicking(Model):
     @api.multi
     def action_equipment_change(self):
         line = []
-        for ml in self.move_lines:
+        for ml in self.moves_ids_without_package:
             line.append((0, 0, {
                 'ant_product_id': ml.product_id.id,
                 'move_line': ml.id}))
@@ -347,27 +347,27 @@ class StockPicking(Model):
         self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
             replace(" ", "").replace(":", "")
 
-    @api.multi
-    def action_cancel(self):
-        if self._context.get('wizard_cancel'):
-            wizard_id = self.env['stock.picking.cancel.wizard'].create(
-                vals={'picking_ids': [(4, self._ids)]})
+    # @api.multi
+    # def action_cancel(self):
+    #     if self._context.get('wizard_cancel'):
+    #         wizard_id = self.env['stock.picking.cancel.wizard'].create(
+    #             vals={'picking_ids': [(4, self._ids)]})
 
-            return {
-                'name': 'Cancellation Wizard',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'stock.picking.cancel.wizard',
-                'res_id': wizard_id.id,
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-            }
-        else:
-            return self.action_do_cancel()
+    #         return {
+    #             'name': 'Cancellation Wizard',
+    #             'view_type': 'form',
+    #             'view_mode': 'form',
+    #             'res_model': 'stock.picking.cancel.wizard',
+    #             'res_id': wizard_id.id,
+    #             'type': 'ir.actions.act_window',
+    #             'target': 'new',
+    #         }
+    #     else:
+    #         return self.action_do_cancel()
 
     @api.multi
     def action_do_cancel(self):
-        self.mapped('move_lines')._action_cancel()
+        self.mapped('moves_ids_without_package')._action_cancel()
         self.write({'is_locked': True})
         return True
 
@@ -378,8 +378,8 @@ class StockPicking(Model):
         pickings
         return: None
         """
-        mrp_repair_obj = self.env['mrp.repair']
-        for l in self.move_lines:
+        repair_obj = self.env['repair.order']
+        for l in self.moves_ids_without_package:
             vals = {
                 'product_id': l.product_id.id,
                 'partner_id': self.partner_id.id,
@@ -389,8 +389,8 @@ class StockPicking(Model):
                 'product_uom': l.product_uom.id,
                 'location_dest_id': self.location_dest_id.id,
             }
-            repair = mrp_repair_obj.create(vals)
-            l.mrp_repair_id = repair.id
+            repair = repair_obj.create(vals)
+            l.repair_id = repair.id
             self.repair_requests = True
 
     def _compute_attachment_ids(self):
@@ -398,7 +398,7 @@ class StockPicking(Model):
         Get the products attachments
         """
         for data in self:
-            for products in data.move_lines:
+            for products in data.moves_ids_without_package:
                 attachment_ids = self.env[
                     'ir.attachment'].search([
                         ('res_id', '=', products.product_tmpl_id.id), ('res_model', '=', 'product.template')]).ids
@@ -468,7 +468,7 @@ class StockPicking(Model):
         result = super(StockPicking, self).button_validate()
         # ~ Change the product state when is moved to other location.
         for picking in self:
-            for move in picking.move_lines:
+            for move in picking.moves_ids_without_package:
                 if move.product_id.rental:
                     move.product_id.write(
                         {'state_id': move.location_dest_id.product_state.id,
@@ -750,7 +750,7 @@ class StockPicking(Model):
     def button_scrap(self):
         self.ensure_one()
         products = self.env['product.product']
-        for move in self.move_lines:
+        for move in self.moves_ids_without_package:
             if move.state not in ('done') and \
              move.product_id.type in ('product', 'consu'):
                 products |= move.product_id

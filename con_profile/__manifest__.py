@@ -36,8 +36,8 @@
     'depends': [
         # Odoo's addons
         'crm', 'project', 'purchase', 'repair', 'delivery',
-        'fleet', 'web_grid', 'l10n_co_edi', 'l10n_co_reports',
-        'sale_timesheet', 'hr_contract', 'sign', 'repair',
+        'fleet', 'web_grid', 'sale_timesheet', 'hr_contract', 'sign', 'repair',
+        'l10n_co_edi', 'l10n_co_reports', 'website',
         # Community addons
         'stock_real_availability', 'web_export_view',
         'web_widget_color', 'report_qweb_element_page_visibility',
@@ -53,12 +53,13 @@
         'con_hr_timesheet',
         'con_sign',
         'con_base',
-        # 'con_product',
-        # 'con_stock',
-        # 'con_purchase',
-        # 'con_project',
-        # 'con_sale',
-        # 'con_account',
+        'con_purchase',
+        # Check
+        'con_stock',
+        'con_product',
+        'con_sale',
+        'con_project',
+        'con_account',
     ],
     'data': [],
     'qweb': [],

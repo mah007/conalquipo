@@ -33,7 +33,7 @@ class AccountInvoiceLine(models.Model):
 
     owner_id = fields.Many2one('res.partner', 'Owner')
     bill_uom = fields.Many2one(
-        'product.uom', string='Unit of Measure of Sale')
+        'uom.uom', string='Unit of Measure of Sale')
     document = fields.Char(
         string='Document')
     date_move = fields.Date(
@@ -95,20 +95,20 @@ class AccountInvoice(models.Model):
         string="Billing address",
         compute="_get_merge_address")
     sector_id = fields.Many2one(
-        comodel_name='res.partner.sector',
+        comodel_name='res.country.sector',
         string='Work Sector',
         track_visibility='onchange')
     secondary_sector_ids = fields.Many2one(
-        comodel_name='res.partner.sector',
+        comodel_name='res.country.sector',
         string="Secondary work sectors",
         domain="[('parent_id', '=', sector_id)]",
         track_visibility='onchange')
     sector_id2 = fields.Many2one(
-        comodel_name='res.partner.sector',
+        comodel_name='res.country.sector',
         string='Invoice Sector',
         track_visibility='onchange')
     secondary_sector_ids2 = fields.Many2one(
-        comodel_name='res.partner.sector',
+        comodel_name='res.country.sector',
         string="Secondary invoice sectors",
         domain="[('parent_id', '=', sector_id2)]",
         track_visibility='onchange')

@@ -31,22 +31,6 @@ class ProjectProductAvailable(models.TransientModel):
         start = ''
         end = ''
 
-        # Enviroments
-        bill_periods = self.env['account.invoice.year.period'].search(
-            [('state', 'in', ['open']),
-             ('company_id', '=', self.company_id.id)])
-
-        if not bill_periods:
-            raise ValidationError(_("You need defined a billing year and "
-                                    "periods"))
-
-        # Searching the period of the query date
-        for period in bill_periods.periods_ids:
-            if self.query_date >= period.start_date and self.query_date <= \
-                    period.end_date:
-                start = period.start_date
-                end = period.end_date
-
         # Selections
         if self.typeselection == 'all' and self.selectionby == 'partner':
             partners = list(all_partners._ids)

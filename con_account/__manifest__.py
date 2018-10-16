@@ -20,7 +20,6 @@
     """,
     'data': [
         'views/account_invoice.xml',
-        'views/account_invoice_period.xml',
         'wizards/views/account_invoice_state.xml',
         'wizards/views/sale_advance_payment_inv.xml',
         'wizards/views/product_replacement.xml',

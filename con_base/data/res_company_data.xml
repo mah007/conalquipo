@@ -17,8 +17,8 @@
         <field name="phone">Tel: (57 4) 441 0341</field>
         <field name="email">conalquipo@conalquipo.com</field>
         <field name="website">https://www.conalquipo.com</field>
-        <field name="lang">es_ES</field>
         <field name="vat"></field>
+        <field name="tz">America/Bogota</field>
         <field name="company_id" ref="base.main_company"/>
     </record>
 

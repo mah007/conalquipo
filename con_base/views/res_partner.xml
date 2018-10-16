@@ -2,19 +2,6 @@
 <odoo>
   <data>
 
-    <record id="l10n_co_topology_inherit" model="ir.ui.view">
-        <field name="name">res.partner.l10n_co_topology</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="l10n_co_topology.res_partner_form_inherit1"/>
-        <field name="arch" type="xml">
-
-            <xpath expr="//div[@class='o_address_format']" position="attributes">
-                <attribute name="attrs">{'readonly': ['|', ('type', '=', 'contact'), ('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}</attribute>
-            </xpath>
-
-        </field>
-    </record>
-
     <record id="res_partner_form_inherit" model="ir.ui.view">
         <field name="name">res.partner.form.code</field>
         <field name="model">res.partner</field>
@@ -77,6 +64,10 @@
                 <field name="end_day" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
                 <field name="week_list" attrs="{'readonly': [('is_administrative_assistant','=',False)]}"/>
             </field>
+
+            <xpath expr="//div[@class='o_address_format']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('type', '=', 'contact'), ('parent_id', '!=', False), ('is_administrative_assistant','=',False)]}</attribute>
+            </xpath>
 
         </field>
     </record>

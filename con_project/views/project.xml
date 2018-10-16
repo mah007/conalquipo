@@ -64,8 +64,8 @@
       <field name="model">project.project</field>
       <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
       <field name="arch" type="xml">
-        <xpath expr="//sheet" position="replace">
-          <sheet>
+        <xpath expr="//form" position="replace">
+          <form>
             <group>
               <group>
                 <field name="name"
@@ -85,7 +85,7 @@
                 <button string="Create" name="close_dialog" type="object" class="btn-primary"/>
                 <button string="Discard" class="btn-default" special="cancel"/>
             </footer>
-          </sheet>
+          </form>
         </xpath>
       </field>
     </record>
@@ -191,7 +191,7 @@
                 </group>
               </group>
             </page>
-            <page name="contact Work information" string="contact Work information">
+            <page name="Contact work information" string="contact Work information">
               <group>
                 <group string="contact" required="0">
                   <field name="legal_cont_responsible" required="0"/>
@@ -221,6 +221,19 @@
             <page string="Settings">
               <group>
                 <field name="privacy_visibility" widget="radio" required="0"/>
+                <field name="billable_type" required="0"/>
+              </group>
+              <group>
+                  <label for="rating_status" groups="project.group_project_rating"/>
+                  <div groups="project.group_project_rating">
+                      <field name="rating_status" widget="radio"/>
+                      <p attrs="{'invisible': [('rating_status','not in',('periodic','stage'))]}" class="text-muted oe_edit_only">
+                          Edit project's stages and set an email template on the stages on which you want to activate the rating.
+                      </p>
+                  </div>
+                  <field name="rating_status_period"  class="oe_inline" attrs="{'required': [('rating_status','=','periodic')], 'invisible': [('rating_status','!=','periodic')]}" groups="project.group_project_rating"/>
+                  <field name="portal_show_rating" attrs="{'invisible': [('rating_status','==','no')]}" groups="project.group_project_rating"/>
+                  <field name="subtask_project_id" groups="project.group_subtask_project"/>
               </group>
               <group name="misc">
                 <group string="Configuration" groups="base.group_no_one">

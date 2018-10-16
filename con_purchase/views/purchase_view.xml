@@ -10,7 +10,8 @@
                 <field name="order_type" widget="radio"
                        attrs="{'readonly':[('state','not in',('draft','sent'))]}"/>
             </field>
-            <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="after">
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom']" position="after">
                 <field name="bill_uom_qty" attrs="{'column_invisible': [('parent.order_type', '=', 'purchase')]}"/>
                 <field name="bill_uom" attrs="{'column_invisible': [('parent.order_type', '=', 'purchase')]}"/>
             </xpath>

@@ -87,9 +87,9 @@
                         <field name="min_qty_rental"  attrs="{'invisible':[('multiples_uom', '!=', False)]}"/>
                     </field>
 
-                    <!-- <field name="invoice_policy" position="after">
+                    <field name="barcode" position="after">
                         <field name="replenishment_charge"/>
-                    </field> -->
+                    </field>
 
                     <field name="categ_id" position="after">
                         <field name="layout_sec_id"/>
@@ -153,13 +153,15 @@
 
                     </xpath>
 
-                    <!-- <xpath expr="//page[@name='notes']" position="inside">
-                        <group name="more_information">
-                            <group string="More information">
-                                <field name="more_information" nolabel="1" placeholder="This note will show up on sales orders."/>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="term_conditions" string="Terms and conditions">
+                            <group name="more_information">
+                                <group string="More information">
+                                    <field name="more_information" nolabel="1" placeholder="This note will show up on sales orders."/>
+                                </group>
                             </group>
-                        </group>
-                    </xpath> -->
+                        </page>
+                    </xpath>
 
                 </data>
             </field>

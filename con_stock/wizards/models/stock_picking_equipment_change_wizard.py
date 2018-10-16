@@ -33,7 +33,7 @@ class StockPickingEquipmentChangeWizard(models.TransientModel):
                             'name': new_name})
 
                 # Update description on stock move
-                for desc in self.picking_id.move_lines:
+                for desc in self.picking_id.moves_ids_without_package:
                     new_name = 'Comp ' + \
                      new_p.new_product_id.default_code
                     if desc.sale_line_id.parent_line.id == \

@@ -28,7 +28,7 @@
     'summary': 'Adds custom states to products that'
                ' can be changed at specific times of the workflow.',
     'depends': [
-        'uom', 'product', 'web_widget_color',
+        'uom', 'product', 'web_widget_color', 'stock', 'l10n_co_edi',
     ],
     'description':
     """
@@ -36,13 +36,11 @@
          at specific times of the workflow.
     """,
     'data': [
-        'data/product_category.xml',
         'security/ir.model.access.csv',
+        'data/product_category.xml',
         'views/product_product.xml',
         'views/product_template.xml',
-        'views/product_states.xml',
-        'data/product.states.csv',
-        # 'data/uom_uom.xml',
+        'data/uom_uom.xml',
     ],
     'qweb': [
     ],

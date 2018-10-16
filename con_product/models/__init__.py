@@ -19,7 +19,6 @@
 #
 ##############################################################################
 
-from . import product_states
 from . import product_components
 from . import product_multiples_uom
 from . import product_states_nonmech

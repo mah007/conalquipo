@@ -28,7 +28,6 @@ _logger = logging.getLogger(__name__)
 class StockLocation(Model):
     _inherit = "stock.location"
 
-
     @api.multi
     @api.depends('product_state')
     def _get_color(self):

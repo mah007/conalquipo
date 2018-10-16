@@ -8,7 +8,7 @@
     'sequence': 10,
     'summary': 'Base',
     'depends': [
-        'base', 'sale', 'l10n_co_topology'
+        'base', 'sale', 'l10n_co_topology', 'repair',
     ],
     'description':
     """

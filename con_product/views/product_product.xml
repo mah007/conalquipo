@@ -43,7 +43,7 @@
             <field name="arch" type="xml">
                 <data>
 
-                    <field name="categ_id" position="after">
+                    <field name="default_code" position="before">
                         <field name="location_id" />
                         <field name="state_id" />
                         <field name="color" widget="color"/>

@@ -99,8 +99,8 @@ class StockMove(Model):
         'res.partner', string='Partner')
     child_product = fields.Boolean(
         string="Child product", default=False)
-    mrp_repair_id = fields.Many2one(
-        'repair', string='Repair request')
+    repair_id = fields.Many2one(
+        'repair.order', string='Repair request')
     employee_ids = fields.Many2many(
         'hr.employee', string='Operators',
         related="product_id.employee_ids", readonly=True)
