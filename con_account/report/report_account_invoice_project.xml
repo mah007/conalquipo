@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_project_invoice_report"
+        model="account.invoice"
+        string="List invoice to work"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_account.account_project_invoice_report"
+        file="con_account.account_project_invoice_report" 
+    />
+
+     <template id="account_project_invoice_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                 <div class="page">
+                    <center><h3>RELACIÓN DE FACTURAS PENDIENTES</h3></center>
+                    <br/>
+                    <div class="row mt32 mb32">
+                          <div class="col-xs-4"/>
+                             <div class="mr128 col-xs-2">
+                                <strong>Fecha desde:</strong>
+                                <span t-field="o.date_from" t-field-options='{"widget": "date"}'/>
+                            </div>
+                            <div class="col-xs-2">
+                                <strong>Fecha hasta:</strong>
+                                <span t-field="o.date_to" t-field-options='{"widget": "date"}'/>
+                            </div>
+                    </div>
+                    <br/>
+                    <t t-foreach="group_lines" t-as="partner_id">
+                        <t t-foreach="group_lines[partner_id]" t-as="project_id">
+                        <t t-set="project" t-value="request.env['project.project'].browse(int(project_id))"/>
+                        <table class="table table-condensed">
+                            <thead>
+                            <tr>
+                                 
+                                <th style="border-top:3px solid;border-bottom:3px solid;" >Cliente</th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"><t t-esc="project.partner_code" /></th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"><t t-esc="project.partner_id.name" /></th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                            </tr>
+                            <tr>
+                                <th style="border-top:3px solid;border-bottom:3px solid;">Obra</th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"><t t-esc="project.work_code" /></th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"><t t-esc="project.name" /></th>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                                <th style="border-top:3px solid;border-bottom:3px solid;"/>
+                            </tr>
+                            <tr>
+                                <th style="border-top:none;border-bottom:none;">Fecha</th>
+                                <th style="border-top:none;border-bottom:none;">Factura</th>
+                                <th style="border-top:none;border-bottom:none;">Total</th>
+                                <th style="border-top:none;border-bottom:none;">Abono</th>
+                                <th style="border-top:none;border-bottom:none;">Saldo</th>
+                                <th style="border-top:none;border-bottom:none;">N.C</th>
+                                <th style="border-top:none;border-bottom:none;">Valor N.C</th>
+                            </tr>
+                            </thead>
+                            <tbody t-foreach="group_lines[partner_id][project_id]" t-as="line">
+                                <tr>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('date_invoice')"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('number')"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('total')"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('credit')"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('due')"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('credit_note') or 'N/A'"/></td>
+                                    <td style="border-top:none;border-bottom:none;"><t t-esc="line.get('credit_note_value')"/></td>
+                                </tr>
+                                </tbody>
+                                <tfood>
+                                <tr>
+                                    <td><strong>Total Deuda Obra</strong></td>
+                                    <td>
+                                        <strong><t t-esc="o.formatlang(total_due.get(partner_id, {}).get('works', {}).get(project_id, 0.00))"/></strong></td>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                </tr>
+                            </tfood>
+                        </table>
+                     </t>
+                     <div style="width:100%; border-top: 3px solid;">
+                        <span><strong>Total Deuda Cliente: </strong></span>
+                        <span><strong><t t-esc="o.formatlang(total_due.get(partner_id, {}).get('total_client', 0.00))"/></strong></span>
+                     </div>
+                     </t>
+                 </div>
+                </t>
+            </t>
+        </t>
+     </template>
+
+</odoo>
