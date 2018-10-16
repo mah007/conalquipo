@@ -11,3 +11,5 @@ access_product_states_nonmech_stock_user,product.states.nonmech,model_product_st
 access_product_states_nonmech_stock_manager,product.states.nonmech,model_product_states_nonmech,stock.group_stock_manager,1,1,1,1
 access_product_states_nonmech_sale_user,product.states.nonmech,model_product_states_nonmech,sales_team.group_sale_salesman,1,1,1,0
 access_product_states_nonmech_sale_manager,product.states.nonmech,model_product_states_nonmech,sales_team.group_sale_manager,1,1,1,1
+access_sale_layout_cat_group_user,sale.layout_category,model_sale_layout_category,base.group_user,1,1,1,0
+access_sale_layout_cat_group_system,sale.layout_category,model_sale_layout_category,base.group_system,1,1,1,1

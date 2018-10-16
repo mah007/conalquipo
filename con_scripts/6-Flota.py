@@ -3,8 +3,8 @@
 import xmlrpc.client
 import csv
 
-host = 'http://localhost:9001'
-db = 'prueba_piloto_productos_limpia'
+host = 'http://localhost:9002'
+db = 'con_odoo12'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 

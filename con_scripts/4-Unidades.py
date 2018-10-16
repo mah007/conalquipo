@@ -3,8 +3,8 @@
 import xmlrpc.client
 import csv
 
-host = 'http://localhost:9001'
-db = 'prueba_piloto_productos_limpia'
+host = 'http://localhost:9002'
+db = 'con_odoo12'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -31,7 +31,7 @@ for row in Productos:
         {'fields': ['id']})
 
     uom_id = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
+        db, uid, password, 'uom.uom', 'search_read', [
             [['name',
               '=', row['Unidad'].strip()]]], {'fields': ['id']})
 

@@ -5,8 +5,8 @@ import csv
 import ast
 import codecs
 
-host = 'http://localhost:9001'
-db = 'prueba_piloto_productos_limpia'
+host = 'http://localhost:9002'
+db = 'con_odoo12'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -56,7 +56,7 @@ for row in Productos:
     # UNIDADES DE MEDIDA
     # COMPRA
     uom_po_id = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
+        db, uid, password, 'uom.uom', 'search_read', [
             [['name',
               '=', row[
                   'Unidad de medida de compra'].strip()]]], {'fields': ['id']})
@@ -64,14 +64,14 @@ for row in Productos:
     if not uom_po_id:
         uom_po_id = sock.execute_kw(
             db, uid, password,
-            'product.uom',
+            'uom.uom',
             'create', [{'name': row['Unidad de medida de compra'].strip()}])
     else:
         uom_po_id = uom_po_id[0]['id']
 
     # VENTA
     sale_uom = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
+        db, uid, password, 'uom.uom', 'search_read', [
             [['name',
               '=', row[
                   'Unidad de medida de venta'].strip()]]], {'fields': ['id']})
@@ -79,21 +79,21 @@ for row in Productos:
     if not sale_uom:
         sale_uom = sock.execute_kw(
             db, uid, password,
-            'product.uom',
+            'uom.uom',
             'create', [{'name': row['Unidad de medida de venta'].strip()}])
     else:
         sale_uom = sale_uom[0]['id']
 
     # UNIDAD
     uom_id = sock.execute_kw(
-        db, uid, password, 'product.uom', 'search_read', [
+        db, uid, password, 'uom.uom', 'search_read', [
             [['name',
               '=', row['Unidad de medida'].strip()]]], {'fields': ['id']})
 
     if not uom_id:
         uom_id = sock.execute_kw(
             db, uid, password,
-            'product.uom',
+            'uom.uom',
             'create', [{'name': row['Unidad de medida'].strip()}])
     else:
         uom_id = uom_id[0]['id']
@@ -401,24 +401,24 @@ for row in Productos:
                 [producto_id[0]['id']], vals])
 
         # AÑADIR CANTIDAD A MANO
-        # pro_id = sock.execute_kw(
-        #     db, uid, password, 'product.product', 'search_read', [
-        #         [['product_tmpl_id', '=', producto_id[0]['id']]]],
-        #     {'fields': ['id']})
+        pro_id = sock.execute_kw(
+            db, uid, password, 'product.product', 'search_read', [
+                [['product_tmpl_id', '=', producto_id[0]['id']]]],
+            {'fields': ['id']})
 
-        # vals_qty = {
-        #     'product_id': pro_id[0]['id'],
-        #     'location_id': origin_location_id[0]['id'],
-        #     'new_quantity': row['cantidad a mano']
-        # }
+        vals_qty = {
+            'product_id': pro_id[0]['id'],
+            'location_id': origin_location_id[0]['id'],
+            'new_quantity': row['cantidad a mano']
+        }
 
-        # wizard = sock.execute_kw(
-        #     db, uid, password, 'stock.change.product.qty', 'create', [
-        #         vals_qty])
+        wizard = sock.execute_kw(
+            db, uid, password, 'stock.change.product.qty', 'create', [
+                vals_qty])
 
-        # sock.execute_kw(
-        #     db, uid, password,
-        #     'stock.change.product.qty', 'change_product_qty', [
-        #         wizard])
+        sock.execute_kw(
+            db, uid, password,
+            'stock.change.product.qty', 'change_product_qty', [
+                wizard])
 
 print("Finaliza Proceso (Productos)...")

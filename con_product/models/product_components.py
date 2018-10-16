@@ -36,13 +36,3 @@ class ProductComponents(Model):
     quantity = fields.Integer('Default quantity', default=1)
     child = fields.Boolean('Child', default=True)
     extra = fields.Boolean('Extra product')
-
-
-class SaleLayoutCategory(Model):
-    _name = 'sale.layout_category'
-    _order = 'sequence, id'
-
-    name = fields.Char('Name', required=True, translate=True)
-    sequence = fields.Integer('Sequence', required=True, default=10)
-    subtotal = fields.Boolean('Add subtotal', default=True)
-    pagebreak = fields.Boolean('Add pagebreak')

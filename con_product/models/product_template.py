@@ -49,7 +49,7 @@ class ProductTemplate(Model):
         for data in self:
             if data.type != 'service':
                 data.state_id = self.env['product.states'].search([
-                    ('default_value', '=', True)], limit=1) or False
+                    ('default_value', '=', True)], limit=1).id or False
             else:
                 data.state_id = False
 

@@ -18,11 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from odoo.models import Model
+from odoo import fields, api, _
+from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
-from . import sale_layout_category
-from . import product_components
-from . import product_multiples_uom
-from . import product_states_nonmech
-from . import product_product
-from . import product_template
-from . import uom_uom
+
+class SaleLayoutCategory(Model):
+    _name = 'sale.layout_category'
+    _order = 'sequence, id'
+
+    name = fields.Char('Name', required=True, translate=True)
+    sequence = fields.Integer('Sequence', required=True, default=10)
+    subtotal = fields.Boolean('Add subtotal', default=True)
+    pagebreak = fields.Boolean('Add pagebreak')

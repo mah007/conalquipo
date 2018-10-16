@@ -3,8 +3,8 @@
 import xmlrpc.client
 import csv
 
-host = 'http://localhost:9001'
-db = 'prueba_piloto_productos_limpia'
+host = 'http://localhost:9002'
+db = 'con_odoo12'
 user = 'dmpineda@conalquipo.com'
 password = 'admin'
 
@@ -47,7 +47,7 @@ for row in Productos:
             db, uid, password, 'product.product', 'search_read', [
                 [['default_code', 'in', data.replace(" ", "").split()]]],
             {'fields': ['id']})
-            
+
         if comp_id:
             vals = {
                 'product_id': producto_id[0]['id'],
