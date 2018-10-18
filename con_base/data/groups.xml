@@ -5,109 +5,91 @@
         <record id="group_it_manager" model="res.groups">
             <field name="name">IT Manager</field>
             <field name="category_id" ref="base.module_category_accounting_and_finance"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_administrative_assistant" model="res.groups">
             <field name="name">Administrative assistant</field>
             <field name="category_id" ref="base.module_category_accounting_and_finance"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_commercial_director" model="res.groups">
             <field name="name">Commercial director</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_commercial" model="res.groups">
             <field name="name">Commercial</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_commercial_purchases" model="res.groups">
             <field name="name">Can see purchases</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_work" model="res.groups">
             <field name="name">Works management</field>
               <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_can_sign" model="res.groups">
             <field name="name">Can sign documents</field>
               <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_logistic_director" model="res.groups">
             <field name="name">Logistic Director</field>
             <field name="category_id" ref="base.module_category_warehouse_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_logistic" model="res.groups">
             <field name="name">Logistic</field>
             <field name="category_id" ref="base.module_category_warehouse_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_fleet" model="res.groups">
             <field name="name">Fleet management</field>
             <field name="category_id" ref="base.module_category_warehouse_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_repair" model="res.groups">
             <field name="name">Repair management</field>
             <field name="category_id" ref="base.module_category_warehouse_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_sale_overlimit" model="res.groups">
             <field name="name">Can confirm sales with overlimit</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_message_warnings" model="res.groups">
             <field name="name">Can set messages and warnings</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_sale_small_qty" model="res.groups">
             <field name="name">Can confirm smaller quantities</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_sale_discount_modifications" model="res.groups">
             <field name="name">Can confirm discount modifications</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_inactive_partners" model="res.groups">
             <field name="name">Can confirm inactive partners</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_can_see_employees" model="res.groups">
             <field name="name">Can see menu employees</field>
             <field name="category_id" ref="base.module_category_human_resources"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record id="group_sale_special_quotations" model="res.groups">
             <field name="name">Can approve special quotations</field>
             <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <record model="res.groups" id="group_shipping_driver">
@@ -123,8 +105,6 @@
         <record model="res.groups" id="group_equipment_change">
             <field name="name">Equipment Change</field>
             <field name="category_id" ref="base.module_category_warehouse_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         </record>
 
         <record id="base.user_admin" model="res.users">

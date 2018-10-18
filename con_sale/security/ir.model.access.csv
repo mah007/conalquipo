@@ -3,3 +3,7 @@ access_sale_product_components_sale_user,sale.product.components,model_sale_prod
 access_sale_product_components_sale_manager,sale.product.components,model_sale_product_components,sales_team.group_sale_manager,1,1,1,1
 access_sale_product_components_stock_user,sale.product.components,model_sale_product_components,stock.group_stock_user,1,1,1,0
 access_sale_product_components_stock_manager,sale.product.components,model_sale_product_components,stock.group_stock_manager,1,1,1,1
+access_sale_order_group_commercia,sale.order,model_sale_order,con_base.group_commercial,1,1,1,0
+access_sale_order_commercial_director,sale.order,model_sale_order,con_base.group_commercial_director,1,1,1,1
+access_sale_order_line_group_commercia,sale.order.line,model_sale_order_line,con_base.group_commercial,1,1,1,0
+access_sale_order_line_commercial_director,sale.order.line,model_sale_order_line,con_base.group_commercial_director,1,1,1,1

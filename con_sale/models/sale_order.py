@@ -130,10 +130,10 @@ class SaleOrder(models.Model):
     due_invoice_ids = fields.Many2many(
         "account.invoice", string='Related invoices',
         track_visibility='onchange')
-    # employee_id = fields.Many2one(
-    #     "hr.employee", string='Employee',
-    #     track_visibility='onchange',
-    #     domain=lambda self: self.getemployee())
+    employee_id = fields.Many2one(
+        "hr.employee", string='Employee',
+        track_visibility='onchange',
+        domain=lambda self: self.getemployee())
     employee_code = fields.Char('Employee code')
     approved_min_prices = fields.Boolean(
         'Approve min prices for products',
@@ -165,10 +165,10 @@ class SaleOrder(models.Model):
         readonly=True,
         states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         track_visibility='onchange')
-    # user_id = fields.Many2one(
-    #     'hr.employee', string='Salesperson',
-    #     index=True, track_visibility='onchange',
-    #     default=lambda self: self.employee_id.id)
+    user_id = fields.Many2one(
+        'hr.employee', string='Salesperson',
+        index=True, track_visibility='onchange',
+        default=lambda self: self.employee_id.id)
     payment_term_note = fields.Text(
         'Payment Terms and conditions')
     min_emptying = fields.Char('Min. Emptying')
@@ -506,10 +506,10 @@ class SaleOrder(models.Model):
         """
         Show in sale order form the limit amount
         """
-        self.write({'can_confirm': False,
-                    'due_invoice_ids': [],
-                    'message_invoice': '',
-                    'available_amount': 0.0})
+        self.update({'can_confirm': False,
+                     'due_invoice_ids': [],
+                     'message_invoice': '',
+                     'available_amount': 0.0})
 
     def _compute_product_count(self):
         """
@@ -1872,28 +1872,6 @@ class SaleOrderLine(models.Model):
             task = self.env[
                 'project.task'].create(task_values)
             line.write({'task_id': task.id})
-        # Merge products
-        # same_product = self.search(
-        #     [('product_id', '=', values.get('product_id', False)),
-        #      ('order_id', '=', values.get('order_id', False)),
-        #      ('bill_uom', '=', values.get('bill_uom', False))])
-        # if same_product:
-        #     for data in same_product:
-        #         if values.get('product_id') == data.product_id.id and \
-        #                 data.product_id.product_tmpl_id.non_mech \
-        #                 or data.product_id.product_tmpl_id.type \
-        #                 == 'service':
-        #             total_qty = data.product_qty + values.get(
-        #                 'product_uom_qty', 0)
-        #             total_sale_uom = data.bill_uom_qty + values.get(
-        #                 'bill_uom_qty', 0)
-        #             values.update({
-        #                 'product_uom_qty': total_qty,
-        #                 'bill_uom_qty': total_sale_uom,
-        #             })
-        #             same_product.write(values)
-        #             return same_product
-        # else:
         return line
 
     @api.multi

@@ -75,50 +75,47 @@
 
         <!-- MENU VENTAS -->
         <record id="sale.sale_menu_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_commercial'), ref('con_base.group_commercial_director'), ref('con_base.group_logistic_director')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_commercial'), ref('con_base.group_commercial_director'), ref('con_base.group_logistic_director')])]"/>
         </record>
 
+        <!-- MENU CRM -->
         <record id="crm.crm_menu_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_commercial'), ref('con_base.group_commercial_director')])]"/>
-        </record>
-
-        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_commercial'), ref('con_base.group_commercial_director')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_commercial'), ref('con_base.group_commercial_director')])]"/>
         </record>
 
         <!-- MENU INVENTARIO -->
         <record id="stock.menu_stock_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_logistic'), ref('con_base.group_logistic_director')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_logistic'), ref('con_base.group_logistic_director')])]"/>
         </record>
 
         <!-- MENU CONTABILIDAD -->
         <record id="account.menu_finance" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_administrative_assistant')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_administrative_assistant')])]"/>
         </record>
 
         <!-- MENU FLOTAS -->
         <record id="fleet.menu_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_fleet')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_fleet')])]"/>
         </record>
 
         <!-- MENU HR -->
         <record id="hr.menu_hr_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_can_see_employees')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_can_see_employees')])]"/>
         </record>
 
         <!-- MENU PURCHASES -->
         <record id="purchase.menu_purchase_root" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_commercial_purchases')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_commercial_purchases'), ref('con_base.group_commercial'), ref('con_base.group_commercial_director')])]"/>
         </record>
 
         <!-- MENU REPAIR -->
         <record id="repair.menu_repair_order" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_repair')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_repair')])]"/>
         </record>
 
         <!-- MENU SIGN -->
         <record id="sign.menu_document" model="ir.ui.menu">
-            <field name="groups_id" eval="[(6,0,[ref('con_base.group_can_sign')])]"/>
+            <field name="groups_id" eval="[(6, 0, [ref('con_base.group_can_sign')])]"/>
         </record>
 
     </data>
