@@ -77,7 +77,7 @@ class SaleOrder(models.Model):
         compute="_get_merge_address",
         track_visibility='onchange')
     signs_ids = fields.Many2many(
-        'signature.request',
+        'sign.request',
         compute='_compute_sign_ids',
         string="Main signs")
     operators_services = fields.Integer(
@@ -281,7 +281,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                    'con_profile.group_sale_small_qty').name]])
+                    'con_base.group_sale_small_qty').name]])
         if groups:
             for data in groups:
                 for users in data.users:
@@ -302,7 +302,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_sale_special_quotations').name]])
+                      'con_base.group_sale_special_quotations').name]])
         if groups_sp_q:
             for data in groups_sp_q:
                 for users in data.users:
@@ -322,7 +322,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_sale_discount_modifications').name]])
+                      'con_base.group_sale_discount_modifications').name]])
         if groups_dm:
             for data in groups_dm:
                 for users in data.users:
@@ -369,7 +369,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_sale_overlimit').name]])
+                      'con_base.group_sale_overlimit').name]])
         if groups_overlimit:
             for data in groups_overlimit:
                 for users in data.users:
@@ -380,7 +380,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_inactive_partners').name]])
+                      'con_base.group_inactive_partners').name]])
         if groups_acp:
             for data in groups_acp:
                 for users in data.users:
@@ -643,7 +643,7 @@ class SaleOrder(models.Model):
         """
         for data in self:
             signs_ids = self.env[
-                'signature.request'].search([
+                'sign.request'].search([
                     ('sale_id', '=', data.id)]).ids
             data.signs_ids = list(
                 set(signs_ids))
@@ -778,8 +778,7 @@ class SaleOrder(models.Model):
             # If partner have documents
             attachment_ids = self.env[
                 'ir.attachment'].search([
-                    ('res_id', '=', self.partner_id.id),
-                    ('res_model', '=', 'res.partner')])
+                    ('partner_id', '=', self.partner_id.id)])
             if not attachment_ids:
                 raise UserError(_(
                     "You need to attach the client's validation documents"))
@@ -829,7 +828,6 @@ class SaleOrder(models.Model):
                                 str(data.bill_uom.name),
                                 'project_id': self.project_id.id,
                                 'sale_line_id': data.id,
-                                'so_line': data.id,
                                 'product_id': data.product_id.id,
                                 'partner_id': self.partner_id.id,
                                 'company_id': self.company_id.id,
@@ -861,7 +859,6 @@ class SaleOrder(models.Model):
                             str(data.bill_uom.name),
                             'project_id': self.project_id.id,
                             'sale_line_id': data.id,
-                            'so_line': data.id,
                             'product_id': data.product_id.id,
                             'partner_id': self.partner_id.id,
                             'company_id': self.company_id.id,
@@ -1059,7 +1056,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_commercial_director').name]])
+                      'con_base.group_commercial_director').name]])
         # Send notification to users when works is created
         recipients = []
         groups = self.env[
@@ -1067,7 +1064,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_commercial_director').name]])
+                      'con_base.group_commercial_director').name]])
         if groups:
             for data in groups:
                 for users in data.users:
@@ -1079,15 +1076,15 @@ class SaleOrder(models.Model):
             res.send_followers(body, recipients)
             res.send_to_channel(body, recipients)
             # Test smtp connection
-            server = self.env['ir.mail_server'].sudo().search([])
-            for data in server:
-                smtp = False
-                try:
-                    smtp = data.connect(mail_server_id=data.id)
-                except Exception as e:
-                    pass
-                else:
-                    res.send_mail(body)
+            # server = self.env['ir.mail_server'].sudo().search([])
+            # for data in server:
+            #     smtp = False
+            #     try:
+            #         smtp = data.connect(mail_server_id=data.id)
+            #     except Exception as e:
+            #         pass
+            #     else:
+            #         res.send_mail(body)
             ###########################
             if res.project_id:
                 return res
@@ -1121,7 +1118,7 @@ class SaleOrder(models.Model):
                 [['name',
                   '=',
                   self.env.ref(
-                      'con_profile.group_commercial_director').name]])
+                      'con_base.group_commercial_director').name]])
         if groups:
             for data in groups:
                 for users in data.users:
@@ -1264,7 +1261,7 @@ class SaleOrder(models.Model):
             })
         else:
             if self.partner_id:
-                self.write({'carrier_id': None, 'vehicle': None})
+                self.update({'carrier_id': None, 'vehicle': None})
 
     @api.onchange('carrier_id')
     def onchange_carrier_id(self):
@@ -1294,7 +1291,7 @@ class SaleOrder(models.Model):
         if self.vehicle:
             for data in self.carrier_id.delivery_carrier_cost:
                 if self.vehicle.id == data.vehicle.id:
-                    self.write({'delivery_price': data.cost})
+                    self.update({'delivery_price': data.cost})
                     self.delivery_price = data.cost
 
     @api.depends('carrier_id', 'order_line')
@@ -1609,7 +1606,7 @@ class SaleOrderLine(models.Model):
             move = self.env['stock.move'].search(
                 [('sale_line_id', '=', self.id)])
             for line in move.move_line_ids:
-                line.write({'assigned_operator': self.assigned_operator})
+                line.update({'assigned_operator': self.assigned_operator})
 
     def _timesheet_create_task_prepare_values(self):
         """Overloaded function for preparate fields values to create the new
@@ -1859,7 +1856,6 @@ class SaleOrderLine(models.Model):
                 str(line.bill_uom.name),
                 'project_id': line.order_id.project_id.id,
                 'sale_line_id': line.id,
-                'so_line': line.id,
                 'product_id': line.product_id.id,
                 'partner_id': line.order_id.partner_id.id,
                 'company_id': self.company_id.id,

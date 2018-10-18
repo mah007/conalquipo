@@ -24,9 +24,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
         date_format = "%Y-%m-%d"
         if self.init_date_invoice and self.end_date_invoice:
             init = datetime.strptime(
-                self.init_date_invoice, date_format)
+                self.init_date_invoice, DEFAULT_SERVER_DATETIME_FORMAT)
             end = datetime.strptime(
-                self.end_date_invoice, date_format)
+                self.end_date_invoice, DEFAULT_SERVER_DATETIME_FORMAT)
             if end < init:
                 self.init_date_invoice = False
                 self.end_date_invoice = False

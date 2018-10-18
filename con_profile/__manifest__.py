@@ -37,7 +37,7 @@
         # Odoo's addons
         'crm', 'project', 'purchase', 'repair', 'delivery',
         'fleet', 'web_grid', 'sale_timesheet', 'hr_contract', 'sign', 'repair',
-        'l10n_co_edi', 'l10n_co_reports', 'website',
+        'l10n_co_edi', 'l10n_co_reports', 'website', 'documents',
         # Community addons
         'stock_real_availability', 'web_export_view',
         'web_widget_color', 'report_qweb_element_page_visibility',

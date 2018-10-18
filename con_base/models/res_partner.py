@@ -246,7 +246,7 @@ class ResPartnerCode(models.Model):
     def _compute_is_administrative_assistant(self):
         for data in self:
             data.is_administrative_assistant = self.env.user.has_group(
-                'con_profile.group_administrative_assistant')
+                'con_base.group_administrative_assistant')
 
     @api.constrains('sector_id', 'secondary_sector_ids')
     def _check_sectors(self):
@@ -257,12 +257,12 @@ class ResPartnerCode(models.Model):
     def _compute_can_edit_doc_delivered(self):
         for data in self:
             data.can_edit_doc_delivered = self.env.user.has_group(
-                'con_profile.group_commercial_director')
+                'con_base.group_commercial_director')
 
     def _compute_can_edit_pricelist(self):
         for data in self:
             data.can_edit_pricelist = self.env.user.has_group(
-                'con_profile.group_commercial_director')
+                'con_base.group_commercial_director')
 
     @api.multi
     @api.depends('country_id')

@@ -386,9 +386,9 @@ class ProjectWorks(models.Model):
                 body = _(
                     'Attention: The work %s are created by %s') % (
                         res.name, res.create_uid.name)
-                res.send_followers(body, recipients)
-                res.send_to_channel(body, recipients)
-                res.send_mail(body)
+                # res.send_followers(body, recipients)
+                # res.send_to_channel(body, recipients)
+                # res.send_mail(body)
         else:
             raise UserError(_("You need to select a client!"))
         return res
