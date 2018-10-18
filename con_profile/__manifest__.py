@@ -54,7 +54,6 @@
         'con_sign',
         'con_base',
         'con_purchase',
-        # Check
         'con_stock',
         'con_product',
         'con_sale',

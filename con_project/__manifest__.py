@@ -14,11 +14,11 @@
         Project Management for works
     """,
     'data': [
+        'data/email_template.xml',
+        'wizards/views/project_product_available.xml',
         'views/project.xml',
         'views/project_task.xml',
-        'wizards/views/project_product_available.xml',
         'reports/project_product_report.xml',
-        'data/email_template.xml',
     ],
     'qweb': [
     ],

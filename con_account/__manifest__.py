@@ -19,12 +19,13 @@
         - Adds project_id, invoice_type field to account.invoice.line model.
     """,
     'data': [
-        'views/account_invoice.xml',
+
+        'data/account_payment_term.xml',
+        'data/account_reconcile_model.xml',        
         'wizards/views/account_invoice_state.xml',
         'wizards/views/sale_advance_payment_inv.xml',
         'wizards/views/product_replacement.xml',
-        'data/account_payment_term.xml',
-        'data/account_reconcile_model.xml',
+        'views/account_invoice.xml',
         'report/report_invoice_inherit.xml',
         'report/product_replacements_report.xml',
     ],

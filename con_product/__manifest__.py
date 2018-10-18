@@ -37,10 +37,10 @@
     """,
     'data': [
         'security/ir.model.access.csv',
+        'data/uom_uom.xml',
         'data/product_category.xml',
         'views/product_product.xml',
         'views/product_template.xml',
-        'data/uom_uom.xml',
     ],
     'qweb': [
     ],

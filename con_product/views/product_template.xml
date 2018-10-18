@@ -36,11 +36,11 @@
                             <li t-if="record.color.value">Color: <field name="color" widget="color" ></field></li>
                             <li t-if="record.location_id.value">Location: <field name="location_id"></field></li>
                             <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
-                            <!-- <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b> -->
+                            <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b>
                         </div>
                         <div t-if="record.non_mech">
                             <li t-if="record.product_origin.value">Origin: <field name="product_origin"></field></li>
-                            <!-- <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b> -->
+                            <b><li t-if="record.outgoing_qty.value">Qty reserved: <field  name="outgoing_qty"></field></li></b>
                         </div>
                     </t>
                 </ul>
@@ -167,10 +167,10 @@
             </field>
         </record>
 
-        <!-- <record id="con_product_template_form_view_inherit" model="ir.ui.view">
+        <record id="view_template_property_form_inherit" model="ir.ui.view">
             <field name="name">product.template.common.form</field>
             <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='stock_property']" position="after">
                         <group name="operated" >
@@ -180,6 +180,6 @@
                         </group>
                 </xpath>
             </field>
-        </record> -->
+        </record>
 
     </odoo>
