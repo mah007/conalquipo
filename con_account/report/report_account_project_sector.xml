@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_project_sector_report"
+        model="account.invoice"
+        string="List work to sector"
+        report_type="qweb-pdf"
+        menu="False"
+        name="con_account.account_project_sector_report"
+        file="con_account.account_project_sector_report" 
+    />
+
+    <template id="account_project_sector_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <center><h3>LISTADO DE OBRAS POR SECTOR</h3></center>
+                        <div class="row mt32 mb32">
+                            <div class="col-xs-4"/>
+                             <div class="col-xs-2">
+                                <strong>Desde:</strong>
+                                <span t-field="o.date_from" t-field-options='{"widget": "date"}'/>
+                            </div>
+                            <div class="col-xs-2">
+                                <strong>Hasta:</strong>
+                                <span t-field="o.date_to" t-field-options='{"widget": "date"}'/>
+                            </div>
+                        </div>
+                        <t t-foreach="group_lines" t-as="sector_id">
+                            <br/>
+                            <div class="row">
+                                 <div style="border-top: 3px solid;" class="col-xs-6">
+                                    <h4><strong>Zona</strong></h4>
+                               </div>
+                                <div style="border-top: 3px solid;" class="col-xs-3">
+                                    <h4><strong>Total</strong></h4>
+                                </div>
+                                <div style="border-top: 3px solid;" class="col-xs-3">
+                                    <h4><strong>Porcentaje</strong></h4>
+                               </div>
+                            <t t-set="sector" t-value="request.env['res.partner.sector'].browse(int(sector_id))"/>
+                            <t t-set="total_sector" t-value="o.total_sector(sector.id)"/>
+                               <div class="col-xs-6">
+                                    <h5><t t-esc="sector.name" /></h5>
+                               </div>
+                                <div class="col-xs-3">
+                                    <h5><t t-esc="o.formatlang(total_sector)"/></h5>
+                               </div>
+                               <div class="col-xs-3">
+                               </div>
+                               <t t-foreach="group_lines[sector_id]" t-as="sub_sector_id">
+                                    <t t-set="sub_sector" t-value="request.env['res.partner.sector'].browse(int(sub_sector_id))"/>
+                                    <t t-set="total_sub_sector" t-value="o.total_subsector(sector.id, sub_sector.id)"/>
+                                    <div class="col-xs-6">
+                                        <h5 style="padding-left:20px"><t t-esc="sub_sector.name"/></h5>
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <h5><t t-esc="o.formatlang(total_sub_sector)"/></h5>
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <h5><t t-esc="o.percentage_subsector(sector.id, sub_sector.id, total_sector)"/></h5>
+                                    </div>
+                                    <t t-foreach="group_lines[sector_id][sub_sector_id]" t-as="partner_id">
+                                        <t t-set="partner" t-value="request.env['res.partner'].browse(int(partner_id))"/>
+                                        <t t-set="total_partner" t-value="o.total_partner(sector.id, sub_sector.id, partner.id)"/>
+                                        <div class="col-xs-6">
+                                            <h5 style="padding-left:30px"><t t-esc="partner.name"/> NIT <t t-esc="partner.vat"/></h5>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <h5><t t-esc="o.formatlang(total_partner)"/></h5>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <h5><t t-esc="o.percentage_partner(sector.id, sub_sector.id, partner.id, total_sub_sector)"/></h5>
+                                        </div>
+                                        <t t-foreach="group_lines[sector_id][sub_sector_id][partner_id]" t-as="line">
+                                            <div class="col-xs-6">
+                                                <span style="padding-left:40px"><t t-esc="line.get('project_id')"/></span>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <span><t t-esc="o.formatlang(line.get('amount_total'))"/></span>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <span><t t-esc="o.get_percentage(line.get('amount_total'), total_partner)"/></span>
+                                            </div>
+                                        </t>
+                                    </t>
+                               </t>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
