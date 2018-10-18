@@ -6,8 +6,7 @@
             <field name="name">Cancellation Wizard</field>
             <field name="model">stock.picking.cancel.wizard</field>
             <field name="arch" type="xml">
-                <form string="Post Journal Entries">
-                    <label string="Please explain the reason for cancellation."/>
+                <form string="Please explain the reason for cancellation.">
                     <field name="name"/>
                     <field name="picking_ids"/>
                     <footer>

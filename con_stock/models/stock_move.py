@@ -103,7 +103,7 @@ class StockMove(Model):
         'repair.order', string='Repair request')
     employee_ids = fields.Many2many(
         'hr.employee', string='Operators',
-        related="product_id.employee_ids", readonly=True)
+        related="product_id.product_tmpl_id.employee_ids", readonly=True)
     employee_id = fields.Many2one(
         'hr.employee', string='Operator')
     description = fields.Char(

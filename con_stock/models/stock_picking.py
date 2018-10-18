@@ -347,23 +347,23 @@ class StockPicking(Model):
         self.carrier_tracking_ref = str("".join(ref)).replace("-", "").\
             replace(" ", "").replace(":", "")
 
-    # @api.multi
-    # def action_cancel(self):
-    #     if self._context.get('wizard_cancel'):
-    #         wizard_id = self.env['stock.picking.cancel.wizard'].create(
-    #             vals={'picking_ids': [(4, self._ids)]})
+    @api.multi
+    def action_cancel(self):
+        if self._context.get('wizard_cancel'):
+            wizard_id = self.env['stock.picking.cancel.wizard'].create(
+                vals={'picking_ids': [(4, self._ids)]})
 
-    #         return {
-    #             'name': 'Cancellation Wizard',
-    #             'view_type': 'form',
-    #             'view_mode': 'form',
-    #             'res_model': 'stock.picking.cancel.wizard',
-    #             'res_id': wizard_id.id,
-    #             'type': 'ir.actions.act_window',
-    #             'target': 'new',
-    #         }
-    #     else:
-    #         return self.action_do_cancel()
+            return {
+                'name': 'Cancellation Wizard',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'stock.picking.cancel.wizard',
+                'res_id': wizard_id.id,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+            }
+        else:
+            return self.action_do_cancel()
 
     @api.multi
     def action_do_cancel(self):
