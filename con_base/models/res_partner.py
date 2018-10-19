@@ -108,7 +108,7 @@ class ResPartnerCode(models.Model):
     contact_person = fields.Boolean(
         'Contact person?', track_visibility='onchange')
     employee_id = fields.Many2one(
-        "hr.employee", string='Employee',
+        "hr.employee", string='Employees',
         track_visibility='onchange',
         domain=lambda self: self._getemployee())
     employee_code = fields.Char('Employee code')
@@ -272,18 +272,18 @@ class ResPartnerCode(models.Model):
                 p.property_product_pricelist = self.env[
                     'product.pricelist']._get_partner_pricelist(p.id)
 
-    # @api.model
-    # def create(self, values):
-    #     values['partner_code'] = self.env[
-    #         'ir.sequence'].next_by_code('res.partner.code')
-    #     res = super(ResPartnerCode, self).create(values)
-    #     pay_term = self.env.user.company_id.default_payment_term_id.id
-    #     if pay_term:
-    #         res.property_payment_term_id = pay_term
-    #     else:
-    #         raise exceptions.Warning(_(
-    #             'You have to define a payment term in company config!'))
-    #     return res
+    @api.model
+    def create(self, values):
+        values['partner_code'] = self.env[
+            'ir.sequence'].next_by_code('res.partner.code')
+        res = super(ResPartnerCode, self).create(values)
+        pay_term = self.env.user.company_id.default_payment_term_id.id
+        if pay_term:
+            res.property_payment_term_id = pay_term
+        else:
+            raise exceptions.Warning(_(
+                'You have to define a payment term in company config!'))
+        return res
 
     @api.multi
     def write(self, values):

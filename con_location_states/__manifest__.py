@@ -18,50 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    'name': "Odoo CON Profile",
+    'name': "Conalquipo's stock customizations for location states",
 
     'summary': """
-        Conalequipos's Odoo Installation profile.
+        Conalequipos's location states.
     """,
 
     'description': """
-        Conalequipo's Odoo Installation profile.
+        - Set massive location and colors wizard
     """,
 
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
+    'author': "Ingeniería Aplicaciones y Software",
     'website': "http://www.ias.com.co",
-    'category': 'Base Profile',
+    'category': 'stock',
     'version': '0.1',
-    'depends': [
-        # Odoo's addons
-        'crm', 'project', 'purchase', 'repair', 'delivery',
-        'fleet', 'web_grid', 'sale_timesheet', 'hr_contract', 'sign', 'repair',
-        'l10n_co_edi', 'l10n_co_reports', 'website', 'documents',
-        # Community addons
-        'stock_real_availability', 'web_export_view',
-        'web_widget_color', 'report_qweb_element_page_visibility',
-        'partner_firstname',
-        # IAS's addons
-        'l10n_co_topology',
-        # Conalquipo's addons
-        'con_web',
-        'con_repair',
-        'con_fleet',
-        'con_delivery',
-        'con_hr',
-        'con_hr_timesheet',
-        'con_sign',
-        'con_base',
-        'con_purchase',
-        'con_location_states',
-        'con_stock',
-        'con_product',
-        'con_sale',
-        'con_project',
-        'con_account',
+    'depends': ['stock'],
+    'data': ['security/ir.model.access.csv',
+             'data/product.states.csv',
+             'data/locations.xml',
+             'views/product_states.xml',
     ],
-    'data': [],
     'qweb': [],
     'images': [],
     'installable': True,

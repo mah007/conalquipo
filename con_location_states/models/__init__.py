@@ -19,37 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name': "Conalquipo's products customizations",
-    'version': '1.1',
-    'author': 'IAS Ingenieria, Aplicaciones y Software, S.A.S',
-    'category': 'Products',
-    'sequence': 10,
-    'summary': 'Adds custom states to products that'
-               ' can be changed at specific times of the workflow.',
-    'depends': [
-        'uom', 'product', 'web_widget_color', 'stock', 'l10n_co_edi', 'hr',
-        'con_location_states'
-    ],
-    'description':
-    """
-        Adds custom states to products that can be changed
-         at specific times of the workflow.
-    """,
-    'data': [
-        'security/ir.model.access.csv',
-        'data/uom_uom.xml',
-        'data/product_category.xml',
-        'views/product_product.xml',
-        'views/product_template.xml',
-    ],
-    'qweb': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': True,
-}
+from . import product_states
