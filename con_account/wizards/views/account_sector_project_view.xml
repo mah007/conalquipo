@@ -14,8 +14,8 @@
                         <group>
                             <field name="partner_ids" widget="many2many_tags"/>
                             <field name="project_ids" widget="many2many_tags"/>
-                            <field name="sector_ids" widget="many2many_tags"/>
-                            <field name="secondary_sector_ids" widget="many2many_tags"/>
+                            <field name="sector_ids"/>
+                            <field name="secondary_sector_ids"/>
                         </group>
                         <field name="invoice_ids" invisible="1"/>
                         <field name="can_print" invisible="1"/>
