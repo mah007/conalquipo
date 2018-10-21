@@ -5,3 +5,4 @@ from . import report_stock_move_history
 from . import report_account_project_client
 from . import report_account_project_invoice
 from . import report_account_project_sector
+from . import report_account_picking_invoice

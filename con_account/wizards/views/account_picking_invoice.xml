@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_account_picking_invoice_view" model="ir.ui.view">
+            <field name="name">Account report picking</field>
+            <field name="model">account.invoice.picking</field>
+            <field name="arch" type="xml">
+                <form string="List delivery to vehicles">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="vehicle_ids" widget="many2many_tags"/>
+                            <field name="driver_ids" widget="many2many_tags"/>
+                        </group>
+                        <field name="picking_ids" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" type="object" class="oe_highlight" string="Print" attrs="{'invisible': [('picking_ids', '=', [])]}"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+      <record id="action_account_invoice_picking_wizard_view" model="ir.actions.act_window">
+            <field name="name">List delivery to vehicles</field>
+            <field name="res_model">account.invoice.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_account_picking_invoice_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_account_picking_invoice_report"
+            name="Report delivery to vehicles"
+            sequence="1"
+            parent="conalquipo_reports"
+            groups="account.group_account_user"
+            action="con_account.action_account_invoice_picking_wizard_view"/>
+
+    </data>
+</odoo>

@@ -26,3 +26,4 @@ from . import account_stock_move_report
 from . import account_project_client
 from . import account_invoice_project
 from . import account_sector_project
+from . import account_picking_invoice

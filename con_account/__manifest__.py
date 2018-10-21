@@ -28,6 +28,7 @@
         'wizards/views/account_project_client_view.xml',
         'wizards/views/account_invoice_project_view.xml',
         'wizards/views/account_sector_project_view.xml',
+        'wizards/views/account_picking_invoice.xml',
         'data/account_payment_term.xml',
         'data/account_reconcile_model.xml',
         'report/report_invoice_inherit.xml',
@@ -36,6 +37,7 @@
         'report/account_project_client.xml',
         'report/report_account_invoice_project.xml',
         'report/report_account_project_sector.xml',
+        'report/report_account_picking_invoice.xml',
     ],
     'qweb': [
     ],
