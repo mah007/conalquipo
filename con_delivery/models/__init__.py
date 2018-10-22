@@ -19,4 +19,6 @@
 #
 ##############################################################################
 
-from . import delivery
+from . import shipping_driver
+from . import delivery_carrier_cost
+from . import delivery_carrier

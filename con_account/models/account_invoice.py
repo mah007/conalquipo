@@ -27,56 +27,6 @@ from odoo.tools import float_compare
 _logger = logging.getLogger(__name__)
 
 
-class AccountInvoiceLine(models.Model):
-    _inherit = 'account.invoice.line'
-    _order = "date_move asc"
-
-    owner_id = fields.Many2one('res.partner', 'Owner')
-    bill_uom = fields.Many2one(
-        'uom.uom', string='Unit of Measure of Sale')
-    document = fields.Char(
-        string='Document')
-    date_move = fields.Date(
-        string='Date')
-    date_init = fields.Integer(
-        string='Date init')
-    date_end = fields.Integer(
-        string='Date end')
-    num_days = fields.Integer(
-        string='Number days')
-    qty_remmisions = fields.Float(
-        string='Qty remmisions')
-    qty_returned = fields.Float(
-        string='Qty returned')
-    products_on_work = fields.Float(
-        string='Products on work')
-    parent_sale_line = fields.Many2one(
-        comodel_name='sale.order.line',
-        string='Parent sale line')
-    move_history_id = fields.Many2one(
-        'stock.move.history',
-        'Stock Move History', help="Stock Move History")
-
-    @api.one
-    @api.depends(
-        'price_unit', 'discount', 'invoice_line_tax_ids',
-        'quantity', 'product_id', 'invoice_id.partner_id',
-        'invoice_id.currency_id', 'invoice_id.company_id',
-        'invoice_id.date_invoice', 'invoice_id.date')
-    def _compute_price(self):
-        res = super(AccountInvoiceLine, self)._compute_price()
-        if self.invoice_id.invoice_type in ['rent']:
-            if self.products_on_work == 0.0:
-                if self.product_id.type != 'product':
-                    self.price_subtotal = self.quantity * self.price_unit
-                else:
-                    self.price_subtotal = 0.0
-            else:
-                self.price_subtotal = \
-                    self.products_on_work * self.quantity * self.price_unit
-        return res
-
-
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
@@ -357,27 +307,29 @@ class AccountInvoice(models.Model):
         values['employee_code'] = False
         res = super(AccountInvoice, self).write(values)
         # Get invoice permissions
-        self.get_invoice_permissions()
+        # self.get_invoice_permissions()
         return res
 
-    def get_invoice_permissions(self):
-        """
-        Check if the user can edit or approve invoices
-        """
-        groups_company = []
-        users_in_acc_groups = []
-        actual_user = self.env.user.id
-        user_company = self.env['res.users'].browse([self._uid]).company_id
-        for acc_groups in user_company.account_extra_perm:
-            groups_company.append(acc_groups)
-        for data in groups_company:
-            for acc_users in data.users:
-                users_in_acc_groups.append(acc_users.id)
-        if actual_user in users_in_acc_groups:
-            return True
-        else:
-            raise UserError(_(
-                "You don't have permission to edit the record!"))
+    # def get_invoice_permissions(self):
+    #     """
+    #     Check if the user can edit or approve invoices
+    #     """
+    #     groups_company = []
+    #     users_in_acc_groups = []
+    #     actual_user = self.env.user.id
+    #     user_company = self.env['res.users'].browse([self._uid]).company_id
+    #     for acc_groups in user_company.account_extra_perm:
+    #         groups_company.append(acc_groups)
+    #     for data in groups_company:
+    #         for acc_users in data.users:
+    #             users_in_acc_groups.append(acc_users.id)
+    #     _logger.warning(actual_user)
+    #     _logger.warning(users_in_acc_groups)
+    #     if actual_user in users_in_acc_groups:
+    #         return True
+    #     else:
+    #         raise UserError(_(
+    #             "You don't have permission to edit the record!"))
 
     @api.multi
     def _get_tax_amount_by_section(self):

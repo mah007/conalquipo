@@ -31,6 +31,11 @@
         <field name="iso_logo" type="base64" file="con_base/static/src/img/ISO-9001.jpg"/>
         <field name="footer_logo" type="base64" file="con_base/static/src/img/footer.png"/>
         <field name="cover_page_logo" type="base64" file="con_base/static/src/img/cover_page.png"/>
+        <field name="default_payment_term_id" eval="ref('account.account_payment_term_net')"/>
+        <field name="special_quotations_categories" eval="[(4, ref('con_product.category_30')), (4, ref('con_product.category_31')), (4, ref('con_product.category_22')), (4, ref('con_product.category_24'))]"/>
+        <field name="default_validate_invoices" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="account_extra_perm" eval="[(4, ref('con_base.group_it_manager'))]"/>
+        <field name="default_uom_task_id" eval="[(4, ref('uom.product_uom_day')), (4, ref('uom.product_uom_unit'))]"/>
     </record>
 
 </odoo>

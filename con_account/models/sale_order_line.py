@@ -28,59 +28,6 @@ from odoo.tools import float_is_zero
 _logger = logging.getLogger(__name__)
 
 
-class SaleOrder(models.Model):
-    _inherit = 'sale.order'
-
-    init_date_invoice = fields.Date(
-        string='Init Date')
-    end_date_invoice = fields.Date(
-        string='End Date')
-
-    @api.multi
-    def _prepare_invoice(self):
-        """
-        Prepare the dict of values to create the new invoice for a sales order.
-         This method may be
-        overridden to implement custom invoice generation
-        (making sure to call super() to establish
-        a clean extension chain).
-        """
-        invoice_vals = super(SaleOrder, self)._prepare_invoice()
-        invoice_vals.update({'init_date_invoice': self.init_date_invoice,
-                             'end_date_invoice': self.end_date_invoice,
-                             'invoice_type': self.order_type})
-
-        return invoice_vals
-
-    # @api.multi
-    # def action_invoice_create(self, grouped=False, final=False):
-    #     """
-    #     Create the invoice associated to the SO.
-    #     :param grouped: if True, invoices are grouped by SO id.
-    #         If False, invoices are grouped by
-    #         (partner_invoice_id, currency)
-    #     :param final: if True, refunds will be generated if necessary
-    #     :returns: list of created invoices
-    #     """
-    #     if self.env['account.invoice'].search(
-    #             ['|', '|', '&',
-    #              ('init_date_invoice', '<=', self.init_date_invoice),
-    #              ('end_date_invoice', '>=', self.init_date_invoice),
-    #              '&',
-    #              ('init_date_invoice', '<=', self.end_date_invoice),
-    #              ('end_date_invoice', '>=', self.end_date_invoice),
-    #              '&',
-    #              ('init_date_invoice', '>=', self.init_date_invoice),
-    #              ('end_date_invoice', '<=', self.end_date_invoice),
-    #              ('partner_id', '=', self.partner_id.id),
-    #              ('project_id', '=', self.project_id.id),
-    #              ('state', '!=', 'cancel')]):
-    #         raise UserError(_('You are trying to create an invoice in '
-    #                           'a period and invoice.'))
-    #     values = super(SaleOrder, self).action_invoice_create(grouped, final)
-    #     return values
-
-
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
@@ -103,7 +50,7 @@ class SaleOrderLine(models.Model):
                 if date >= init_date_invoice and \
                         date <= end_date_invoice:
                     qty += timesheet.unit_amount
-        elif self.bill_uom.id == self.env.ref('product.product_uom_day').id:
+        elif self.bill_uom.id == self.env.ref('uom.product_uom_day').id:
             qty = delta.days + 1
         else:
             qty = moves.product_uom_qty

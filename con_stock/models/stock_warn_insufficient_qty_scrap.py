@@ -25,32 +25,32 @@ from odoo.tools import float_compare
 from odoo.exceptions import UserError
 
 
-class StockScrap(models.Model):
-    _inherit = 'stock.scrap'
+class StockWarnInsufficientQtyScrap(models.TransientModel):
+    _inherit = 'stock.warn.insufficient.qty.scrap'
 
-    def action_validate(self):
-        res = super(StockScrap, self).action_validate()
-        reple_id = self.product_id.product_tmpl_id.replenishment_charge
+    def action_done(self):
+        res = super(StockWarnInsufficientQtyScrap, self).action_done()
+        scrap_id = self.scrap_id
+        reple_id = scrap_id.product_id.product_tmpl_id.replenishment_charge
         if reple_id:
             self.env['sale.order.line'].create({
-                'order_id': self.picking_id.sale_id.id,
+                'order_id': scrap_id.picking_id.sale_id.id,
                 'product_id': reple_id.id,
-                'product_uom_qty': self.scrap_qty,
+                'product_uom_qty': scrap_id.scrap_qty,
                 'price_unit': reple_id.lst_price,
                 'name': _('Replenishment %s') % (reple_id.default_code),
-                'product_uom': reple_id.uom_id.id,
-            })
+                'product_uom': reple_id.uom_id.id})
 
             sign_template = self.env.ref(
                     'con_sign.template_con_website_sign_1')
             request_id = self.env['sign.request'].create({
-                'sale_id': self.picking_id.sale_id.id,
+                'sale_id': scrap_id.picking_id.sale_id.id,
                 'template_id': sign_template.id,
                 'state': 'draft',
                 'reference': sign_template.share_link,
             })
 
-            picking = self.picking_id
+            picking = scrap_id.picking_id
             items = ['signature_con_item_1', 'signature_con_item_2',
                      'signature_con_item_3', 'signature_con_item_4',
                      'signature_con_item_5', 'signature_con_item_6',
@@ -62,36 +62,18 @@ class StockScrap(models.Model):
                             picking.project_id.city,
                             picking.advertisement_date,
                             picking.name,
-                            self.product_id.product_tmpl_id.name,
-                            self.product_id.product_tmpl_id.default_code]
+                            scrap_id.product_id.product_tmpl_id.name,
+                            scrap_id.product_id.product_tmpl_id.default_code]
 
             d = dict(zip(items, items_values))
             for key, value in d.items():
                 self.env['sign.item.value'].create({
-                    'sign_item_id': self.env.ref(
-                        'con_sign.' + str(key)).id,
-                    'sign_request_id': request_id.id,
+                    'signature_item_id': self.env.ref(
+                        'con_website_sign.' + str(key)).id,
+                    'signature_request_id': request_id.id,
                     'value': value
                 })
-
-            return res
         else:
             raise UserError(_(
                 "The product doesn't have replacement service!"))
-        return res
-
-    @api.multi
-    def do_scrap(self):
-        res = super(StockScrap, self).do_scrap()
-        for scrap in self:
-            reple_id = scrap.product_id.product_tmpl_id.replenishment_charge
-            if not reple_id:
-                raise UserError(_(
-                    "The product doesn't have replacement service!"))
-            scrap.move_id.update({
-                'description': _(
-                    'Replenishment %s') % (reple_id.default_code),
-                'location_id': self.location_id.id,
-                'location_dest_id': self.scrap_location_id.id,
-                'state': 'draft'})
         return res

@@ -113,3 +113,10 @@ class ProjectTask(models.Model):
     def compute_qty_rem(self):
         self.sale_line_id.write({
             'bill_uom_qty_executed': self.effective_hours})
+
+    @api.multi
+    @api.constrains('sale_line_id')
+    def _check_sale_line_type(self):
+        for task in self:
+            if task.sale_line_id:
+                return True

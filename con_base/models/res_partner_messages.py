@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2017 IAS Ingenieria, Aplicaciones y Software, S.A.S.
+#    Ingeniería, Aplicaciones y Software S.A.S
+#    Copyright (C) 2003-2017 Tiny SPRL (<http://www.ias.com.co>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,4 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import models
+import logging
+
+from odoo import fields, models
+
+_logger = logging.getLogger(__name__)
+
+
+class ResPartnerMessages(models.Model):
+    _name = 'res.partner.messages'
+
+    name = fields.Char('Message', translate=True)

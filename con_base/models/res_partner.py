@@ -291,9 +291,3 @@ class ResPartnerCode(models.Model):
         values['employee_code'] = False
         res = super(ResPartnerCode, self).write(values)
         return res
-
-
-class ResPartnerMessages(models.Model):
-    _name = 'res.partner.messages'
-
-    name = fields.Char('Message', translate=True)

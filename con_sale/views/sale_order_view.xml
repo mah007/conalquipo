@@ -285,7 +285,7 @@
             <field name="project_id" string="Works"/>
             <field name="message_invoice"/>
             <field name="cancel_options"/>
-            <!-- <field name="employee_id"/> -->
+            <field name="employee_id"/>
         </field>
 
       </field>

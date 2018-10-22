@@ -71,11 +71,11 @@
                     <field name="repair_id" context="{'default_product_id': product_id, 'default_partner_id': parent.partner_id}"/>
                 </xpath>
 
-                <notebook position="inside">
+                <!-- <notebook position="inside">
                     <page string="Attachments">
                         <field name="attachment_ids" widget="many2many_binary"/>
                     </page>
-                </notebook>
+                </notebook> -->
 
                 <field name="partner_id" position="after">
                     <field name="project_id" domain="[('partner_id', '=', partner_id)]" context="{'default_project_id': project_id}"/>

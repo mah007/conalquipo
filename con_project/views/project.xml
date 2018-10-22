@@ -271,7 +271,6 @@
       </field>
     </record>
 
-
     <!-- PROJECT TREE VIEW -->
     <record id="project_tree_works" model="ir.ui.view">
       <field name="name">project.tree.work</field>

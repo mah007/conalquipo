@@ -46,10 +46,10 @@ class StockPicking(Model):
         "hr.employee", string='Employee',
         track_visibility='onchange',
         domain=lambda self:self._getemployee())
-    attachment_ids = fields.Many2many(
-        'ir.attachment',
-        compute='_compute_attachment_ids',
-        string="Main Attachments", track_visibility='onchange')
+    # attachment_ids = fields.Many2many(
+    #     'ir.attachment',
+    #     compute='_compute_attachment_ids',
+    #     string="Main Attachments", track_visibility='onchange')
     # ~Fields for shipping and invoice address
     shipping_address = fields.Text(
         string="Shipping",
@@ -367,7 +367,7 @@ class StockPicking(Model):
 
     @api.multi
     def action_do_cancel(self):
-        self.mapped('moves_ids_without_package')._action_cancel()
+        self.env['stock.move']._action_cancel()
         self.write({'is_locked': True})
         return True
 
@@ -393,20 +393,20 @@ class StockPicking(Model):
             l.repair_id = repair.id
             self.repair_requests = True
 
-    def _compute_attachment_ids(self):
-        """
-        Get the products attachments
-        """
-        for data in self:
-            for products in data.moves_ids_without_package:
-                attachment_ids = self.env[
-                    'ir.attachment'].search([
-                        ('res_id', '=', products.product_tmpl_id.id), ('res_model', '=', 'product.template')]).ids
-                message_attachment_ids = self.mapped(
-                    'message_ids.attachment_ids').ids
-                data.attachment_ids = list(
-                    set(attachment_ids) - set(
-                        message_attachment_ids))
+    # def _compute_attachment_ids(self):
+    #     """
+    #     Get the products attachments
+    #     """
+    #     for data in self:
+    #         for products in data.moves_ids_without_package:
+    #             attachment_ids = self.env[
+    #                 'ir.attachment'].search([
+    #                     ('res_id', '=', products.product_tmpl_id.id), ('res_model', '=', 'product.template')]).ids
+    #             message_attachment_ids = self.mapped(
+    #                 'message_ids.attachment_ids').ids
+    #             data.attachment_ids = list(
+    #                 set(attachment_ids) - set(
+    #                     message_attachment_ids))
 
     @api.onchange('picking_type_id', 'partner_id')
     def onchange_picking_type(self):
@@ -468,7 +468,7 @@ class StockPicking(Model):
         result = super(StockPicking, self).button_validate()
         # ~ Change the product state when is moved to other location.
         for picking in self:
-            for move in picking.moves_ids_without_package:
+            for move in picking.move_lines:
                 if move.product_id.rental:
                     move.product_id.write(
                         {'state_id': move.location_dest_id.product_state.id,
